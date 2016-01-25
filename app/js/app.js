@@ -53,13 +53,17 @@ angular.module('LodSite', [
         .state('developers.item', {
           url: '/:id',
           templateUrl: templateUrl('projects', 'developers-item')
-        });
+        })
 
-      //.state('order', {
-      //url: '/order',
-      //templateUrl: templateUrl('index', 'index'),
-      //controller: 'OrderCtrl'
-      //})
+        .state('about', {
+          url: '/about',
+          templateUrl: templateUrl('about', 'about-index')
+        })
+        .state('contact', {
+          url: '/contact',
+          templateUrl: templateUrl('contact', 'contact-index')
+        })
+
     }
   ]);
 

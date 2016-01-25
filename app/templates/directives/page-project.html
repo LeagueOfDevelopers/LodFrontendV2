@@ -25,8 +25,10 @@
       <div class="info__subheading">Описание:</div>
       <div class="info__description" ng-bind="project.Info"></div>
       <div class="info__subheading">Разработчики:</div>
-      <span class="info__developers" ng-repeat="developer in project.ProjectMemberships"
-           ng-bind="developer.FirstName + ' ' + developer.LastName + ' (' + developer.Role + '), '"></span>
+      <span class="info__developers" ng-repeat="developer in project.ProjectMemberships">
+        <a ng-href="{{'/developers/'+developer.DeveloperId}}" ng-bind="developer.FirstName + ' ' + developer.LastName"></a>
+        <span ng-bind=" '(' + developer.Role + '),' "></span>
+      </span>
       <div class="info__subheading">Уровень доступа:</div>
       <div class="info__access" ng-switch="project.AccessLevel">
         <span ng-switch-when="0">Закрытый</span>

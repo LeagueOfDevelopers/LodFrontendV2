@@ -367,7 +367,6 @@ header {
 .status__value {
   display: inline-block;
   color: white;
-  margin: 0 10px;
   padding: 5px 10px;
   border-radius: 5px;
   font-weight: normal;
@@ -475,17 +474,18 @@ footer {
 /************************
       PROJECT-PAGE
 *************************/
-.full-project-container{
+.full-project-container {
   box-sizing: border-box;
   width: 100%;
   padding: 15px;
 }
 
-.full-project-wrapper{
+.full-project-wrapper {
   width: 100%;
   margin: 0 auto;
 }
-.full-project__name{
+
+.full-project__name {
   display: block;
   margin: 15px auto;
   font-size: 1.8em;
@@ -493,23 +493,23 @@ footer {
   font-family: 'Cuprum', sans-serif;
   text-transform: uppercase;
   text-align: center;
-  text-shadow: 2px 2px rgba(0,0,0,.1);
+  text-shadow: 2px 2px rgba(0, 0, 0, .1);
 }
 
-.full-project__preview{
+.full-project__preview {
   position: relative;
   width: 100%;
   height: 300px;
   border-radius: 5px 5px 0 0;
 }
 
-.preview__project-status{
+.preview__project-status {
   position: absolute;
-  right: 0;
+  right: 10px;
   bottom: 10px;
 }
 
-.full-project__info{
+.full-project__info {
   width: 100%;
   box-sizing: border-box;
   padding: 15px;
@@ -517,25 +517,30 @@ footer {
   border-radius: 0 0 5px 5px;
 }
 
-.info__subheading{
+.info__subheading {
   text-align: left;
   font-weight: 900;
   font-size: 1.1em;
 }
 
 .info__subheading:not(:first-of-type),
-.info__links{
+.info__links {
   margin-top: 10px;
 }
 
-.info__project-types{
+.info__project-types {
   display: inline-block;
   color: white;
   background: #717171;
   padding: 5px 10px;
   margin: 10px 5px 0 0;
 }
-
+.info__developers>a {
+  color: #1e88e5;
+}
+.info__developers>a:hover {
+  text-decoration: underline;
+}
 .info__links>a {
   display: inline-block;
   color: #1e88e5;
@@ -548,14 +553,16 @@ footer {
   transition: all .15s ease-out;
 }
 
-.info__join-button{
+.info__join-button {
   text-align: center;
   display: block;
   margin: 25px auto 10px auto;
 }
-.full-project-issues{
+
+.full-project-issues {
   text-align: center;
 }
+
 .project-issues__issue {
   display: inline-block;
   padding: 10px;
@@ -563,6 +570,7 @@ footer {
   box-shadow: 1px 1px 2px rgba(0, 0, 0, .15);
   margin: 5px;
 }
+
 @media only screen and (min-width: 640px) {
   /*************************
            MAIN
@@ -606,11 +614,14 @@ footer {
   /************************
         PROJECT-PAGE
   *************************/
-  .full-project-wrapper{
-    max-width: 800px;
+  .full-project-wrapper {
+    max-width: 700px;
+  }
+
+  .full-project__preview {
+    height: 400px;
   }
 }
-
 @media only screen and (min-width: 1024px) {
   /*************************
            MAIN
@@ -685,7 +696,6 @@ footer {
     -moz-transition: all .2s ease-out;
     -o-transition: all .2s ease-out;
     transition: all .2s ease-out;
-
   }
 
   .reg-or-login__reg:hover,
@@ -809,24 +819,58 @@ footer {
   /************************
         PROJECT-PAGE
   *************************/
-  .full-project-container{
-    padding: 0 40px;
+  .full-project-container {
+    padding: 20px 40px 0 40px;
   }
 
-  .full-project__name{
+  .full-project-wrapper {
+    position: relative;
+    max-width: 1300px;
+  }
+
+  /*clearFix*/
+  .full-project-wrapper:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .full-project__preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    border-radius: 5px 0 0 5px;
+  }
+
+  .preview__project-status {
+    position: absolute;
+    left: 15px;
+    top: 15px;
+  }
+
+  .full-project__info {
+    float: right;
+    width: 50%;
+    margin-left: 50%;
+    border-radius: 0 5px 5px 0;
+  }
+
+  .full-project__name {
     font-size: 2.2em;
   }
 
-  .info__links>a:hover{
+  .info__links > a:hover {
     color: #fff;
     background-color: #1e88e5;
   }
 
-  .full-project-issues{
+  .full-project-issues {
     text-align: left;
   }
+
   .project-issues__issue {
     margin: 15px 15px 15px 0;
   }
-
 }

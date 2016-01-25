@@ -1,9 +1,12 @@
 'use strict';
 
+/* Directives */
+
 angular.module('LodSite.directives', [])
-  .directive('pageHeader',function(){
+  //header and footer directives
+  .directive('pageHeader', function () {
     return {
-      restrict : 'E',
+      restrict: 'E',
       scope: {
         isblack: '='
       },
@@ -11,8 +14,7 @@ angular.module('LodSite.directives', [])
       controller: 'HeaderController'
     }
   })
-
-  .directive('pageFooter',function(){
+  .directive('pageFooter', function () {
     return {
       restrict: 'E',
       scope: true,
@@ -21,45 +23,44 @@ angular.module('LodSite.directives', [])
     }
   })
 
-  .directive('randomDevelopers',function(){
-    return{
-      restrict : 'E',
+  //developers directives
+  .directive('randomDevelopers', function () {
+    return {
+      restrict: 'E',
       scope: true,
       templateUrl: templateUrl('directives', 'random-developers'),
       controller: 'RandomDevelopersController'
     }
   })
-
-  .directive('fullDevelopers',function(){
-    return{
-      restrict : 'E',
+  .directive('fullDevelopers', function () {
+    return {
+      restrict: 'E',
       scope: true,
       templateUrl: templateUrl('directives', 'full-developers'),
       controller: 'FullDevelopersController'
     }
   })
 
-  .directive('randomProjects',function(){
-    return{
-      restrict : 'E',
+  //projects directives
+  .directive('randomProjects', function () {
+    return {
+      restrict: 'E',
       scope: true,
       templateUrl: templateUrl('directives', 'random-projects'),
       controller: 'RandomProjectsController'
     }
   })
-
-  .directive('fullProjects',function(){
-    return{
-      restrict : 'E',
+  .directive('fullProjects', function () {
+    return {
+      restrict: 'E',
       scope: true,
       templateUrl: templateUrl('directives', 'full-projects'),
       controller: 'FullProjectsController'
     }
   })
-
-  .directive('pageProject',function(){
-    return{
-      restrict : 'E',
+  .directive('pageProject', function () {
+    return {
+      restrict: 'E',
       scope: true,
       templateUrl: templateUrl('directives', 'page-project'),
       controller: 'ProjectCtrl'

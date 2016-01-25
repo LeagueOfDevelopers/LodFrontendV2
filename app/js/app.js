@@ -1,15 +1,5 @@
 'use strict';
 
-function templateUrl(module, name) {
-  return 'app/templates/' + module + '/' + name + '.html';
-}
-
-function setPaddingBottom() {
-  $('.content').css('padding-bottom', $('footer').innerHeight());
-}
-setTimeout(setPaddingBottom, 500);
-$(window).resize(setPaddingBottom);
-
 angular.module('LodSite', [
     'ng',
     'ngRoute',
@@ -65,11 +55,20 @@ angular.module('LodSite', [
           templateUrl: templateUrl('projects', 'developers-item')
         });
 
-       //.state('order', {
-       //url: '/order',
-       //templateUrl: templateUrl('index', 'index'),
-       //controller: 'OrderCtrl'
-       //})
+      //.state('order', {
+      //url: '/order',
+      //templateUrl: templateUrl('index', 'index'),
+      //controller: 'OrderCtrl'
+      //})
     }
   ]);
 
+// accessory functions
+function templateUrl(module, name) {
+  return 'app/templates/' + module + '/' + name + '.html';
+}
+function setPaddingBottom() {
+  $('.content').css('padding-bottom', $('footer').innerHeight());
+}
+setTimeout(setPaddingBottom, 500);
+$(window).resize(setPaddingBottom);

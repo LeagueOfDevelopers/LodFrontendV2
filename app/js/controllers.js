@@ -6,8 +6,8 @@ angular.module('LodSite.controllers', [])
   //main controllers
   .controller('PageCtrl', ['$scope', function ($scope) {
     var defaultTitle = 'Лига Разработчиков НИТУ МИСиС';
-    $scope.$on('change title', function (e, args) {
-      $scope.title = args.titles !== undefined && args.title.length ? args.title : defaultTitle;
+    $scope.$on('change_title', function (e, args) {
+      $scope.title = args.title !== undefined && args.title.length ? args.title : defaultTitle;
     });
   }])
   .controller('AppCtrl', ['$scope', function ($scope) {
@@ -43,6 +43,9 @@ angular.module('LodSite.controllers', [])
   .controller('FullDevelopersController', ['$scope', '$http', function ($scope, $http) {
     $http.get('http://api.lod-misis.ru/developers').success(function (data) {
       $scope.fullDevelopers = data;
+      $scope.$emit('change_title', {
+        title: 'Разработчики - Лига Разработчиков НИТУ МИСиС'
+      });
     });
   }])
 
@@ -57,6 +60,9 @@ angular.module('LodSite.controllers', [])
       $scope.fullProjects = data;
     });
     $scope.$emit('toggle black', {isblack: true});
+    $scope.$emit('change_title', {
+      title: 'Проекты - Лига Разработчиков НИТУ МИСиС'
+    });
   }])
   .controller('ProjectCtrl', ['$scope', '$http', '$state', function ($scope, $http, $state) {
     var projectId = $state.params.id;
@@ -64,6 +70,11 @@ angular.module('LodSite.controllers', [])
       $scope.project = data;
       $scope.projectTypes = $scope.project.ProjectType;
       $scope.projectIssues = $scope.project.Issues;
-    })
+
+      $scope.$emit('change_title', {
+        title: $scope.project.Name + ' - Лига Разработчиков НИТУ МИСиС'
+      });
+    });
+    $scope.$emit('toggle black', {isblack: true});
   }])
 ;

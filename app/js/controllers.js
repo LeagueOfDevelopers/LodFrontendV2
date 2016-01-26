@@ -43,9 +43,10 @@ angular.module('LodSite.controllers', [])
   .controller('FullDevelopersCtrl', ['$scope', '$http', function ($scope, $http) {
     $http.get('http://api.lod-misis.ru/developers').success(function (data) {
       $scope.fullDevelopers = data;
-      $scope.$emit('change_title', {
-        title: 'Разработчики - Лига Разработчиков НИТУ МИСиС'
-      });
+    });
+    $scope.$emit('toggle black', {isblack: true});
+    $scope.$emit('change_title', {
+      title: 'Разработчики - Лига Разработчиков НИТУ МИСиС'
     });
   }])
 

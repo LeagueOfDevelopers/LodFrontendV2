@@ -47,8 +47,7 @@ angular.module('LodSite', [
         })
         .state('developers.index', {
           url: '',
-          templateUrl: templateUrl('index', 'developers-index'),
-          controller: 'DevelopersCtrl'
+          templateUrl: templateUrl('index', 'developers-index')
         })
         .state('developers.item', {
           url: '/:id',

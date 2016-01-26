@@ -16,6 +16,10 @@ time, mark, audio, video {
 /************************
           MAIN
 *************************/
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none;
+}
+
 body {
   font-size: 1em;
   font-family: 'PT Sans', sans-serif;

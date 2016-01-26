@@ -11,7 +11,7 @@ angular.module('LodSite.directives', [])
         isblack: '='
       },
       templateUrl: templateUrl('directives', 'page-header'),
-      controller: 'HeaderController'
+      controller: 'HeaderCtrl'
     }
   })
   .directive('pageFooter', function () {
@@ -19,7 +19,7 @@ angular.module('LodSite.directives', [])
       restrict: 'E',
       scope: true,
       templateUrl: templateUrl('directives', 'page-footer'),
-      controller: 'FooterController'
+      controller: 'FooterCtrl'
     }
   })
 
@@ -29,7 +29,7 @@ angular.module('LodSite.directives', [])
       restrict: 'E',
       scope: true,
       templateUrl: templateUrl('directives', 'random-developers'),
-      controller: 'RandomDevelopersController'
+      controller: 'RandomDevelopersCtrl'
     }
   })
   .directive('fullDevelopers', function () {
@@ -37,7 +37,7 @@ angular.module('LodSite.directives', [])
       restrict: 'E',
       scope: true,
       templateUrl: templateUrl('directives', 'full-developers'),
-      controller: 'FullDevelopersController'
+      controller: 'FullDevelopersCtrl'
     }
   })
 
@@ -47,7 +47,7 @@ angular.module('LodSite.directives', [])
       restrict: 'E',
       scope: true,
       templateUrl: templateUrl('directives', 'random-projects'),
-      controller: 'RandomProjectsController'
+      controller: 'RandomProjectsCtrl'
     }
   })
   .directive('fullProjects', function () {
@@ -55,7 +55,7 @@ angular.module('LodSite.directives', [])
       restrict: 'E',
       scope: true,
       templateUrl: templateUrl('directives', 'full-projects'),
-      controller: 'FullProjectsController'
+      controller: 'FullProjectsCtrl'
     }
   })
   .directive('pageProject', function () {

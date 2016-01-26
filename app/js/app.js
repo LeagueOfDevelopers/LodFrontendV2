@@ -4,13 +4,13 @@ angular.module('LodSite', [
     'ng',
     'ngRoute',
     'ui.router',
+    //'ymaps',
 
     'LodSite.directives',
     'LodSite.controllers'
   ])
   .config(['$locationProvider', '$stateProvider', '$urlRouterProvider',
     function ($locationProvider, $stateProvider, $urlRouterProvider) {
-
       $locationProvider.hashPrefix('!');
       $locationProvider.html5Mode(true);
 
@@ -57,7 +57,8 @@ angular.module('LodSite', [
 
         .state('about', {
           url: '/about',
-          templateUrl: templateUrl('about', 'about-index')
+          templateUrl: templateUrl('about', 'about-index'),
+          controller: 'AboutCtrl'
         })
         .state('contact', {
           url: '/contact',
@@ -67,7 +68,7 @@ angular.module('LodSite', [
     }
   ]);
 
-// accessory functions
+// other functions
 function templateUrl(module, name) {
   return 'app/templates/' + module + '/' + name + '.html';
 }

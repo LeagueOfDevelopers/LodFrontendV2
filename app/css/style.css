@@ -537,13 +537,16 @@ footer {
   padding: 5px 10px;
   margin: 10px 5px 0 0;
 }
-.info__developers>a {
+
+.info__developers > a {
   color: #1e88e5;
 }
-.info__developers>a:hover {
+
+.info__developers > a:hover {
   text-decoration: underline;
 }
-.info__links>a {
+
+.info__links > a {
   display: inline-block;
   color: #1e88e5;
   padding: 3px 5px;
@@ -571,6 +574,90 @@ footer {
   background: #fff;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, .15);
   margin: 5px;
+}
+
+/*************************
+        ABOUT
+*************************/
+
+/*about*/
+-->
+/*heading*/
+
+.about-logo {
+  width: 100%;
+  height: 320px;
+  background: url("../imgs/logo-ver1-black.svg") no-repeat center;
+  background-size: contain;
+  margin-bottom: -45px;
+}
+
+/*about*/
+-->
+/*content*/
+
+.about-wrap-content {
+  margin: 5% auto 230px;
+}
+
+.about-points {
+  margin: 0 3% 5% 3%;
+}
+
+.about-numbers {
+  position: relative;
+  margin: 0 auto -50px;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 8px solid white;
+  font-size: 55px;
+  font-weight: 900;
+  text-align: center;
+  z-index: 1;
+}
+
+.left-number {
+  background-color: #ffd212;
+}
+
+.right-number {
+  background-color: #0072bc;
+}
+
+.about-numbers span {
+  vertical-align: middle;
+  color: white;
+}
+
+.about-text {
+  padding: 60px 5% 5%;
+  background-color: white;
+  text-align: left;
+}
+
+.about-text .heading {
+  text-align: center;
+  margin-bottom: 10px;
+  font-family: 'Noto Serif', serif;
+  font-size: 1.5em;
+  font-weight: 900;
+  color: #202d3a;
+}
+
+.about-text a {
+  font-weight: 900;
+  color: #0072bc;
+}
+
+.about-text a:hover {
+  color: #202d3a;
+  text-decoration: underline;
+}
+
+.about-yandex-map {
+  width: 95%;
+  margin: 8% auto 0;
 }
 
 @media only screen and (min-width: 640px) {
@@ -623,7 +710,31 @@ footer {
   .full-project__preview {
     height: 400px;
   }
+
+  /*************************
+            ABOUT
+  *************************/
+  .about-logo {
+    max-width: 90%;
+    background: url("../imgs/logo-ver2-black.png") no-repeat center;
+    background-size: contain;
+    margin: auto;
+  }
+
+  .about-numbers {
+    margin-bottom: -80px;
+    width: 150px;
+    height: 150px;
+    border-width: 10px;
+    font-size: 93px;
+  }
+
+  .about-text {
+    padding-top: 85px;
+  }
+
 }
+
 @media only screen and (min-width: 1024px) {
   /*************************
            MAIN
@@ -875,4 +986,157 @@ footer {
   .project-issues__issue {
     margin: 15px 15px 15px 0;
   }
+
+  /*************************
+            ABOUT
+   *************************/
+  /*about*/
+--> /*heading*/
+  .about-wrapper {
+    width: 100%;
+  }
+
+  .about-heading {
+    padding: 0 30px;
+    box-sizing: border-box;
+  }
+
+  .about-logo {
+
+    margin: 3% auto 5%;
+  }
+
+  /*about*/
+--> /*content*/
+  .about-wrap-content {
+    width: 100%;
+  }
+
+  .about-content {
+    width: 1000px;
+    margin: 0 auto;
+  }
+
+  .about-points {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 2%;
+  }
+
+  .left-text {
+    order: 0;
+  }
+
+  .right-number {
+    order: 1;
+  }
+
+  .about-numbers {
+    display: inline-block;
+    margin: 0;
+    width: 200px;
+    height: 200px;
+    font-size: 127px;
+  }
+
+  .about-text {
+    display: inline-block;
+    padding: 20px;
+    max-width: 65%;
+    min-height: 160px;
+  }
+
+  .right-text::before {
+    content: '';
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 10px;
+    top: 0;
+    left: 105px;
+    background-color: white;
+  }
+
+  .first-text::before {
+    content: '';
+    display: block;
+    position: absolute;
+    height: 50%;
+    width: 10px;
+    top: 50%;
+    left: 105px;
+    background-color: white;
+  }
+
+  .left-text::after {
+    content: '';
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 10px;
+    top: 0;
+    right: 105px;
+    background-color: white;
+  }
+
+  .last-text::before {
+    content: '';
+    display: block;
+    position: absolute;
+    height: 50%;
+    width: 10px;
+    top: 0;
+    right: 105px;
+    background-color: white;
+  }
+
+  .about-text .heading {
+    text-align: left;
+  }
+
+  /*about*/
+--> /*lines*/
+  .lines {
+    width: 100%;
+  }
+
+  .block-1, .block-2 {
+    width: 740px;
+    height: 30px;
+    margin: 0 auto;
+  }
+
+  .block-1 {
+    border-bottom: 10px solid white;
+  }
+
+  .line-1-2.block-1, .line-3-4.block-1 {
+    border-left: 10px solid white;
+  }
+
+  .line-1-2.block-2, .line-3-4.block-2 {
+    border-right: 10px solid white;
+  }
+
+  .line-2-3.block-1, .line-4-5.block-1 {
+    border-right: 10px solid white;
+  }
+
+  .line-2-3.block-2, .line-4-5.block-2 {
+    border-left: 10px solid white;
+  }
+
+  /* line-2-3 */
+  .line-2-3.block-1 {
+    height: 60px;
+    margin-top: -30px;
+  }
+
+  /* line-2-3 */
+  .line-4-5.block-1 {
+    height: 50px;
+  }
+
 }

@@ -78,6 +78,24 @@ angular.module('LodSite.controllers', [])
     $scope.$emit('toggle black', {isblack: true});
   }])
 
+  .controller('LoginCtrl', ['$scope', function ($scope) {
+
+    $scope.$emit('toggle black', {isblack: true});
+
+    $scope.$emit('change_title', {
+      title: 'Войти - Лига Разработчиков НИТУ МИСиС'
+    });
+
+  }])
+  .controller('SignupCtrl', ['$scope', function ($scope) {
+
+    $scope.$emit('toggle black', {isblack: true});
+
+    $scope.$emit('change_title', {
+      title: 'Стать разработчиком - Лига Разработчиков НИТУ МИСиС'
+    });
+
+  }])
   .controller('AboutCtrl', ['$scope', function ($scope) {
 
     $scope.$emit('toggle black', {isblack: true});

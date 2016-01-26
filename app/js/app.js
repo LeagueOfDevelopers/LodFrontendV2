@@ -55,6 +55,16 @@ angular.module('LodSite', [
           templateUrl: templateUrl('projects', 'developers-item')
         })
 
+        .state('login', {
+          url: '/login',
+          templateUrl: templateUrl('login', 'login-index'),
+          controller: 'LoginCtrl'
+        })
+        .state('signup', {
+          url: '/signup',
+          templateUrl: templateUrl('signup', 'signup-index'),
+          controller: 'SignupCtrl'
+        })
         .state('order', {
           url: '/order',
           templateUrl: templateUrl('order', 'order-index'),

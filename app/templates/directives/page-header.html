@@ -1,29 +1,29 @@
 <header>
   <a href="index.html"><div class="header__site-logo"></div></a>
   <span class="header__reg-or-login">
-    <a class="reg-or-login__reg" href="signup.html">Стать разработчиком</a>
-    или <a class="reg-or-login__login" href="login.html">Войти</a>
+    <a class="reg-or-login__reg" ui-sref="signup">Стать разработчиком</a>
+    или <a class="reg-or-login__login" ui-sref="login">Войти</a>
   </span>
   <div class="header__nav-toggle" ng-click="activeToggle()"
        ng-class="{'header__nav-toggle--active': opened}">
     <div class="nav-toggle__burger"></div>
   </div>
   <nav class="header__nav-full">
-    <a class="nav-full__item" href="order.html">Заказать</a>
+    <a class="nav-full__item" ui-sref="order">Заказать</a>
     <a class="nav-full__item" ui-sref="projects.index">Проекты</a>
-    <a class="nav-full__item" href="developers.html">Разработчики</a>
+    <a class="nav-full__item" ui-sref="developers.index">Разработчики</a>
     <a class="nav-full__item" href="">Блог</a>
     <a class="nav-full__item" ui-sref="about">О нас</a>
-    <a class="nav-full__item" href="contact.html">Связаться</a>
+    <a class="nav-full__item" ui-sref="contact">Связаться</a>
   </nav>
 </header>
 <nav class="nav-mobile" ng-show="opened">
-  <a class="nav-mobile__item" href="login.html">Войти</a>
-  <a class="nav-mobile__item" href="signup.html">Стать разработчиком</a>
-  <a class="nav-mobile__item" href="order.html">Сделать заказ</a>
+  <a class="nav-mobile__item" ui-sref="login">Войти</a>
+  <a class="nav-mobile__item" ui-sref="signup">Стать разработчиком</a>
+  <a class="nav-mobile__item" ui-sref="order">Сделать заказ</a>
   <a class="nav-mobile__item" ui-sref="projects.index">Наши проекты</a>
-  <a class="nav-mobile__item" href="developers.html">Разработчики</a>
+  <a class="nav-mobile__item" ui-sref="developers.index">Разработчики</a>
   <a class="nav-mobile__item" href="">Блог</a>
-  <a class="nav-mobile__item" href="about.html">О нас</a>
-  <a class="nav-mobile__item" href="contact.html">Связаться</a>
+  <a class="nav-mobile__item" ui-sref="about">О нас</a>
+  <a class="nav-mobile__item" ui-sref="contact">Связаться</a>
 </nav>

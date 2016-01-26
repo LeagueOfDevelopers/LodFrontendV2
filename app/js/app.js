@@ -55,6 +55,11 @@ angular.module('LodSite', [
           templateUrl: templateUrl('projects', 'developers-item')
         })
 
+        .state('order', {
+          url: '/order',
+          templateUrl: templateUrl('order', 'order-index'),
+          controller: 'OrderCtrl'
+        })
         .state('about', {
           url: '/about',
           templateUrl: templateUrl('about', 'about-index'),
@@ -62,7 +67,8 @@ angular.module('LodSite', [
         })
         .state('contact', {
           url: '/contact',
-          templateUrl: templateUrl('contact', 'contact-index')
+          templateUrl: templateUrl('contact', 'contact-index'),
+          controller: 'ContactCtrl'
         })
 
     }

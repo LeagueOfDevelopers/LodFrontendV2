@@ -77,12 +77,31 @@ angular.module('LodSite.controllers', [])
     });
     $scope.$emit('toggle black', {isblack: true});
   }])
+
   .controller('AboutCtrl', ['$scope', function ($scope) {
 
     $scope.$emit('toggle black', {isblack: true});
 
     $scope.$emit('change_title', {
       title: 'О нас - Лига Разработчиков НИТУ МИСиС'
+    });
+
+  }])
+  .controller('OrderCtrl', ['$scope', function ($scope) {
+
+    $scope.$emit('toggle black', {isblack: true});
+
+    $scope.$emit('change_title', {
+      title: 'Заказать - Лига Разработчиков НИТУ МИСиС'
+    });
+
+  }])
+  .controller('ContactCtrl', ['$scope', function ($scope) {
+
+    $scope.$emit('toggle black', {isblack: true});
+
+    $scope.$emit('change_title', {
+      title: 'Cвязаться - Лига Разработчиков НИТУ МИСиС'
     });
 
   }])

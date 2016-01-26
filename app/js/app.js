@@ -4,7 +4,6 @@ angular.module('LodSite', [
     'ng',
     'ngRoute',
     'ui.router',
-    //'ymaps',
 
     'LodSite.directives',
     'LodSite.controllers'

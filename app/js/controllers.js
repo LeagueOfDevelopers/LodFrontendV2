@@ -124,16 +124,5 @@ angular.module('LodSite.controllers', [])
     });
 
   }])
-  //.controller('MapCtrl', ['$scope', 'ymaps', function ($scope) {
-  //  $scope.markers = [
-  //    {coordinates:[55.727025, 37.607127], title: 'Вход №2'},
-  //    {coordinates:[55.726569, 37.606473], title: 'Вход №1'},
-  //    {coordinates:[55.726393, 37.606784], title: '"Лига Разработчиков"(5й этаж,Г-588)'}
-  //  ];
-  //  $scope.map = {
-  //    center: [55.726996, 37.607213],
-  //    zoom: 12
-  //  };
-  //}])
 
 ;

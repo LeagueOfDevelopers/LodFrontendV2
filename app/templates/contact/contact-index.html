@@ -1,2 +1,12 @@
-<!-- здесь шаблон, он попадёт внутрь <ui-view></ui-view>
-на странице index.html, что находится в корне главной папки -->
+<div class="contact-content">
+    <div class="contact-heading">Связаться с нами</div>
+    <form class="contact-form">
+        <label><input type="text" name="name" autocomplete="on" placeholder="Ваше имя" required
+                      autofocus="autofocus"></label>
+        <label><input type="email" name="e-mail" autocomplete="on" placeholder="Ваше e-mail адрес"
+                      required></label>
+        <label><input type="text" name="topic" placeholder="Тема сообщения" required></label>
+        <label><textarea name="message" placeholder="Текст сообщения" required></textarea></label>
+        <label class="submit"><input type="submit" value=""></label>
+    </form>
+</div>

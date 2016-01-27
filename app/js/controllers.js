@@ -79,9 +79,13 @@ angular.module('LodSite.controllers', [])
     var projectId = $state.params.id;
     $http.get('http://api.lod-misis.ru/projects/' + projectId).success(function (data) {
       $scope.project = data;
+      console.log(data);
+      console.log(data.ProjectMemberships.length);
       $scope.projectTypes = $scope.project.ProjectType;
       $scope.projectIssues = $scope.project.Issues;
-
+      if($scope.project.ProjectMemberships.length === 0 ){
+        $scope.replacementText = "В данный момент на проекте нет разработчиков.";
+      }
       $scope.$emit('change_title', {
         title: $scope.project.Name + ' - Лига Разработчиков НИТУ МИСиС'
       });

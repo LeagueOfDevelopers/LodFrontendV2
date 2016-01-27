@@ -29,6 +29,7 @@
         <a ng-href="{{'/developers/'+developer.DeveloperId}}" ng-bind="developer.FirstName + ' ' + developer.LastName"></a>
         <span ng-bind=" '(' + developer.Role + '),' "></span>
       </span>
+      <div class="info__if-no-developers" style="color:#a4a4a4" ng-bind="replacementText"></div>
       <div class="info__subheading">Уровень доступа:</div>
       <div class="info__access" ng-switch="project.AccessLevel">
         <span ng-switch-when="0">Закрытый</span>

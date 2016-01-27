@@ -41,7 +41,7 @@ angular.module('LodSite.controllers', [])
     });
   }])
   .controller('FullDevelopersCtrl', ['$scope', '$http', function ($scope, $http) {
-    $http.get('http://api.lod-misis.ru/developers/random/6').success(function (data) {
+    $http.get('http://api.lod-misis.ru/developers').success(function (data) {
       $scope.fullDevelopers = data;
     });
     $scope.$emit('toggle black', {isblack: true});
@@ -54,7 +54,7 @@ angular.module('LodSite.controllers', [])
     $http.get('http://api.lod-misis.ru/developers/' + developerId).success(function (data) {
       $scope.developer = data;
       $scope.$emit('change_title', {
-        title: 'Разработчик' + ' - Лига Разработчиков НИТУ МИСиС'
+        title: $scope.developer.FirstName+' '+$scope.developer.LastName+' - Лига Разработчиков НИТУ МИСиС'
       });
     });
     $scope.$emit('toggle black', {isblack: true});

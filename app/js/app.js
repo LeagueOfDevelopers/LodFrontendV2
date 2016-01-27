@@ -29,28 +29,33 @@ angular.module('LodSite', [
           template: '<ui-view/>',
           abstract: true
         })
+
         .state('projects.index', {
           url: '',
-          templateUrl: templateUrl('projects', 'projects-index')
+          templateUrl: templateUrl('projects', 'projects-index'),
+          controller: 'FullProjectsCtrl'
         })
         .state('projects.item', {
           url: '/:id',
-          templateUrl: templateUrl('projects', 'projects-item')
+          templateUrl: templateUrl('projects', 'projects-item'),
+          controller: 'ProjectCtrl'
         })
 
         //developers
         .state('developers', {
           url: '/developers',
-          templateUrl: '<ui-view/>',
+          template: '<ui-view/>',
           abstract: true
         })
         .state('developers.index', {
           url: '',
-          templateUrl: templateUrl('index', 'developers-index')
+          templateUrl: templateUrl('developers', 'developers-index'),
+          controller: 'FullDevelopersCtrl'
         })
         .state('developers.item', {
           url: '/:id',
-          templateUrl: templateUrl('projects', 'developers-item')
+          templateUrl: templateUrl('projects', 'developers-item'),
+          controller: 'FullDevelopersCtrl'
         })
 
         .state('login', {
@@ -91,3 +96,7 @@ function setPaddingBottom() {
 }
 setTimeout(setPaddingBottom, 500);
 $(window).resize(setPaddingBottom);
+
+  $( '.categories__item' ).click(function() {
+    $( this ).toggleClass('categories__item--activated');
+  });

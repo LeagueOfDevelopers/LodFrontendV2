@@ -443,6 +443,11 @@ header {
   margin: 15px auto 30px auto;
 }
 
+.developers-section__see-more-button {
+  display: block;
+  margin: 40px auto;
+}
+
 /************************
          FOOTER
 *************************/

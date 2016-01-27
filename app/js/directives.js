@@ -32,14 +32,6 @@ angular.module('LodSite.directives', [])
       controller: 'RandomDevelopersCtrl'
     }
   })
-  .directive('fullDevelopers', function () {
-    return {
-      restrict: 'E',
-      scope: true,
-      templateUrl: templateUrl('directives', 'full-developers'),
-      controller: 'FullDevelopersCtrl'
-    }
-  })
 
   //projects directives
   .directive('randomProjects', function () {
@@ -48,21 +40,5 @@ angular.module('LodSite.directives', [])
       scope: true,
       templateUrl: templateUrl('directives', 'random-projects'),
       controller: 'RandomProjectsCtrl'
-    }
-  })
-  .directive('fullProjects', function () {
-    return {
-      restrict: 'E',
-      scope: true,
-      templateUrl: templateUrl('directives', 'full-projects'),
-      controller: 'FullProjectsCtrl'
-    }
-  })
-  .directive('pageProject', function () {
-    return {
-      restrict: 'E',
-      scope: true,
-      templateUrl: templateUrl('directives', 'page-project'),
-      controller: 'ProjectCtrl'
     }
   });

@@ -10,7 +10,23 @@
   </div>
   <div class="dividing-line"></div>
   <div class="projects-section-container">
-    <full-projects></full-projects>
+    <a ng-repeat="fullProject in fullProjects" class="projects-section__link-to-project"
+       ui-sref="projects.item({id: fullProject.ProjectId})">
+      <div class="projects-section__project">
+        <div style="background: url({{fullProject.PhotoUri}}) no-repeat center;" class="project__background"></div>
+        <div class="project__info-container">
+          <div class="project__name" ng-bind="fullProject.Name"></div>
+          <div class="project__status">Cтатус:
+            <span ng-switch="fullProject.ProjectStatus">
+                  <span class="status__value" style="background: #795548;" ng-switch-when="0">Запланирован</span>
+                  <span class="status__value" style="background: #1e88e5;" ng-switch-when="1">В процессе</span>
+                  <span class="status__value" style="background: #607d8b;" ng-switch-when="2">Заморожен</span>
+                  <span class="status__value" style="background: #009688;" ng-switch-default="ng-switch-default">Завершен</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </a>
   </div>
   <a class="projects-section__see-more-button button-style" href="#">Показать больше</a>
 </section>

@@ -719,10 +719,10 @@ footer {
 }
 
 .contact-form input:required:valid, textarea:valid {
-    border: 1px solid #5cd053;
+    border: 1px solid #2fd08e;
 }
 
-.contact-form input:invalid, textarea:invalid {
+.contact-form .isValid:invalid {
     border: 1px solid red;
 }
 
@@ -828,7 +828,6 @@ footer {
     /*************************
             CONTACT
     *************************/
-
     .contact-content {
         margin-bottom: 70px;
     }
@@ -1308,9 +1307,14 @@ footer {
 
     .contact-form .submit:hover {
         background-color: #ffd200;
+        cursor: pointer;
         -moz-transition: all 0.5s ease;
         -webkit-transition: all 0.5s ease;
         -o-transition: all 0.5s ease;
         transition: all 0.5s ease;
+    }
+
+    .contact-form [type="submit"]:hover {
+        cursor: pointer;
     }
 }

@@ -138,5 +138,12 @@ angular.module('LodSite.controllers', [])
     });
 
   }])
+  .controller('ContactFormValidationCtrl', ['$scope', function ($scope) {
 
+    $scope.addClass = function(event) {
+      angular.element(event.target).addClass('isValid');
+    };
+      
+    }])
 ;
+

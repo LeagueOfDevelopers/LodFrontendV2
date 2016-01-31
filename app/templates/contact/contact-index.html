@@ -1,19 +1,11 @@
 <div class="contact-content">
     <div class="contact-heading">Связаться с нами</div>
-    <form class="contact-form">
-        <label><input type="text" name="name" autocomplete="on" placeholder="Ваше имя" required></label>
-        <label><input type="email" name="e-mail" autocomplete="on" placeholder="Ваше e-mail адрес"
+    <form class="contact-form" ng-controller="ContactFormValidationCtrl">
+        <label><input type="text" ng-focus="addClass($event)" name="name" autocomplete="on" placeholder="Ваше имя" required></label>
+        <label><input type="email" ng-focus="addClass($event)" name="e-mail" autocomplete="on" placeholder="Ваше e-mail адрес"
                       required></label>
-        <label><input type="text" name="topic" placeholder="Тема сообщения" required></label>
-        <label><textarea name="message" placeholder="Текст сообщения" required></textarea></label>
+        <label><input type="text" ng-focus="addClass($event)" name="topic" placeholder="Тема сообщения" required></label>
+        <label><textarea name="message" ng-focus="addClass($event)" placeholder="Текст сообщения" required></textarea></label>
         <label class="submit"><input type="submit" value=""></label>
     </form>
 </div>
-<script>
-    Array.from(document.querySelectorAll("[name = 'name'], [name = 'e-mail'], [name = 'topic'], [name = 'message']"))
-            .forEach(function (element) {
-                element.addEventListener('focus', function () {
-                    this.classList.add('isValid');
-                })
-            });
-</script>

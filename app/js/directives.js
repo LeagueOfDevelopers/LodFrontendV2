@@ -41,4 +41,21 @@ angular.module('LodSite.directives', [])
       templateUrl: templateUrl('directives', 'random-projects'),
       controller: 'RandomProjectsCtrl'
     }
+  })
+
+  .directive('yandexMap', function ($document) {
+    return {
+      restrict: 'EA',
+      scope: true,
+      templateUrl: templateUrl('directives', 'yandex-map'),
+      controller: ['$scope', function ($scope) {
+
+      }],
+      link: function (scope, element, attrs) {
+        var script = document.createElement('script');
+        script.src = 'https://api-maps.yandex.ru/services/constructor/1.0/js/?sid=4Yg6W87x5Mr-mGZLObfvYf8IoDh7KTsm&width=100%&height=450&lang=ru_RU&sourceType=constructor';
+        script.async = true;
+        element[0].querySelector('#map').appendChild(script);
+      }
+    };
   });

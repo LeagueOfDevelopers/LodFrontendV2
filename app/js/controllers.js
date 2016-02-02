@@ -99,29 +99,29 @@ angular.module('LodSite.controllers', [])
     }
     ];
     $scope.indexes = [];
-      $scope.activateFilter = function (categoryItem) {
-        categoryItem.status = !categoryItem.status;
-        for(var i = 0; i < $scope.categories.length; i++){
-          if(categoryItem.status == true){
-            $scope.indexes.push(categoryItem.index);
-          }else{
-            var elementPosition = $scope.indexes.indexOf(categoryItem.index);
-            if (elementPosition > -1) {
-              $scope.indexes.splice(elementPosition, 1);
-            }
+    $scope.activateFilter = function (categoryItem) {
+      categoryItem.status = !categoryItem.status;
+      for(var i = 0; i < $scope.categories.length; i++){
+        if(categoryItem.status == true){
+          $scope.indexes.push(categoryItem.index);
+        }else{
+          var elementPosition = $scope.indexes.indexOf(categoryItem.index);
+          if (elementPosition > -1) {
+            $scope.indexes.splice(elementPosition, 1);
           }
         }
-        var apiLink = '';
-        if($scope.indexes.length === 0){
-          apiLink = 'http://api.lod-misis.ru/projects';
-        }
-        else {
-          apiLink = 'http://api.lod-misis.ru/projects?categories=' + $scope.indexes.join();
-        }
-        $http.get(apiLink).success(function (data) {
-          $scope.fullProjects = data;
-        });
       }
+      var apiLink = '';
+      if($scope.indexes.length === 0){
+        apiLink = 'http://api.lod-misis.ru/projects';
+      }
+      else {
+        apiLink = 'http://api.lod-misis.ru/projects?categories=' + $scope.indexes.join();
+      }
+      $http.get(apiLink).success(function (data) {
+        $scope.fullProjects = data;
+      });
+    }
   }])
   .controller('ProjectCtrl', ['$scope', '$http', '$state', function ($scope, $http, $state) {
     var projectId = $state.params.id;

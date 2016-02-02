@@ -1180,10 +1180,23 @@ footer {
     }
 
     .about-points {
-        display: flex;
         position: relative;
+        
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+
+        -webkit-justify-content: space-between;
         justify-content: space-between;
+
+        -webkit-box-align: center;
+        -moz-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
         align-items: center;
+
         margin: 0 2%;
     }
 

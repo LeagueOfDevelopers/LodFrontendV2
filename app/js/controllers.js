@@ -129,7 +129,32 @@ angular.module('LodSite.controllers', [])
         });
 
     }])
-    .controller('ContactCtrl', ['$scope', function ($scope) {
+    .controller('ContactCtrl', ['$scope', '$http', function ($scope, $http) {
+        $scope.data = {};
+
+        $scope.Request = function (form) {
+            $http.post('http://api.lod-misis.ru/contact', $scope.data).success(function (data) {
+
+                var envelope = $("[type='submit']");
+                var tick = $('.tick');
+                var wrap_tick = $('.submit');
+
+                $("[name = 'name'], [name = 'email'], [name = 'topic'], [name = 'message']").removeClass('isValid');
+                $('.contact-form').trigger('reset');
+
+                envelope.css('display', 'none');
+                wrap_tick.css('background-color', '#2fd08e');
+                tick.addClass('success');
+
+                setTimeout(function () {
+                        envelope.css('display', 'inline-block');
+                        wrap_tick.css('background-color', '#f1f1f1');
+                        tick.removeClass('success');
+                    }
+                    , 4000);
+
+            });
+        };
 
         $scope.$emit('toggle black', {isblack: true});
 
@@ -139,7 +164,7 @@ angular.module('LodSite.controllers', [])
 
     }])
     .controller('ContactFormValidationCtrl', ['$scope', function ($scope) {
-        Array.from(document.querySelectorAll("[name = 'name'], [name = 'e-mail'], [name = 'topic'], [name = 'message']"))
+        Array.from($("[name = 'name'], [name = 'email'], [name = 'topic'], [name = 'message']"))
             .forEach(function (element) {
                 element.addEventListener('focus', function () {
                     if (this.value.length == 0) {
@@ -149,10 +174,6 @@ angular.module('LodSite.controllers', [])
                         this.className = 'isValid';
                     }
                 })
-            });
-
-        Array.from(document.querySelectorAll("[name = 'name'], [name = 'e-mail'], [name = 'topic'], [name = 'message']"))
-            .forEach(function (element) {
                 element.addEventListener('blur', function () {
                     if (this.value.length == 0) {
                         this.className = '';

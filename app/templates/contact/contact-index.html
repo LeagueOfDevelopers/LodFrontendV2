@@ -1,14 +1,16 @@
 <div class="contact-content">
     <div class="contact-heading">Связаться с нами</div>
-    <form class="contact-form" ng-controller="ContactFormValidationCtrl">
-        <label><input type="text" ng-keyup="addClass($event)" name="name" autocomplete="on" placeholder="Ваше имя"
+    <form class="contact-form" name="ContactForm" ng-controller="ContactFormValidationCtrl"
+          ng-submit="Request(ContactForm)">
+        <label><input type="text" ng-model="data.ClientName" name="name" autocomplete="on" placeholder="Ваше имя"
                       required></label>
-        <label><input type="email" ng-keyup="addClass($event)" name="e-mail" autocomplete="on"
+        <label><input type="email" ng-model="data.ClientEmail" name="email"
+                      pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$" autocomplete="on"
                       placeholder="Ваше e-mail адрес" required></label>
-        <label><input type="text" ng-keyup="addClass($event)" name="topic" placeholder="Тема сообщения"
+        <label><input type="text" ng-model="data.MessageTopic" name="topic" placeholder="Тема сообщения"
                       required></label>
-        <label><textarea name="message" ng-keyup="addClass($event)" placeholder="Текст сообщения"
+        <label><textarea name="message" ng-model="data.MessageBody" placeholder="Текст сообщения"
                          required></textarea></label>
-        <label class="submit"><input type="submit" value=""></label>
+        <label class="submit"><input type="submit" value=""><div class="tick"></div></label>
     </form>
 </div>

@@ -112,13 +112,13 @@ a {
          HEADER
 *************************/
 header {
-  box-sizing: border-box;
-  position: relative;
-  width: 100%;
-  height: 70px;
-  padding: 0 15px;
-  background: #151515;
-  z-index: 20;
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    height: 70px;
+    padding: 0 15px;
+    background: #151515;
+    z-index: 20;
 }
 
 .header__site-logo {
@@ -234,21 +234,21 @@ header {
 }
 
 .welcome-section:after {
-  background-image: -webkit-linear-gradient(top, rgba(0,0,0,0.55), transparent);
-  background-image: -moz-linear-gradient(top, rgba(0,0,0,0.55), transparent);
-  background-image: -o-linear-gradient(top, rgba(0,0,0,0.55), transparent);
-  background-image: linear-gradient(top, rgba(0,0,0,0.55), transparent);
-  
-  height: 210px;
+    background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.55), transparent);
+    background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.55), transparent);
+    background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.55), transparent);
+    background-image: linear-gradient(top, rgba(0, 0, 0, 0.55), transparent);
+
+    height: 210px;
 }
 
 .welcome-section:after {
-  content: '';
-  left: 0;
-  top: 0;
-  position: absolute;
-  width: 100%;
-  z-index: 1;
+    content: '';
+    left: 0;
+    top: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
 }
 
 .welcome-section-container {
@@ -761,14 +761,22 @@ footer {
     background-color: #f1f1f1;
 }
 
-.contact-form [type="submit"] {
+.success, .contact-form [type="submit"] {
     display: inline-block;
     position: relative;
     top: 14px;
     vertical-align: middle;
     height: 40px;
     width: 40px;
+}
+
+.contact-form [type="submit"] {
     background: url("../imgs/envelope.svg") no-repeat center;
+}
+
+.success {
+    background: url("../imgs/white_tick.svg") no-repeat center;
+    background-size: cover;
 }
 
 @media only screen and (min-width: 640px) {
@@ -876,9 +884,13 @@ footer {
 
     }
 
-    .contact-form [type="submit"] {
+    .success, .contact-form [type="submit"] {
         height: 45px;
         width: 45px;
+    }
+
+    .success {
+        top: 18px;
     }
 }
 
@@ -1318,10 +1330,17 @@ footer {
         width: 90px;
     }
 
-    .contact-form [type="submit"] {
-        top: -9px;
+    .success, .contact-form [type="submit"] {
         height: 50px;
         width: 50px;
+    }
+
+    .contact-form [type="submit"] {
+        top: -9px;
+    }
+
+    .success {
+        top: 20px;
     }
 
     .contact-form .submit:hover {

@@ -146,7 +146,7 @@ angular.module('LodSite.controllers', [])
                         this.className = '';
                     }
                     else {
-                        this.className = 'isValid';фывафвыа
+                        this.className = 'isValid';
                     }
                 })
             });

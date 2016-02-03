@@ -24,11 +24,23 @@ angular.module('LodSite.controllers', [])
   }])
 
   //header and footer controllers
-  .controller('HeaderCtrl', ['$scope', function ($scope) {
+  .controller('HeaderCtrl', ['$scope', 'ngDialog', function ($scope, ngDialog) {
     $scope.opened = false;
     $scope.activeToggle = function () {
       $scope.opened = !$scope.opened;
-    }
+    };
+
+    $scope.openLoginDialog = function () {
+      $scope.$dialog = ngDialog.open({
+        template: 'loginTemplate',
+        showClose: true,
+        closeByNavigation: true
+      });
+    };
+
+    $scope.closeDialog = function () {
+      ngDialog.close($scope.dialog);
+    };
   }])
   .controller('FooterCtrl', ['$scope', function ($scope) {
     $scope.currentDate = new Date();
@@ -211,5 +223,14 @@ angular.module('LodSite.controllers', [])
         })
       });
   }])
+  .controller('LoginFormCtrl', ['$scope', function ($scope) {
+    var date = new Date();
+    var hour = date.getHours();
+    $scope.timeOfDay = (hour > 4 && hour < 12) ? 'morning' :
+                       (hour >= 12 && hour <= 18) ? 'afternoon' :
+                       (hour > 18 && hour < 24) ? 'evening' :
+                       'night';
+    console.log($scope.timeOfDay);
+}])
 ;
 

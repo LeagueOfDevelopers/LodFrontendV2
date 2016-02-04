@@ -3,8 +3,8 @@
   <div class="dividing-line"></div>
   <div class="categories">
     <span ng-repeat="categoryItem in categories" ng-bind="categoryItem.category"
-          ng-click="activateFilter(categoryItem)"
-          ng-class="{'categories__item--activated':categoryItem.status}" class="categories__item"></span>
+          ng-click="toggleCategory(categoryItem)"
+          ng-class="{'categories__item--activated': categoryItem.status}" class="categories__item"></span>
   </div>
   <div class="dividing-line"></div>
   <div class="projects-section-container">

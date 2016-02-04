@@ -139,8 +139,6 @@ angular.module('LodSite.controllers', [])
     var projectId = $state.params.id;
     $http.get('http://api.lod-misis.ru/projects/' + projectId).success(function (data) {
       $scope.project = data;
-      console.log(data);
-      console.log(data.ProjectMemberships.length);
       $scope.projectTypes = $scope.project.ProjectType;
       $scope.projectIssues = $scope.project.Issues;
       if ($scope.project.ProjectMemberships.length === 0) {
@@ -230,7 +228,6 @@ angular.module('LodSite.controllers', [])
                        (hour >= 12 && hour <= 18) ? 'afternoon' :
                        (hour > 18 && hour < 24) ? 'evening' :
                        'night';
-    console.log($scope.timeOfDay);
 }])
 ;
 

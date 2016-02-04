@@ -380,6 +380,7 @@ header {
   display: inline-block;
   color: white;
   padding: 5px 10px;
+  margin-left: 5px;
   border-radius: 5px;
   font-weight: normal;
   background: #0288d1;

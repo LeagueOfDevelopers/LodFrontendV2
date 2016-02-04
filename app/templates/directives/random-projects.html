@@ -1,7 +1,7 @@
 <a ng-repeat="randomProject in randomProjects" class="projects-section__link-to-project"
    ng-href="projects/{{randomProject.ProjectId}}">
   <div class="projects-section__project">
-    <div style="background: url({{randomProject.PhotoUri}}) no-repeat center;" class="project__background"></div>
+    <div style="background: url({{randomProject.PhotoUri}}) no-repeat center; background-size: contain;" class="project__background"></div>
     <div class="project__info-container">
       <div class="project__name" ng-bind="randomProject.Name"></div>
     </div>

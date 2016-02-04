@@ -79,14 +79,12 @@ angular.module('LodSite.controllers', [])
     });
   }])
   .controller('FullProjectsCtrl', ['$scope', '$http', function ($scope, $http) {
-    $http.get('http://api.lod-misis.ru/projects').success(function (data) {
-      $scope.fullProjects = data;
-    });
-
-    $scope.$emit('toggle black', {isblack: true});
+    $scope.$emit('toggle black', { isblack: true });
     $scope.$emit('change_title', {
       title: 'Проекты - Лига Разработчиков НИТУ МИСиС'
     });
+
+    var projectsApiUrl = 'http://api.lod-misis.ru/projects';
 
     $scope.categories = [{
       category: 'Веб',
@@ -108,32 +106,31 @@ angular.module('LodSite.controllers', [])
       category: 'Прочее',
       status: false,
       index: 4
-    }
-    ];
-    $scope.indexes = [];
-    $scope.activateFilter = function (categoryItem) {
-      categoryItem.status = !categoryItem.status;
-      for(var i = 0; i < $scope.categories.length; i++){
-        if(categoryItem.status == true){
-          $scope.indexes.push(categoryItem.index);
-        }else{
-          var elementPosition = $scope.indexes.indexOf(categoryItem.index);
-          if (elementPosition > -1) {
-            $scope.indexes.splice(elementPosition, 1);
-          }
-        }
+    }];
+
+    $scope.toggleCategory = function (targetCategory) {
+      targetCategory.status = !targetCategory.status;
+      $scope.updateProjects();
+    };
+
+    $scope.updateProjects = function () {
+      var indexes = $scope.categories.filter(function (category) {
+        return category.status;
+      }).map(function (category) {
+        return category.index;
+      });
+      var requestParams = {};
+      if (indexes.length) {
+        angular.extend(requestParams, {
+          categories: indexes.join(',')
+        });
       }
-      var apiLink = '';
-      if($scope.indexes.length === 0){
-        apiLink = 'http://api.lod-misis.ru/projects';
-      }
-      else {
-        apiLink = 'http://api.lod-misis.ru/projects?categories=' + $scope.indexes.join();
-      }
-      $http.get(apiLink).success(function (data) {
+      $http.get(projectsApiUrl, { params: requestParams }).success(function (data) {
         $scope.fullProjects = data;
       });
-    }
+    };
+
+    $scope.updateProjects();
   }])
   .controller('ProjectCtrl', ['$scope', '$http', '$state', function ($scope, $http, $state) {
     var projectId = $state.params.id;

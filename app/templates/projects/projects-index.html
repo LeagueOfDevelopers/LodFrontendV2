@@ -2,11 +2,9 @@
   <h1 class="projects-section__headline headline">Проекты</h1>
   <div class="dividing-line"></div>
   <div class="categories">
-    <span class="categories__item categories__web">Веб</span>
-    <span class="categories__item categories__game">Игра</span>
-    <span class="categories__item categories__mobile">Мобильное</span>
-    <span class="categories__item categories__desktop">Десктопное</span>
-    <span class="categories__item categories__other">Прочее</span>
+    <span ng-repeat="categoryItem in categories" ng-bind="categoryItem.category"
+          ng-click="activateFilter(categoryItem)"
+          ng-class="{'categories__item--activated':categoryItem.status}" class="categories__item"></span>
   </div>
   <div class="dividing-line"></div>
   <div class="projects-section-container">

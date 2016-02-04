@@ -4,6 +4,7 @@ angular.module('LodSite', [
     'ng',
     'ngRoute',
     'ui.router',
+    'ngDialog',
 
     'LodSite.directives',
     'LodSite.controllers'
@@ -58,11 +59,6 @@ angular.module('LodSite', [
           controller: 'DeveloperCtrl'
         })
 
-        .state('login', {
-          url: '/login',
-          templateUrl: templateUrl('login', 'login-index'),
-          controller: 'LoginCtrl'
-        })
         .state('signup', {
           url: '/signup',
           templateUrl: templateUrl('signup', 'signup-index'),
@@ -96,7 +92,3 @@ function setPaddingBottom() {
 }
 setTimeout(setPaddingBottom, 500);
 $(window).resize(setPaddingBottom);
-
-  $( '.categories__item' ).click(function() {
-    $( this ).toggleClass('categories__item--activated');
-  });

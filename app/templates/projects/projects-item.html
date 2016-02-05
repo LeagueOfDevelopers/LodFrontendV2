@@ -2,7 +2,7 @@
   <h1 class="full-project__name" ng-bind="project.Name"></h1>
   <div class="full-project-wrapper">
     <div class="full-project__preview" style="background: #fff url({{project.LandingImageUri}})
-     no-repeat center; background-size: cover;">
+     no-repeat center; background-size: contain;">
     <span class="preview__project-status" ng-switch="project.ProjectStatus">
           <span class="status__value" style="background: #795548;" ng-switch-when="0">Запланирован</span>
           <span class="status__value" style="background: #1e88e5;" ng-switch-when="1">В процессе</span>

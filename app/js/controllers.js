@@ -113,10 +113,10 @@ angular.module('LodSite.controllers', [])
     $scope.indexes = [];
     $scope.activateFilter = function (categoryItem) {
       categoryItem.status = !categoryItem.status;
-      for(var i = 0; i < $scope.categories.length; i++){
-        if(categoryItem.status == true){
+      for (var i = 0; i < $scope.categories.length; i++) {
+        if (categoryItem.status == true) {
           $scope.indexes.push(categoryItem.index);
-        }else{
+        } else {
           var elementPosition = $scope.indexes.indexOf(categoryItem.index);
           if (elementPosition > -1) {
             $scope.indexes.splice(elementPosition, 1);
@@ -124,7 +124,7 @@ angular.module('LodSite.controllers', [])
         }
       }
       var apiLink = '';
-      if($scope.indexes.length === 0){
+      if ($scope.indexes.length === 0) {
         apiLink = 'http://api.lod-misis.ru/projects';
       }
       else {
@@ -151,23 +151,38 @@ angular.module('LodSite.controllers', [])
     $scope.$emit('toggle black', {isblack: true});
   }])
 
-  .controller('LoginCtrl', ['$scope', function ($scope) {
+  .controller('SignupCtrl', ['$scope', '$http', function ($scope, $http) {
+    $scope.isSuccess = '';
+    $scope.emptyNewDeveloper = {
+      "Email": "",
+      "FirstName": "",
+      "LastName": "",
+      "Password": "",
+      "VkProfileUri": "",
+      "PhoneNumber": "",
+      "StudyingProfile": "",
+      "InstituteName": "",
+      "Department": "",
+      "AccessionYear": ""
+    };
+    $scope.newDeveloper = angular.copy($scope.emptyNewDeveloper);
+    $scope.repeatPassword = "";
 
     $scope.$emit('toggle black', {isblack: true});
-
-    $scope.$emit('change_title', {
-      title: 'Войти - Лига Разработчиков НИТУ МИСиС'
-    });
-
-  }])
-  .controller('SignupCtrl', ['$scope', function ($scope) {
-
-    $scope.$emit('toggle black', {isblack: true});
-
     $scope.$emit('change_title', {
       title: 'Стать разработчиком - Лига Разработчиков НИТУ МИСиС'
     });
 
+    $scope.register = function () {
+      $http.post('http://api.lod-misis.ru/developers', $scope.newDeveloper).success(function () {
+          $scope.isSuccess = true;
+          $scope.newDeveloper = angular.copy($scope.emptyNewDeveloper);
+          $scope.repeatPassword = "";
+        })
+        .error(function () {
+          $scope.isSuccess = false;
+        });
+    };
   }])
   .controller('AboutCtrl', ['$scope', function ($scope) {
 
@@ -221,13 +236,24 @@ angular.module('LodSite.controllers', [])
         })
       });
   }])
-  .controller('LoginFormCtrl', ['$scope', function ($scope) {
+  .controller('LoginFormCtrl', ['$scope', '$http', function ($scope, $http) {
     var date = new Date();
     var hour = date.getHours();
-    $scope.timeOfDay = (hour > 4 && hour < 12) ? 'morning' :
-                       (hour >= 12 && hour <= 18) ? 'afternoon' :
-                       (hour > 18 && hour < 24) ? 'evening' :
-                       'night';
-}])
-;
+    $scope.noDeveloperData = false;
+    $scope.userLogin = {
+      'Email': '',
+      'Password': ''
+    };
 
+    $scope.timeOfDay = (hour > 4 && hour < 12) ? 'morning' :
+      (hour >= 12 && hour <= 18) ? 'afternoon' :
+        (hour > 18 && hour < 24) ? 'evening' :
+          'night';
+
+    $scope.login = function () {
+      $http.post('http://api.lod-misis.ru//developers/authorize', $scope.userLogin).error(function () {
+        $scope.noDeveloperData = true;
+      });
+    };
+  }])
+;

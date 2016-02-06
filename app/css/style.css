@@ -55,7 +55,7 @@ a {
   margin: 30px 0;
 
   font-family: 'Noto Serif', serif;
-  font-size: 1.8em;
+  font-size: 1.5em;
   font-weight: bold;
 
   color: #202d3a;
@@ -247,6 +247,7 @@ header {
 .welcome-section__headline {
   margin: 30px 0 10px 0;
   color: #ffd200;
+  font-size: 1.8em;
 }
 
 .welcome-section__paragraph {
@@ -402,7 +403,7 @@ header {
 .developers-section {
   box-sizing: border-box;
   width: 100%;
-  padding: 15px 0;
+  padding-bottom: 15px;
   text-align: center;
 }
 
@@ -458,8 +459,86 @@ header {
 }
 
 /************************
-         FOOTER
+     DEVELOPERS-PAGE
 *************************/
+.developers-page{
+  box-sizing: border-box;
+  width: 100%;
+  padding: 15px;
+}
+.developers-page__search {
+  position: relative;
+  display: block;
+  margin: 20px auto;
+}
+.developers-page__search input{
+  display: block;
+  box-sizing: border-box;
+  padding: 0 40px 0 10px;
+  border: none;
+  font-size: 1em;
+  font-family: 'PT Sans', sans-serif;
+  width: 100%;
+  min-height: 40px;
+  outline: none;
+}
+.search__icon {
+  height: 30px;
+  box-sizing: border-box;
+  width: 30px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 5px;
+  background: white url(/app/imgs/search-icon.svg) no-repeat center;
+  background-size: contain;
+}
+.developers__full-developer{
+  text-align: center;
+  background: white;
+  max-width: 400px;
+  margin: 0 auto 30px auto;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, .15);
+  cursor: pointer;
+}
+.full-developer__photo{
+  display: inline-block;
+  width: auto;
+  max-width: 90%;
+  height: auto;
+  margin: 5% 0 0 0;
+}
+.full-developer__info{
+  text-align: left;
+  padding: 5px 5% 5% 5%;
+}
+.full-developer__name{
+  font-family: 'Noto Serif', serif;
+  font-weight: bold;
+  font-size: 1.3em;
+  border-bottom: 1px solid #202d3a;
+  text-align: center;
+  padding-bottom: 5px;
+}
+.full-developer__role{
+  text-align: center;
+  padding: 5px 0 20px 0;
+  font-size: 1em;
+  font-weight: bold;
+  font-family: 'Noto Serif', serif;
+}
+
+.full-developer__experience, .full-developer__projects-count, .full-developer__vk {
+  margin: 5px 0;
+}
+
+.full-developer__vk{
+  color: #0288d1;
+  text-decoration: underline;
+}
+  /************************
+           FOOTER
+  *************************/
 footer {
   position: absolute;
   bottom: 0;
@@ -694,9 +773,9 @@ footer {
   width: 255px;
   top: 28px;
   margin: 10px auto 0;
-  padding: 10px;
+  padding: 10px 0;
   font-family: 'Noto Serif', serif;
-  font-size: 1.7em;
+  font-size: 1.5em;
   font-weight: 900;
   border: 2px solid #202d3a;
   background-color: #f1f1f1;
@@ -705,7 +784,7 @@ footer {
 .contact-form {
   border: 2px solid #202d3a;
   padding-top: 35px;
-  min-width: 300px;
+  min-width: 280px;
   max-width: 80%;
   margin: 0 auto;
 }
@@ -864,7 +943,6 @@ footer {
 }
 
 .sign-up__headline {
-  font-size: 1.5em;
   text-align: center;
 }
 
@@ -931,6 +1009,10 @@ footer {
   *************************/
   body {
     font-size: 1.1em;
+  }
+
+  .headline {
+    font-size: 1.8em;
   }
 
   /*************************

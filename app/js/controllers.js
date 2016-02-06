@@ -53,9 +53,20 @@ angular.module('LodSite.controllers', [])
     });
   }])
   .controller('FullDevelopersCtrl', ['$scope', '$http', function ($scope, $http) {
+    var dateOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    };
+
     $http.get('http://api.lod-misis.ru/developers').success(function (data) {
       $scope.fullDevelopers = data;
+      for (var i = 0; i < $scope.fullDevelopers.length; i++) {
+        var formattedDate = new Date(Date.parse($scope.fullDevelopers[i].RegistrationDate));
+        $scope.fullDevelopers[i].RegistrationDate = formattedDate.toLocaleString("ru", dateOptions);
+      }
     });
+
     $scope.$emit('toggle black', {isblack: true});
     $scope.$emit('change_title', {
       title: 'Разработчики - Лига Разработчиков НИТУ МИСиС'
@@ -79,7 +90,7 @@ angular.module('LodSite.controllers', [])
     });
   }])
   .controller('FullProjectsCtrl', ['$scope', '$http', function ($scope, $http) {
-    $scope.$emit('toggle black', { isblack: true });
+    $scope.$emit('toggle black', {isblack: true});
     $scope.$emit('change_title', {
       title: 'Проекты - Лига Разработчиков НИТУ МИСиС'
     });
@@ -125,7 +136,7 @@ angular.module('LodSite.controllers', [])
           categories: indexes.join(',')
         });
       }
-      $http.get(projectsApiUrl, { params: requestParams }).success(function (data) {
+      $http.get(projectsApiUrl, {params: requestParams}).success(function (data) {
         $scope.fullProjects = data;
       });
     };

@@ -2,7 +2,7 @@
   <a ui-sref="index"><div class="header__site-logo"></div></a>
   <span class="header__reg-or-login">
     <a class="reg-or-login__reg" ui-sref="signup">Стать разработчиком</a>
-    или <a class="reg-or-login__login" ui-sref="login">Войти</a>
+    или <a class="reg-or-login__login" ng-click="openLoginDialog($event)">Войти</a>
   </span>
   <div class="header__nav-toggle" ng-click="activeToggle()"
        ng-class="{'header__nav-toggle--active': opened}">
@@ -18,7 +18,7 @@
   </nav>
 </header>
 <nav class="nav-mobile" ng-show="opened">
-  <a class="nav-mobile__item" ui-sref="login">Войти</a>
+  <a class="nav-mobile__item" ng-click="openLoginDialog($event)">Войти</a>
   <a class="nav-mobile__item" ui-sref="signup">Стать разработчиком</a>
   <a class="nav-mobile__item" ui-sref="order">Сделать заказ</a>
   <a class="nav-mobile__item" ui-sref="projects.index">Наши проекты</a>
@@ -27,3 +27,25 @@
   <a class="nav-mobile__item" ui-sref="about">О нас</a>
   <a class="nav-mobile__item" ui-sref="contact">Связаться</a>
 </nav>
+<script type="text/ng-template" id="loginTemplate">
+  <div ng-controller="LoginFormCtrl" class="login-window">
+    <div class="login-window__form">
+      <div class="form__close-button" ng-click="closeThisDialog('.form__close-button')"></div>
+      <div ng-switch="timeOfDay">
+        <div class="form__greeting"  ng-switch-when="morning">Доброе утро!</div>
+        <div class="form__greeting"  ng-switch-when="afternoon">Добрый день!</div>
+        <div class="form__greeting"  ng-switch-when="evening">Добрый вечер!</div>
+        <div class="form__greeting"  ng-switch-default="night">Доброй ночи!</div>
+      </div>
+      <form class="form__container">
+        <input type="email" placeholder="E-mail" ng-model="userLogin.Email" required />
+        <input type="password" placeholder="Пароль" ng-model="userLogin.Password" required />
+        <button ng-click="login()">Войти</button>
+        <p ng-if="noDeveloperData" style="margin: 10px; color: #2980b9;"> Вы ввели неверный e-mail или пароль </p>
+        <div class="form__question">Не являетесь разработчиком?
+          <a class="form__become-dev" ui-sref="signup">Стать разработчиком</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</script>

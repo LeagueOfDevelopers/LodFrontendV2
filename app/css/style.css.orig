@@ -26,11 +26,14 @@ body {
   font-family: 'PT Sans', sans-serif;
   background-color: #f1f1f1;
   color: #202d3a;
+<<<<<<< HEAD
+=======
 }
 
 .backdrop {
   position: fixed;
   display: none;
+>>>>>>> origin/master
 }
 
 .wrapper {
@@ -52,10 +55,17 @@ a {
 .headline {
   display: block;
   text-align: center;
+<<<<<<< HEAD
+  margin: 30px 0;
+
+  font-family: 'Noto Serif', serif;
+  font-size: 1.8em;
+=======
   margin: 15px 0;
 
   font-family: 'Noto Serif', serif;
-a  font-size: 1.5em;
+  font-size: 1.5em;
+>>>>>>> origin/master
   font-weight: bold;
 
   color: #202d3a;
@@ -220,7 +230,10 @@ header {
   border-bottom: 1px solid #ccc;
   color: #202d3a;
   transition: background .2s;
+<<<<<<< HEAD
+=======
   cursor: pointer;
+>>>>>>> origin/master
 }
 
 .nav-mobile__item:hover {
@@ -231,6 +244,31 @@ header {
      WELCOME-SECTION
 *************************/
 .welcome-section {
+<<<<<<< HEAD
+  width: 100%;
+
+  background: url('../imgs/mobile-main-background.jpg') no-repeat center;
+  background-size: cover;
+
+  font-size: 1em;
+}
+
+.welcome-section:after {
+  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.55), transparent);
+  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.55), transparent);
+  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.55), transparent);
+  background-image: linear-gradient(top, rgba(0, 0, 0, 0.55), transparent);
+
+  height: 210px;
+}
+
+.welcome-section:after {
+  content: '';
+  left: 0;
+  top: 0;
+  position: absolute;
+=======
+>>>>>>> origin/master
   width: 100%;
   position: relative;
   background: url('../imgs/mobile-main-background.jpg') no-repeat center;
@@ -247,7 +285,10 @@ header {
 .welcome-section__headline {
   margin: 30px 0 10px 0;
   color: #ffd200;
+<<<<<<< HEAD
+=======
   font-size: 1.8em;
+>>>>>>> origin/master
 }
 
 .welcome-section__paragraph {
@@ -381,7 +422,10 @@ header {
   display: inline-block;
   color: white;
   padding: 5px 10px;
+<<<<<<< HEAD
+=======
   margin-left: 5px;
+>>>>>>> origin/master
   border-radius: 5px;
   font-weight: normal;
   background: #0288d1;
@@ -403,7 +447,11 @@ header {
 .developers-section {
   box-sizing: border-box;
   width: 100%;
+<<<<<<< HEAD
+  padding: 15px 0;
+=======
   padding-bottom: 15px;
+>>>>>>> origin/master
   text-align: center;
 }
 
@@ -456,6 +504,8 @@ header {
 .developers-section__see-more-button {
   display: block;
   margin: 40px auto;
+<<<<<<< HEAD
+=======
 }
 
 /************************
@@ -543,6 +593,7 @@ header {
 .full-developer__vk {
   color: #0288d1;
   text-decoration: underline;
+>>>>>>> origin/master
 }
 
 /************************
@@ -704,7 +755,11 @@ footer {
 /*content*/
 
 .about-wrap-content {
+<<<<<<< HEAD
+  margin: 5% auto 230px;
+=======
   margin: 5% auto 100px;
+>>>>>>> origin/master
 }
 
 .about-points {
@@ -771,16 +826,25 @@ footer {
      CONTACT & ORDER
 *************************/
 
+<<<<<<< HEAD
 .order-content, .contact-content {
+=======
+.contact-content {
+>>>>>>> origin/master
   text-align: center;
   margin-bottom: 60px;
 }
 
+<<<<<<< HEAD
 .order-heading, .contact-heading {
+=======
+.contact-heading {
+>>>>>>> origin/master
   display: block;
   position: relative;
   width: 255px;
   top: 28px;
+<<<<<<< HEAD
   margin: 10px auto;
   padding: 10px;
   font-family: 'Noto Serif', serif;
@@ -951,6 +1015,72 @@ footer {
 .order-accordion p {
   padding: 15px;
   text-align: left;
+=======
+  margin: 10px auto 0;
+  padding: 10px 0;
+  font-family: 'Noto Serif', serif;
+  font-size: 1.5em;
+  font-weight: 900;
+  border: 2px solid #202d3a;
+  background-color: #f1f1f1;
+}
+
+.contact-form {
+  border: 2px solid #202d3a;
+  padding-top: 35px;
+  min-width: 280px;
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+.contact-form input, textarea {
+  display: inline-block;
+  resize: none;
+  margin: 3% auto;
+  padding: 0 15px;
+  width: 70%;
+  outline: none;
+  border: 0;
+  font-family: 'PT Sans', sans-serif;
+  font-size: 1em;
+}
+
+.contact-form input {
+  min-height: 40px;
+}
+
+.contact-form input:required:valid, textarea:valid {
+  border: 1px solid #009688;
+}
+
+.contact-form .isValid:invalid {
+  border: 1px solid #F44336;
+}
+
+.contact-form textarea {
+  padding-top: 10px;
+  height: 200px;
+}
+
+.contact-form .submit {
+  display: block;
+  position: relative;
+  margin: 0 auto -36px;
+  height: 70px;
+  width: 70px;
+  border: 2px solid #202d3a;
+  border-radius: 50%;
+  background-color: #f1f1f1;
+}
+
+.contact-form [type="submit"] {
+  display: inline-block;
+  position: relative;
+  top: 14px;
+  vertical-align: middle;
+  height: 40px;
+  width: 40px;
+  background: url("../imgs/envelope.svg") no-repeat center;
 }
 
 /*************************
@@ -1116,6 +1246,7 @@ footer {
   -o-transition: all .15s ease-out;
   transition: all .15s ease-out;
   cursor: pointer;
+>>>>>>> origin/master
 }
 
 @media only screen and (min-width: 640px) {
@@ -1126,10 +1257,13 @@ footer {
     font-size: 1.1em;
   }
 
+<<<<<<< HEAD
+=======
   .headline {
     font-size: 1.8em;
   }
 
+>>>>>>> origin/master
   /*************************
       WELCOME-SECTION
   *************************/
@@ -1173,6 +1307,8 @@ footer {
     height: 400px;
   }
 
+<<<<<<< HEAD
+=======
   /************************
        DEVELOPERS-PAGE
   *************************/
@@ -1205,6 +1341,7 @@ footer {
     text-align: left;
   }
 
+>>>>>>> origin/master
   /*************************
             ABOUT
   *************************/
@@ -1228,6 +1365,7 @@ footer {
   }
 
   /*************************
+<<<<<<< HEAD
        CONTACT & ORDER
   *************************/
   .order-content, .contact-content {
@@ -1235,15 +1373,29 @@ footer {
   }
 
   .order-heading, .contact-heading {
+=======
+          CONTACT
+  *************************/
+  .contact-content {
+    margin-bottom: 70px;
+  }
+
+  .contact-heading {
+>>>>>>> origin/master
     width: 360px;
     font-size: 2em;
   }
 
+<<<<<<< HEAD
   .order-accordion, .order-form, .contact-form {
+=======
+  .contact-form {
+>>>>>>> origin/master
     width: 70%;
     max-width: 500px;
   }
 
+<<<<<<< HEAD
   .order-form input, .order-form textarea, .order-form select, .contact-form input, .contact-form textarea {
     width: 360px;
   }
@@ -1253,12 +1405,24 @@ footer {
   }
 
   .order-form .submit, .contact-form .submit {
+=======
+  .contact-form input, textarea {
+    width: 360px;
+  }
+
+  .contact-form input {
+    min-height: 50px;
+  }
+
+  .contact-form .submit {
+>>>>>>> origin/master
     margin-bottom: -41px;
     height: 80px;
     width: 80px;
 
   }
 
+<<<<<<< HEAD
   .success, .order-form [type="submit"], .contact-form [type="submit"] {
     height: 45px;
     width: 45px;
@@ -1289,7 +1453,11 @@ footer {
 .order-accordion p {
   padding: 15px;
   text-align: left;
-}
+=======
+  .contact-form [type="submit"] {
+    height: 45px;
+    width: 45px;
+  }
 
   /*************************
         SIGNUP-PAGE
@@ -1301,7 +1469,8 @@ footer {
   .sign-up__headline {
     font-size: 1.8em;
   }
-
+>>>>>>> origin/master
+}
 
 @media only screen and (min-width: 1024px) {
   /*************************
@@ -1377,7 +1546,10 @@ footer {
     -moz-transition: all .2s ease-out;
     -o-transition: all .2s ease-out;
     transition: all .2s ease-out;
+<<<<<<< HEAD
+=======
     cursor: pointer;
+>>>>>>> origin/master
   }
 
   .reg-or-login__reg:hover,
@@ -1437,6 +1609,8 @@ footer {
     background-size: cover;
   }
 
+<<<<<<< HEAD
+=======
   .welcome-section:after {
     background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.55), transparent);
     background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.55), transparent);
@@ -1455,6 +1629,7 @@ footer {
     z-index: 1;
   }
 
+>>>>>>> origin/master
   .welcome-section-container {
     max-width: 800px;
     padding: 20px 50px;
@@ -1492,6 +1667,8 @@ footer {
     border-color: #2980b9;
   }
 
+<<<<<<< HEAD
+=======
   /************************
        DEVELOPERS-PAGE
   *************************/
@@ -1521,6 +1698,7 @@ footer {
     text-decoration: underline;
   }
 
+>>>>>>> origin/master
   /*************************
           FOOTER
   *************************/
@@ -1637,6 +1815,7 @@ footer {
   }
 
   .about-points {
+<<<<<<< HEAD
     position: relative;
 
     display: -webkit-box;
@@ -1654,6 +1833,12 @@ footer {
     -webkit-align-items: center;
     align-items: center;
 
+=======
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+>>>>>>> origin/master
     margin: 0 2%;
   }
 
@@ -1772,8 +1957,8 @@ footer {
   }
 
   /*************************
+<<<<<<< HEAD
        CONTACT & ORDER
-  *************************/
   *************************/
   .order-content, .contact-content {
     margin-bottom: 80px;
@@ -1781,6 +1966,16 @@ footer {
 
   .order-heading, .contact-heading {
     font-size: 2.2em;
+=======
+          CONTACT
+  *************************/
+  .contact-content {
+    margin-bottom: 80px;
+  }
+
+  .contact-heading {
+    font-size: 1.8em;
+>>>>>>> origin/master
     width: 400px;
     top: 35px;
   }
@@ -1790,22 +1985,36 @@ footer {
     min-width: 600px;
   }
 
+<<<<<<< HEAD
   .order-form input, .order-form textarea, .order-form select, .contact-form input, .contact-form textarea {
+=======
+  .contact-form input, textarea {
+>>>>>>> origin/master
     width: 400px;
     margin: 30px auto 0;
   }
 
+<<<<<<< HEAD
   .order-form .submit, .contact-form .submit {
+=======
+  .contact-form .submit {
+>>>>>>> origin/master
     margin: 20px auto -50px;
     height: 90px;
     width: 90px;
   }
 
+<<<<<<< HEAD
   .success, .order-form [type="submit"], .contact-form [type="submit"] {
+=======
+  .contact-form [type="submit"] {
+    top: -9px;
+>>>>>>> origin/master
     height: 50px;
     width: 50px;
   }
 
+<<<<<<< HEAD
   .order-form [type="submit"], .contact-form [type="submit"] {
     top: -9px;
   }
@@ -1814,6 +2023,8 @@ footer {
     top: 20px;
   }
 
+=======
+>>>>>>> origin/master
   .contact-form .submit:hover {
     background-color: #ffd200;
     cursor: pointer;
@@ -1828,6 +2039,7 @@ footer {
   }
 
   /*************************
+<<<<<<< HEAD
          ORDER
 *************************/
   .order-content {
@@ -1843,12 +2055,6 @@ footer {
 
   .order-form {
     width: 100%;
-  }
-
-  }
-
-  .order-form select:hover, .order-form [name="deadline"]:hover {
-    cursor: pointer;
   }
 
   .order-wrap-form, .order-form {
@@ -1881,7 +2087,7 @@ footer {
     width: 85%;
   }
 
-  /*************************
+=======
           LOGIN-WINDOW
   *************************/
   .form__close-button:hover {
@@ -1936,4 +2142,5 @@ footer {
     border-top: 25px solid #0169A5;
     border-left: 25px solid transparent;
   }
+>>>>>>> origin/master
 }

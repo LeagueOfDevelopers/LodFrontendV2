@@ -1,10 +1,25 @@
-<section class="developers-section">
-  <h1 class="developers-section__headline headline">Разработчики</h1>
+<section class="developers-page">
+  <h1 class="developers-page__headline headline">Разработчики</h1>
+
   <div class="dividing-line"></div>
-  <div class="developers-section-container">
-
-
-
+  <div class="developers-page__search">
+    <input placeholder="Поиск" ng-model="search"/>
+    <div class="search__icon"></div>
+  </div>
+  <div class="developers-page__developers">
+    <div ng-repeat="fullDeveloper in fullDevelopers | filter:search " class="developers__full-developer">
+      <a ui-sref="developers.item({id: fullDeveloper.UserId})">
+        <img class="full-developer__photo" ng-src="{{fullDeveloper.PhotoUri}}">
+        <div class="full-developer__info">
+          <div class="full-developer__name" ng-bind="fullDeveloper.FirstName + ' ' + fullDeveloper.LastName"></div>
+          <div class="full-developer__role" ng-bind="fullDeveloper.Role"></div>
+          <div class="full-developer__experience" ng-bind="'В Лиге Разработчиков с ' + fullDeveloper.RegistrationDate"></div>
+          <div class="full-developer__projects-count"
+               ng-bind="'Количество проектов: ' + fullDeveloper.ProjectCount + '.' "></div>
+          <a class="full-developer__vk" href="{{fullDeveloper.VkPageUri}}">Профиль Вконтакте</a>
+        </div>
+      </a>
+    </div>
   </div>
   <a class="developers-section__see-more-button button-style" href="#">Показать больше</a>
 </section>

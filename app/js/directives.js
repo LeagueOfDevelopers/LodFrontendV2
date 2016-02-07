@@ -41,4 +41,5 @@ angular.module('LodSite.directives', [])
       templateUrl: templateUrl('directives', 'random-projects'),
       controller: 'RandomProjectsCtrl'
     }
-  });
+  })
+;

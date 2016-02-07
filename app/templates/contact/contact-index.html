@@ -1,6 +1,6 @@
 <div class="contact-content">
     <div class="contact-heading">Связаться с нами</div>
-    <form class="contact-form" name="ContactForm" ng-controller="ContactFormValidationCtrl"
+    <form class="contact-form" name="ContactForm" ng-controller="FormValidationCtrl"
           ng-submit="Request(ContactForm)">
         <label><input type="text" ng-model="data.ClientName" name="name" autocomplete="on" placeholder="Ваше имя"
                       required></label>
@@ -11,6 +11,9 @@
                       required></label>
         <label><textarea name="message" ng-model="data.MessageBody" placeholder="Текст сообщения"
                          required></textarea></label>
-        <label class="submit"><input type="submit" value=""><div class="tick"></div></label>
+        <label class="submit"><input type="submit" value="">
+
+            <div class="tick"></div>
+        </label>
     </form>
 </div>

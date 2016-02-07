@@ -1,0 +1,67 @@
+<div class="order-content">
+  <div class="order-wrap-form">
+    <div class="order-heading">Заказать работу</div>
+    <form method="post" class="order-form" name="OrderForm" ng-controller="FormValidationCtrl"
+          ng-submit="Request(OrderForm)">
+      <label><input type="text" ng-model="data.CustomerName" name="name" autocomplete="on" placeholder="Ваши ФИО"
+                    required></label>
+      <label><input type="email" ng-model="data.Email" name="email"
+                    pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$" autocomplete="on"
+                    placeholder="Ваш e-mail" required></label>
+      <label><input type="text" ng-model="data.Header" name="projectName" placeholder="Название проекта"
+                    required></label>
+      <label><select name="ProjectType" required>
+        <option class="placeholder" value="" disabled selected>Выбрать тип проекта</option>
+        <option>Веб-приложение</option>
+        <option>Мобильное приложение</option>
+        <option>Десктопное приложение</option>
+        <option>Игра</option>
+        <option>Другое</option>
+      </select></label>
+      <label><input type="text" ng-model="data.DeadLine" name="deadline" placeholder="Срок выполнения"
+                    required></label>
+      <label><textarea name="description" ng-model="data.Description" placeholder="Описание проекта"
+                       required></textarea></label>
+
+      <!--
+      <div class="order-upload-wrap">
+        <label class="order-upload-label"><input id="multiple" type="file" multiple /><span class="add">+</span></label>
+        <label class="order-upload-label"><input type="file"/><span>+</span></label>
+        <label class="order-upload-label"><input type="file"/><span>+</span></label>
+      </div>
+      -->
+
+      <label class="submit"><input type="submit" value="">
+
+        <div class="tick"></div>
+      </label>
+    </form>
+  </div>
+
+  <div class="order-accordion">
+    <div class="order-accordion-heading">Условия заказа</div>
+
+    <div class="dividing-line"></div>
+
+    <div class="span-wrap"><span>Курсовые работы</span></div>
+    <p>Лига Разработчиков не занимается выполнением курсовых и дипломных работ. Причиной этому является отсутствие в
+      подобной деятельности командной составляющей и образовательной ценности. Тем не менее, вы можете просмотреть
+      портфолио наших разработчиков и лично обратиться за помощью к кому-либо из них.</p>
+
+    <div class="span-wrap"><span>Рассмотрение заказа</span></div>
+    <p>После нажатия кнопки "Отправить" заказ отправляется на рассмотрение менеджеру организации. Менеджер постарается
+      подобрать для заказа разработчиков и его успех в этом деле напрямую зависит от условий, которые вы ставите. Вы
+      будете оповещены, когда работа над вашим заказом начнётся.</p>
+
+    <div class="span-wrap"><span>Оплата</span></div>
+    <p>Вопросы оплаты обсуждаются индивидуально с менеджером. Заказ может быть выполнен бесплатно, если он имеет
+      какую-либо академическую ценность, не требует очень быстрого выполнения и не затрагивает специфических предметных
+      областей.</p>
+
+    <div class="span-wrap"><span>Гарантии</span></div>
+    <p>Члены нашей организации присутствуют в ней добровольно в образовательных целях, они не связаны никакими трудовыми
+      договорами, поэтому выполнение работы не гарантируется. В случае невыполнения заказа в срок, вам будут предложены
+      альтернативы, но руководство Лиги стремится снизить число таких ситуаций.</p>
+  </div>
+
+</div>

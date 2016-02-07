@@ -122,6 +122,20 @@ angular.module('LodSite.controllers', [])
   }])
   .controller('OrderCtrl', ['$scope', '$http', function ($scope, $http) {
 
+    // FOR INPUT TYPE=DATE
+
+    Array.from($("[name='deadline']"))
+      .forEach(function (element) {
+        element.addEventListener('focus', function () {
+          this.setAttribute('type', 'date');
+        });
+        element.addEventListener('blur', function () {
+          if (this.value.length == 0) {
+            this.setAttribute('type', 'text');
+          }
+        });
+      });
+
     // ACCORDION
 
     $(".order-accordion p:not(:first)").hide();

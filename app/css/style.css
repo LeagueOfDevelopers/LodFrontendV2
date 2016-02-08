@@ -55,7 +55,7 @@ a {
   margin: 15px 0;
 
   font-family: 'Noto Serif', serif;
-a  font-size: 1.5em;
+  font-size: 1.5em;
   font-weight: bold;
 
   color: #202d3a;
@@ -1291,17 +1291,16 @@ footer {
   text-align: left;
 }
 
-  /*************************
-        SIGNUP-PAGE
-  *************************/
-  .sign-up-form__section {
-    padding: 25px 40px;
-  }
+/*************************
+      SIGNUP-PAGE
+*************************/
+.sign-up-form__section {
+  padding: 25px 40px;
+}
 
-  .sign-up__headline {
-    font-size: 1.8em;
-  }
-
+.sign-up__headline {
+  font-size: 1.8em;
+}
 
 @media only screen and (min-width: 1024px) {
   /*************************
@@ -1774,7 +1773,6 @@ footer {
   /*************************
        CONTACT & ORDER
   *************************/
-  *************************/
   .order-content, .contact-content {
     margin-bottom: 80px;
   }
@@ -1843,8 +1841,6 @@ footer {
 
   .order-form {
     width: 100%;
-  }
-
   }
 
   .order-form select:hover, .order-form [name="deadline"]:hover {
@@ -1936,4 +1932,5 @@ footer {
     border-top: 25px solid #0169A5;
     border-left: 25px solid transparent;
   }
+
 }

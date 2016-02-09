@@ -546,6 +546,58 @@ header {
 }
 
 /************************
+     DEVELOPER-PAGE
+*************************/
+.developer-page{
+  box-sizing: border-box;
+  padding: 0 15px;
+}
+.developer-photo{
+  width: 200px;
+  height: 200px;
+  margin: 15px auto;
+  border: 10px solid #ccc;
+  border-radius: 50%;
+}
+.developer-name, .developer-role{
+  text-align: center;
+}
+.developer-name{
+  font-family: 'Noto Serif', serif;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.developer-role{
+  font-size: 1.2em;
+  margin: 5px 0 20px 0;
+}
+.developer-info{
+  margin: 25px auto;
+}
+.developer-info__item{
+  box-sizing: border-box;
+  padding: 10px 0;
+  width: 100%;
+}
+.developer-info__item-name, .developer-info__item-text{
+  background: #fff;
+  font-size: 1em;
+  padding: 10px;
+}
+.developer-info__item-name{
+  border-radius: 5px 5px 0 0;
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+
+}
+.developer-info__item-text{
+  border-radius: 0 0 5px 5px;
+}
+.developer-page__headline{
+
+}
+
+/************************
          FOOTER
 *************************/
 footer {
@@ -1205,6 +1257,18 @@ footer {
     text-align: left;
   }
 
+  /************************
+       DEVELOPER-PAGE
+  *************************/
+  .developer-info{
+    font-size: 0;
+  }
+  .developer-info__item{
+    display: inline-block;
+    width: 50%;
+    padding: 10px;
+    font-size: 16px;
+  }
   /*************************
             ABOUT
   *************************/
@@ -1518,6 +1582,16 @@ footer {
 
   .full-developer__vk:hover {
     text-decoration: underline;
+  }
+
+  /*************************
+        DEVELOPER-PAGE
+  *************************/
+  .developer-page{
+    padding: 0 40px;
+  }
+  .developer-name{
+    font-size: 1.8em;
   }
 
   /*************************

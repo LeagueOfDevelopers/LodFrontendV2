@@ -928,7 +928,7 @@ footer {
   padding-bottom: 20px;
 }
 
-.order-accordion .span-wrap, p {
+.order-accordion .span-wrap, .order-accordion p {
   margin: 0 auto 4px;
   width: 80%;
   background-color: white;
@@ -1118,6 +1118,13 @@ footer {
   cursor: pointer;
 }
 
+/*************************
+      PROFILE SETTINGS
+*************************/
+
+{
+
+}
 @media only screen and (min-width: 640px) {
   /*************************
            MAIN

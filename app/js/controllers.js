@@ -64,6 +64,9 @@ angular.module('LodSite.controllers', [])
       for (var i = 0; i < $scope.fullDevelopers.length; i++) {
         var formattedDate = new Date(Date.parse($scope.fullDevelopers[i].RegistrationDate));
         $scope.fullDevelopers[i].RegistrationDate = formattedDate.toLocaleString("ru", dateOptions);
+        if($scope.fullDevelopers[i].PhotoUri == null){
+          $scope.fullDevelopers[i].PhotoUri = '/app/imgs/developer-default-photo.png';
+        }
       }
     });
 
@@ -76,6 +79,19 @@ angular.module('LodSite.controllers', [])
     var developerId = $state.params.id;
     $http.get('http://api.lod-misis.ru/developers/' + developerId).success(function (data) {
       $scope.developer = data;
+      var dateOptions = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      };
+      var date = new Date();
+      var formattedDate = new Date(Date.parse($scope.developer.RegistrationDate));
+
+      if($scope.developer.PhotoUri == null){
+        $scope.developer.PhotoUri = '/app/imgs/developer-default-photo.png';
+      }
+      $scope.developer.studyingYear = date.getFullYear() - $scope.developer.StudentAccessionYear || 1;
+      $scope.developer.RegistrationDate =  formattedDate.toLocaleString("ru", dateOptions);
       $scope.$emit('change_title', {
         title: $scope.developer.FirstName + ' ' + $scope.developer.LastName + ' - Лига Разработчиков НИТУ МИСиС'
       });
@@ -85,7 +101,7 @@ angular.module('LodSite.controllers', [])
 
   //projects controllers
   .controller('RandomProjectsCtrl', ['$scope', '$http', function ($scope, $http) {
-    $http.get('http://api.lod-misis.ru/projects/random/4').success(function (data) {
+    $http.get('http://api.lod-misis.ru/projects/random/6').success(function (data) {
       $scope.randomProjects = data;
     });
   }])

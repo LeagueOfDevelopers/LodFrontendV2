@@ -247,10 +247,16 @@ angular.module('LodSite.controllers', [])
     // FORM SENDING
 
     $scope.data = {};
-    $scope.data.Attachments = [];
+
     $scope.Request = function (form) {
+
+      $scope.data.Attachments = $scope.files.map(function (file) {
+        return file.url;
+      });
+
       $http.post('http://api.lod-misis.ru/orders', $scope.data).success(function () {
 
+        console.log($scope.data.Attachments);
         var envelope = $("[type='submit']");
         var tick = $('.tick');
         var wrap_tick = $('.submit');
@@ -269,7 +275,7 @@ angular.module('LodSite.controllers', [])
         }, 4000);
 
       }).error(function (err) {
-        console.log('Error:' + err.message);
+        console.log(err);
       });
     };
 
@@ -305,6 +311,7 @@ angular.module('LodSite.controllers', [])
 
       if (args.data) {
         var dataSplit = args.data.split('.');
+
         if(dataSplit[dataSplit.length - 2].length == 17) {
           dataSplit[dataSplit.length - 2] = '';
         }
@@ -312,26 +319,22 @@ angular.module('LodSite.controllers', [])
           dataSplit[dataSplit.length - 2] =  dataSplit[dataSplit.length - 2].slice(0, dataSplit[dataSplit.length - 2].length - 17);
         }
 
+        var name = dataSplit.join('.');
 
-        $scope.files.push(dataSplit.join('.'));
-        $scope.data.Attachments.push('http://api.lod-misis.ru/file' + args.data);
-      }
-      if ($scope.files.length <= 2) {
+        $scope.files.push({
+          name: name,
+          url: 'http://api.lod-misis.ru/file/' + args.data
+        });
+
         $scope.currentUploadState = 'waiting';
-      }
-      else if ($scope.files.length > 2) {
-        $scope.currentUploadState = 'nothing';
-        $('.order-upload-file__wrap').css('display', 'none');
+
+        $scope.$apply();
       }
 
-      $scope.$apply();
     });
 
     $scope.deleteFile = function (fileItem, index) {
       $scope.files.splice(index, 1);
-
-      $scope.currentUploadState = 'waiting';
-      $('.order-upload-file__wrap').css('display', 'inline-block');
     }
   }])
   .controller('ContactCtrl', ['$scope', '$http', function ($scope, $http) {

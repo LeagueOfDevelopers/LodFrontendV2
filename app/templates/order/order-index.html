@@ -27,12 +27,12 @@
       <div class="upload-box-wrap order-upload-wrap">
         <div class="upload-box order-uploaded-file" ng-repeat="file in files">
           <div class="order-uploaded-file__name-wrap">
-            <div class="order-uploaded-file__name" ng-bind="file"></div>
+            <div class="order-uploaded-file__name" ng-bind="file.name"></div>
             <div class="order-file-close" ng-click="deleteFile(file, $index)"></div>
           </div>
         </div>
 
-        <div class="upload-box order-upload-file__wrap" upload-file dropzone-file>
+        <div class="upload-box order-upload-file__wrap" ng-if="files.length < 3" upload-file dropzone-file>
           <div ng-switch="currentUploadState">
 
             <div ng-switch-when="waiting">

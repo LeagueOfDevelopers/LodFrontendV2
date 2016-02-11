@@ -30,7 +30,11 @@ body {
 
 .backdrop {
   position: fixed;
-  display: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
 }
 
 .wrapper {
@@ -202,6 +206,8 @@ header {
 
 /* mobile navigation */
 .nav-mobile {
+  position: relative;
+  z-index: 4;
   display: block;
   width: 100%;
   background: #ffffff;

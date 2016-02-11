@@ -288,7 +288,16 @@ angular.module('LodSite.controllers', [])
     $scope.$on('successUploading', function (ev, args) {
 
       if (args.data) {
-        $scope.files.push(args.data);
+        var dataSplit = args.data.split('.');
+        if(dataSplit[dataSplit.length - 2].length == 17) {
+          dataSplit[dataSplit.length - 2] = '';
+        }
+        else {
+          dataSplit[dataSplit.length - 2] =  dataSplit[dataSplit.length - 2].slice(0, dataSplit[dataSplit.length - 2].length - 17);
+        }
+
+
+        $scope.files.push(dataSplit.join('.'));
         $scope.data.Attachments.push('http://api.lod-misis.ru/file' + args.data);
       }
       console.dir($scope.files);

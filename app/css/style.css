@@ -1501,6 +1501,8 @@ footer {
 
   .order-uploaded-file__name-wrap {
     padding-right: 0;
+    -webkit-justify-content: center;
+    justify-content: center;
   }
 
   .order-uploaded-file__name {

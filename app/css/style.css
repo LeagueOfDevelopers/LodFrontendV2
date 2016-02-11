@@ -919,7 +919,7 @@ footer {
 .success, .order-form [type="submit"], .contact-form [type="submit"] {
   display: inline-block;
   position: relative;
-  top: 16px;
+  top: 8px;
   height: 40px;
   width: 40px;
 }

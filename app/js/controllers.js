@@ -256,7 +256,6 @@ angular.module('LodSite.controllers', [])
 
       $http.post('http://api.lod-misis.ru/orders', $scope.data).success(function () {
 
-        console.log($scope.data.Attachments);
         var envelope = $("[type='submit']");
         var tick = $('.tick');
         var wrap_tick = $('.submit');

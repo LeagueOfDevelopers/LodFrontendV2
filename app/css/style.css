@@ -1201,10 +1201,45 @@ footer {
       PROFILE SETTINGS
 *************************/
 .profile-settings {
+  padding: 15px;
+}
+
+.profile-settings__top-part {
+  display: flex;
+}
+
+.profile-settings__avatar-wrapper {
+  position: relative;
+  background-color: white;
+  width: 30%;
+  margin: 0 auto;
 
 }
-.profile-settings_heading {
 
+.profile-settings__avatar-img {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background-image: url("../imgs/no-avatar.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 90%;
+  height: 90%;
+}
+
+.profile-settings__general {
+  width: 65%;
+}
+.profile-settings__general label{
+  font-size: 1.2em;
+  font-weight: 900;
+}
+
+.profile-settings__general input{
+  padding: 0 10px;
+  height: 35px;
+  width: 100%;
 }
 
 @media only screen and (min-width: 640px) {

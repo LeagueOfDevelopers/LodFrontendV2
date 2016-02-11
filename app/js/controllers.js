@@ -183,10 +183,10 @@ angular.module('LodSite.controllers', [])
 
     $scope.register = function () {
       $http.post('http://api.lod-misis.ru/developers', $scope.newDeveloper).success(function () {
-          $scope.isSuccess = true;
-          $scope.newDeveloper = angular.copy($scope.emptyNewDeveloper);
-          $scope.repeatPassword = "";
-        })
+        $scope.isSuccess = true;
+        $scope.newDeveloper = angular.copy($scope.emptyNewDeveloper);
+        $scope.repeatPassword = "";
+      })
         .error(function () {
           $scope.isSuccess = false;
         });
@@ -201,7 +201,7 @@ angular.module('LodSite.controllers', [])
     });
 
   }])
-  .controller('OrderCtrl', ['$scope', '$http', function ($scope, $http) {
+  .controller('OrderCtrl', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
 
     // FOR INPUT TYPE=DATE
 
@@ -231,9 +231,9 @@ angular.module('LodSite.controllers', [])
     // FORM SENDING
 
     $scope.data = {};
-
+    $scope.data.Attachments = [];
     $scope.Request = function (form) {
-      $http.post('http://api.lod-misis.ru/order', $scope.data).success(function () {
+      $http.post('http://api.lod-misis.ru/orders', $scope.data).success(function () {
 
         var envelope = $("[type='submit']");
         var tick = $('.tick');
@@ -246,15 +246,14 @@ angular.module('LodSite.controllers', [])
         wrap_tick.css('background-color', '#2fd08e');
         tick.addClass('success');
 
-        setTimeout(function () {
-            envelope.css('display', 'inline-block');
-            wrap_tick.css('background-color', '#f1f1f1');
-            tick.removeClass('success');
-          }
-          , 4000);
+        $timeout(function () {
+          envelope.css('display', 'inline-block');
+          wrap_tick.css('background-color', '#f1f1f1');
+          tick.removeClass('success');
+        }, 4000);
 
       }).error(function (err) {
-        alert('Error:' + err.message);
+        console.log('Error:' + err.message);
       });
     };
 
@@ -264,6 +263,53 @@ angular.module('LodSite.controllers', [])
       title: 'Заказать - Лига Разработчиков НИТУ МИСиС'
     });
 
+    $scope.files = [];
+    $scope.currentUploadState = "waiting"; // waiting, uploading
+    $scope.currentPercent = 0;
+
+    $scope.$on('beforeSend', function (ev, args) {
+      $scope.currentUploadState = 'uploading';
+      $scope.currentPercent = 0;
+      $scope.$apply();
+    });
+
+    $scope.$on('errorUploading', function (ev, args) {
+      alert('Что-то пошло не так!')
+      $scope.currentUploadState = 'waiting';
+      $scope.currentPercent = 0;
+      $scope.$apply();
+    });
+
+    $scope.$on('progress', function (ev, args) {
+      $scope.currentPercent = args.progress_value;
+      $scope.$apply();
+    });
+
+    $scope.$on('successUploading', function (ev, args) {
+
+      if (args.data) {
+        $scope.files.push(args.data);
+        $scope.data.Attachments.push('http://api.lod-misis.ru/file' + args.data);
+      }
+      console.dir($scope.files);
+      alert($scope.files);
+      if ($scope.files.length <= 2) {
+        $scope.currentUploadState = 'waiting';
+      }
+      else if ($scope.files.length > 2) {
+        $scope.currentUploadState = 'nothing';
+        $('.order-upload-file__wrap').css('display', 'none');
+      }
+
+      $scope.$apply();
+    });
+
+    $scope.deleteFile = function (fileItem, index) {
+      $scope.files.splice(index, 1);
+
+      $scope.currentUploadState = 'waiting';
+      $('.order-upload-file__wrap').css('display', 'inline-block');
+    }
   }])
   .controller('ContactCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.data = {};
@@ -287,7 +333,7 @@ angular.module('LodSite.controllers', [])
             wrap_tick.css('background-color', '#f1f1f1');
             tick.removeClass('success');
           }
-          , 4000);
+          , 1000);
 
       });
     };

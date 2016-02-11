@@ -316,8 +316,6 @@ angular.module('LodSite.controllers', [])
         $scope.files.push(dataSplit.join('.'));
         $scope.data.Attachments.push('http://api.lod-misis.ru/file' + args.data);
       }
-      console.dir($scope.files);
-      alert($scope.files);
       if ($scope.files.length <= 2) {
         $scope.currentUploadState = 'waiting';
       }

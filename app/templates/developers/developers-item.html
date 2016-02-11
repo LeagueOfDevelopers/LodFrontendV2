@@ -1,0 +1,73 @@
+<div class="developer-page">
+  <div class="developer-confirmation-status" ng-switch="developer.ConfirmationStatus">
+    <span style="color: #ccc;" ng-switch-when="1">Подтверждена почта</span>
+    <span style="color: #ccc;" ng-switch-when="2">Подтверждён администратором</span>
+    <span style="color: #ccc;" ng-switch-default="ng-switch-default">Не подтверждён</span>
+  </div>
+  <div class="developer-photo" style="
+  background: url({{developer.PhotoUri}}) no-repeat center; background-size: contain;"></div>
+  <div class="developer-name" ng-bind="developer.FirstName + ' ' + developer.LastName"></div>
+  <div class="developer-role" ng-bind="developer.Role"></div>
+  <div class="dividing-line"></div>
+  <div class="developer-info">
+    <div class="developer-info__item">
+      <div class="developer-info__item-name">Инстиутут</div>
+      <div class="developer-info__item-text" ng-bind="developer.InstituteName"></div>
+    </div>
+    <div class="developer-info__item">
+      <div class="developer-info__item-name">Кафедра</div>
+      <div class="developer-info__item-text" ng-bind="developer.StudyingDirection"></div>
+    </div>
+    <div class="developer-info__item">
+      <div class="developer-info__item-name">Специальность</div>
+      <div class="developer-info__item-text" ng-bind="developer.Specialization"></div>
+    </div>
+    <div class="developer-info__item">
+      <div class="developer-info__item-name">Курс</div>
+      <div class="developer-info__item-text" ng-bind="developer.studyingYear"></div>
+    </div>
+    <div class="developer-info__item">
+      <div class="developer-info__item-name">Дата регистрации</div>
+      <div class="developer-info__item-text" ng-bind="developer.RegistrationDate"></div>
+    </div>
+    <div class="developer-info__item">
+      <div class="developer-info__item-name">Профиль Вконтакте</div>
+      <div class="developer-info__item-text"><a style="text-decoration: underline;
+    color: #0072bc;" href="{{developer.VkProfileUri}}">{{developer.VkProfileUri}}</a></div>
+    </div>
+    <div class="developer-info__item">
+      <div class="developer-info__item-name">E-mail</div>
+      <div class="developer-info__item-text" ng-bind="developer.Email"></div>
+    </div>
+    <div class="developer-info__item">
+      <div class="developer-info__item-name">Номер телефона</div>
+      <div class="developer-info__item-text" ng-bind="developer.PhoneNumber"></div>
+    </div>
+  </div>
+  <div class="dividing-line"></div>
+  <h1 class="developer-page__headline headline">Портфолио</h1>
+  <div class="developer-projects">
+    <div class="projects-section-container">
+      <a ng-repeat="projectByDeveloper in developer.Projects" class="projects-section__link-to-project"
+         ui-sref="projects.item({id: projectByDeveloper.ProjectId})">
+        <div class="projects-section__project">
+          <div style="background: url({{projectByDeveloper.PhotoUri}}) no-repeat center; background-size: contain;"
+               class="project__background"></div>
+          <div class="project__info-container">
+            <div class="project__name" ng-bind="projectByDeveloper.Name"></div>
+            <div class="project__status">Cтатус:
+            <span ng-switch="projectByDeveloper.ProjectStatus">
+                  <span class="status__value" style="background: #795548;" ng-switch-when="0">Запланирован</span>
+                  <span class="status__value" style="background: #1e88e5;" ng-switch-when="1">В процессе</span>
+                  <span class="status__value" style="background: #607d8b;" ng-switch-when="2">Заморожен</span>
+                  <span class="status__value" style="background: #009688;" ng-switch-default="ng-switch-default">Завершен</span>
+            </span>
+            </div>
+            <div class="project__developer-role"><b>Роль разработчика:</b></div>
+            <div class="project__developer-role-text" ng-bind="projectByDeveloper.DeveloperRole"></div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>

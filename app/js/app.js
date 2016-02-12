@@ -85,7 +85,7 @@ angular.module('LodSite', [
 
 // other functions
 function templateUrl(module, name) {
-  return 'app/templates/' + module + '/' + name + '.html';
+  return 'app/templates/' + module + '/' + name + '.html?' + Math.random();
 }
 function setPaddingBottom() {
   $('.content').css('padding-bottom', $('footer').innerHeight());

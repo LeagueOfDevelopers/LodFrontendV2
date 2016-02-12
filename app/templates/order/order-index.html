@@ -22,14 +22,38 @@
                     required></label>
       <label><textarea name="description" ng-model="data.Description" placeholder="Описание проекта"
                        required></textarea></label>
+      <div class="order-upload__heading">Прикрепить файлы (макс. 3):</div>
 
-      <!--
-      <div class="order-upload-wrap">
-        <label class="order-upload-label"><input id="multiple" type="file" multiple /><span class="add">+</span></label>
-        <label class="order-upload-label"><input type="file"/><span>+</span></label>
-        <label class="order-upload-label"><input type="file"/><span>+</span></label>
+      <div class="upload-box-wrap order-upload-wrap">
+        <div class="upload-box order-uploaded-file" ng-repeat="file in files">
+          <div class="order-uploaded-file__name-wrap">
+            <div class="order-uploaded-file__name" ng-bind="file.name"></div>
+            <div class="order-file-close" ng-click="deleteFile(file, $index)"></div>
+          </div>
+        </div>
+
+        <div class="upload-box order-upload-file__wrap" ng-if="files.length < 3" upload-file dropzone-file>
+          <div ng-switch="currentUploadState">
+
+            <div ng-switch-when="waiting">
+              <div class="order-upload-file__adding">+</div>
+            </div>
+
+            <div ng-switch-when="uploading">
+              <div class="order-uploading-wrap">
+                <div class="order-uploading-percent" ng-bind="currentPercent + '%'"></div>
+                <div class="order-uploading__bar-wrap">
+                  <div class="order-uploading__bar" ng-attr-style='width: {{currentPercent}}%'></div>
+                </div>
+              </div>
+            </div>
+
+            <div ng-switch="nothing" style="display: none"></div>
+
+          </div>
+        </div>
+
       </div>
-      -->
 
       <label class="submit"><input type="submit" value="">
 

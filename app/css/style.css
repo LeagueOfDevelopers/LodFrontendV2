@@ -27,10 +27,22 @@ body {
   background-color: #f1f1f1;
   color: #202d3a;
 }
+ input{
+   transition: all .5s ease-out;
+ }
+
+ .help-message-input{
+   color: #2980b9;
+   transition: all .5s ease-out;
+ }
 
 .backdrop {
   position: fixed;
-  display: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
 }
 
 .wrapper {
@@ -202,6 +214,8 @@ header {
 
 /* mobile navigation */
 .nav-mobile {
+  position: relative;
+  z-index: 4;
   display: block;
   width: 100%;
   background: #ffffff;
@@ -892,11 +906,11 @@ footer {
 }
 
 .order-form input:required:valid, .order-form textarea:valid, .contact-form input:required:valid, .contact-form textarea:valid {
-  border: 1px solid #2fd08e;
+  border: 1px solid #4CAF50;
 }
 
 .order-form .isValid:invalid, .contact-form .isValid:invalid {
-  border: 1px solid red;
+  border: 1px solid #F44336;
 }
 
 .order-form textarea, .contact-form textarea {
@@ -1234,7 +1248,7 @@ footer {
   min-height: 40px;
   padding: 0 15px;
   margin: 15px 0;
-  border: none;
+  border: 1px solid #f1f1f1;
   outline: none;
 }
 
@@ -1263,6 +1277,13 @@ footer {
   -o-transition: all .15s ease-out;
   transition: all .15s ease-out;
   cursor: pointer;
+}
+/* login and signup form validation */
+.validate-field.ng-invalid.ng-dirty{
+  border: 1px solid #F44336;
+}
+.validate-field.ng-valid.ng-dirty{
+  border: 1px solid #4CAF50
 }
 
 /*************************
@@ -1444,7 +1465,7 @@ footer {
 
   .order-heading, .contact-heading {
     width: 360px;
-    font-size: 2em;
+    font-size: 1.8em;
   }
 
   .order-accordion, .order-form, .contact-form {
@@ -1677,7 +1698,7 @@ footer {
   .welcome-section {
     box-sizing: border-box;
     margin: -100px 0 0 0;
-    padding: 140px 0 40px 0;
+    padding: 140px 0 100px 0;
     background: url('../imgs/main-background-min1024px.jpg') no-repeat top;
     background-size: cover;
   }
@@ -2041,7 +2062,7 @@ footer {
   }
 
   .order-heading, .contact-heading {
-    font-size: 2.2em;
+    font-size: 1.8em;
     width: 400px;
     top: 35px;
   }
@@ -2226,6 +2247,12 @@ footer {
   }
 }
 @media only screen and (min-width: 1700px){
+  body {
+    font-size: 1.3em;
+  }
+  .welcome-section {
+    padding: 200px 0 200px 0;
+  }
   .projects-section-container {
     max-width: 1600px;
   }

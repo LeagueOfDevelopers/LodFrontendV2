@@ -948,15 +948,10 @@ footer {
   padding: 0 20px 0 10px;
 }
 
-.placeholder {
-  display: none;
-}
-
 .order-upload__heading {
   width: 80%;
   margin: 0 auto 10px;
   text-align: left;
-  font-weight: 800;
 }
 
 .order-upload-wrap {
@@ -1026,7 +1021,7 @@ footer {
 
 .order-file-close {
   position: absolute;
-  background-image: url("../imgs/cross.svg");
+  background-image: url("../imgs/close-button.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -2121,11 +2116,12 @@ footer {
 
   .order-upload__heading, .order-upload-wrap {
     width: 430px;
+    margin-top: 30px;
   }
 
   .order-upload-file__adding {
     cursor: pointer;
-    font-size: 103px;
+    font-size: 99px;
   }
 
   .upload-box {

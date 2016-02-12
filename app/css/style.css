@@ -1253,7 +1253,7 @@ footer {
   min-height: 40px;
   padding: 0 15px;
   margin: 15px 0;
-  border: 1px solid #fff;
+  border: 1px solid #f1f1f1;
   outline: none;
 }
 
@@ -1470,7 +1470,7 @@ footer {
 
   .order-heading, .contact-heading {
     width: 360px;
-    font-size: 2em;
+    font-size: 1.8em;
   }
 
   .order-accordion, .order-form, .contact-form {
@@ -1703,7 +1703,7 @@ footer {
   .welcome-section {
     box-sizing: border-box;
     margin: -100px 0 0 0;
-    padding: 140px 0 40px 0;
+    padding: 140px 0 100px 0;
     background: url('../imgs/main-background-min1024px.jpg') no-repeat top;
     background-size: cover;
   }
@@ -2067,7 +2067,7 @@ footer {
   }
 
   .order-heading, .contact-heading {
-    font-size: 2.2em;
+    font-size: 1.8em;
     width: 400px;
     top: 35px;
   }
@@ -2251,6 +2251,12 @@ footer {
   }
 }
 @media only screen and (min-width: 1700px){
+  body {
+    font-size: 1.3em;
+  }
+  .welcome-section {
+    padding: 200px 0 200px 0;
+  }
   .projects-section-container {
     max-width: 1600px;
   }

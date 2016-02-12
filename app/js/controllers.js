@@ -192,18 +192,18 @@ angular.module('LodSite.controllers', [])
       "AccessionYear": ""
     };
     $scope.newDeveloper = angular.copy($scope.emptyNewDeveloper);
-    $scope.repeatPassword = "";
+    $scope.repeatedPassword = '';
 
     $scope.$emit('toggle_black', {isblack: true});
     $scope.$emit('change_title', {
       title: 'Стать разработчиком - Лига Разработчиков НИТУ МИСиС'
     });
-
     $scope.register = function () {
       $http.post('http://api.lod-misis.ru/developers', $scope.newDeveloper).success(function () {
           $scope.isSuccess = true;
-          $scope.newDeveloper = angular.copy($scope.emptyNewDeveloper);
-          $scope.repeatPassword = "";
+          $scope.newDeveloper = angular.copy($scope.emptyNewDeveloper); //reset form
+          $scope.repeatedPassword = " ";
+          $scope.signForm.$setPristine();
         })
         .error(function () {
           $scope.isSuccess = false;

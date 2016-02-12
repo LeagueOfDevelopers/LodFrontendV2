@@ -27,6 +27,14 @@ body {
   background-color: #f1f1f1;
   color: #202d3a;
 }
+ input{
+   transition: all .5s ease-out;
+ }
+
+ .help-message-input{
+   color: #2980b9;
+   transition: all .5s ease-out;
+ }
 
 .backdrop {
   position: fixed;
@@ -898,11 +906,11 @@ footer {
 }
 
 .order-form input:required:valid, .order-form textarea:valid, .contact-form input:required:valid, .contact-form textarea:valid {
-  border: 1px solid #2fd08e;
+  border: 1px solid #4CAF50;
 }
 
 .order-form .isValid:invalid, .contact-form .isValid:invalid {
-  border: 1px solid red;
+  border: 1px solid #F44336;
 }
 
 .order-form textarea, .contact-form textarea {
@@ -1166,7 +1174,7 @@ footer {
   min-height: 40px;
   padding: 0 15px;
   margin: 15px 0;
-  border: none;
+  border: 1px solid #fff;
   outline: none;
 }
 
@@ -1195,6 +1203,13 @@ footer {
   -o-transition: all .15s ease-out;
   transition: all .15s ease-out;
   cursor: pointer;
+}
+/* login and signup form validation */
+.validate-field.ng-invalid.ng-dirty{
+  border: 1px solid #F44336;
+}
+.validate-field.ng-valid.ng-dirty{
+  border: 1px solid #4CAF50
 }
 
 /*************************

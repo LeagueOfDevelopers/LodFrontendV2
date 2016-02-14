@@ -1,10 +1,10 @@
 <div class="sign-up-container">
   <h1 class="sign-up__headline headline">Стать разработчиком</h1>
-  <form class="sign-up-form">
+  <form class="sign-up-form" name="signForm">
     <div class="sign-up-form__section">
       <div class="section__step-number">1</div>
-      <input type="text" placeholder="Имя" ng-model="newDeveloper.FirstName" required autofocus/>
-      <input type="text" placeholder="Фамилия" ng-model="newDeveloper.LastName" required/>
+      <input type="text" class="validate-field" placeholder="Имя" pattern="^[А-Я][а-яА-Я-_\.]{1,30}$" ng-model="newDeveloper.FirstName" ng-maxlength="30" required autofocus/>
+      <input type="text" class="validate-field" placeholder="Фамилия" pattern="^[А-Я][а-яА-Я-_\.]{1,30}$" ng-model="newDeveloper.LastName" ng-maxlength="30" required/>
     </div>
     <div class="sign-up-form__section">
       <div class="section__step-number">2</div>
@@ -18,26 +18,30 @@
         <option value="ИБО" ng-selected="newDeveloper.InstituteName=='ИБО'">ИБО</option>
         <option value="Горный" ng-selected="newDeveloper.InstituteName=='Горный'">Горный</option>
       </select>
-      <input type="text" placeholder="Кафедра" ng-model="newDeveloper.Department" required/>
-      <input type="text" placeholder="Специальность" ng-model="newDeveloper.StudyingProfile" required/>
-      <input type="number" placeholder="Год поступления" ng-model="newDeveloper.AccessionYear" required/>
+      <input  type="text" class="validate-field" placeholder="Кафедра" pattern="^[А-Я][а-яА-Я-_\.]{1,30}$" ng-model="newDeveloper.Department" ng-maxlength="30" required/>
+      <input  type="text" class="validate-field" placeholder="Специальность" pattern="^[А-Я][а-яА-Я-_\.]{1,30}$" ng-model="newDeveloper.StudyingProfile" ng-maxlength="30" required/>
+      <input type="number" class="validate-field" placeholder="Год поступления" ng-model="newDeveloper.AccessionYear" pattern="[1-9]\d*" ng-minlength="4" ng-maxlength="4" required/>
     </div>
     <div class="sign-up-form__section">
       <div class="section__step-number">3</div>
-      <input type="url" placeholder="Профиль Вконтакте" ng-model="newDeveloper.VkProfileUri" required/>
-      <input type="number" placeholder="Номер телефона" ng-model="newDeveloper.PhoneNumber" required/>
-      <input type="email" placeholder="E-mail" ng-model="newDeveloper.Email" required/>
-      <input type="password" placeholder="Пароль" ng-model="newDeveloper.Password" required/>
-      <input type="password" placeholder="Повторите пароль" ng-model="repeatPassword" required/>
+      <input type="url" name="vkUrl" class="validate-field" placeholder="Профиль Вконтакте" ng-model="newDeveloper.VkProfileUri" ng-maxlength="30" required/>
+      <div class="help-message-input" ng-show="signForm.vkUrl.$error.url">Введите адрес в формате http://vk.com/[username].</div>
+      <input type="number" class="validate-field" placeholder="Номер телефона" ng-model="newDeveloper.PhoneNumber" pattern="[1-9]\d*" ng-minlength="11" ng-maxlength="30" required/>
+      <input type="email" class="validate-field" placeholder="E-mail" pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$" ng-model="newDeveloper.Email" ng-maxlength="30" required/>
+      <input type="password" name="password" class="validate-field" placeholder="Пароль" pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$" ng-minlength="8" ng-maxlength="30" ng-model="newDeveloper.Password" required/>
+      <div class="help-message-input" ng-show="signForm.password.$error.pattern">Пароль должен быть длинной не менее 8 символов и содержать латинские буквы или цифры.</div>
+      <input type="password" class="validate-field" ng-keyup="comparePasswords()" placeholder="Повторите пароль" pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$" ng-minlength="8" ng-maxlength="30" ng-model="repeatedPassword" required/>
+      <div class="help-message-input" ng-show="repeatedPassword !== newDeveloper.Password">Пароли не совпадают.</div>
     </div>
   </form>
-  <div class="sign-up__button" ng-click="register()">Отправить заявку</div>
   <div style="margin: 0 auto 30px auto;" ng-switch="isSuccess">
-    <p style="color: #009688;" ng-switch-when="true">
+    <p class="help-message-input" ng-switch-when="true">
       Поздравляем! Ваша заявка принята, ожидайте e-mail сообщения о подтвреждении.
     </p>
-    <p style="color: #2980b9;" ng-switch-when="false">
+    <p class="help-message-input" ng-switch-when="false">
       Форма заполнена неверно! Проверьте введенные данные.
     </p>
   </div>
+  <div class="sign-up__button" ng-click="register()">Отправить заявку</div>
+
 </div>

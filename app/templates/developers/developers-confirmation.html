@@ -1,0 +1,24 @@
+<div class="confirmation__wrap" ng-switch="isSuccess">
+
+  <div ng-switch-when="true">
+    <div class="confirmation__success">
+      Ваш email успешно подтверждён!
+      <br/><br/>
+      <span style="font-weight: 100;">Ожидайте, пока мы рассмотрим Вашу заявку и активируем аккаунт.</span>
+      <br/>
+      <div class="confirmation__button-wrap">
+        <a class="button-style confirmation__button" ui-sref="index">Перейти на главную</a>
+      </div>
+    </div>
+  </div>
+
+
+  <p class="confirmation__error" ng-switch-when="false">
+    Ссылка подтвеждения просрочена.
+  </p>
+
+  <p class="confirmation__loading" ng-switch-default>
+    Идет загрузка...
+  </p>
+
+</div>

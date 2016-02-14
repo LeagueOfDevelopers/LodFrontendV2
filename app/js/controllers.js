@@ -411,4 +411,11 @@ angular.module('LodSite.controllers', [])
       });
     };
   }])
+
+  .controller('EmailConfirmationCtrl', ['$scope', '$http', '$state', function ($scope, $http, $state) {
+    var token = $state.params.token;
+    $http.post('http://api.lod-misis.ru/developers/confirmation/' + token).success(function (data) {
+      $scope.isSuccess = !data.Message;
+    });
+  }])
 ;

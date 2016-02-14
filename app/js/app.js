@@ -58,6 +58,11 @@ angular.module('LodSite', [
           templateUrl: templateUrl('developers', 'developers-item'),
           controller: 'DeveloperCtrl'
         })
+        .state('developers.confirmation', {
+          url: '/confirmation/:token',
+          templateUrl: templateUrl('developers', 'developers-confirmation'),
+          controller: 'EmailConfirmationCtrl'
+        })
 
         .state('signup', {
           url: '/signup',
@@ -79,7 +84,6 @@ angular.module('LodSite', [
           templateUrl: templateUrl('contact', 'contact-index'),
           controller: 'ContactCtrl'
         })
-
     }
   ]);
 

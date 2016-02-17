@@ -1,0 +1,121 @@
+<div class="profile-settings__wrap">
+  <h1 class="profile-settings__heading headline">Редактирование профиля</h1>
+
+  <div class="dividing-line"></div>
+
+  <form class="" name="">
+
+    <div class="profile-settings__top-part">
+
+      <div class="profile-settings__avatar-wrapper">
+        <div class="profile-settings__avatar-img"></div>
+        <div class="profile-settings__button">Загрузить фото</div>
+      </div>
+      <div class="profile-settings__top-part__inputs">
+        <div class="profile-settings__input-heading">Институт:</div>
+        <input type="text" class="profile-settings__input validate-field" pattern="^[А-Я][а-яА-Я-_\.]{1,30}$"
+               ng-model=""
+               ng-maxlength="30"
+               required/>
+        <br/>
+
+        <div class="profile-settings__input-heading">Кафедра:</div>
+        <input type="text" class="profile-settings__input validate-field" pattern="^[А-Я][а-яА-Я-_\.]{1,30}$"
+               ng-model=""
+               ng-maxlength="30"
+               required/>
+        <br/>
+
+        <div class="profile-settings__input-heading">Специальность:</div>
+        <input type="text" class="profile-settings__input validate-field" pattern="^[А-Я][а-яА-Я-_\.]{1,30}$"
+               ng-model=""
+               ng-maxlength="30"
+               required/>
+        <br/>
+
+        <div class="profile-settings__input-heading">Год поступления:</div>
+        <input type="text" class="profile-settings__input validate-field" pattern="[1-9]\d*" ng-minlength="4"
+               ng-maxlength="4" ng-model=""
+               required/>
+        <br/>
+
+        <div class="profile-settings__input-heading">Профиль ВКонтакте:</div>
+        <input type="url" name="vkUrl" class="profile-settings__input validate-field"
+               ng-model="" ng-maxlength="30" required/>
+
+        <div class="help-message-input" ng-show="signForm.vkUrl.$error.url">Введите адрес в формате
+          http://vk.com/[username].
+        </div>
+        <br/>
+
+        <div class="profile-settings__input-heading">Номер телефона:</div>
+        <input type="text" class="profile-settings__input validate-field" pattern="^[А-Я][а-яА-Я-_\.]{1,30}$"
+               ng-model=""
+               ng-maxlength="30"
+               required/>
+        <br/>
+      </div>
+    </div>
+
+    <h1 class="headline">Изменение пароля</h1>
+
+    <div class="dividing-line"></div>
+
+    <div class="profile-settings__middle-part">
+      <div class="profile-settings__input-heading">Новый пароль:</div>
+      <input type="password" class="profile-settings__input validate-field" pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
+             ng-minlength="8"
+             ng-maxlength="30" ng-model="" required/>
+      <br/>
+
+      <div class="profile-settings__input-heading">Повторите пароль:</div>
+      <input type="password" class="profile-settings__input validate-field" pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
+             ng-minlength="8"
+             ng-maxlength="30" ng-model="" required/>
+      <br/>
+
+    </div>
+
+    <h1 class="headline">Настройка оповещений</h1>
+
+    <div class="dividing-line"></div>
+
+    <div class="profile-settings__bottom-part">
+
+      <label class="profile-settings__checkbox-label"><input type="checkbox" ng-model="" required/>От
+        администрации</label>
+      <br/>
+
+      <label class="profile-settings__checkbox-label"><input type="checkbox" ng-model="" required/>О появлении
+        новых задач на проектах</label>
+      <br/>
+
+      <label class="profile-settings__checkbox-label"><input type="checkbox" ng-model="" required/>О
+        появлении/уходе разработчика на проекте</label>
+      <br/>
+
+      <label class="profile-settings__checkbox-label"> <input type="checkbox" ng-model="" required/>О
+        подтвержденной регистрации нового разработчика</label>
+      <br/>
+
+    </div>
+
+    <div class="profile-settings__submit-wrapper">
+      <div class="profile-settings__submit">Сохранить</div>
+    </div>
+
+  </form>
+
+
+  <div style="margin: 0 auto 30px auto;" ng-switch="isSuccess">
+    <p class="help-message-input" ng-switch-when="true">
+      Поздравляем! Ваша заявка принята, ожидайте e-mail сообщения о подтвреждении.
+    </p>
+
+    <p class="help-message-input" ng-switch-when="false">
+      Форма заполнена неверно! Проверьте введенные данные.
+    </p>
+  </div>
+
+  </form>
+</div>

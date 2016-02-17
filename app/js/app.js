@@ -63,6 +63,11 @@ angular.module('LodSite', [
           templateUrl: templateUrl('developers', 'developers-confirmation'),
           controller: 'EmailConfirmationCtrl'
         })
+        .state('developers.edit', {
+          url: '/edit/',
+          templateUrl: templateUrl('developers', 'developers-edit'),
+          controller: 'EmailConfirmationCtrl'
+        })
 
         .state('signup', {
           url: '/signup',

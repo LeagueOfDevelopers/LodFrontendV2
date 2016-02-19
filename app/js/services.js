@@ -26,7 +26,7 @@ angular.module('LodSite.services', [])
 
   .service('ApiService', ['$http', function ($http) {
 
-    this.sendPostRequest = function (apiUrl, requestData) {
+    var sendPostRequest = function (apiUrl, requestData) {
       return $http({
         method: 'POST',
         url: apiUrl,
@@ -34,10 +34,9 @@ angular.module('LodSite.services', [])
       }).then(function successCallback() {
         return true;
       }, function errorCallback(response) {
-        console.log("Данные не отправлены: " + response.status, response.statusText);
       });
     };
-    this.sendGetRequest = function (apiUrl, requestParams) {
+    var sendGetRequest = function (apiUrl, requestParams) {
       return $http({
         method: 'GET',
         url: apiUrl,
@@ -45,7 +44,6 @@ angular.module('LodSite.services', [])
       }).then(function successCallback(response) {
         return response.data;
       }, function errorCallback(response) {
-        console.log("Данные не получены: " + response.status, response.statusText);
       });
     };
 

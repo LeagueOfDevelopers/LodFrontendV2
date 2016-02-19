@@ -383,7 +383,7 @@ angular.module('LodSite.controllers', [])
     $scope.login = function() {
       ApiService.signIn($scope.userLogin).then(function () {
         $scope.userLogin = {};
-        $scope.signForm.$setPristine();
+        $scope.loginForm.$setPristine();
       }, function () {
         $scope.isNoDeveloper = true;
       });

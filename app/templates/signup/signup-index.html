@@ -30,15 +30,15 @@
       <input type="email" class="validate-field" placeholder="E-mail" pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$" ng-model="newDeveloper.Email" ng-maxlength="30" required/>
       <input type="password" name="password" class="validate-field" placeholder="Пароль" pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$" ng-minlength="8" ng-maxlength="30" ng-model="newDeveloper.Password" required/>
       <div class="help-message-input" ng-show="signForm.password.$error.pattern">Пароль должен быть длинной не менее 8 символов и содержать латинские буквы или цифры.</div>
-      <input type="password" class="validate-field" ng-keyup="comparePasswords()" placeholder="Повторите пароль" pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$" ng-minlength="8" ng-maxlength="30" ng-model="repeatedPassword" required/>
+      <input type="password" class="validate-field" placeholder="Повторите пароль" pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$" ng-minlength="8" ng-maxlength="30" ng-model="repeatedPassword" required/>
       <div class="help-message-input" ng-show="repeatedPassword !== newDeveloper.Password">Пароли не совпадают.</div>
     </div>
   </form>
-  <div style="margin: 0 auto 30px auto;" ng-switch="isSuccess">
-    <p class="help-message-input" ng-switch-when="true">
+  <div style="margin: 0 auto 30px auto;" ng-switch="currentState">
+    <p class="help-message-input" ng-switch-when="success">
       Поздравляем! Ваша заявка принята, ожидайте e-mail сообщения о подтвреждении.
     </p>
-    <p class="help-message-input" ng-switch-when="false">
+    <p class="help-message-input" ng-switch-when="failed">
       Форма заполнена неверно! Проверьте введенные данные.
     </p>
   </div>

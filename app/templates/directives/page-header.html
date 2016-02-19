@@ -38,11 +38,11 @@
         <div class="form__greeting"  ng-switch-when="evening">Добрый вечер!</div>
         <div class="form__greeting"  ng-switch-default="night">Доброй ночи!</div>
       </div>
-      <form class="form__container">
+      <form name="loginForm" class="form__container">
         <input type="email" placeholder="E-mail" ng-model="userLogin.Email" pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$" ng-maxlength="30" required />
         <input type="password" placeholder="Пароль" ng-model="userLogin.Password" pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$" ng-minlength="8" ng-maxlength="30" required />
         <button ng-click="login()">Войти</button>
-        <p ng-if="noDeveloperData" style="margin: 10px; color: #2980b9;"> Вы ввели неверный e-mail или пароль.</p>
+        <p ng-if="isNoDeveloper" style="margin: 10px; color: #2980b9;"> Вы ввели неверный e-mail или пароль.</p>
         <div class="form__question">Не являетесь разработчиком?
           <a class="form__become-dev" ui-sref="signup">Стать разработчиком</a>
         </div>

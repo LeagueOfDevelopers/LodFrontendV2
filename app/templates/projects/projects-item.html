@@ -13,7 +13,7 @@
     <div class="full-project__info">
       <div class="info__subheading">Тип проекта:</div>
       <div class="info__project-types">
-      <span class="project-types__type" ng-repeat="projectType in projectTypes" ng-switch="projectType" class="project-type">
+      <span class="project-types__type" ng-repeat="projectType in projectTypes" ng-switch="projectType">
           <span ng-switch-when="0">Веб</span>
           <span ng-switch-when="1">Мобильное</span>
           <span ng-switch-when="2">Десктопное</span>
@@ -25,9 +25,11 @@
       <div class="info__description" ng-bind="project.Info"></div>
       <div class="info__subheading">Разработчики:</div>
       <span class="info__developers" ng-repeat="developer in project.ProjectMemberships">
-        <a ng-href="{{'/developers/'+developer.DeveloperId}}" ng-bind="developer.FirstName + ' ' + developer.LastName"></a>
+        <a ng-href="{{'/developers/'+developer.DeveloperId}}"
+           ng-bind="developer.FirstName + ' ' + developer.LastName"></a>
         <span ng-bind=" '(' + developer.Role + '),' "></span>
       </span>
+
       <div class="info__if-no-developers" style="color:#a4a4a4" ng-bind="replacementText"></div>
       <div class="info__subheading">Уровень доступа:</div>
       <div class="info__access" ng-switch="project.AccessLevel">
@@ -43,9 +45,28 @@
   <h1 class="full-project__headline headline">Задачи на проекте</h1>
   <div class="dividing-line"></div>
   <div class="full-project-issues">
-    <span class="project-issues__issue" ng-repeat="projectIssue in projectIssues" class="full-project__issues" ng-bind="projectIssue.Header"></span>
+    <span class="project-issues__issue" ng-repeat="projectIssue in projectIssues" class="full-project__issues"
+          ng-bind="projectIssue.Header"></span>
   </div>
-  <h1 class="full-project__headline headline">Cкриншоты</h1>
+  <h1 class="full-project__headline headline">Скриншоты</h1>
   <div class="dividing-line"></div>
-  <!--Галерея-->
+  <!--<div class='gallery'>-->
+    <!--<div class="gallery__item"-->
+         <!--style='background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/jeremiah-wilson-2.jpg) no-repeat center;  background-size: cover; '></div>-->
+    <!--<div class="gallery__item"-->
+         <!--style='background: url(https://pp.vk.me/c624824/v624824421/2b088/Jg3VIBGJNdg.jpg) no-repeat center;  background-size: cover;'></div>-->
+    <!--<div class="gallery__item"-->
+         <!--style='background: url(https://cs7050.vk.me/c540102/v540102919/2b772/9cSiNclnf74.jpg) no-repeat center;  background-size: cover;'></div>-->
+    <!--<div class="gallery__item"-->
+         <!--style='background: url(https://pp.vk.me/c623625/v623625980/477d0/-NjVJ2_MmDA.jpg) no-repeat center;  background-size: cover;'></div>-->
+    <!--<div class="gallery__item"-->
+         <!--style='background: url(https://cs7050.vk.me/c540102/v540102919/2b772/9cSiNclnf74.jpg) no-repeat center;  background-size: cover;'></div>-->
+    <!--<div class="gallery__item"-->
+         <!--style='background: url(https://cs7050.vk.me/c540102/v540102919/2b772/9cSiNclnf74.jpg) no-repeat center;  background-size: cover;'></div>-->
+  <!--</div>-->
 </div>
+<!--<script type="text/ng-template" id="viewerWindow">-->
+<!--<div class="login-window__form">-->
+<!--<div class="form__close-button" ng-click="closeThisDialog('.form__close-button')"></div>-->
+<!--</div>-->
+<!--</script>-->

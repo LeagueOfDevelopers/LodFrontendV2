@@ -781,6 +781,26 @@ footer {
   margin: 5px;
 }
 
+/* project - gallery */
+.gallery {
+  font-size: 0;
+  display: -ms-flexbox;
+  -ms-flex-wrap: wrap;
+  -ms-flex-direction: column;
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+  display: -webkit-box;
+  display: flex;
+}
+.gallery__item {
+  /*-webkit-box-flex: auto;*/
+  /*-ms-flex: auto;*/
+  /*flex: auto;*/
+  margin: 5px;
+  width: 240px;
+  height: 240px;
+}
+
 /*************************
         ABOUT
 *************************/
@@ -1961,6 +1981,13 @@ footer {
 
   .project-issues__issue {
     margin: 15px 15px 15px 0;
+  }
+
+  /* project - gallery */
+  .gallery__item{
+    width: 350px;
+    height: 350px;
+    margin: 10px;
   }
 
   /*************************

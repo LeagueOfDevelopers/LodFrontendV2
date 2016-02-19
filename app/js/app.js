@@ -7,7 +7,8 @@ angular.module('LodSite', [
     'ngDialog',
 
     'LodSite.directives',
-    'LodSite.controllers'
+    'LodSite.controllers',
+    'LodSite.services'
   ])
   .config(['$locationProvider', '$stateProvider', '$urlRouterProvider',
     function ($locationProvider, $stateProvider, $urlRouterProvider) {
@@ -30,7 +31,6 @@ angular.module('LodSite', [
           template: '<ui-view/>',
           abstract: true
         })
-
         .state('projects.index', {
           url: '',
           templateUrl: templateUrl('projects', 'projects-index'),
@@ -64,6 +64,7 @@ angular.module('LodSite', [
           controller: 'EmailConfirmationCtrl'
         })
 
+        //other
         .state('signup', {
           url: '/signup',
           templateUrl: templateUrl('signup', 'signup-index'),

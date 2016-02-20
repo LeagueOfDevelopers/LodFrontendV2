@@ -154,7 +154,7 @@ angular.module('LodSite.controllers', [])
   }])
   .controller('ProjectCtrl', ['$scope','$state','ApiService', function ($scope, $state, ApiService) {
     var projectId = $state.params.id;
-    $scope.project = ApiService.getProject(projectId);
+    $scope.project = ApiService.testGetProject(projectId);
     $scope.projectTypes = $scope.project.ProjectType;
     $scope.projectIssues = $scope.project.Issues;
     if ($scope.project.ProjectMemberships.length === 0) {

@@ -2,7 +2,7 @@
   <h1 class="full-project__name" ng-bind="project.Name"></h1>
   <div class="full-project-wrapper">
     <div class="full-project__preview" style="background: #fff url({{project.LandingImageUri}})
-     no-repeat center; background-size: contain;">
+     no-repeat center; background-size: cover;">
     <span class="preview__project-status" ng-switch="project.ProjectStatus">
           <span class="status__value" style="background: #795548;" ng-switch-when="0">Запланирован</span>
           <span class="status__value" style="background: #1e88e5;" ng-switch-when="1">В процессе</span>
@@ -29,7 +29,6 @@
            ng-bind="developer.FirstName + ' ' + developer.LastName"></a>
         <span ng-bind=" '(' + developer.Role + '),' "></span>
       </span>
-
       <div class="info__if-no-developers" style="color:#a4a4a4" ng-bind="replacementText"></div>
       <div class="info__subheading">Уровень доступа:</div>
       <div class="info__access" ng-switch="project.AccessLevel">
@@ -45,25 +44,14 @@
   <h1 class="full-project__headline headline">Задачи на проекте</h1>
   <div class="dividing-line"></div>
   <div class="full-project-issues">
-    <span class="project-issues__issue" ng-repeat="projectIssue in projectIssues" class="full-project__issues"
-          ng-bind="projectIssue.Header"></span>
+    <span class="project-issues__issue" ng-repeat="projectIssue in projectIssues" ng-bind="projectIssue.Header"></span>
   </div>
   <h1 class="full-project__headline headline">Скриншоты</h1>
   <div class="dividing-line"></div>
-  <!--<div class='gallery'>-->
-    <!--<div class="gallery__item"-->
-         <!--style='background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/jeremiah-wilson-2.jpg) no-repeat center;  background-size: cover; '></div>-->
-    <!--<div class="gallery__item"-->
-         <!--style='background: url(https://pp.vk.me/c624824/v624824421/2b088/Jg3VIBGJNdg.jpg) no-repeat center;  background-size: cover;'></div>-->
-    <!--<div class="gallery__item"-->
-         <!--style='background: url(https://cs7050.vk.me/c540102/v540102919/2b772/9cSiNclnf74.jpg) no-repeat center;  background-size: cover;'></div>-->
-    <!--<div class="gallery__item"-->
-         <!--style='background: url(https://pp.vk.me/c623625/v623625980/477d0/-NjVJ2_MmDA.jpg) no-repeat center;  background-size: cover;'></div>-->
-    <!--<div class="gallery__item"-->
-         <!--style='background: url(https://cs7050.vk.me/c540102/v540102919/2b772/9cSiNclnf74.jpg) no-repeat center;  background-size: cover;'></div>-->
-    <!--<div class="gallery__item"-->
-         <!--style='background: url(https://cs7050.vk.me/c540102/v540102919/2b772/9cSiNclnf74.jpg) no-repeat center;  background-size: cover;'></div>-->
-  <!--</div>-->
+  <div class='gallery'>
+    <div class="gallery__item" ng-repeat="screenshotUrl in project.Screenshots"
+         style='background: url({{screenshotUrl}}) no-repeat center;  background-size: cover;'></div>
+  </div>
 </div>
 <!--<script type="text/ng-template" id="viewerWindow">-->
 <!--<div class="login-window__form">-->

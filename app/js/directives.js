@@ -42,16 +42,14 @@ angular.module('LodSite.directives', [])
       controller: 'RandomProjectsCtrl'
     }
   })
-
-  .directive('yandexMap', function ($document) {
+  .directive('yandexMap', function () {
     return {
       restrict: 'EA',
       scope: true,
       templateUrl: templateUrl('directives', 'yandex-map'),
       controller: ['$scope', function ($scope) {
-
       }],
-      link: function (scope, element, attrs) {
+      link: function (scope, element) {
         var script = document.createElement('script');
         script.src = 'https://api-maps.yandex.ru/services/constructor/1.0/js/?sid=4Yg6W87x5Mr-mGZLObfvYf8IoDh7KTsm&width=100%&height=450&lang=ru_RU&sourceType=constructor';
         script.async = true;
@@ -59,7 +57,6 @@ angular.module('LodSite.directives', [])
       }
     };
   })
-
   .directive('uploadFile', ['$rootScope', function($rootScope) {
     return {
       resctrict: 'A',
@@ -93,7 +90,6 @@ angular.module('LodSite.directives', [])
       });
     }
   }])
-
   .directive('dropzoneFile', ['$rootScope', function($rootScope) {
     return {
       resctrict: 'A',
@@ -126,4 +122,13 @@ angular.module('LodSite.directives', [])
         }
       });
     }
-  }]);
+  }])
+  .directive('loader', function () {
+    return {
+      restrict: 'E',
+      scope: true,
+      templateUrl: templateUrl('directives', 'loader')
+    }
+  })
+
+;

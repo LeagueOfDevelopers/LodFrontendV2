@@ -15,21 +15,18 @@
         <div class="profile-settings__input-heading">Институт:</div>
         <input type="text" class="profile-settings__input validate-field" pattern="^[А-Я][а-яА-Я-_\.]{1,30}$"
                ng-model=""
-               ng-maxlength="30"
                required/>
         <br/>
 
         <div class="profile-settings__input-heading">Кафедра:</div>
         <input type="text" class="profile-settings__input validate-field" pattern="^[А-Я][а-яА-Я-_\.]{1,30}$"
                ng-model=""
-               ng-maxlength="30"
                required/>
         <br/>
 
         <div class="profile-settings__input-heading">Специальность:</div>
-        <input type="text" class="profile-settings__input validate-field" pattern="^[А-Я][а-яА-Я-_\.]{1,30}$"
+        <input type="text" class="profile-settings__input validate-field" pattern="^[а-яА-Я]$"
                ng-model=""
-               ng-maxlength="30"
                required/>
         <br/>
 
@@ -57,30 +54,36 @@
       </div>
     </div>
 
-    <h1 class="headline">Изменение пароля</h1>
+    <h1 class="profile-settings__heading headline">Изменение пароля</h1>
 
     <div class="dividing-line"></div>
+    <div class="profile-settings__middle-part__wrapper">
+      <div class="profile-settings__middle-part">
+        <div class="profile-settings__input-heading">Новый пароль:</div>
+        <input type="password" class="profile-settings__input validate-field" pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
+               ng-minlength="8"
+               ng-maxlength="30" ng-model="" required/>
+        <br/>
 
-    <div class="profile-settings__middle-part">
-      <div class="profile-settings__input-heading">Новый пароль:</div>
-      <input type="password" class="profile-settings__input validate-field" pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
-             ng-minlength="8"
-             ng-maxlength="30" ng-model="" required/>
-      <br/>
+        <div class="profile-settings__input-heading">Повторите пароль:</div>
+        <input type="password" class="profile-settings__input validate-field" pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
+               ng-minlength="8"
+               ng-maxlength="30" ng-model="" required/>
+        <br/>
 
-      <div class="profile-settings__input-heading">Повторите пароль:</div>
-      <input type="password" class="profile-settings__input validate-field" pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
-             ng-minlength="8"
-             ng-maxlength="30" ng-model="" required/>
-      <br/>
+      </div>
+
+      <div class="profile-settings__support-div"></div>
 
     </div>
 
-    <h1 class="headline">Настройка оповещений</h1>
+    <h1 class="profile-settings__heading headline">Настройка оповещений</h1>
 
     <div class="dividing-line"></div>
 
     <div class="profile-settings__bottom-part">
+
+      <div class="profile-settings__bottom-part__heading">Посылать на почту оповещения:</div>
 
       <label class="profile-settings__checkbox-label"><input type="checkbox" ng-model="" required/>От
         администрации</label>

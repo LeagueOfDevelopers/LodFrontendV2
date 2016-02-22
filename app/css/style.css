@@ -1024,6 +1024,7 @@ footer {
 }
 
 .order-uploaded-file__name-wrap {
+  display: inline-block;
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -1374,6 +1375,8 @@ footer {
 .profile-settings__input {
   display: block;
   box-sizing: border-box;
+  outline: none;
+  border: 0;
   width: 90%;
   max-width: 450px;
   padding: 0 5px;
@@ -1441,6 +1444,13 @@ footer {
   width: 90%;
   max-width: 450px;
   margin: 0 auto;
+}
+
+.profile-settings__bottom-part__heading {
+  font-size: 1.1em;
+  font-weight: 900;
+  margin: 0 auto 10px;
+  text-align: left;
 }
 
 .profile-settings__checkbox-label {
@@ -1691,9 +1701,6 @@ footer {
   /*************************
      PROFILE SETTINGS
   *************************/
-  .profile-settings__wrap {
-
-  }
 
   .profile-settings__wrap .dividing-line {
     margin: 10px auto 20px;
@@ -1701,22 +1708,17 @@ footer {
   }
 
   .profile-settings__top-part {
+    display: inline-block;
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
   }
 
   .profile-settings__heading {
+    text-align: left;
+    padding-left: 0;
   }
 
-  .profile-settings__input-heading {
-    width: 90%;
-    max-width: 450px;
-    margin: 0 auto 5px;
-
-    font-weight: 600;
-    font-size: 1.1em;
-  }
 
   .profile-settings__top-part__inputs {
     width: 50%;
@@ -1727,39 +1729,22 @@ footer {
     max-width: none;
   }
 
+  .profile-settings__middle-part {
+    text-align: center;
+    width: 50%;
+  }
+
   .profile-settings__middle-part .profile-settings__input {
-    display: inline-block;
-    width: 30%;
-    margin: 0;
+    margin: 0 auto 5px;
   }
 
   .profile-settings__middle-part .profile-settings__input-heading {
-    display: inline-block;
-    width: auto;
-    margin: 0;
+    text-align: left;
+    margin: 0 auto;
   }
 
   .profile-settings__avatar-wrapper {
     width: 50%;
-  }
-
-  .profile-settings__avatar-img {
-    margin: 0 auto;
-    overflow: hidden;
-    position: relative;
-    background-color: white;
-    max-width: 400px;
-    width: 90%;
-    background-image: url("../imgs/developer-default-photo-gray.svg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 90% 90%;
-  }
-
-  .profile-settings__avatar-img:before {
-    content: "";
-    padding-top: 100%;
-    float: left;
   }
 
   .profile-settings__button, .profile-settings__submit {
@@ -1771,37 +1756,28 @@ footer {
     font-family: 'Cuprum', sans-serif;
   }
 
-  .profile-settings__button {
-    font-size: 1.2em;
-    padding: 5px 10px;
-    margin: 15px auto 20px;
-  }
-
-  .profile-settings__submit {
-    margin: 50px 0 10px;
-    padding: 5px 30px;
-    font-size: 1.7em;
-  }
-
   .profile-settings__submit-wrapper {
-    width: 100%;
-    text-align: center;
-    margin: 40px auto;
-  }
-
-  .profile-settings__button:hover {
-    background-color: #1e88e5;
+    margin: 0;
   }
 
   .profile-settings__bottom-part {
+    width: 50%;
+    max-width: none;
+    text-align: center;
+    white-space: nowrap;
+    margin: 0;
+  }
+
+  .profile-settings__bottom-part__heading {
     width: 90%;
-    max-width: 450px;
-    margin: 0 auto;
+    margin-bottom: 15px;
   }
 
   .profile-settings__checkbox-label {
-    margin-bottom: 20px;
-    font-size: 1.1em;
+    display: block;
+    width: 90%;
+    margin: 0 auto -10px;
+    text-align: left;
   }
 }
 
@@ -2494,11 +2470,135 @@ footer {
     font-size: 1em;
   }
 
+  /*****************************
+    PROFILE SETTINGS
+  *****************************/
+  .profile-settings__avatar-wrapper {
+    width: 350px;
+  }
+
+  .profile-settings__avatar-img {
+    width: 310px;
+  }
+
+  .profile-settings__wrap{
+    padding: 0 40px;
+  }
+
+  .profile-settings__top-part {
+    justify-content: center;
+  }
+
+  .profile-settings__top-part__inputs {
+    width: 600px
+  }
+
+  .profile-settings__input-heading {
+    display: inline-block;
+    text-align: right;
+    width: 180px;
+  }
+
+  .profile-settings__input {
+    display: inline-block;
+    max-width: none;
+    width: 395px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+  }
+
+  .profile-settings__middle-part__wrapper {
+    display: inline-block;
+    display: flex;
+    justify-content: center;
+  }
+
+  .profile-settings__middle-part {
+    display: inline-block;
+    text-align: left;
+    width: 600px;
+  }
+
+  .profile-settings__middle-part .profile-settings__input-heading {
+    text-align: right;
+  }
+
+  .profile-settings__middle-part .profile-settings__input {
+    margin-bottom: 20px;
+    margin-left: 20px;
+    width: 300px;
+  }
+
+
+  .profile-settings__support-div {
+    display: inline-block;
+    width: 350px;
+    height: 100px;
+  }
+
+
+
+  .profile-settings__bottom-part {
+    width: 600px;
+    text-align: left;
+  }
+
+  .profile-settings__bottom-part [type="checkbox"] {
+    margin-right: 20px;
+  }
 }
 
 @media only screen and (min-width: 1300px) {
   .projects-section-container {
     max-width: 1200px;
+  }
+
+  /*****************************
+    PROFILE SETTINGS
+  *****************************/
+
+  .headline {
+    font-size: 2em;
+  }
+
+  .profile-settings__wrap .dividing-line {
+    margin-bottom: 35px;
+  }
+
+  .profile-settings__avatar-wrapper, .profile-settings__support-div {
+    width: 440px;
+  }
+
+  .profile-settings__avatar-img {
+    width: 390px;
+  }
+
+  .profile-settings__top-part__inputs,.profile-settings__middle-part, .profile-settings__bottom-part {
+    width: 1000px
+  }
+
+  .profile-settings__input {
+    height: 40px;
+    width: 620px;
+    margin-bottom: 30px;
+  }
+
+  .profile-settings__button{
+    font-size: 1.3em;
+  }
+
+  .profile-settings__input-heading {
+    font-size: 1.2em;
+    width: 193px;
+  }
+
+  .profile-settings__middle-part .profile-settings__input {
+    width: 350px;
+    margin-bottom: 30px;
+  }
+
+  .profile-settings__bottom-part__heading, .profile-settings__checkbox-label {
+    font-size: 1.2em;
   }
 }
 
@@ -2513,5 +2613,17 @@ footer {
 
   .projects-section-container {
     max-width: 1600px;
+  }
+
+  /*****************************
+    PROFILE SETTINGS
+  *****************************/
+
+  .profile-settings__input {
+    width: 740px;
+  }
+
+  .profile-settings__input-heading {
+    width: 228px;
   }
 }

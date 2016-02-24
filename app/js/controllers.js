@@ -5,6 +5,9 @@
 angular.module('LodSite.controllers', [])
   //main controllers
   .controller('PageCtrl', ['$scope', function ($scope) {
+    $scope.$on('$viewContentLoaded', function(){
+      setPaddingBottom();
+    });
     var defaultTitle = 'Лига Разработчиков НИТУ МИСиС';
     $scope.$on('change_title', function (e, args) {
       $scope.title = args.title !== undefined && args.title.length ? args.title : defaultTitle;
@@ -32,16 +35,13 @@ angular.module('LodSite.controllers', [])
     $scope.$on('$locationChangeSuccess', function () {
       $scope.opened = false;
     });
+
     $scope.openLoginDialog = function () {
       $scope.$dialog = ngDialog.open({
         template: 'loginTemplate',
         showClose: true,
         closeByNavigation: true
       });
-    };
-
-    $scope.closeDialog = function () {
-      ngDialog.close($scope.dialog);
     };
   }])
   .controller('FooterCtrl', ['$scope', function ($scope) {
@@ -152,7 +152,7 @@ angular.module('LodSite.controllers', [])
     });
 
   }])
-  .controller('ProjectCtrl', ['$scope','$state','ApiService', function ($scope, $state, ApiService) {
+  .controller('ProjectCtrl', ['$scope','$state','ApiService','ngDialog', '$rootScope', function ($scope, $state, ApiService, ngDialog, $rootScope) {
     var projectId = $state.params.id;
     $scope.project = ApiService.testGetProject(projectId);
     $scope.projectTypes = $scope.project.ProjectType;
@@ -160,6 +160,21 @@ angular.module('LodSite.controllers', [])
     if ($scope.project.ProjectMemberships.length === 0) {
       $scope.replacementText = "В данный момент на проекте нет разработчиков.";
     }
+
+    $scope.openViewer = function () {
+      $scope.$dialog = ngDialog.open({
+        template: 'viewer',
+        showClose: true,
+        closeByNavigation: true,
+        controller: ['$rootScope', '$scope', function($rootScope, $scope) {
+            $scope.openedScreenshotUrl = $rootScope.openedScreenshotUrl;
+        }]
+      });
+    };
+    $scope.openViewerDialog = function (imgIndex) {
+      $rootScope.openedScreenshotUrl = $scope.project.Screenshots[imgIndex];
+      $scope.openViewer();
+    };
 
     $scope.$emit('change_title', {
       title: $scope.project.Name + ' - Лига Разработчиков НИТУ МИСиС'

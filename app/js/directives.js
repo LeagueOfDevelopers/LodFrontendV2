@@ -123,12 +123,5 @@ angular.module('LodSite.directives', [])
       });
     }
   }])
-  .directive('loader', function () {
-    return {
-      restrict: 'E',
-      scope: true,
-      templateUrl: templateUrl('directives', 'loader')
-    }
-  })
 
 ;

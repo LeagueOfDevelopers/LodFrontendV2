@@ -92,8 +92,8 @@ angular.module('LodSite', [
 function templateUrl(module, name) {
   return 'app/templates/' + module + '/' + name + '.html?' + Math.random();
 }
+//keeping footer at the bottom
 function setPaddingBottom() {
   $('.content').css('padding-bottom', $('footer').innerHeight());
 }
-setTimeout(setPaddingBottom, 500);
 $(window).resize(setPaddingBottom);

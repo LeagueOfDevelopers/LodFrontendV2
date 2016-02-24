@@ -50,11 +50,11 @@
   <div class="dividing-line"></div>
   <div class='gallery'>
     <div class="gallery__item" ng-repeat="screenshotUrl in project.Screenshots"
-         style='background: url({{screenshotUrl}}) no-repeat center;  background-size: cover;'></div>
+         style='background: url({{screenshotUrl}}) no-repeat center;  background-size: cover;' ng-click="openViewerDialog($index)"></div>
   </div>
+  <script type="text/ng-template" id="viewer">
+    <div class="viewer__img" style='background: rgba(0, 0, 0, .8) url({{openedScreenshotUrl}}) no-repeat center;  background-size: contain;'>
+      <div class="viewer__close-button" ng-click="closeThisDialog('.viewer__button')"></div>
+    </div>
+  </script>
 </div>
-<!--<script type="text/ng-template" id="viewerWindow">-->
-<!--<div class="login-window__form">-->
-<!--<div class="form__close-button" ng-click="closeThisDialog('.form__close-button')"></div>-->
-<!--</div>-->
-<!--</script>-->

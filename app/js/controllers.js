@@ -432,25 +432,27 @@ angular.module('LodSite.controllers', [])
     
 
     var developerId = $state.params.id;
-    $http.get('http://api.lod-misis.ru/developers/' + developerId).success(function (data) {
+    $http.get('http://api.lod-misis.ru/developers/profile/' + developerId).success(function (data) {
       $scope.developer = data;
-      var dateOptions = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      };
-      var date = new Date();
-      var formattedDate = new Date(Date.parse($scope.developer.RegistrationDate));
 
-      if ($scope.developer.PhotoUri == null) {
-        $scope.developer.PhotoUri = '/app/imgs/developer-default-photo.png';
+      if ($scope.developer.SmallPhotoUri == null) {
+        $scope.developer.SmallPhotoUri = '/app/imgs/developer-default-photo-gray.svg';
       }
-      $scope.developer.studyingYear = date.getFullYear() - $scope.developer.StudentAccessionYear || 1;
-      $scope.developer.RegistrationDate = formattedDate.toLocaleString("ru", dateOptions);
-      $scope.$emit('change_title', {
-        title: $scope.developer.FirstName + ' ' + $scope.developer.LastName + ' - Лига Разработчиков НИТУ МИСиС'
-      });
     });
+
+    $scope.compareProfile = function () {
+
+    };
+
+    $http.get('http://api.lod-misis.ru/developers/notification/' + developerId).success(function (data) {
+      $scope.notifications = data;
+
+    });
+
+    $scope.saveChange = function () {
+      $http.post();
+    }
+
     $scope.$emit('toggle_black', {isblack: true});
   }])
 ;

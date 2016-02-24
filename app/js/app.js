@@ -64,7 +64,7 @@ angular.module('LodSite', [
           controller: 'EmailConfirmationCtrl'
         })
         .state('developers.edit', {
-          url: '/edit/',
+          url: '/profile/:id',
           templateUrl: templateUrl('developers', 'developers-edit'),
           controller: 'EmailConfirmationCtrl'
         })

@@ -3,7 +3,7 @@
 
   <div class="dividing-line"></div>
 
-  <form class="" name="">
+  <form class="" name="profileSettings">
 
     <div class="profile-settings__top-part">
 
@@ -13,43 +13,38 @@
       </div>
       <div class="profile-settings__top-part__inputs">
         <div class="profile-settings__input-heading">Институт:</div>
-        <input type="text" class="profile-settings__input validate-field" pattern="^[А-Я][а-яА-Я-_\.]{1,30}$"
-               ng-model=""
-               required/>
+        <input type="text" class="profile-settings__input validate-field" ng-bind="profile.InstituteNname"
+               ng-model="profile.InstituteName" required/>
         <br/>
 
         <div class="profile-settings__input-heading">Кафедра:</div>
-        <input type="text" class="profile-settings__input validate-field" pattern="^[А-Я][а-яА-Я-_\.]{1,30}$"
-               ng-model=""
-               required/>
+        <input type="text" class="profile-settings__input validate-field" ng-bind="profile.StudyingDirection"
+               ng-model="profile.StudyingDirection" required/>
         <br/>
 
         <div class="profile-settings__input-heading">Специальность:</div>
-        <input type="text" class="profile-settings__input validate-field" pattern="^[а-яА-Я]$"
-               ng-model=""
-               required/>
+        <input type="text" class="profile-settings__input validate-field" ng-bind="profile.Specialization"
+               ng-model="profile.Specialization" required/>
         <br/>
 
         <div class="profile-settings__input-heading">Год поступления:</div>
-        <input type="text" class="profile-settings__input validate-field" pattern="[1-9]\d*" ng-minlength="4"
-               ng-maxlength="4" ng-model=""
-               required/>
+        <input type="text" class="profile-settings__input validate-field" ng-bind="profile.StudentAccessionYear"
+               ng-model="profile.PhoneNumber" pattern="[1-9]\d*" ng-minlength="4" ng-maxlength="4" required/>
         <br/>
 
         <div class="profile-settings__input-heading">Профиль ВКонтакте:</div>
-        <input type="url" name="vkUrl" class="profile-settings__input validate-field"
-               ng-model="" ng-maxlength="30" required/>
+        <input type="url" name="vkUrl" class="profile-settings__input validate-field" ng-bind="profile.VkProfileUri"
+               ng-model="profile.VkProfileUri" required/>
 
-        <div class="help-message-input" ng-show="signForm.vkUrl.$error.url">Введите адрес в формате
+        <div class="help-message-input" name="vkUri" ng-show="profileSettings.vkUri.$error.url">Введите адрес в формате
           http://vk.com/[username].
         </div>
+
         <br/>
 
         <div class="profile-settings__input-heading">Номер телефона:</div>
-        <input type="text" class="profile-settings__input validate-field" pattern="^[А-Я][а-яА-Я-_\.]{1,30}$"
-               ng-model=""
-               ng-maxlength="30"
-               required/>
+        <input type="text" class="profile-settings__input validate-field"
+               ng-bind="profile.PhoneNumber" ng-model="profile.PhoneNumber" required/>
         <br/>
       </div>
     </div>
@@ -60,16 +55,22 @@
     <div class="profile-settings__middle-part__wrapper">
       <div class="profile-settings__middle-part">
         <div class="profile-settings__input-heading">Новый пароль:</div>
-        <input type="password" class="profile-settings__input validate-field" pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
-               ng-minlength="8"
-               ng-maxlength="30" ng-model="" required/>
+        <input type="password" name="password" class="profile-settings__input validate-field"
+               pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
+               ng-minlength="8" ng-maxlength="30" ng-model="newPassword" required/>
         <br/>
 
+        <div class="help-message-input" ng-show="profileSettings.password.$error.pattern">Пароль должен быть длинной не
+          менее 8 символов и содержать латинские буквы или цифры.
+        </div>
+
         <div class="profile-settings__input-heading">Повторите пароль:</div>
-        <input type="password" class="profile-settings__input validate-field" pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
-               ng-minlength="8"
-               ng-maxlength="30" ng-model="" required/>
+        <input type="password" name="repeatedPassword" class="profile-settings__input validate-field"
+               pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
+               ng-minlength="8" ng-maxlength="30" ng-change="compareProfile(password, repeatedPassword)" required/>
         <br/>
+
+        <div class="help-message-input" ng-if="repeatedPassword !== password">Пароли не совпадают.</div>
 
       </div>
 
@@ -81,11 +82,13 @@
 
     <div class="dividing-line"></div>
 
-    <div class="profile-settings__bottom-part">
+    <div class="profile-settings__bottom-part" ng-switch="notification">
 
       <div class="profile-settings__bottom-part__heading">Посылать на почту оповещения:</div>
 
-      <label class="profile-settings__checkbox-label"><input type="checkbox" ng-model="" required/>От
+      <label class="profile-settings__checkbox-label" ng-switch-when="notification[1] == 1"><input type="checkbox" ng-click="" required/>От
+        администрации</label>
+      <label class="profile-settings__checkbox-label"><input type="checkbox" ng-click="" required/>От
         администрации</label>
       <br/>
 
@@ -112,11 +115,11 @@
 
   <div style="margin: 0 auto 30px auto;" ng-switch="isSuccess">
     <p class="help-message-input" ng-switch-when="true">
-      Поздравляем! Ваша заявка принята, ожидайте e-mail сообщения о подтвреждении.
+      Изменения успешно сохранены.
     </p>
 
     <p class="help-message-input" ng-switch-when="false">
-      Форма заполнена неверно! Проверьте введенные данные.
+      Какое-то из полей заполнено неверно.
     </p>
   </div>
 

@@ -35,11 +35,11 @@
       <div class="developer-info__item-text"><a style="text-decoration: underline;
     color: #0072bc;" href="{{developer.VkProfileUri}}">{{developer.VkProfileUri}}</a></div>
     </div>
-    <div class="developer-info__item">
+    <div class="developer-info__item" ng-if="developer.Email">
       <div class="developer-info__item-name">E-mail</div>
       <div class="developer-info__item-text" ng-bind="developer.Email"></div>
     </div>
-    <div class="developer-info__item">
+    <div class="developer-info__item" ng-if="developer.PhoneNumber">
       <div class="developer-info__item-name">Номер телефона</div>
       <div class="developer-info__item-text" ng-bind="developer.PhoneNumber"></div>
     </div>

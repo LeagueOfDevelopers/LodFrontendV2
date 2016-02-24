@@ -239,6 +239,8 @@ angular.module('LodSite.controllers', [])
     // ACCORDION
 
     $(".order-accordion p:not(:first)").hide();
+    $(".order-content > .order-accordion p:first").show();
+
 
     $(".span-wrap").click(function () {
       $(this).next("p").slideToggle("slow")
@@ -440,11 +442,13 @@ angular.module('LodSite.controllers', [])
       }
     });
 
-    $scope.compareProfile = function () {
-
+    $scope.comparePassword = function (password, repetitionPassword) {
+      if(password.value != repetitionPassword.value) {
+        return false;
+      }
     };
 
-    $http.get('http://api.lod-misis.ru/developers/notification/' + developerId).success(function (data) {
+    $http.get('http://api.lod-misis.ru/developers/notificationsettings/' + developerId).success(function (data) {
       $scope.notifications = data;
 
     });

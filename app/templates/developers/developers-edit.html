@@ -86,21 +86,21 @@
 
       <div class="profile-settings__bottom-part__heading">Посылать на почту оповещения:</div>
 
-      <label class="profile-settings__checkbox-label" ng-switch-when="notification[1] == 1"><input type="checkbox" ng-click="" required/>От
+      <label class="profile-settings__checkbox-label" ng-switch-when="notification[0].NotificationSettingValue == 1"><input type="checkbox" ng-click="checkboxEvent()" required/>От
         администрации</label>
-      <label class="profile-settings__checkbox-label"><input type="checkbox" ng-click="" required/>От
+      <label class="profile-settings__checkbox-label" ng-switch-when="notification[0].NotificationSettingValue == 2"><input type="checkbox" ng-click="checkboxEvent()" required/>От
         администрации</label>
       <br/>
 
-      <label class="profile-settings__checkbox-label"><input type="checkbox" ng-model="" required/>О появлении
+      <label class="profile-settings__checkbox-label" ng-switch-when="notification[0].NotificationSettingValue == 1"><input type="checkbox" ng-model="" required/>О появлении
         новых задач на проектах</label>
       <br/>
 
-      <label class="profile-settings__checkbox-label"><input type="checkbox" ng-model="" required/>О
+      <label class="profile-settings__checkbox-label" ng-switch-when="notification[0].NotificationSettingValue == 1"><input type="checkbox" ng-model="" required/>О
         появлении/уходе разработчика на проекте</label>
       <br/>
 
-      <label class="profile-settings__checkbox-label"> <input type="checkbox" ng-model="" required/>О
+      <label class="profile-settings__checkbox-label" ng-switch-when="notification[0].NotificationSettingValue == 1"> <input type="checkbox" ng-model="" required/>О
         подтвержденной регистрации нового разработчика</label>
       <br/>
 

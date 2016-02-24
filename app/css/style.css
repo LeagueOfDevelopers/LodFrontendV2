@@ -889,11 +889,14 @@ footer {
   background-color: #f1f1f1;
 }
 
-.order-accordion, .order-form, .contact-form {
+.order-form, .contact-form {
   border: 2px solid #202d3a;
   padding-top: 45px;
-  min-width: 300px;
   max-width: 80%;
+}
+
+.order-accordion, .order-form, .contact-form {
+  min-width: 300px;
   margin: 0 auto;
 }
 
@@ -945,7 +948,7 @@ footer {
 .success, .order-form [type="submit"], .contact-form [type="submit"] {
   display: inline-block;
   position: relative;
-  top: 8px;
+  top: 7px;
   height: 40px;
   width: 40px;
 }
@@ -962,6 +965,11 @@ footer {
 /*************************
          ORDER
 *************************/
+
+.order-content > .order-accordion{
+  display: none;
+}
+
 .order-form select {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -1103,7 +1111,7 @@ footer {
 }
 
 .order-accordion {
-  border-top: 0;
+  padding-top: 15px;
   padding-bottom: 20px;
 }
 
@@ -1595,8 +1603,11 @@ footer {
     font-size: 1.8em;
   }
 
-  .order-accordion, .order-form, .contact-form {
+  .order-form, .contact-form {
     width: 70%;
+  }
+
+  .order-accordion, .order-form, .contact-form {
     max-width: 500px;
   }
 
@@ -1618,7 +1629,7 @@ footer {
   .success, .order-form [type="submit"], .contact-form [type="submit"] {
     height: 45px;
     width: 45px;
-    top: 10px;
+    top: 9px;
   }
 
   .success {
@@ -1701,7 +1712,6 @@ footer {
   /*************************
      PROFILE SETTINGS
   *************************/
-
   .profile-settings__wrap .dividing-line {
     margin: 10px auto 20px;
     max-width: none;
@@ -1718,7 +1728,6 @@ footer {
     text-align: left;
     padding-left: 0;
   }
-
 
   .profile-settings__top-part__inputs {
     width: 50%;
@@ -2381,7 +2390,11 @@ footer {
     height: 129px;
   }
 
-  .order-accordion {
+  .order-wrap-form .order-accordion {
+    display: none;
+  }
+
+  .order-content > .order-accordion {
     display: inline-block;
     width: 450px;
     margin: 65px 0 0;
@@ -2481,7 +2494,7 @@ footer {
     width: 310px;
   }
 
-  .profile-settings__wrap{
+  .profile-settings__wrap {
     padding: 0 40px;
   }
 
@@ -2529,14 +2542,11 @@ footer {
     width: 300px;
   }
 
-
   .profile-settings__support-div {
     display: inline-block;
     width: 350px;
     height: 100px;
   }
-
-
 
   .profile-settings__bottom-part {
     width: 600px;
@@ -2556,7 +2566,6 @@ footer {
   /*****************************
     PROFILE SETTINGS
   *****************************/
-
   .headline {
     font-size: 2em;
   }
@@ -2573,7 +2582,7 @@ footer {
     width: 390px;
   }
 
-  .profile-settings__top-part__inputs,.profile-settings__middle-part, .profile-settings__bottom-part {
+  .profile-settings__top-part__inputs, .profile-settings__middle-part, .profile-settings__bottom-part {
     width: 1000px
   }
 
@@ -2583,7 +2592,7 @@ footer {
     margin-bottom: 30px;
   }
 
-  .profile-settings__button{
+  .profile-settings__button {
     font-size: 1.3em;
   }
 
@@ -2618,7 +2627,6 @@ footer {
   /*****************************
     PROFILE SETTINGS
   *****************************/
-
   .profile-settings__input {
     width: 740px;
   }

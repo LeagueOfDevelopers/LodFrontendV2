@@ -409,6 +409,38 @@ angular.module('LodSite.controllers', [])
     var token = $state.params.token;
     $http.post('http://api.lod-misis.ru/developers/confirmation/' + token).success(function (data) {
       $scope.currentState = !data.Message;
+      $scope.isSuccess = true;
+    }).error(function () {
+      $scope.isSuccess = false;
     });
+
+    $scope.$emit('toggle_black', {isblack: true});
+  }])
+
+  .controller('EditDeveloperCtrl', ['$scope', '$http', '$state', function ($scope, $http, $state) {
+
+    $("[name='phone']").mask("+7 (999) 999-9999");
+
+    var developerId = $state.params.id;
+    $http.get('http://api.lod-misis.ru/developers/' + developerId).success(function (data) {
+      $scope.developer = data;
+      var dateOptions = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      };
+      var date = new Date();
+      var formattedDate = new Date(Date.parse($scope.developer.RegistrationDate));
+
+      if ($scope.developer.PhotoUri == null) {
+        $scope.developer.PhotoUri = '/app/imgs/developer-default-photo.png';
+      }
+      $scope.developer.studyingYear = date.getFullYear() - $scope.developer.StudentAccessionYear || 1;
+      $scope.developer.RegistrationDate = formattedDate.toLocaleString("ru", dateOptions);
+      $scope.$emit('change_title', {
+        title: $scope.developer.FirstName + ' ' + $scope.developer.LastName + ' - Лига Разработчиков НИТУ МИСиС'
+      });
+    });
+    $scope.$emit('toggle_black', {isblack: true});
   }])
 ;

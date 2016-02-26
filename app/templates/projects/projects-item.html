@@ -3,7 +3,7 @@
 
   <div class="full-project-wrapper">
     <div class="full-project__preview"
-         style="background: #202d3a url({{project.LandingImageUri || '/app/imgs/project-cap-image.png'}}) no-repeat center; background-size: cover;">
+         style="background: #000 url({{project.LandingImageUri || '/app/imgs/project-cap-image.png'}}) no-repeat center; background-size: cover;">
     <span class="preview__project-status" ng-switch="project.ProjectStatus">
           <span class="status__value" style="background: #795548;" ng-switch-when="0">Запланирован</span>
           <span class="status__value" style="background: #1e88e5;" ng-switch-when="1">В процессе</span>

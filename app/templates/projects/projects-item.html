@@ -1,8 +1,9 @@
 <div class="full-project-container">
   <h1 class="full-project__name" ng-bind="project.Name"></h1>
+
   <div class="full-project-wrapper">
-    <div class="full-project__preview" style="background: #fff url({{project.LandingImageUri}})
-     no-repeat center; background-size: cover;">
+    <div class="full-project__preview"
+         style="background: #202d3a url({{project.LandingImageUri || '/app/imgs/project-cap-image.png'}}) no-repeat center; background-size: cover;">
     <span class="preview__project-status" ng-switch="project.ProjectStatus">
           <span class="status__value" style="background: #795548;" ng-switch-when="0">Запланирован</span>
           <span class="status__value" style="background: #1e88e5;" ng-switch-when="1">В процессе</span>
@@ -29,6 +30,7 @@
            ng-bind="developer.FirstName + ' ' + developer.LastName"></a>
         <span ng-bind=" '(' + developer.Role + '),' "></span>
       </span>
+
       <div class="info__if-no-developers" style="color:#a4a4a4" ng-bind="replacementText"></div>
       <div class="info__subheading">Уровень доступа:</div>
       <div class="info__access" ng-switch="project.AccessLevel">
@@ -42,18 +44,22 @@
     </div>
   </div>
   <h1 class="full-project__headline headline">Задачи на проекте</h1>
+
   <div class="dividing-line"></div>
   <div class="full-project-issues">
     <span class="project-issues__issue" ng-repeat="projectIssue in projectIssues" ng-bind="projectIssue.Header"></span>
   </div>
   <h1 class="full-project__headline headline">Скриншоты</h1>
+
   <div class="dividing-line"></div>
   <div class='gallery'>
     <div class="gallery__item" ng-repeat="screenshotUrl in project.Screenshots"
-         style='background: url({{screenshotUrl}}) no-repeat center;  background-size: cover;' ng-click="openViewerDialog($index)"></div>
+         style='background: url({{screenshotUrl}}) no-repeat center;  background-size: cover;'
+         ng-click="openViewerDialog($index)"></div>
   </div>
   <script type="text/ng-template" id="viewer">
-    <div class="viewer__img" style='background: rgba(0, 0, 0, .8) url({{openedScreenshotUrl}}) no-repeat center;  background-size: contain;'>
+    <div class="viewer__img"
+         style='background: rgba(0, 0, 0, .8) url({{openedScreenshotUrl}}) no-repeat center;  background-size: contain;'>
       <div class="viewer__close-button" ng-click="closeThisDialog('.viewer__button')"></div>
     </div>
   </script>

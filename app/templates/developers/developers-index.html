@@ -3,11 +3,11 @@
 
   <div class="dividing-line"></div>
   <div class="developers-page__search">
-    <input placeholder="Поиск" ng-model="search"/>
+    <input placeholder="Поиск" ng-model="searchText"/>
     <div class="search__icon"></div>
   </div>
   <div class="developers-page__developers">
-    <div ng-repeat="fullDeveloper in fullDevelopers | filter:search " class="developers__full-developer">
+    <div ng-repeat="fullDeveloper in fullDevelopers" class="developers__full-developer">
       <a ui-sref="developers.item({id: fullDeveloper.UserId})">
         <img class="full-developer__photo" ng-src="{{fullDeveloper.PhotoUri}}">
         <div class="full-developer__info">

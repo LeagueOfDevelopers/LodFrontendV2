@@ -64,6 +64,32 @@ angular.module('LodSite.services', [])
           console.log(response.status);
         });
     };
+    this.getFullDevelopersBySearch = function(searchText) {
+      var apiUrl = 'http://api.lod-misis.ru/developers/search/' + searchText;
+      return $http.get(apiUrl).then(
+        function successCallback(response) {
+          function changeDateFormat() {
+            var dateOptions = {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            };
+            for (var i = 0; i < response.data.length; i++) {
+              var formattedDate = new Date(Date.parse(response.data[i].RegistrationDate));
+              response.data[i].RegistrationDate = formattedDate.toLocaleString("ru", dateOptions);
+              if (response.data[i].PhotoUri == null) {
+                response.data[i].PhotoUri = '/app/imgs/developer-default-photo.png';
+              }
+            }
+          }
+
+          changeDateFormat();
+          return response.data;
+        },
+        function errorCallback(response) {
+          console.log(response.status);
+        });
+    };
     this.getDeveloper = function (developerId) {
       var apiUrl = 'http://api.lod-misis.ru/developers/' + developerId;
 

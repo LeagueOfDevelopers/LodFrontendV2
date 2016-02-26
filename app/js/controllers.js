@@ -5,7 +5,7 @@
 angular.module('LodSite.controllers', [])
   //main controllers
   .controller('PageCtrl', ['$scope', function ($scope) {
-    $scope.$on('$viewContentLoaded', function(){
+    $scope.$on('$viewContentLoaded', function () {
       setPaddingBottom();
     });
     var defaultTitle = 'Лига Разработчиков НИТУ МИСиС';
@@ -56,9 +56,21 @@ angular.module('LodSite.controllers', [])
     })
   }])
   .controller('FullDevelopersCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
-    ApiService.getFullDevelopers().then(function (data) {
-      $scope.fullDevelopers = data;
-    });
+    $scope.searchText = '';
+    $scope.$watch(
+      "searchText",
+      function (newValue, oldValue) {
+        if (newValue === '') {
+          ApiService.getFullDevelopers().then(function (data) {
+            $scope.fullDevelopers = data;
+          });
+        } else if (newValue !== oldValue) {
+          ApiService.getFullDevelopersBySearch($scope.searchText).then(function (data) {
+            $scope.fullDevelopers = data;
+          });
+        }
+      }
+    );
 
     $scope.$emit('toggle_black', {isblack: true});
     $scope.$emit('change_title', {
@@ -89,19 +101,19 @@ angular.module('LodSite.controllers', [])
       category: 'Веб',
       status: false,
       index: 0
-    },{
+    }, {
       category: 'Мобильное',
       status: false,
       index: 1
-    },{
+    }, {
       category: 'Десктопное',
       status: false,
       index: 2
-    },{
+    }, {
       category: 'Игра',
       status: false,
       index: 3
-    },{
+    }, {
       category: 'Прочее',
       status: false,
       index: 4
@@ -136,14 +148,14 @@ angular.module('LodSite.controllers', [])
     });
 
   }])
-  .controller('ProjectCtrl', ['$scope','$state','ApiService','ngDialog', '$rootScope', function ($scope, $state, ApiService, ngDialog, $rootScope) {
+  .controller('ProjectCtrl', ['$scope', '$state', 'ApiService', 'ngDialog', '$rootScope', function ($scope, $state, ApiService, ngDialog, $rootScope) {
     var projectId = $state.params.id;
     $scope.openViewer = function () {
       $scope.$dialog = ngDialog.open({
         template: 'viewer',
         showClose: true,
         closeByNavigation: true,
-        controller: ['$rootScope', '$scope', function($rootScope, $scope) {
+        controller: ['$rootScope', '$scope', function ($rootScope, $scope) {
           $scope.openedScreenshotUrl = $rootScope.openedScreenshotUrl;
         }]
       });
@@ -170,21 +182,21 @@ angular.module('LodSite.controllers', [])
     $scope.$emit('toggle_black', {isblack: true});
   }])
 
-  .controller('SignupCtrl', ['$scope','ApiService', '$timeout', function ($scope, ApiService, $timeout) {
+  .controller('SignupCtrl', ['$scope', 'ApiService', '$timeout', function ($scope, ApiService, $timeout) {
     $scope.currentState = 'filling';
     $scope.newDeveloper = {};
 
-    $scope.register = function() {
+    $scope.register = function () {
       ApiService.registerNewDeveloper($scope.newDeveloper).then(function (isSuccess) {
-        if(isSuccess){
+        if (isSuccess) {
           $scope.currentState = 'success';
           $scope.newDeveloper = {};
           $scope.repeatedPassword = "";
           $scope.signForm.$setPristine();
-          $timeout(function() {
+          $timeout(function () {
             $scope.currentState = 'filling';
           }, 3000);
-        }else{
+        } else {
           $scope.currentState = 'failed';
         }
       });
@@ -306,7 +318,6 @@ angular.module('LodSite.controllers', [])
         }
 
         var name = dataSplit.join('.');
-
         $scope.files.push({
           name: name,
           url: 'http://api.lod-misis.ru/file/' + args.data
@@ -357,7 +368,7 @@ angular.module('LodSite.controllers', [])
     });
 
   }])
-  .controller('FormValidationCtrl', [ function () {
+  .controller('FormValidationCtrl', [function () {
     Array.from($("input, textarea"))
       .forEach(function (element) {
         element.addEventListener('focus', function () {
@@ -388,12 +399,12 @@ angular.module('LodSite.controllers', [])
     $scope.isNoDeveloper = false;
     $scope.userLogin = {};
 
-    $scope.login = function() {
+    $scope.login = function () {
       ApiService.signIn($scope.userLogin).then(function (isSuccess) {
-        if(isSuccess){
+        if (isSuccess) {
           $scope.userLogin = {};
           $scope.loginForm.$setPristine();
-        }else{
+        } else {
           $scope.isNoDeveloper = true;
         }
       });

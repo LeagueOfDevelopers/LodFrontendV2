@@ -51,24 +51,14 @@ angular.module('LodSite.controllers', [])
   //developers controllers
   .controller('RandomDevelopersCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
     var numberOfDevelopers = 6;
-    $scope.randomDevelopers = ApiService.getRandomDevelopers(numberOfDevelopers);
+    ApiService.getRandomDevelopers(numberOfDevelopers).then(function (data) {
+      $scope.randomDevelopers = data;
+    })
   }])
   .controller('FullDevelopersCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
-    var dateOptions = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    };
-
-    $scope.fullDevelopers = ApiService.getFullDevelopers();
-
-    for (var i = 0; i < $scope.fullDevelopers.length; i++) {
-      var formattedDate = new Date(Date.parse($scope.fullDevelopers[i].RegistrationDate));
-      $scope.fullDevelopers[i].RegistrationDate = formattedDate.toLocaleString("ru", dateOptions);
-      if ($scope.fullDevelopers[i].PhotoUri == null) {
-        $scope.fullDevelopers[i].PhotoUri = '/app/imgs/developer-default-photo.png';
-      }
-    }
+    ApiService.getFullDevelopers().then(function (data) {
+      $scope.fullDevelopers = data;
+    });
 
     $scope.$emit('toggle_black', {isblack: true});
     $scope.$emit('change_title', {
@@ -77,23 +67,12 @@ angular.module('LodSite.controllers', [])
   }])
   .controller('DeveloperCtrl', ['$scope', '$state', 'ApiService', function ($scope, $state, ApiService) {
     var developerId = $state.params.id;
-    $scope.developer = ApiService.getDeveloper(developerId);
-    var dateOptions = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    };
-    var date = new Date();
-    var formattedDate = new Date(Date.parse($scope.developer.RegistrationDate));
-
-    if ($scope.developer.PhotoUri == null) {
-      $scope.developer.PhotoUri = '/app/imgs/developer-default-photo.png';
-    }
-    $scope.developer.studyingYear = date.getFullYear() - $scope.developer.StudentAccessionYear || 1;
-    $scope.developer.RegistrationDate = formattedDate.toLocaleString("ru", dateOptions);
-
-    $scope.$emit('change_title', {
-      title: $scope.developer.FirstName + ' ' + $scope.developer.LastName + ' - Лига Разработчиков НИТУ МИСиС'
+    ApiService.getDeveloper(developerId).then(function (data) {
+      $scope.developer = data;
+      $scope.$emit('change_title', {
+        title: $scope.developer.FirstName + ' ' + $scope.developer.LastName +
+        ' - Лига Разработчиков НИТУ МИСиС'
+      });
     });
     $scope.$emit('toggle_black', {isblack: true});
   }])
@@ -101,26 +80,28 @@ angular.module('LodSite.controllers', [])
   //projects controllers
   .controller('RandomProjectsCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
     var numberOfProjects = 6;
-    $scope.randomProjects = ApiService.getRandomProjects(numberOfProjects);
+    ApiService.getRandomProjects(numberOfProjects).then(function (data) {
+      $scope.randomProjects = data;
+    })
   }])
   .controller('FullProjectsCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
     $scope.categories = [{
       category: 'Веб',
       status: false,
       index: 0
-    }, {
+    },{
       category: 'Мобильное',
       status: false,
       index: 1
-    }, {
+    },{
       category: 'Десктопное',
       status: false,
       index: 2
-    }, {
+    },{
       category: 'Игра',
       status: false,
       index: 3
-    }, {
+    },{
       category: 'Прочее',
       status: false,
       index: 4
@@ -142,7 +123,10 @@ angular.module('LodSite.controllers', [])
           categories: indexes.join(',')
         });
       }
-        $scope.fullProjects = ApiService.getFullProjects(requestParams);
+
+      ApiService.getFullProjects(requestParams).then(function (data) {
+        $scope.fullProjects = data;
+      })
     };
 
     $scope.updateProjects();
@@ -154,46 +138,55 @@ angular.module('LodSite.controllers', [])
   }])
   .controller('ProjectCtrl', ['$scope','$state','ApiService','ngDialog', '$rootScope', function ($scope, $state, ApiService, ngDialog, $rootScope) {
     var projectId = $state.params.id;
-    $scope.project = ApiService.testGetProject(projectId);
-    $scope.projectTypes = $scope.project.ProjectType;
-    $scope.projectIssues = $scope.project.Issues;
-    if ($scope.project.ProjectMemberships.length === 0) {
-      $scope.replacementText = "В данный момент на проекте нет разработчиков.";
-    }
-
     $scope.openViewer = function () {
       $scope.$dialog = ngDialog.open({
         template: 'viewer',
         showClose: true,
         closeByNavigation: true,
         controller: ['$rootScope', '$scope', function($rootScope, $scope) {
-            $scope.openedScreenshotUrl = $rootScope.openedScreenshotUrl;
+          $scope.openedScreenshotUrl = $rootScope.openedScreenshotUrl;
         }]
       });
     };
-    $scope.openViewerDialog = function (imgIndex) {
-      $rootScope.openedScreenshotUrl = $scope.project.Screenshots[imgIndex];
-      $scope.openViewer();
-    };
 
-    $scope.$emit('change_title', {
-      title: $scope.project.Name + ' - Лига Разработчиков НИТУ МИСиС'
+    ApiService.getProject(projectId).then(function (data) {
+      $scope.project = data;
+      $scope.projectTypes = $scope.project.ProjectType;
+      $scope.projectIssues = $scope.project.Issues;
+      if ($scope.project.ProjectMemberships.length === 0) {
+        $scope.replacementText = "В данный момент на проекте нет разработчиков.";
+      }
+
+      $scope.openViewerDialog = function (imgIndex) {
+        $rootScope.openedScreenshotUrl = $scope.project.Screenshots[imgIndex];
+        $scope.openViewer();
+      };
+
+      $scope.$emit('change_title', {
+        title: $scope.project.Name + ' - Лига Разработчиков НИТУ МИСиС'
+      });
     });
+
     $scope.$emit('toggle_black', {isblack: true});
   }])
 
-  .controller('SignupCtrl', ['$scope','ApiService', function ($scope, ApiService) {
+  .controller('SignupCtrl', ['$scope','ApiService', '$timeout', function ($scope, ApiService, $timeout) {
     $scope.currentState = 'filling';
     $scope.newDeveloper = {};
 
     $scope.register = function() {
-      ApiService.registerNewDeveloper($scope.newDeveloper).then(function () {
-        $scope.currentState = 'success';
-        $scope.newDeveloper = {};
-        $scope.repeatedPassword = "";
-        $scope.signForm.$setPristine();
-      }, function () {
-        $scope.currentState = 'failed';
+      ApiService.registerNewDeveloper($scope.newDeveloper).then(function (isSuccess) {
+        if(isSuccess){
+          $scope.currentState = 'success';
+          $scope.newDeveloper = {};
+          $scope.repeatedPassword = "";
+          $scope.signForm.$setPristine();
+          $timeout(function() {
+            $scope.currentState = 'filling';
+          }, 3000);
+        }else{
+          $scope.currentState = 'failed';
+        }
       });
     };
 
@@ -396,11 +389,13 @@ angular.module('LodSite.controllers', [])
     $scope.userLogin = {};
 
     $scope.login = function() {
-      ApiService.signIn($scope.userLogin).then(function () {
-        $scope.userLogin = {};
-        $scope.loginForm.$setPristine();
-      }, function () {
-        $scope.isNoDeveloper = true;
+      ApiService.signIn($scope.userLogin).then(function (isSuccess) {
+        if(isSuccess){
+          $scope.userLogin = {};
+          $scope.loginForm.$setPristine();
+        }else{
+          $scope.isNoDeveloper = true;
+        }
       });
     };
   }])

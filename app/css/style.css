@@ -1296,12 +1296,12 @@ footer {
 .form__container button {
   font-family: 'PT Sans', sans-serif;
   text-transform: uppercase;
-  outline: 0;
   background: #f1f1f1;
   width: 100%;
   border: 1px solid #202d3a;
   padding: 15px;
   color: #202d3a;
+  outline: none;
   font-size: 1em;
   -webkit-transition: all .15s ease-out;
   -moz-transition: all .15s ease-out;
@@ -1310,10 +1310,22 @@ footer {
   cursor: pointer;
 }
 
-.form__container button:hover, .form button:active, .form button:focus {
+.form__container button:disabled{
+  cursor: default;
+  border: 1px solid #808080;
+  color: #808080;
+}
+
+.form__container button:hover {
   background: #2980b9;
   border: 1px solid #2980b9;
   color: #fff;
+}
+
+.form__container button:disabled:hover{
+  background: none;
+  border: 1px solid #808080;
+  color: #808080;
 }
 
 .form__question {
@@ -1403,13 +1415,20 @@ footer {
   text-transform: uppercase;
 
   background: #f1f1f1;
+  color: #202d3a;
   border: 1px solid #202d3a;
 
   -webkit-transition: all .15s ease-out;
   -moz-transition: all .15s ease-out;
   -o-transition: all .15s ease-out;
   transition: all .15s ease-out;
+  outline: none;
   cursor: pointer;
+}
+.sign-up__button:disabled{
+  cursor: default;
+  border: 1px solid #808080;
+  color: #808080;
 }
 
 /* login and signup form validation */
@@ -1556,6 +1575,7 @@ footer {
     display: inline-block;
     margin: 10px 20px 25px 20px;
     width: 240px;
+    vertical-align: top;
   }
 
   /************************
@@ -2415,6 +2435,11 @@ footer {
     background: #2980b9;
     border: 1px solid #2980b9;
     color: #fff;
+  }
+  .sign-up__button:disabled:hover{
+    background: none;
+    border: 1px solid #808080;
+    color: #808080;
   }
 
   .sign-up-form input, select {

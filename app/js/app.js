@@ -10,6 +10,9 @@ angular.module('LodSite', [
     'LodSite.controllers',
     'LodSite.services'
   ])
+  .run(function() {
+    FastClick.attach(document.body);
+  })
   .config(['$locationProvider', '$stateProvider', '$urlRouterProvider',
     function ($locationProvider, $stateProvider, $urlRouterProvider) {
       $locationProvider.hashPrefix('!');

@@ -186,12 +186,13 @@ angular.module('LodSite.controllers', [])
     $scope.currentState = 'filling';
     $scope.newDeveloper = {};
 
-    $scope.register = function () {
-      ApiService.registerNewDeveloper($scope.newDeveloper).then(function (isSuccess) {
+    $scope.signUp = function () {
+      ApiService.signUp($scope.newDeveloper).then(function (isSuccess) {
         if (isSuccess) {
           $scope.currentState = 'success';
           $scope.newDeveloper = {};
-          $scope.repeatedPassword = "";
+          $scope.repeatedPassword = '';
+          $scope.newDeveloper.Password ='';
           $scope.signForm.$setPristine();
           $timeout(function () {
             $scope.currentState = 'filling';
@@ -399,7 +400,7 @@ angular.module('LodSite.controllers', [])
     $scope.isNoDeveloper = false;
     $scope.userLogin = {};
 
-    $scope.login = function () {
+    $scope.signIn = function () {
       ApiService.signIn($scope.userLogin).then(function (isSuccess) {
         if (isSuccess) {
           $scope.userLogin = {};

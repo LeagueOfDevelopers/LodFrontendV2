@@ -4,25 +4,25 @@
 
 angular.module('LodSite.services', [])
 
-  //.service('TokenService', function () {
-  //
-  //  this.saveToken = function (token) {
-  //
-  //  };
-  //  this.getToken = function () {
-  //
-  //  };
-  //  this.resetToken = function () {
-  //
-  //  };
-  //  this.refreshTokenDate = function () {
-  //
-  //  };
-  //  this.getRole = function () {
-  //
-  //  };
-  //
-  //})
+  .service('TokenService', function () {
+
+    this.saveToken = function (token) {
+
+    };
+    this.getToken = function () {
+
+    };
+    this.resetToken = function () {
+
+    };
+    this.refreshTokenDate = function () {
+
+    };
+    this.getRole = function () {
+
+    };
+
+  })
 
   .service('ApiService', ['$http', function ($http) {
 
@@ -161,9 +161,9 @@ angular.module('LodSite.services', [])
     };
 
     //other
-    this.registerNewDeveloper = function (requestData) {
+    this.signUp = function (requestData) {
       var apiUrl = 'http://api.lod-misis.ru/developers';
-      return $http.post(apiUrl,{ data: requestData}).then(
+      return $http.post(apiUrl, requestData).then(
         function successCallback() {
           return true;
         },
@@ -173,8 +173,8 @@ angular.module('LodSite.services', [])
 
     };
     this.signIn = function (requestData) {
-      var apiUrl = 'http://api.lod-misis.ru/developers/authorize';
-      return $http.get(apiUrl,{data: requestData}).then(
+      var apiUrl = 'http://api.lod-misis.ru/login';
+      return $http.post(apiUrl, requestData).then(
         function successCallback() {
           return true;
         },

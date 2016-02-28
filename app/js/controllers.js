@@ -140,13 +140,12 @@ angular.module('LodSite.controllers', [])
         $scope.fullProjects = data;
       })
     };
-
     $scope.updateProjects();
+
     $scope.$emit('toggle_black', {isblack: true});
     $scope.$emit('change_title', {
       title: 'Проекты - Лига Разработчиков НИТУ МИСиС'
     });
-
   }])
   .controller('ProjectCtrl', ['$scope', '$state', 'ApiService', 'ngDialog', '$rootScope', function ($scope, $state, ApiService, ngDialog, $rootScope) {
     var projectId = $state.params.id;
@@ -192,7 +191,7 @@ angular.module('LodSite.controllers', [])
           $scope.currentState = 'success';
           $scope.newDeveloper = {};
           $scope.repeatedPassword = '';
-          $scope.newDeveloper.Password ='';
+          $scope.newDeveloper.Password = '';
           $scope.signForm.$setPristine();
           $timeout(function () {
             $scope.currentState = 'filling';
@@ -211,11 +210,9 @@ angular.module('LodSite.controllers', [])
   .controller('AboutCtrl', ['$scope', function ($scope) {
 
     $scope.$emit('toggle_black', {isblack: true});
-
     $scope.$emit('change_title', {
       title: 'О нас - Лига Разработчиков НИТУ МИСиС'
     });
-
   }])
   .controller('OrderCtrl', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
 
@@ -335,6 +332,7 @@ angular.module('LodSite.controllers', [])
       $scope.files.splice(index, 1);
     }
   }])
+  //TODO-andrey Переделать http запросы в ContactCtrl, EmailConfirmationCtrl и EditDeveloperCtrl через ApiService.
   .controller('ContactCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.data = {};
 
@@ -411,7 +409,6 @@ angular.module('LodSite.controllers', [])
       });
     };
   }])
-
   .controller('EmailConfirmationCtrl', ['$scope', '$http', '$state', function ($scope, $http, $state) {
     var token = $state.params.token;
     $http.post('http://api.lod-misis.ru/developers/confirmation/' + token).success(function (data) {
@@ -425,10 +422,9 @@ angular.module('LodSite.controllers', [])
   }])
 
   .controller('EditDeveloperCtrl', ['$scope', '$http', '$state', function ($scope, $http, $state) {
-
+    var developerId = $state.params.id;
     $("[name='phone']").mask("+7 (999) 999-9999");
 
-    var developerId = $state.params.id;
     $http.get('http://api.lod-misis.ru/developers/' + developerId).success(function (data) {
       $scope.developer = data;
       var dateOptions = {

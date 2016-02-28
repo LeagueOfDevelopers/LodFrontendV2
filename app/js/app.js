@@ -10,7 +10,7 @@ angular.module('LodSite', [
     'LodSite.controllers',
     'LodSite.services'
   ])
-  .run(function() {
+  .run(function setFastMobileClick() {
     FastClick.attach(document.body);
   })
   .config(['$locationProvider', '$stateProvider', '$urlRouterProvider',

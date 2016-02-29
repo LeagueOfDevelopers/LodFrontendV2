@@ -72,7 +72,7 @@ angular.module('LodSite.controllers', [])
       }
     );
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
     $scope.$emit('change_title', {
       title: 'Разработчики - Лига Разработчиков НИТУ МИСиС'
     });
@@ -86,7 +86,7 @@ angular.module('LodSite.controllers', [])
         ' - Лига Разработчиков НИТУ МИСиС'
       });
     });
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
   }])
 
   //projects controllers
@@ -142,7 +142,7 @@ angular.module('LodSite.controllers', [])
     };
     $scope.updateProjects();
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
     $scope.$emit('change_title', {
       title: 'Проекты - Лига Разработчиков НИТУ МИСиС'
     });
@@ -178,7 +178,7 @@ angular.module('LodSite.controllers', [])
       });
     });
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
   }])
 
   .controller('SignupCtrl', ['$scope', 'ApiService', '$timeout', function ($scope, ApiService, $timeout) {
@@ -202,14 +202,14 @@ angular.module('LodSite.controllers', [])
       });
     };
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
     $scope.$emit('change_title', {
       title: 'Стать разработчиком - Лига Разработчиков НИТУ МИСиС'
     });
   }])
   .controller('AboutCtrl', ['$scope', function ($scope) {
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
     $scope.$emit('change_title', {
       title: 'О нас - Лига Разработчиков НИТУ МИСиС'
     });
@@ -275,7 +275,7 @@ angular.module('LodSite.controllers', [])
       });
     };
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
 
     $scope.$emit('change_title', {
       title: 'Заказать - Лига Разработчиков НИТУ МИСиС'
@@ -360,7 +360,7 @@ angular.module('LodSite.controllers', [])
       });
     };
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
 
     $scope.$emit('change_title', {
       title: 'Cвязаться - Лига Разработчиков НИТУ МИСиС'
@@ -418,7 +418,7 @@ angular.module('LodSite.controllers', [])
       $scope.isSuccess = false;
     });
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
   }])
 
   .controller('EditDeveloperCtrl', ['$scope', '$http', '$state', function ($scope, $http, $state) {
@@ -444,6 +444,6 @@ angular.module('LodSite.controllers', [])
         title: $scope.developer.FirstName + ' ' + $scope.developer.LastName + ' - Лига Разработчиков НИТУ МИСиС'
       });
     });
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
   }])
 ;

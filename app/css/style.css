@@ -13,7 +13,7 @@ time, mark, audio, video {
 }
 
 /* LOADER - STYLES */
-.blackout{
+.blackout {
   position: fixed;
   top: 0;
   left: 0;
@@ -22,6 +22,7 @@ time, mark, audio, video {
   background: rgba(0, 0, 0, 0.8);
   z-index: 999;
 }
+
 .loading {
   border-radius: 50px;
   line-height: 100px;
@@ -37,6 +38,7 @@ time, mark, audio, video {
   letter-spacing: 0.05em;
   z-index: 1000;
 }
+
 .loading:before, .loading:after {
   content: '';
   position: absolute;
@@ -48,16 +50,19 @@ time, mark, audio, video {
   border-radius: 50px;
   opacity: 0;
 }
+
 .loading:before {
   -webkit-transform: scale(1);
   transform: scale(1);
   -webkit-animation: pulse 2s infinite linear;
   animation: pulse 2s infinite linear;
 }
+
 .loading:after {
   -webkit-animation: pulse 2s 1s infinite linear;
   animation: pulse 2s 1s infinite linear;
 }
+
 @-webkit-keyframes pulse {
   0% {
     -webkit-transform: scale(0.6);
@@ -75,6 +80,7 @@ time, mark, audio, video {
     opacity: 0;
   }
 }
+
 @keyframes pulse {
   0% {
     -webkit-transform: scale(0.6);
@@ -879,17 +885,18 @@ footer {
   margin: 5px;
   width: 240px;
   height: 240px;
-  cursor:pointer;
+  cursor: pointer;
 }
 
-.viewer__img{
+.viewer__img {
   position: fixed;
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100vh;
 }
-.viewer__close-button{
+
+.viewer__close-button {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -1310,7 +1317,7 @@ footer {
   cursor: pointer;
 }
 
-.form__container button:disabled{
+.form__container button:disabled {
   cursor: default;
   border: 1px solid #808080;
   color: #808080;
@@ -1322,7 +1329,7 @@ footer {
   color: #fff;
 }
 
-.form__container button:disabled:hover{
+.form__container button:disabled:hover {
   background: none;
   border: 1px solid #808080;
   color: #808080;
@@ -1425,7 +1432,8 @@ footer {
   outline: none;
   cursor: pointer;
 }
-.sign-up__button:disabled{
+
+.sign-up__button:disabled {
   cursor: default;
   border: 1px solid #808080;
   color: #808080;
@@ -2100,16 +2108,17 @@ footer {
   }
 
   /* project - gallery */
-  .gallery{
+  .gallery {
     margin-bottom: 40px;
   }
+
   .gallery__item {
     width: 350px;
     height: 350px;
     margin: 5px;
   }
 
-  .viewer__close-button:hover{
+  .viewer__close-button:hover {
     -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
     -o-transform: rotate(90deg);
@@ -2436,7 +2445,8 @@ footer {
     border: 1px solid #2980b9;
     color: #fff;
   }
-  .sign-up__button:disabled:hover{
+
+  .sign-up__button:disabled:hover {
     background: none;
     border: 1px solid #808080;
     color: #808080;

@@ -57,7 +57,7 @@ angular.module('LodSite.directives', [])
       }
     };
   })
-  .directive('uploadFile', ['$rootScope', function($rootScope) {
+  .directive('uploadFile', ['$rootScope', function ($rootScope) {
     return {
       resctrict: 'A',
       link: link
@@ -66,7 +66,7 @@ angular.module('LodSite.directives', [])
     function link($scope, element, attrs) {
       // Set promptzone
       $(element[0]).ajaxUploadPrompt({
-        url : 'http://api.lod-misis.ru/file',
+        url: 'http://api.lod-misis.ru/file',
         beforeSend: function () {
           $rootScope.$broadcast('beforeSend');
           console.log('before send');
@@ -90,7 +90,7 @@ angular.module('LodSite.directives', [])
       });
     }
   }])
-  .directive('dropzoneFile', ['$rootScope', function($rootScope) {
+  .directive('dropzoneFile', ['$rootScope', function ($rootScope) {
     return {
       resctrict: 'A',
       link: link
@@ -99,8 +99,8 @@ angular.module('LodSite.directives', [])
     function link($scope, element, attrs) {
       // Set promptzone
       $(element[0]).ajaxUploadDrop({
-        url : 'http://api.lod-misis.ru/file',
-        beforeSend : function () {
+        url: 'http://api.lod-misis.ru/file',
+        beforeSend: function () {
           $rootScope.$broadcast('beforeSend');
           console.log('before send');
         },

@@ -1,20 +1,27 @@
-
 <div class="contact-content">
-    <div class="contact-heading">Связаться с нами</div>
-    <form class="contact-form" name="ContactForm" ng-controller="FormValidationCtrl"
-          ng-submit="Request(ContactForm)">
-        <label><input type="text" ng-model="data.ClientName" name="name" autocomplete="on" placeholder="Ваше имя"
-                      required></label>
-        <label><input type="email" ng-model="data.ClientEmail" name="email"
-                      pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$" autocomplete="on"
-                      placeholder="Ваше e-mail адрес" required></label>
-        <label><input type="text" ng-model="data.MessageTopic" name="topic" placeholder="Тема сообщения"
-                      required></label>
-        <label><textarea name="message" ng-model="data.MessageBody" placeholder="Текст сообщения"
-                         required></textarea></label>
-        <label class="submit"><input type="submit" value="">
+  <div class="contact-heading">Связаться с нами</div>
+  <form class="contact-form" name="ContactForm" ng-controller="FormValidationCtrl"
+        ng-submit="Request(ContactForm)">
+    <label>
+      <input type="text" ng-model="data.ClientName" name="name" autocomplete="on" placeholder="Ваше имя"
+             required>
+    </label>
+    <label>
+      <input type="email" ng-model="data.ClientEmail" name="email"
+             pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$" autocomplete="on"
+             placeholder="Ваше e-mail адрес" required>
+    </label>
+    <label>
+      <input type="text" ng-model="data.MessageTopic" name="topic" placeholder="Тема сообщения"
+             required>
+    </label>
+    <label>
+      <textarea name="message" ng-model="data.MessageBody" placeholder="Текст сообщения"
+                required></textarea>
+    </label>
+    <label class="submit"><input type="submit" value="">
 
-            <div class="tick"></div>
-        </label>
-    </form>
+      <div class="tick"></div>
+    </label>
+  </form>
 </div>

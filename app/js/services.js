@@ -32,7 +32,7 @@ angular.module('LodSite.services', [])
     var sendRequest = function (method, url, requestParams, requestData) {
       switch (method) {
         case 'get':
-          return $http.get(url, {params: requestParams}).then(
+          return $http.get(url, { params: requestParams }).then(
             function successCallback(response) {
               return response.data;
             },

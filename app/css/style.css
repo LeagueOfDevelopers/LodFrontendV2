@@ -1,6 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Cuprum:400,700|PT+Sans:400,700|Noto+Serif:400,700&subset=latin,cyrillic);
-
-/* CSS RESET */
+@import url(https://fonts.googleapis.com/css?family=Cuprum:400,700|PT+Sans:400,700|Noto+Serif:400,700&subset=latin,cyrillic); /* CSS RESET */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a,
 abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike,
 strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
@@ -12,6 +10,93 @@ time, mark, audio, video {
   border: 0;
   font-size: 1em;
   vertical-align: baseline;
+}
+
+/* LOADER - STYLES */
+.blackout {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 999;
+}
+
+.loading {
+  border-radius: 50px;
+  line-height: 100px;
+  text-align: center;
+  width: 100px;
+  height: 100px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  z-index: 1000;
+}
+
+.loading:before, .loading:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 210, 0, .5);
+  border-radius: 50px;
+  opacity: 0;
+}
+
+.loading:before {
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  -webkit-animation: pulse 2s infinite linear;
+  animation: pulse 2s infinite linear;
+}
+
+.loading:after {
+  -webkit-animation: pulse 2s 1s infinite linear;
+  animation: pulse 2s 1s infinite linear;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-transform: scale(0.6);
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  33% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1.4);
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    -webkit-transform: scale(0.6);
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  33% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1.4);
+    transform: scale(1.4);
+    opacity: 0;
+  }
 }
 
 /************************
@@ -135,7 +220,7 @@ header {
   width: 100%;
   height: 70px;
   padding: 0 15px;
-  background: #151515;
+  background: #000;
   z-index: 20;
 }
 
@@ -206,7 +291,6 @@ header {
 }
 
 /** end of burger-icon **/
-
 .header__nav-full {
   display: none;
   font-family: 'Cuprum', sans-serif;
@@ -654,7 +738,7 @@ footer {
   box-sizing: border-box;
   width: 100%;
   padding: 15px;
-  background: #151515;
+  background: #000;
   text-align: center;
 }
 
@@ -782,10 +866,51 @@ footer {
   margin: 5px;
 }
 
+/* project - gallery */
+.gallery {
+  font-size: 0;
+  display: -ms-flexbox;
+  -ms-flex-wrap: wrap;
+  -ms-flex-direction: column;
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+  display: -webkit-box;
+  display: flex;
+}
+
+.gallery__item {
+  -webkit-box-flex: auto;
+  -ms-flex: auto;
+  flex: auto;
+  margin: 5px;
+  width: 240px;
+  height: 240px;
+  cursor: pointer;
+}
+
+.viewer__img {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+}
+
+.viewer__close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, .2) url(../imgs/close-button-white.svg) no-repeat center;
+  background-size: contain;
+  cursor: pointer;
+  transition: all .2s ease-out;
+}
+
 /*************************
         ABOUT
 *************************/
-
 /*about*/
 -->
 /*heading*/
@@ -869,7 +994,6 @@ footer {
 /*************************
      CONTACT & ORDER
 *************************/
-
 .order-content, .contact-content {
   text-align: center;
   margin-bottom: 60px;
@@ -1143,7 +1267,6 @@ footer {
 /*************************
       LOGIN-WINDOW
 *************************/
-
 .login-window {
   max-width: 360px;
   width: 100%;
@@ -1189,12 +1312,12 @@ footer {
 .form__container button {
   font-family: 'PT Sans', sans-serif;
   text-transform: uppercase;
-  outline: 0;
   background: #f1f1f1;
   width: 100%;
   border: 1px solid #202d3a;
   padding: 15px;
   color: #202d3a;
+  outline: none;
   font-size: 1em;
   -webkit-transition: all .15s ease-out;
   -moz-transition: all .15s ease-out;
@@ -1203,10 +1326,22 @@ footer {
   cursor: pointer;
 }
 
-.form__container button:hover, .form button:active, .form button:focus {
+.form__container button:disabled {
+  cursor: default;
+  border: 1px solid #808080;
+  color: #808080;
+}
+
+.form__container button:hover {
   background: #2980b9;
   border: 1px solid #2980b9;
   color: #fff;
+}
+
+.form__container button:disabled:hover {
+  background: none;
+  border: 1px solid #808080;
+  color: #808080;
 }
 
 .form__question {
@@ -1296,13 +1431,21 @@ footer {
   text-transform: uppercase;
 
   background: #f1f1f1;
+  color: #202d3a;
   border: 1px solid #202d3a;
 
   -webkit-transition: all .15s ease-out;
   -moz-transition: all .15s ease-out;
   -o-transition: all .15s ease-out;
   transition: all .15s ease-out;
+  outline: none;
   cursor: pointer;
+}
+
+.sign-up__button:disabled {
+  cursor: default;
+  border: 1px solid #808080;
+  color: #808080;
 }
 
 /* login and signup form validation */
@@ -1317,7 +1460,6 @@ footer {
 /*****************************
     CONFIRMATION OF EMAIL
 *****************************/
-
 .confirmation__success, .confirmation__error, .confirmation__loading {
   text-align: center;
   margin: 0 auto;
@@ -1514,6 +1656,7 @@ footer {
     display: inline-block;
     margin: 10px 20px 25px 20px;
     width: 240px;
+    vertical-align: top;
   }
 
   /************************
@@ -1755,7 +1898,6 @@ footer {
   .profile-settings__avatar-wrapper {
     width: 50%;
   }
-
   .profile-settings__button, .profile-settings__submit {
     display: inline-block;
     background-color: #202d3a;
@@ -2119,6 +2261,24 @@ footer {
     margin: 15px 15px 15px 0;
   }
 
+  /* project - gallery */
+  .gallery {
+    margin-bottom: 40px;
+  }
+
+  .gallery__item {
+    width: 350px;
+    height: 350px;
+    margin: 5px;
+  }
+
+  .viewer__close-button:hover {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+  }
+
   /*************************
             ABOUT
    *************************/
@@ -2343,7 +2503,7 @@ footer {
 
   /*************************
          ORDER
-*************************/
+  *************************/
   .order-content {
     margin-left: auto;
     margin-right: auto;
@@ -2442,6 +2602,12 @@ footer {
     background: #2980b9;
     border: 1px solid #2980b9;
     color: #fff;
+  }
+
+  .sign-up__button:disabled:hover {
+    background: none;
+    border: 1px solid #808080;
+    color: #808080;
   }
 
   .sign-up-form input, select {

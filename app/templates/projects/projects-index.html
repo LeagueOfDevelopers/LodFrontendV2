@@ -1,5 +1,6 @@
 <section class="projects-section">
   <h1 class="projects-section__headline headline">Проекты</h1>
+
   <div class="dividing-line"></div>
   <div class="categories">
     <span ng-repeat="categoryItem in categories" ng-bind="categoryItem.category"
@@ -11,7 +12,9 @@
     <a ng-repeat="fullProject in fullProjects" class="projects-section__link-to-project"
        ui-sref="projects.item({id: fullProject.ProjectId})">
       <div class="projects-section__project">
-        <div style="background: url({{fullProject.PhotoUri}}) no-repeat center; background-size: contain;" class="project__background"></div>
+        <div
+          style="background: #ffd200 url({{fullProject.PhotoUri || '/app/imgs/project-cap-image.png'}}) no-repeat center; background-size: contain;"
+          class="project__background"></div>
         <div class="project__info-container">
           <div class="project__name" ng-bind="fullProject.Name"></div>
           <div class="project__status">Cтатус:

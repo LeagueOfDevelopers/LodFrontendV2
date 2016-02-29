@@ -5,6 +5,9 @@
 angular.module('LodSite.controllers', [])
   //main controllers
   .controller('PageCtrl', ['$scope', function ($scope) {
+    $scope.$on('$viewContentLoaded', function () {
+      setPaddingBottom();
+    });
     var defaultTitle = 'Лига Разработчиков НИТУ МИСиС';
     $scope.$on('change_title', function (e, args) {
       $scope.title = args.title !== undefined && args.title.length ? args.title : defaultTitle;
@@ -32,6 +35,7 @@ angular.module('LodSite.controllers', [])
     $scope.$on('$locationChangeSuccess', function () {
       $scope.opened = false;
     });
+
     $scope.openLoginDialog = function () {
       $scope.$dialog = ngDialog.open({
         template: 'loginTemplate',
@@ -39,82 +43,60 @@ angular.module('LodSite.controllers', [])
         closeByNavigation: true
       });
     };
-
-    $scope.closeDialog = function () {
-      ngDialog.close($scope.dialog);
-    };
   }])
   .controller('FooterCtrl', ['$scope', function ($scope) {
     $scope.currentDate = new Date();
   }])
 
   //developers controllers
-  .controller('RandomDevelopersCtrl', ['$scope', '$http', function ($scope, $http) {
-    $http.get('http://api.lod-misis.ru/developers/random/6').success(function (data) {
+  .controller('RandomDevelopersCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
+    var numberOfDevelopers = 6;
+    ApiService.getRandomDevelopers(numberOfDevelopers).then(function (data) {
       $scope.randomDevelopers = data;
-    });
+    })
   }])
-  .controller('FullDevelopersCtrl', ['$scope', '$http', function ($scope, $http) {
-    var dateOptions = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    };
-
-    $http.get('http://api.lod-misis.ru/developers').success(function (data) {
-      $scope.fullDevelopers = data;
-      for (var i = 0; i < $scope.fullDevelopers.length; i++) {
-        var formattedDate = new Date(Date.parse($scope.fullDevelopers[i].RegistrationDate));
-        $scope.fullDevelopers[i].RegistrationDate = formattedDate.toLocaleString("ru", dateOptions);
-        if ($scope.fullDevelopers[i].PhotoUri == null) {
-          $scope.fullDevelopers[i].PhotoUri = '/app/imgs/developer-default-photo.png';
+  .controller('FullDevelopersCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
+    $scope.searchText = '';
+    $scope.$watch(
+      "searchText",
+      function (newValue, oldValue) {
+        if (newValue === '') {
+          ApiService.getFullDevelopers().then(function (data) {
+            $scope.fullDevelopers = data;
+          });
+        } else if (newValue !== oldValue) {
+          ApiService.getFullDevelopersBySearch($scope.searchText).then(function (data) {
+            $scope.fullDevelopers = data;
+          });
         }
       }
-    });
+    );
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
     $scope.$emit('change_title', {
       title: 'Разработчики - Лига Разработчиков НИТУ МИСиС'
     });
   }])
-  .controller('DeveloperCtrl', ['$scope', '$http', '$state', function ($scope, $http, $state) {
+  .controller('DeveloperCtrl', ['$scope', '$state', 'ApiService', function ($scope, $state, ApiService) {
     var developerId = $state.params.id;
-    $http.get('http://api.lod-misis.ru/developers/' + developerId).success(function (data) {
+    ApiService.getDeveloper(developerId).then(function (data) {
       $scope.developer = data;
-      var dateOptions = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      };
-      var date = new Date();
-      var formattedDate = new Date(Date.parse($scope.developer.RegistrationDate));
-
-      if ($scope.developer.PhotoUri == null) {
-        $scope.developer.PhotoUri = '/app/imgs/developer-default-photo.png';
-      }
-      $scope.developer.studyingYear = date.getFullYear() - $scope.developer.StudentAccessionYear || 1;
-      $scope.developer.RegistrationDate = formattedDate.toLocaleString("ru", dateOptions);
       $scope.$emit('change_title', {
-        title: $scope.developer.FirstName + ' ' + $scope.developer.LastName + ' - Лига Разработчиков НИТУ МИСиС'
+        title: $scope.developer.FirstName + ' ' + $scope.developer.LastName +
+        ' - Лига Разработчиков НИТУ МИСиС'
       });
     });
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
   }])
 
   //projects controllers
-  .controller('RandomProjectsCtrl', ['$scope', '$http', function ($scope, $http) {
-    $http.get('http://api.lod-misis.ru/projects/random/6').success(function (data) {
+  .controller('RandomProjectsCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
+    var numberOfProjects = 6;
+    ApiService.getRandomProjects(numberOfProjects).then(function (data) {
       $scope.randomProjects = data;
-    });
+    })
   }])
-  .controller('FullProjectsCtrl', ['$scope', '$http', function ($scope, $http) {
-    $scope.$emit('toggle_black', {isblack: true});
-    $scope.$emit('change_title', {
-      title: 'Проекты - Лига Разработчиков НИТУ МИСиС'
-    });
-
-    var projectsApiUrl = 'http://api.lod-misis.ru/projects';
-
+  .controller('FullProjectsCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
     $scope.categories = [{
       category: 'Веб',
       status: false,
@@ -141,7 +123,6 @@ angular.module('LodSite.controllers', [])
       targetCategory.status = !targetCategory.status;
       $scope.updateProjects();
     };
-
     $scope.updateProjects = function () {
       var indexes = $scope.categories.filter(function (category) {
         return category.status;
@@ -154,71 +135,84 @@ angular.module('LodSite.controllers', [])
           categories: indexes.join(',')
         });
       }
-      $http.get(projectsApiUrl, {params: requestParams}).success(function (data) {
+
+      ApiService.getFullProjects(requestParams).then(function (data) {
         $scope.fullProjects = data;
+      })
+    };
+    $scope.updateProjects();
+
+    $scope.$emit('toggle_black', { isblack: true });
+    $scope.$emit('change_title', {
+      title: 'Проекты - Лига Разработчиков НИТУ МИСиС'
+    });
+  }])
+  .controller('ProjectCtrl', ['$scope', '$state', 'ApiService', 'ngDialog', '$rootScope', function ($scope, $state, ApiService, ngDialog, $rootScope) {
+    var projectId = $state.params.id;
+    $scope.openViewer = function () {
+      $scope.$dialog = ngDialog.open({
+        template: 'viewer',
+        showClose: true,
+        closeByNavigation: true,
+        controller: ['$rootScope', '$scope', function ($rootScope, $scope) {
+          $scope.openedScreenshotUrl = $rootScope.openedScreenshotUrl;
+        }]
       });
     };
 
-    $scope.updateProjects();
-  }])
-  .controller('ProjectCtrl', ['$scope', '$http', '$state', function ($scope, $http, $state) {
-    var projectId = $state.params.id;
-    $http.get('http://api.lod-misis.ru/projects/' + projectId).success(function (data) {
+    ApiService.getProject(projectId).then(function (data) {
       $scope.project = data;
       $scope.projectTypes = $scope.project.ProjectType;
       $scope.projectIssues = $scope.project.Issues;
       if ($scope.project.ProjectMemberships.length === 0) {
         $scope.replacementText = "В данный момент на проекте нет разработчиков.";
       }
+
+      $scope.openViewerDialog = function (imgIndex) {
+        $rootScope.openedScreenshotUrl = $scope.project.Screenshots[imgIndex];
+        $scope.openViewer();
+      };
+
       $scope.$emit('change_title', {
         title: $scope.project.Name + ' - Лига Разработчиков НИТУ МИСиС'
       });
     });
-    $scope.$emit('toggle_black', {isblack: true});
+
+    $scope.$emit('toggle_black', { isblack: true });
   }])
 
-  .controller('SignupCtrl', ['$scope', '$http', function ($scope, $http) {
-    $scope.isSuccess = '';
-    $scope.emptyNewDeveloper = {
-      "Email": "",
-      "FirstName": "",
-      "LastName": "",
-      "Password": "",
-      "VkProfileUri": "",
-      "PhoneNumber": "",
-      "StudyingProfile": "",
-      "InstituteName": "",
-      "Department": "",
-      "AccessionYear": ""
-    };
-    $scope.newDeveloper = angular.copy($scope.emptyNewDeveloper);
-    $scope.repeatedPassword = '';
+  .controller('SignupCtrl', ['$scope', 'ApiService', '$timeout', function ($scope, ApiService, $timeout) {
+    $scope.currentState = 'filling';
+    $scope.newDeveloper = {};
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.signUp = function () {
+      ApiService.signUp($scope.newDeveloper).then(function (isSuccess) {
+        if (isSuccess) {
+          $scope.currentState = 'success';
+          $scope.newDeveloper = {};
+          $scope.repeatedPassword = '';
+          $scope.newDeveloper.Password = '';
+          $scope.signForm.$setPristine();
+          $timeout(function () {
+            $scope.currentState = 'filling';
+          }, 3000);
+        } else {
+          $scope.currentState = 'failed';
+        }
+      });
+    };
+
+    $scope.$emit('toggle_black', { isblack: true });
     $scope.$emit('change_title', {
       title: 'Стать разработчиком - Лига Разработчиков НИТУ МИСиС'
     });
-    $scope.register = function () {
-      $http.post('http://api.lod-misis.ru/developers', $scope.newDeveloper)
-        .success(function () {
-          $scope.isSuccess = true;
-          $scope.newDeveloper = angular.copy($scope.emptyNewDeveloper); //reset form
-          $scope.repeatedPassword = " ";
-          $scope.signForm.$setPristine();
-        })
-        .error(function () {
-          $scope.isSuccess = false;
-        });
-    };
   }])
   .controller('AboutCtrl', ['$scope', function ($scope) {
 
-    $scope.$emit('toggle_black', {isblack: true});
-
+    $scope.$emit('toggle_black', { isblack: true });
     $scope.$emit('change_title', {
       title: 'О нас - Лига Разработчиков НИТУ МИСиС'
     });
-
   }])
   .controller('OrderCtrl', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
 
@@ -283,7 +277,7 @@ angular.module('LodSite.controllers', [])
       });
     };
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
 
     $scope.$emit('change_title', {
       title: 'Заказать - Лига Разработчиков НИТУ МИСиС'
@@ -324,7 +318,6 @@ angular.module('LodSite.controllers', [])
         }
 
         var name = dataSplit.join('.');
-
         $scope.files.push({
           name: name,
           url: 'http://api.lod-misis.ru/file/' + args.data
@@ -341,6 +334,7 @@ angular.module('LodSite.controllers', [])
       $scope.files.splice(index, 1);
     }
   }])
+  //TODO-andrey Переделать http запросы в ContactCtrl, EmailConfirmationCtrl и EditDeveloperCtrl через ApiService.
   .controller('ContactCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.data = {};
 
@@ -368,14 +362,14 @@ angular.module('LodSite.controllers', [])
       });
     };
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
 
     $scope.$emit('change_title', {
       title: 'Cвязаться - Лига Разработчиков НИТУ МИСиС'
     });
 
   }])
-  .controller('FormValidationCtrl', ['$scope', function ($scope) {
+  .controller('FormValidationCtrl', [function () {
     Array.from($("input, textarea"))
       .forEach(function (element) {
         element.addEventListener('focus', function () {
@@ -396,44 +390,43 @@ angular.module('LodSite.controllers', [])
         });
       });
   }])
-  .controller('LoginFormCtrl', ['$scope', '$http', function ($scope, $http) {
+  .controller('LoginFormCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
     var date = new Date();
     var hour = date.getHours();
-    $scope.noDeveloperData = false;
-    $scope.userLogin = {
-      'Email': '',
-      'Password': ''
-    };
-
     $scope.timeOfDay = (hour > 4 && hour < 12) ? 'morning' :
       (hour >= 12 && hour <= 18) ? 'afternoon' :
         (hour > 18 && hour < 24) ? 'evening' :
           'night';
+    $scope.isNoDeveloper = false;
+    $scope.userLogin = {};
 
-    $scope.login = function () {
-      $http.post('http://api.lod-misis.ru//developers/authorize', $scope.userLogin).error(function () {
-        $scope.noDeveloperData = true;
+    $scope.signIn = function () {
+      ApiService.signIn($scope.userLogin).then(function (isSuccess) {
+        if (isSuccess) {
+          $scope.userLogin = {};
+          $scope.loginForm.$setPristine();
+        } else {
+          $scope.isNoDeveloper = true;
+        }
       });
     };
   }])
-
   .controller('EmailConfirmationCtrl', ['$scope', '$http', '$state', function ($scope, $http, $state) {
     var token = $state.params.token;
     $http.post('http://api.lod-misis.ru/developers/confirmation/' + token).success(function (data) {
+      $scope.currentState = !data.Message;
       $scope.isSuccess = true;
     }).error(function () {
       $scope.isSuccess = false;
     });
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
   }])
 
   .controller('EditDeveloperCtrl', ['$scope', '$http', '$state', function ($scope, $http, $state) {
-
+    var developerId = $state.params.id;
     $("[name='phone']").mask("+7 (999) 999-9999");
 
-
-    var developerId = $state.params.id;
     $http.get('http://api.lod-misis.ru/developers/profile/' + developerId).success(function (data) {
       $scope.developer = data;
 
@@ -454,6 +447,6 @@ angular.module('LodSite.controllers', [])
       $http.post();
     }
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
   }])
 ;

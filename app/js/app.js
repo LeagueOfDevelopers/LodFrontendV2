@@ -7,8 +7,12 @@ angular.module('LodSite', [
     'ngDialog',
 
     'LodSite.directives',
-    'LodSite.controllers'
+    'LodSite.controllers',
+    'LodSite.services'
   ])
+  .run(function setFastMobileClick() {
+    FastClick.attach(document.body);
+  })
   .config(['$locationProvider', '$stateProvider', '$urlRouterProvider',
     function ($locationProvider, $stateProvider, $urlRouterProvider) {
       $locationProvider.hashPrefix('!');
@@ -30,7 +34,6 @@ angular.module('LodSite', [
           template: '<ui-view/>',
           abstract: true
         })
-
         .state('projects.index', {
           url: '',
           templateUrl: templateUrl('projects', 'projects-index'),
@@ -69,6 +72,7 @@ angular.module('LodSite', [
           controller: 'EmailConfirmationCtrl'
         })
 
+        //other
         .state('signup', {
           url: '/signup',
           templateUrl: templateUrl('signup', 'signup-index'),
@@ -96,8 +100,8 @@ angular.module('LodSite', [
 function templateUrl(module, name) {
   return 'app/templates/' + module + '/' + name + '.html?' + Math.random();
 }
+//keeping footer at the bottom
 function setPaddingBottom() {
   $('.content').css('padding-bottom', $('footer').innerHeight());
 }
-setTimeout(setPaddingBottom, 500);
 $(window).resize(setPaddingBottom);

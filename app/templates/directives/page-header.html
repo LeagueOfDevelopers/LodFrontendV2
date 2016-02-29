@@ -1,10 +1,13 @@
 <div class="backdrop" ng-show="opened" ng-click="activeToggle()"></div>
 <header>
-  <a ui-sref="index"><div class="header__site-logo"></div></a>
+  <a ui-sref="index">
+    <div class="header__site-logo"></div>
+  </a>
   <span class="header__reg-or-login">
     <a class="reg-or-login__reg" ui-sref="signup">Стать разработчиком</a>
     или <a class="reg-or-login__login" ng-click="openLoginDialog($event)">Войти</a>
   </span>
+
   <div class="header__nav-toggle" ng-click="activeToggle()"
        ng-class="{'header__nav-toggle--active': opened}">
     <div class="nav-toggle__burger"></div>
@@ -13,7 +16,7 @@
     <a class="nav-full__item" ui-sref="order">Заказать</a>
     <a class="nav-full__item" ui-sref="projects.index">Проекты</a>
     <a class="nav-full__item" ui-sref="developers.index">Разработчики</a>
-    <a class="nav-full__item" href="">Блог</a>
+    <a class="nav-full__item" href="//endowment.misis.ru/blog/liga">Блог</a>
     <a class="nav-full__item" ui-sref="about">О нас</a>
     <a class="nav-full__item" ui-sref="contact">Связаться</a>
   </nav>
@@ -24,7 +27,7 @@
   <a class="nav-mobile__item" ui-sref="order">Сделать заказ</a>
   <a class="nav-mobile__item" ui-sref="projects.index">Наши проекты</a>
   <a class="nav-mobile__item" ui-sref="developers.index">Разработчики</a>
-  <a class="nav-mobile__item" href="">Блог</a>
+  <a class="nav-mobile__item" href="//endowment.misis.ru/blog/liga">Блог</a>
   <a class="nav-mobile__item" ui-sref="about">О нас</a>
   <a class="nav-mobile__item" ui-sref="contact">Связаться</a>
 </nav>
@@ -33,16 +36,21 @@
     <div class="login-window__form">
       <div class="form__close-button" ng-click="closeThisDialog('.form__close-button')"></div>
       <div ng-switch="timeOfDay">
-        <div class="form__greeting"  ng-switch-when="morning">Доброе утро!</div>
-        <div class="form__greeting"  ng-switch-when="afternoon">Добрый день!</div>
-        <div class="form__greeting"  ng-switch-when="evening">Добрый вечер!</div>
-        <div class="form__greeting"  ng-switch-default="night">Доброй ночи!</div>
+        <div class="form__greeting" ng-switch-when="morning">Доброе утро!</div>
+        <div class="form__greeting" ng-switch-when="afternoon">Добрый день!</div>
+        <div class="form__greeting" ng-switch-when="evening">Добрый вечер!</div>
+        <div class="form__greeting" ng-switch-default="night">Доброй ночи!</div>
       </div>
-      <form class="form__container">
-        <input type="email" placeholder="E-mail" ng-model="userLogin.Email" pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$" ng-maxlength="30" required />
-        <input type="password" placeholder="Пароль" ng-model="userLogin.Password" pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$" ng-minlength="8" ng-maxlength="30" required />
-        <button ng-click="login()">Войти</button>
-        <p ng-if="noDeveloperData" style="margin: 10px; color: #2980b9;"> Вы ввели неверный e-mail или пароль.</p>
+      <form name="loginForm" class="form__container">
+        <input type="email" placeholder="E-mail" ng-model="userLogin.Email"
+               pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$" ng-maxlength="30"
+               required/>
+        <input type="password" placeholder="Пароль" ng-model="userLogin.Password" pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
+               ng-minlength="8" ng-maxlength="30" required/>
+        <button ng-disabled="loginForm.$invalid" ng-click="signIn()">Войти</button>
+        <p ng-if="isNoDeveloper" style="margin: 10px; color: #2980b9;"> Не удалось войти, проверьте введенные
+          данные.</p>
+
         <div class="form__question">Не являетесь разработчиком?
           <a class="form__become-dev" ui-sref="signup">Стать разработчиком</a>
         </div>

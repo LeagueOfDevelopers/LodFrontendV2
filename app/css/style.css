@@ -878,12 +878,12 @@ footer {
 .order-heading, .contact-heading {
   display: block;
   position: relative;
-  width: 255px;
+  width: 225px;
   top: 28px;
   margin: 10px auto;
   padding: 10px;
   font-family: 'Noto Serif', serif;
-  font-size: 1.7em;
+  font-size: 1.5em;
   font-weight: 900;
   border: 2px solid #202d3a;
   background-color: #f1f1f1;
@@ -896,7 +896,7 @@ footer {
 }
 
 .order-accordion, .order-form, .contact-form {
-  min-width: 300px;
+  min-width: 270px;
   margin: 0 auto;
 }
 

@@ -316,11 +316,11 @@ angular.module('LodSite.controllers', [])
       if (args.data) {
         var dataSplit = args.data.split('.');
 
-        if(dataSplit[dataSplit.length - 2].length == 17) {
+        if (dataSplit[dataSplit.length - 2].length == 17) {
           dataSplit[dataSplit.length - 2] = '';
         }
         else {
-          dataSplit[dataSplit.length - 2] =  dataSplit[dataSplit.length - 2].slice(0, dataSplit[dataSplit.length - 2].length - 17);
+          dataSplit[dataSplit.length - 2] = dataSplit[dataSplit.length - 2].slice(0, dataSplit[dataSplit.length - 2].length - 17);
         }
 
         var name = dataSplit.join('.');
@@ -431,7 +431,7 @@ angular.module('LodSite.controllers', [])
   .controller('EditDeveloperCtrl', ['$scope', '$http', '$state', function ($scope, $http, $state) {
 
     $("[name='phone']").mask("+7 (999) 999-9999");
-    
+
 
     var developerId = $state.params.id;
     $http.get('http://api.lod-misis.ru/developers/profile/' + developerId).success(function (data) {
@@ -443,9 +443,6 @@ angular.module('LodSite.controllers', [])
     });
 
     $scope.comparePassword = function (password, repetitionPassword) {
-      if(password.value != repetitionPassword.value) {
-        return false;
-      }
     };
 
     $http.get('http://api.lod-misis.ru/developers/notificationsettings/' + developerId).success(function (data) {

@@ -4,13 +4,16 @@
 
 angular.module('LodSite.controllers', [])
   //main controllers
-  .controller('PageCtrl', ['$scope', function ($scope) {
-    $scope.$on('$viewContentLoaded', function () {
-      setPaddingBottom();
-    });
+  .controller('PageCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
     var defaultTitle = 'Лига Разработчиков НИТУ МИСиС';
+    $rootScope.$on('userRole_changed', function (e, args) {
+      $scope.userRole = args.userRole;
+    });
     $scope.$on('change_title', function (e, args) {
       $scope.title = args.title !== undefined && args.title.length ? args.title : defaultTitle;
+    });
+    $scope.$on('$viewContentLoaded', function () {
+      setPaddingBottom();
     });
   }])
   .controller('AppCtrl', ['$scope', function ($scope) {
@@ -388,7 +391,7 @@ angular.module('LodSite.controllers', [])
         });
       });
   }])
-  .controller('LoginFormCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
+  .controller('LoginFormCtrl', ['$scope', 'ApiService', 'TokenService', function ($scope, ApiService, TokenService) {
     var date = new Date();
     var hour = date.getHours();
     $scope.timeOfDay = (hour > 4 && hour < 12) ? 'morning' :
@@ -403,6 +406,7 @@ angular.module('LodSite.controllers', [])
         if (isSuccess) {
           $scope.userLogin = {};
           $scope.loginForm.$setPristine();
+          $scope.closeThisDialog('.form__close-button');
         } else {
           $scope.isNoDeveloper = true;
         }

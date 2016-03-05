@@ -66,6 +66,11 @@ angular.module('LodSite', [
           templateUrl: templateUrl('developers', 'developers-confirmation'),
           controller: 'EmailConfirmationCtrl'
         })
+        .state('developers.edit', {
+          url: '/profile/:id',
+          templateUrl: templateUrl('developers', 'developers-edit'),
+          controller: 'EmailConfirmationCtrl'
+        })
 
         //other
         .state('signup', {

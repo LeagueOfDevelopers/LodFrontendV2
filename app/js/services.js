@@ -4,54 +4,103 @@
 
 angular.module('LodSite.services', [])
 
-  .service('TokenService', function () {
+  .service('TokenService', ['$rootScope', function ($rootScope) {
+    var HOURS = 24;
+    var TOKEN_VALIDITY = 3600 * 1000 * HOURS;
+    var self = this;
 
-    this.saveToken = function (token) {
-
+    this.setToken = function (token) {
+      localStorage.setItem('authorization_token', JSON.stringify(token));
+      $rootScope.$emit('userRole_changed', {
+        userRole: token.Role
+      });
     };
+
     this.getToken = function () {
-
+      return JSON.parse(localStorage.getItem('authorization_token'));
     };
-    this.resetToken = function () {
 
-    };
     this.refreshTokenDate = function () {
-
+      var now = new Date();
+      var token = self.getToken();
+      if (token) {
+        token.CreationTime = now.toISOString();
+        self.setToken(token);
+      }
     };
+
+    this.resetToken = function () {
+      localStorage.removeItem('authorization_token');
+    };
+
     this.getRole = function () {
-
+      var token = self.getToken();
+      if (!token) return 0;
+      var now = (new Date()).getMilliseconds();
+      var tokenCreationTime = Date.parse(token.CreationTime);
+      if (now - tokenCreationTime > TOKEN_VALIDITY) {
+        self.resetToken();
+        return 0;
+      } else {
+        self.refreshTokenDate();
+        return token.Role;
+      }
     };
+  }])
 
-  })
-
-  .service('ApiService', ['$http', function ($http) {
+  .service('ApiService', ['$http', 'TokenService', '$rootScope', function ($http, TokenService, $rootScope) {
     var GET = 'get';
     var POST = 'post';
 
-    // ApiService methods
     var sendRequest = function (method, url, requestParams, requestData) {
+      var userRole = TokenService.getRole();
+
       switch (method) {
         case 'get':
-          return $http.get(url, { params: requestParams }).then(
+          return $http({
+            method: 'GET',
+            url: url,
+            params: requestParams,
+            headers: userRole === 0 ? {} : {
+              'Authorization': 'Basic ' + TokenService.getToken().Token
+            }
+          }).then(
             function successCallback(response) {
+              TokenService.refreshTokenDate();
               return response.data;
             },
             function errorCallback(response) {
-              console.log(response.status);
+              if (response.status === 401) {
+                TokenService.resetToken();
+              }
             });
           break;
 
         case 'post':
-          return $http.post(url, requestData).then(
-            function successCallback() {
-              return true;
+          return $http({
+            method: 'POST',
+            url: url,
+            data: requestData,
+            headers: userRole === 0 ? {} : {
+              'Authorization': TokenService.getToken().Token
+            }
+          }).then(
+            function successCallback(response) {
+              return {
+                data: response.data,
+                isSuccess: true
+              };
             },
             function errorCallback() {
+              if (response.status === 401) {
+                TokenService.resetToken();
+              }
               return false;
             });
       }
     };
 
+    // ApiService methods
     this.getRandomDevelopers = function (numberOfDevelopers) {
       var apiUrl = 'http://api.lod-misis.ru/developers/random/' + numberOfDevelopers;
 
@@ -122,7 +171,10 @@ angular.module('LodSite.services', [])
     this.signIn = function (requestData) {
       var apiUrl = 'http://api.lod-misis.ru/login';
 
-      return sendRequest(POST, apiUrl, null, requestData);
+      return sendRequest(POST, apiUrl, null, requestData).then(function (responseObject) {
+        TokenService.setToken(responseObject.data);
+        return responseObject.isSuccess;
+      });
     };
   }])
 ;

@@ -3,9 +3,16 @@
   <a ui-sref="index">
     <div class="header__site-logo"></div>
   </a>
-  <span class="header__reg-or-login">
-    <a class="reg-or-login__reg" ui-sref="signup">Стать разработчиком</a>
-    или <a class="reg-or-login__login" ng-click="openLoginDialog($event)">Войти</a>
+  <span ng-switch="userRole">
+    <span class="header__reg-or-login" ng-switch-default="0">
+      <a class="reg-or-login__reg" ui-sref="signup">Стать разработчиком</a>
+      или <a class="reg-or-login__login" ng-click="openLoginDialog($event)">Войти</a>
+    </span>
+    <span class="header__reg-or-login" ng-switch-when="1">
+      <span class="reg-or-login__login">Оповещений: 0</span> |
+      <a class="reg-or-login__reg" ui-sref="signup">Мой профиль</a> |
+      <span class="reg-or-login__login" ng-click="signOut()">Выйти</span>
+    </span>
   </span>
 
   <div class="header__nav-toggle" ng-click="activeToggle()"
@@ -21,15 +28,18 @@
     <a class="nav-full__item" ui-sref="contact">Связаться</a>
   </nav>
 </header>
-<nav class="nav-mobile" ng-show="opened">
-  <a class="nav-mobile__item" ng-click="openLoginDialog($event)">Войти</a>
-  <a class="nav-mobile__item" ui-sref="signup">Стать разработчиком</a>
-  <a class="nav-mobile__item" ui-sref="order">Сделать заказ</a>
+<nav class="nav-mobile" ng-show="opened" ng-switch="userRole">
+  <a class="nav-mobile__item" ng-switch-when="1">Оповещений: 0</a>
+  <a class="nav-mobile__item" ng-switch-when="1">Мой профиль</a>
+  <a class="nav-mobile__item" ng-click="openLoginDialog($event)" ng-switch-default="0">Войти</a>
+  <a class="nav-mobile__item" ng-switch-default="0" ui-sref="signup">Стать разработчиком</a>
+  <a class="nav-mobile__item" ng-switch-default="0" ui-sref="order">Сделать заказ</a>
   <a class="nav-mobile__item" ui-sref="projects.index">Наши проекты</a>
   <a class="nav-mobile__item" ui-sref="developers.index">Разработчики</a>
   <a class="nav-mobile__item" href="//endowment.misis.ru/blog/liga">Блог</a>
   <a class="nav-mobile__item" ui-sref="about">О нас</a>
   <a class="nav-mobile__item" ui-sref="contact">Связаться</a>
+  <a class="nav-mobile__item" ng-switch-when="1" ng-click="signOut()">Выйти</a>
 </nav>
 <script type="text/ng-template" id="loginTemplate">
   <div ng-controller="LoginFormCtrl" class="login-window">
@@ -45,7 +55,8 @@
         <input type="email" placeholder="E-mail" ng-model="userLogin.Email"
                pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$" ng-maxlength="30"
                required/>
-        <input type="password" placeholder="Пароль" ng-model="userLogin.Password" pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
+        <input type="password" placeholder="Пароль" ng-model="userLogin.Password"
+               pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
                ng-minlength="8" ng-maxlength="30" required/>
         <button ng-disabled="loginForm.$invalid" ng-click="signIn()">Войти</button>
         <p ng-if="isNoDeveloper" style="margin: 10px; color: #2980b9;"> Не удалось войти, проверьте введенные

@@ -13,7 +13,7 @@
        ui-sref="projects.item({id: fullProject.ProjectId})">
       <div class="projects-section__project">
         <div
-          style="background: #ffd200 url({{fullProject.PhotoUri || '/app/imgs/project-cap-image.png'}}) no-repeat center; background-size: contain;"
+          style="background: #ffd200 url({{fullProject.PhotoUri || '/app/imgs/project-cap-image.png'}}) no-repeat center; background-size: cover;"
           class="project__background"></div>
         <div class="project__info-container">
           <div class="project__name" ng-bind="fullProject.Name"></div>

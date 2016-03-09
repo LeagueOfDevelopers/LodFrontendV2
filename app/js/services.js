@@ -31,6 +31,9 @@ angular.module('LodSite.services', [])
 
     this.resetToken = function () {
       localStorage.removeItem('authorization_token');
+      $rootScope.$emit('userRole_changed', {
+        userRole: self.getRole()
+      });
     };
 
     this.getRole = function () {
@@ -52,93 +55,89 @@ angular.module('LodSite.services', [])
     var GET = 'get';
     var POST = 'post';
 
-    var sendRequest = function (method, url, requestParams, requestData) {
-      var userRole = TokenService.getRole();
-
-      switch (method) {
-        case 'get':
-          return $http({
-            method: 'GET',
-            url: url,
-            params: requestParams,
-            headers: userRole === 0 ? {} : {
-              'Authorization': 'Basic ' + TokenService.getToken().Token
-            }
-          }).then(
-            function successCallback(response) {
-              TokenService.refreshTokenDate();
-              return response.data;
-            },
-            function errorCallback(response) {
-              if (response.status === 401) {
-                TokenService.resetToken();
-              }
-            });
-          break;
-
-        case 'post':
-          return $http({
-            method: 'POST',
-            url: url,
-            data: requestData,
-            headers: userRole === 0 ? {} : {
-              'Authorization': TokenService.getToken().Token
-            }
-          }).then(
-            function successCallback(response) {
-              return {
-                data: response.data,
-                isSuccess: true
-              };
-            },
-            function errorCallback() {
-              if (response.status === 401) {
-                TokenService.resetToken();
-              }
-              return false;
-            });
+    var sendRequest = function (method, url, requestParams, requestData, tokenValue) {
+      var requestConfig = {
+        method: method,
+        url: url
+      };
+      if (tokenValue) {
+        requestConfig.headers = { 'Authorization': 'Basic ' + tokenValue };
       }
+      if (requestParams) {
+        requestConfig.params = requestParams;
+      }
+      if (requestData) {
+        requestConfig.data = requestData;
+      }
+      return $http(requestConfig);
+    };
+    var sendAuthorizationSaveRequest = function (method, url, requestParams, requestData) {
+      var userRole = TokenService.getRole();
+      if (userRole !== 0) {
+        var token = TokenService.getToken().Token;
+      }
+      var responsePromise = sendRequest(method, url, requestParams, requestData, token);
+
+      return responsePromise.then(function successCallback(response) {
+          TokenService.refreshTokenDate();
+          return response;
+        },
+        function errorCallback(response) {
+          if (response.status === 401) {
+            TokenService.resetToken();
+            return sendRequest(method, url, requestParams, requestData, null).then(function successCallback(response) {
+                TokenService.refreshTokenDate();
+                return response;
+              },
+              function errorCallback() {
+                return false;
+              });
+          }
+          return false;
+        });
     };
 
     // ApiService methods
     this.getRandomDevelopers = function (numberOfDevelopers) {
       var apiUrl = 'http://api.lod-misis.ru/developers/random/' + numberOfDevelopers;
 
-      return sendRequest(GET, apiUrl);
+      return sendAuthorizationSaveRequest(GET, apiUrl).then(function(response){
+        return response.data;
+      });
     };
     this.getFullDevelopers = function () {
       var apiUrl = 'http://api.lod-misis.ru/developers';
 
-      return sendRequest(GET, apiUrl).then(function setImageCap(data) {
-        for (var i = 0; i < data.length; i++) {
-          if (data[i].PhotoUri == null) {
-            data[i].PhotoUri = '/app/imgs/developer-default-photo.png';
+      return sendAuthorizationSaveRequest(GET, apiUrl).then(function setImageCap(response) {
+        for (var i = 0; i < response.data.length; i++) {
+          if (response.data[i].PhotoUri == null) {
+            response.data[i].PhotoUri = '/app/imgs/developer-default-photo.png';
           }
         }
-        return data;
+        return response.data;
       });
     };
     this.getFullDevelopersBySearch = function (searchText) {
       var apiUrl = 'http://api.lod-misis.ru/developers/search/' + searchText;
 
-      return sendRequest(GET, apiUrl).then(function setImageCap(data) {
-        for (var i = 0; i < data.length; i++) {
-          if (data[i].PhotoUri == null) {
-            data[i].PhotoUri = '/app/imgs/developer-default-photo.png';
+      return sendAuthorizationSaveRequest(GET, apiUrl).then(function setImageCap(response) {
+        for (var i = 0; i < response.data.length; i++) {
+          if (response.data[i].PhotoUri == null) {
+            response.data[i].PhotoUri = '/app/imgs/developer-default-photo.png';
           }
         }
-        return data;
+        return response.data;
       });
     };
     this.getDeveloper = function (developerId) {
       var apiUrl = 'http://api.lod-misis.ru/developers/' + developerId;
 
-      return sendRequest(GET, apiUrl)
-        .then(function setImageCap(data) {
-          if (data.PhotoUri == null) {
-            data.PhotoUri = '/app/imgs/developer-default-photo.png';
+      return sendAuthorizationSaveRequest(GET, apiUrl)
+        .then(function setImageCap(response) {
+          if (response.data.PhotoUri == null) {
+            response.data.PhotoUri = '/app/imgs/developer-default-photo.png';
           }
-          return data;
+          return response.data;
         })
         .then(function setStudyingYear(data) {
           var date = new Date();
@@ -150,30 +149,38 @@ angular.module('LodSite.services', [])
     this.getRandomProjects = function (numberOfProjects) {
       var apiUrl = 'http://api.lod-misis.ru/projects/random/' + numberOfProjects;
 
-      return sendRequest(GET, apiUrl);
+      return sendAuthorizationSaveRequest(GET, apiUrl).then(function(response){
+        return response.data;
+      });
     };
     this.getFullProjects = function (requestParams) {
       var apiUrl = 'http://api.lod-misis.ru/projects';
 
-      return sendRequest(GET, apiUrl, requestParams);
+      return sendAuthorizationSaveRequest(GET, apiUrl, requestParams).then(function(response){
+        return response.data;
+      });
     };
     this.getProject = function (projectId) {
       var apiUrl = 'http://api.lod-misis.ru/projects/' + projectId;
 
-      return sendRequest(GET, apiUrl);
+      return sendAuthorizationSaveRequest(GET, apiUrl).then(function(response){
+        return response.data;
+      });
     };
 
     this.signUp = function (requestData) {
       var apiUrl = 'http://api.lod-misis.ru/developers';
 
-      return sendRequest(POST, apiUrl, null, requestData);
+      return sendAuthorizationSaveRequest(POST, apiUrl, null, requestData).then(function(response){
+        return response.data;
+      });
     };
     this.signIn = function (requestData) {
       var apiUrl = 'http://api.lod-misis.ru/login';
 
-      return sendRequest(POST, apiUrl, null, requestData).then(function (responseObject) {
+      return sendAuthorizationSaveRequest(POST, apiUrl, null, requestData).then(function (responseObject) {
         TokenService.setToken(responseObject.data);
-        return responseObject.isSuccess;
+        return responseObject.data;
       });
     };
   }])

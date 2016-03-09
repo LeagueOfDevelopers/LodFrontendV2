@@ -4,7 +4,8 @@
 
 angular.module('LodSite.controllers', [])
   //main controllers
-  .controller('PageCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
+  .controller('PageCtrl', ['$scope', '$rootScope',
+    function ($scope, $rootScope ) {
     var defaultTitle = 'Лига Разработчиков НИТУ МИСиС';
     $rootScope.$on('userRole_changed', function (e, args) {
       $scope.userRole = args.userRole;
@@ -30,7 +31,7 @@ angular.module('LodSite.controllers', [])
   }])
 
   //header and footer controllers
-  .controller('HeaderCtrl', ['$scope', 'ngDialog', function ($scope, ngDialog) {
+  .controller('HeaderCtrl', ['$scope', 'ngDialog','TokenService', function ($scope, ngDialog, TokenService) {
     $scope.opened = false;
     $scope.activeToggle = function () {
       $scope.opened = !$scope.opened;
@@ -46,6 +47,10 @@ angular.module('LodSite.controllers', [])
         closeByNavigation: true
       });
     };
+    $scope.signOut = function () {
+      TokenService.resetToken();
+      TokenService.getRole();
+    }
   }])
   .controller('FooterCtrl', ['$scope', function ($scope) {
     $scope.currentDate = new Date();
@@ -189,20 +194,20 @@ angular.module('LodSite.controllers', [])
     $scope.newDeveloper = {};
 
     $scope.signUp = function () {
-      ApiService.signUp($scope.newDeveloper).then(function (isSuccess) {
-        if (isSuccess) {
-          $scope.currentState = 'success';
-          $scope.newDeveloper = {};
-          $scope.repeatedPassword = '';
-          $scope.newDeveloper.Password = '';
-          $scope.signForm.$setPristine();
-          $timeout(function () {
-            $scope.currentState = 'filling';
-          }, 3000);
-        } else {
-          $scope.currentState = 'failed';
-        }
-      });
+        ApiService.signUp($scope.newDeveloper).then(function (isSuccess) {
+          if (isSuccess) {
+            $scope.currentState = 'success';
+            $scope.newDeveloper = {};
+            $scope.repeatedPassword = '';
+            $scope.newDeveloper.Password = '';
+            $scope.signForm.$setPristine();
+            $timeout(function () {
+              $scope.currentState = 'filling';
+            }, 3000);
+          } else {
+            $scope.currentState = 'failed';
+          }
+        });
     };
 
     $scope.$emit('toggle_black', { isblack: true });

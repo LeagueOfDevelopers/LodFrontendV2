@@ -1,0 +1,117 @@
+<div class="profile-settings__wrap">
+  <h1 class="profile-settings__heading headline">Добавление проекта</h1>
+
+  <div class="dividing-line"></div>
+
+  <form name="addProjectForm">
+
+    <div class="profile-settings__top-part">
+
+      <div class="profile-settings__avatar-wrapper">
+
+        <div class="adding-project__avatar-img"
+             ng-attr-style='background-image: url("{{newProject.LandingImageUri}}")' dropzone-big-image>
+
+          <div class="adding-project__file-close adding-project__big-image__file-close"
+               ng-if="newProject.LandingImageUri != 'app/imgs/progect-default-photo.svg'"
+               ng-click="deleteBigImage()"></div>
+
+          <div class="adding-project__uploading__bar-wrap">
+            <div class="adding-project__uploading__bar" ng-if="currentUploadStateBigImage=='uploading'" ng-attr-style='width: {{currentPercentBigImage}}%'></div>
+          </div>
+
+        </div>
+
+        <div class="profile-settings__button" upload-big-image>Загрузить фото</div>
+      </div>
+
+      <div class="profile-settings__top-part__inputs">
+        <div class="profile-settings__input-heading">Имя проекта:</div>
+        <input type="text" class="profile-settings__input validate-field" ng-model="newProject.Name" autofocus
+               required/>
+        <br/>
+
+        <div class="profile-settings__input-heading adding-project__input-heading">Тип проекта:</div>
+        <div class="adding-project__type">
+          <span ng-repeat="categoryItem in categories" ng-bind="categoryItem.category"
+                ng-click="toggleCategory(categoryItem)"
+                ng-class="{'adding-project__categories__item--activated': categoryItem.status}"
+                class="adding-project__categories__item"></span>
+        </div>
+        <br/>
+
+        <div class="profile-settings__input-heading">Статус проекта:</div>
+        <label><select class="adding-project__select" ng-model="newProject.ProjectStatus" required>
+          <option value='0' selected>Запланирован</option>
+          <option value='1'  >В процессе</option>
+          <option value='2' >Заморожен</option>
+        </select></label>
+        <br/>
+
+        <div class="profile-settings__input-heading">Уровень доступа:</div>
+        <label><select class="adding-project__select" ng-model="newProject.AccessLevel" required>
+          <option value="0" selected>Публичный</option>
+          <option value="1">Приватный</option>
+        </select></label>
+        <br/>
+
+        <div class="profile-settings__input-heading adding-project__input-heading">Описание проекта:</div>
+        <textarea class="adding-project__textarea validate-field" ng-model="newProject.Info" maxlength="500"
+                  ng-minlength="1" required></textarea>
+        <br/>
+
+
+        <div class="profile-settings__input-heading adding-project__input-heading">Прикрепить фото:</div>
+
+        <div class="adding-project__upload-box-wrap adding-project__upload-wrap">
+
+          <div class="adding-project__upload-box adding-project__uploaded-file" ng-repeat="image in images">
+            <div class="adding-project__uploaded-file__image-wrap"
+                 ng-attr-style="background-image: url('{{image.url}}')">
+              <div class="adding-project__file-close" ng-click="deleteImage(image, $index)"></div>
+            </div>
+          </div>
+
+          <div class="adding-project__upload-box adding-project__upload-file__wrap">
+            <div ng-switch="currentUploadStateImage">
+
+              <div ng-switch-when="waiting" upload-image dropzone-image>
+                <div class="adding-project__upload-file__adding">+</div>
+              </div>
+
+              <div ng-switch-when="uploading">
+                <div class="adding-project__uploading-wrap">
+                  <div class="adding-project__uploading-percent" ng-bind="currentPercentImage + '%'"></div>
+                  <div class="adding-project__uploading__bar-wrap">
+                    <div class="adding-project__uploading__bar" ng-attr-style='width: {{currentPercentImage}}%'></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <div class="adding-project__submit-wrapper">
+      <div ng-switch="currentState">
+        <p class="help-message-input" ng-switch-when="success">
+          Проект успешно добавлен.
+        </p>
+
+        <p class="help-message-input" ng-switch-when="failed">
+          Ошибка!
+        </p>
+      </div>
+
+      <button class="profile-settings__submit adding-project__submit" ng-disabled="addProjectForm.$invalid"
+              ng-click="registerProject()">
+        Добавить
+      </button>
+    </div>
+
+  </form>
+</div>

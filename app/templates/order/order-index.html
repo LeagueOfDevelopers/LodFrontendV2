@@ -11,13 +11,13 @@
                     placeholder="Ваш e-mail" required></label>
       <label><input type="text" ng-model="data.Header" name="projectName" placeholder="Название проекта"
                     required></label>
-      <label><select name="ProjectType" required>
-        <option value="" disabled selected>Выбрать тип проекта</option>
-        <option ng-selected="newDeveloper.InstituteName=='Веб-приложение'">Веб-приложение</option>
-        <option ng-selected="newDeveloper.InstituteName=='Мобильное приложение'">Мобильное приложение</option>
-        <option ng-selected="newDeveloper.InstituteName=='Десктопное приложение'">Десктопное приложение</option>
-        <option ng-selected="newDeveloper.InstituteName=='Игра'">Игра</option>
-        <option ng-selected="newDeveloper.InstituteName=='Другое'">Другое</option>
+      <label><select name="ProjectType" ng-model="data.ProjectType" required>
+        <option value='' disabled selected>Выбрать тип проекта</option>
+        <option value='0'>Веб-приложение</option>
+        <option value='1'>Мобильное приложение</option>
+        <option value='2'>Десктопное приложение</option>
+        <option value='3'>Игра</option>
+        <option value='4'>Другое</option>
       </select></label>
       <label><input type="text" ng-model="data.DeadLine" name="deadline" placeholder="Срок выполнения"
                     required></label>

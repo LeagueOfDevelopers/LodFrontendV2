@@ -176,5 +176,11 @@ angular.module('LodSite.services', [])
         return responseObject.isSuccess;
       });
     };
+
+    this.addProject = function (requestData) {
+      var apiUrl = 'http://api.lod-misis.ru/projects';
+
+      return sendRequest(POST, apiUrl, null, requestData);
+    };
   }])
 ;

@@ -7,9 +7,7 @@ angular.module('LodSite.directives', [])
   .directive('pageHeader', function () {
     return {
       restrict: 'E',
-      scope: {
-        isblack: '='
-      },
+      scope: true,
       templateUrl: templateUrl('directives', 'page-header'),
       controller: 'HeaderCtrl'
     }

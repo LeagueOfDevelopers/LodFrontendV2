@@ -13,28 +13,23 @@
       </div>
       <div class="profile-settings__top-part__inputs">
         <div class="profile-settings__input-heading">Институт:</div>
-        <input type="text" class="profile-settings__input validate-field" ng-bind="profile.InstituteNname"
-               ng-model="profile.InstituteName" required/>
+        <input type="text" class="profile-settings__input validate-field" ng-model="profile.InstituteName" required/>
         <br/>
 
         <div class="profile-settings__input-heading">Кафедра:</div>
-        <input type="text" class="profile-settings__input validate-field" ng-bind="profile.StudyingDirection"
-               ng-model="profile.StudyingDirection" required/>
+        <input type="text" class="profile-settings__input validate-field" ng-model="profile.StudyingDirection" required/>
         <br/>
 
         <div class="profile-settings__input-heading">Специальность:</div>
-        <input type="text" class="profile-settings__input validate-field" ng-bind="profile.Specialization"
-               ng-model="profile.Specialization" required/>
+        <input type="text" class="profile-settings__input validate-field" ng-model="profile.Specialization" required/>
         <br/>
 
         <div class="profile-settings__input-heading">Год поступления:</div>
-        <input type="text" class="profile-settings__input validate-field" ng-bind="profile.StudentAccessionYear"
-               ng-model="profile.PhoneNumber" pattern="[1-9]\d*" ng-minlength="4" ng-maxlength="4" required/>
+        <input type="text" class="profile-settings__input validate-field" ng-model="profile.PhoneNumber" pattern="[1-9]\d*" ng-minlength="4" ng-maxlength="4" required/>
         <br/>
 
         <div class="profile-settings__input-heading">Профиль ВКонтакте:</div>
-        <input type="url" name="vkUrl" class="profile-settings__input validate-field" ng-bind="profile.VkProfileUri"
-               ng-model="profile.VkProfileUri" required/>
+        <input type="url" name="vkUrl" class="profile-settings__input validate-field" ng-model="profile.VkProfileUri" required/>
 
         <div class="help-message-input" name="vkUri" ng-show="profileSettings.vkUri.$error.url">Введите адрес в формате
           http://vk.com/[username].
@@ -43,8 +38,7 @@
         <br/>
 
         <div class="profile-settings__input-heading">Номер телефона:</div>
-        <input type="text" class="profile-settings__input validate-field"
-               ng-bind="profile.PhoneNumber" ng-model="profile.PhoneNumber" required/>
+        <input type="text" class="profile-settings__input validate-field" ng-model="profile.PhoneNumber" required/>
         <br/>
       </div>
     </div>

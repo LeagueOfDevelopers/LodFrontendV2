@@ -72,6 +72,29 @@ angular.module('LodSite', [
           controller: 'EmailConfirmationCtrl'
         })
 
+        //admin-panel
+        .state('adminpanel', {
+          url: '/admin',
+          template: '<ui-view/>',
+          abstract: true
+        })
+        .state('adminpanel.index', {
+          url: '',
+          templateUrl: templateUrl('adminpanel', 'adminpanel-index'),
+          controller: 'AdminPanelCtrl'
+        })
+
+        .state('adminpanel.projects', {
+          url: '/projects',
+          templateUrl: templateUrl('adminpanel', 'adminpanel-projects'),
+          controller: 'AllProjectsCtrl'
+        })
+        .state('adminpanel.projectAdd', {
+          url: '/projects/add',
+          templateUrl: templateUrl('adminpanel', 'adminpanel-projectAdd'),
+          controller: 'AddProjectCtrl'
+        })
+
         //other
         .state('signup', {
           url: '/signup',

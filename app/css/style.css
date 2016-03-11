@@ -1,4 +1,6 @@
-@import url(https://fonts.googleapis.com/css?family=Cuprum:400,700|PT+Sans:400,700|Noto+Serif:400,700&subset=latin,cyrillic); /* CSS RESET */
+@import url(https://fonts.googleapis.com/css?family=Cuprum:400,700|PT+Sans:400,700|Noto+Serif:400,700&subset=latin,cyrillic);
+
+/* CSS RESET */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a,
 abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike,
 strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
@@ -1522,17 +1524,21 @@ footer {
   font-size: 1.1em;
 }
 
-.profile-settings__input {
+.profile-settings__input, .adding-project__select, .adding-project__textarea, .adding-project__type {
   display: block;
   box-sizing: border-box;
   outline: none;
   border: 0;
   width: 90%;
   max-width: 450px;
-  padding: 0 5px;
-  height: 35px;
   margin: 0 auto;
   font-size: 1em;
+  font-family: 'PT Sans', sans-serif;
+}
+
+.profile-settings__input, .adding-project__select {
+  padding: 0 5px;
+  height: 35px;
 }
 
 .profile-settings__avatar-wrapper {
@@ -1540,20 +1546,23 @@ footer {
   text-align: center;
 }
 
-.profile-settings__avatar-img {
+.profile-settings__avatar-img, .adding-project__avatar-img {
   margin: 0 auto;
   overflow: hidden;
   position: relative;
   background-color: white;
   max-width: 400px;
   width: 90%;
-  background-image: url("../imgs/developer-default-photo-gray.svg");
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.profile-settings__avatar-img {
+  background-image: url("../imgs/developer-default-photo-gray.svg");
   background-size: 90% 90%;
 }
 
-.profile-settings__avatar-img:before {
+.profile-settings__avatar-img:before, .adding-project__avatar-img:before {
   content: "";
   padding-top: 100%;
   float: left;
@@ -1563,30 +1572,41 @@ footer {
   display: inline-block;
   background-color: #202d3a;
   color: #ffffff;
-  border-radius: 5px;
   text-transform: uppercase;
   font-family: 'Cuprum', sans-serif;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .profile-settings__button {
+  border-radius: 5px;
   font-size: 1.2em;
   padding: 5px 10px;
   margin: 15px auto 20px;
 }
 
 .profile-settings__submit {
+  border: none;
+  outline: none;
+  border-radius: 8px;
   margin: 50px 0 10px;
   padding: 5px 30px;
   font-size: 1.7em;
 }
 
-.profile-settings__submit-wrapper {
+.profile-settings__submit-wrapper, .adding-project__submit-wrapper {
   width: 100%;
   text-align: center;
+}
+
+.profile-settings__submit-wrapper {
   margin: 40px auto;
 }
 
-.profile-settings__button:hover {
+.profile-settings__button:hover, .profile-settings__submit:hover {
+  cursor: pointer;
   background-color: #1e88e5;
 }
 
@@ -1606,6 +1626,169 @@ footer {
 .profile-settings__checkbox-label {
   margin-bottom: 20px;
   font-size: 1.1em;
+}
+
+/*************************
+       ADDING PROJECT
+*************************/
+.adding-project__select {
+  background-color: #fff;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.adding-project__textarea {
+  height: 185px;
+  resize: none;
+  padding: 10px;
+}
+
+.profile-settings__submit.adding-project__submit {
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+.adding-project__avatar-img {
+  background-size: contain;
+  background-image: url("../imgs/progect-default-photo.svg");
+}
+
+.adding-project__upload-wrap {
+  width: 90%;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.adding-project__upload-box-wrap {
+  display: block;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  flex-wrap: wrap;
+}
+
+.adding-project__upload-file__adding {
+  color: #aaaaaa;
+  width: 100%;
+  height: 100%;
+  font-size: 84px;
+  cursor: default;
+}
+
+.adding-project__upload-file__wrap {
+  display: inline-block;
+  text-align: center;
+  margin-right: 10px;
+  border: 2px dashed #9a9a9a !important;
+}
+
+.adding-project__upload-box {
+  position: relative;
+  width: 109px;
+  height: 109px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border: 2px solid #0072bc;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.adding-project__uploaded-file__image-wrap {
+  height: 100%;
+  width: 100%;
+  background-image: url("../imgs/Logotip.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.adding-project__file-close, .adding-project__big-image__file-close {
+  position: absolute;
+  background-image: url("../imgs/close-button.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  cursor: pointer;
+  transition: all .2s ease-out;
+}
+
+.adding-project__file-close:hover, .adding-project__big-image__file-close:hover {
+  background-color: #ffffff;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+
+}
+
+.adding-project__file-close {
+  width: 18px;
+  height: 18px;
+  top: 3px;
+  right: 3px;
+}
+
+.adding-project__big-image__file-close {
+  width: 25px;
+  height: 25px;
+}
+
+.adding-project__uploading-wrap {
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+
+.adding-project__uploading-percent {
+  display: table-cell;
+  vertical-align: middle;
+  width: 100%;
+  height: 109px;
+}
+
+.adding-project__uploading__bar-wrap {
+  position: absolute;
+  margin-top: -5px;
+  width: 100%;
+  top: 100%;
+  left: 0;
+  z-index: 1;
+}
+
+.adding-project__uploading__bar {
+  height: 5px;
+  background-color: #0072bc;
+}
+
+.adding-project__type {
+  width: 90%;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.adding-project__categories__item {
+  display: inline-block;
+  padding: 10px;
+  margin: 4px;
+  border: 1px solid #ffffff;
+  background-color: #717171;
+  color: white;
+  -webkit-transition: background-color .2s ease-out;
+  -moz-transition: background-color .2s ease-out;
+  -o-transition: background-color .2s ease-out;
+  transition: background-color .2s ease-out;
+  cursor: pointer;
+}
+
+.adding-project__categories__item--activated {
+  background-color: #2980b9;
 }
 
 @media only screen and (min-width: 480px) {
@@ -1876,7 +2059,7 @@ footer {
     width: 50%;
   }
 
-  .profile-settings__input {
+  .profile-settings__input, .adding-project__select, .adding-project__textarea, .adding-project__type {
     margin: 0 auto -20px;
     max-width: none;
   }
@@ -1897,14 +2080,6 @@ footer {
 
   .profile-settings__avatar-wrapper {
     width: 50%;
-  }
-  .profile-settings__button, .profile-settings__submit {
-    display: inline-block;
-    background-color: #202d3a;
-    color: #ffffff;
-    border-radius: 5px;
-    text-transform: uppercase;
-    font-family: 'Cuprum', sans-serif;
   }
 
   .profile-settings__submit-wrapper {
@@ -1929,6 +2104,27 @@ footer {
     width: 90%;
     margin: 0 auto -10px;
     text-align: left;
+  }
+
+  /*************************
+        ADDING PROJECT
+  *************************/
+  .adding-project__upload-box {
+    width: 123px;
+    height: 123px;
+  }
+
+  .adding-project__upload-file__adding {
+    font-size: 95px;
+  }
+
+  .adding-project__uploading-percent {
+    height: 123px;
+  }
+
+  .adding-project__categories__item {
+    padding: 9px;
+    margin: 4px;
   }
 }
 
@@ -2678,12 +2874,13 @@ footer {
     width: 180px;
   }
 
-  .profile-settings__input {
+  .profile-settings__input, .adding-project__select, .adding-project__textarea, .adding-project__type {
     display: inline-block;
     max-width: none;
-    width: 395px;
+    width: 390px;
     margin-left: 20px;
     margin-bottom: 20px;
+    min-height: 0;
   }
 
   .profile-settings__middle-part__wrapper {
@@ -2722,6 +2919,47 @@ footer {
   .profile-settings__bottom-part [type="checkbox"] {
     margin-right: 20px;
   }
+
+  /*****************************
+        ADDING PROJECT
+  *****************************/
+  .adding-project__textarea {
+    height: 151px;
+  }
+
+  .profile-settings__input-heading.adding-project__input-heading {
+    vertical-align: top;
+  }
+
+  .adding-project__upload-box-wrap {
+    display: inline-block;
+    display: inline-flex;
+  }
+
+  .adding-project__upload-wrap {
+    width: 390px;
+    max-width: none;
+    margin: 0 0 0 20px;
+  }
+
+  .adding-project__upload-box {
+    width: 116px;
+    height: 116px;
+  }
+
+  .adding-project__upload-file__adding {
+    cursor: pointer;
+    font-size: 89px;
+  }
+
+  .adding-project__uploading-percent {
+    height: 116px;
+  }
+
+  .adding-project__categories__item {
+    padding: 10px;
+    margin: 5px;
+  }
 }
 
 @media only screen and (min-width: 1300px) {
@@ -2752,10 +2990,13 @@ footer {
     width: 1000px
   }
 
-  .profile-settings__input {
-    height: 40px;
+  .profile-settings__input, .adding-project__select, .adding-project__textarea, .adding-project__type {
     width: 620px;
     margin-bottom: 30px;
+  }
+
+  .profile-settings__input, .adding-project__select {
+    height: 40px;
   }
 
   .profile-settings__button {
@@ -2775,6 +3016,31 @@ footer {
   .profile-settings__bottom-part__heading, .profile-settings__checkbox-label {
     font-size: 1.2em;
   }
+
+  /*****************************
+      ADDING PROJECT
+  *****************************/
+  .adding-project__textarea {
+    height: 185px;
+  }
+
+  .adding-project__upload-wrap {
+    width: 620px;
+  }
+
+  .adding-project__upload-box {
+    width: 141px;
+    height: 141px;
+  }
+
+  .adding-project__upload-file__adding {
+    font-size: 109px;
+  }
+
+  .adding-project__uploading-percent {
+    height: 141px;
+  }
+
 }
 
 @media only screen and (min-width: 1700px) {
@@ -2793,7 +3059,7 @@ footer {
   /*****************************
     PROFILE SETTINGS
   *****************************/
-  .profile-settings__input {
+  .profile-settings__input, .adding-project__select, .adding-project__textarea, .adding-project__type {
     width: 740px;
   }
 

@@ -122,4 +122,139 @@ angular.module('LodSite.directives', [])
     }
   }])
 
+  .directive('dropzoneImage', ['$rootScope', function ($rootScope) {
+    return {
+      resctrict: 'A',
+      link: link
+    };
+
+    function link($scope, element, attrs) {
+      // Set promptzone
+      $(element[0]).ajaxUploadDrop({
+        url: 'http://api.lod-misis.ru/image',
+        beforeSend: function () {
+          $rootScope.$broadcast('beforeSendImage');
+          console.log('before send');
+        },
+        onprogress: function (e) {
+          if (e.lengthComputable) {
+            var percentComplete = e.loaded / e.total;
+            $rootScope.$broadcast('progressImage', {
+              progress_value: Math.round(percentComplete * 100)
+            });
+          }
+        },
+        error: function () {
+          $rootScope.$broadcast('errorUploadingImage');
+        },
+        success: function (data) {
+          $rootScope.$broadcast('successUploadingImage', {
+            data: data
+          });
+        }
+      });
+    }
+  }])
+
+  .directive('uploadImage', ['$rootScope', function ($rootScope) {
+    return {
+      resctrict: 'A',
+      link: link
+    };
+
+    function link($scope, element, attrs) {
+      // Set promptzone
+      $(element[0]).ajaxUploadPrompt({
+        url: 'http://api.lod-misis.ru/image',
+        beforeSend: function () {
+          $rootScope.$broadcast('beforeSendImage');
+          console.log('before send');
+        },
+        onprogress: function (e) {
+          if (e.lengthComputable) {
+            var percentComplete = e.loaded / e.total;
+            $rootScope.$broadcast('progressImage', {
+              progress_value: Math.round(percentComplete * 100)
+            });
+          }
+        },
+        error: function () {
+          $rootScope.$broadcast('errorUploadingImage');
+        },
+        success: function (data) {
+          $rootScope.$broadcast('successUploadingImage', {
+            data: data
+          });
+        }
+      });
+    }
+  }])
+
+  .directive('dropzoneBigImage', ['$rootScope', function ($rootScope) {
+    return {
+      resctrict: 'A',
+      link: link
+    };
+
+    function link($scope, element, attrs) {
+      // Set promptzone
+      $(element[0]).ajaxUploadDrop({
+        url: 'http://api.lod-misis.ru/image',
+        beforeSend: function () {
+          $rootScope.$broadcast('beforeSendBigImage');
+          console.log('before send');
+        },
+        onprogress: function (e) {
+          if (e.lengthComputable) {
+            var percentComplete = e.loaded / e.total;
+            $rootScope.$broadcast('progressBigImage', {
+              progress_value: Math.round(percentComplete * 100)
+            });
+          }
+        },
+        error: function () {
+          $rootScope.$broadcast('errorUploadingBigImage');
+        },
+        success: function (data) {
+          $rootScope.$broadcast('successUploadingBigImage', {
+            data: data
+          });
+        }
+      });
+    }
+  }])
+
+  .directive('uploadBigImage', ['$rootScope', function ($rootScope) {
+    return {
+      resctrict: 'A',
+      link: link
+    };
+
+    function link($scope, element, attrs) {
+      // Set promptzone
+      $(element[0]).ajaxUploadPrompt({
+        url: 'http://api.lod-misis.ru/image',
+        beforeSend: function () {
+          $rootScope.$broadcast('beforeSendBigImage');
+          console.log('before send');
+        },
+        onprogress: function (e) {
+          if (e.lengthComputable) {
+            var percentComplete = e.loaded / e.total;
+            $rootScope.$broadcast('progressBigImage', {
+              progress_value: Math.round(percentComplete * 100)
+            });
+          }
+        },
+        error: function () {
+          $rootScope.$broadcast('errorUploadingBigImage');
+        },
+        success: function (data) {
+          $rootScope.$broadcast('successUploadingBigImage', {
+            data: data
+          });
+        }
+      });
+    }
+  }])
 ;

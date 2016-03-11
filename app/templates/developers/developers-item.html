@@ -1,5 +1,5 @@
 <div class="developer-page">
-  <div class="developer-confirmation-status" ng-switch="developer.ConfirmationStatus">
+  <div class="developer-confirmation-status" ng-if="userRole === 1" ng-switch="developer.ConfirmationStatus">
     <span style="color: #ccc;" ng-switch-when="1">Подтверждена почта</span>
     <span style="color: #ccc;" ng-switch-when="2">Подтверждён администратором</span>
     <span style="color: #ccc;" ng-switch-default="ng-switch-default">Не подтверждён</span>

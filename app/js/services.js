@@ -38,12 +38,12 @@ angular.module('LodSite.services', [])
 
     this.getRole = function () {
       var token = self.getToken();
-      if (!token) return 0;
+      if (!token) return false;
       var now = (new Date()).getMilliseconds();
       var tokenCreationTime = Date.parse(token.CreationTime);
       if (now - tokenCreationTime > TOKEN_VALIDITY) {
         self.resetToken();
-        return 0;
+        return false;
       } else {
         self.refreshTokenDate();
         return token.Role;
@@ -73,7 +73,7 @@ angular.module('LodSite.services', [])
     };
     var sendAuthorizationSaveRequest = function (method, url, requestParams, requestData) {
       var userRole = TokenService.getRole();
-      if (userRole !== 0) {
+      if (userRole !== false) {
         var token = TokenService.getToken().Token;
       }
       var responsePromise = sendRequest(method, url, requestParams, requestData, token);

@@ -442,7 +442,7 @@ angular.module('LodSite.controllers', [])
     /*GET - REQUESTS*/
     ApiService.getDeveloperForProfileSttings(developerId).then(function (data) {
       $scope.profile.BigPhotoUri = data.BigPhotoUri;
-      $scope.profile.BigPhotoUri = data.SmallPhotoUri;
+      $scope.profile.SmallPhotoUri = data.SmallPhotoUri;
       $scope.profile.InstituteName = data.InstituteName;
       $scope.profile.StudyingDirection = data.StudyingDirection;
       $scope.profile.Specialization = data.Specialization;

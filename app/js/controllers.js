@@ -437,6 +437,8 @@ angular.module('LodSite.controllers', [])
     var developerId = $state.params.id;
     $scope.defaultPhoto = 'app/imgs/developer-default-photo.png';
 
+    $scope.profile = {};
+
     /*GET - REQUESTS*/
     ApiService.getDeveloperForProfileSttings(developerId).then(function (data) {
       $scope.profile.BigPhotoUri = data.BigPhotoUri;

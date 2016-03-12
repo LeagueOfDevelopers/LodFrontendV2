@@ -61,7 +61,7 @@ angular.module('LodSite.services', [])
         url: url
       };
       if (tokenValue) {
-        requestConfig.headers = { 'Authorization': 'Basic ' + tokenValue };
+        requestConfig.headers = {'Authorization': 'Basic ' + tokenValue};
       }
       if (requestParams) {
         requestConfig.params = requestParams;
@@ -101,7 +101,7 @@ angular.module('LodSite.services', [])
     this.getRandomDevelopers = function (numberOfDevelopers) {
       var apiUrl = 'http://api.lod-misis.ru/developers/random/' + numberOfDevelopers;
 
-      return sendAuthorizationSaveRequest(GET, apiUrl).then(function(response){
+      return sendAuthorizationSaveRequest(GET, apiUrl).then(function (response) {
         return response.data;
       });
     };
@@ -149,21 +149,64 @@ angular.module('LodSite.services', [])
     this.getRandomProjects = function (numberOfProjects) {
       var apiUrl = 'http://api.lod-misis.ru/projects/random/' + numberOfProjects;
 
-      return sendAuthorizationSaveRequest(GET, apiUrl).then(function(response){
+      return sendAuthorizationSaveRequest(GET, apiUrl).then(function (response) {
         return response.data;
       });
     };
     this.getFullProjects = function (requestParams) {
       var apiUrl = 'http://api.lod-misis.ru/projects';
 
-      return sendAuthorizationSaveRequest(GET, apiUrl, requestParams).then(function(response){
+      return sendAuthorizationSaveRequest(GET, apiUrl, requestParams).then(function (response) {
         return response.data;
       });
     };
     this.getProject = function (projectId) {
       var apiUrl = 'http://api.lod-misis.ru/projects/' + projectId;
 
-      return sendAuthorizationSaveRequest(GET, apiUrl).then(function(response){
+      return sendAuthorizationSaveRequest(GET, apiUrl).then(function (response) {
+        return response.data;
+      });
+    };
+
+    this.getDeveloperForProfileSttings = function (developerId) {
+      var apiUrl = 'http://api.lod-misis.ru/developers/' + developerId;
+
+      return sendAuthorizationSaveRequest(GET, apiUrl)
+        .then(function setImageCap(response) {
+          if (response.data.BigPhotoUri == null) {
+            response.data.BigPhotoUri = '/app/imgs/developer-default-photo.png';
+          }
+          return response.data;
+        })
+    };
+    this.sendProfileSttings = function (developerId, requestData) {
+      var apiUrl = 'http://api.lod-misis.ru/developers/' + developerId;
+
+      return sendAuthorizationSaveRequest(POST, apiUrl, null, requestData).then(function (response) {
+        return response.data;
+      });
+    };
+
+    this.getNotificationsForProfileSttings = function (developerId) {
+      var apiUrl = 'http://api.lod-misis.ru/developers/notificationsettings/' + developerId;
+
+      return sendAuthorizationSaveRequest(GET, apiUrl)
+        .then(function setImageCap(response) {
+          return response.data;
+        })
+    };
+    this.sendNotifications = function (developerId, requestData) {
+      var apiUrl = 'http://api.lod-misis.ru/developers/notificationsettings/' + developerId;
+
+      return sendAuthorizationSaveRequest(POST, apiUrl, null, requestData).then(function (response) {
+        return response.data;
+      });
+    };
+
+    this.sendNewPassword = function (developerId, requestData) {
+      var apiUrl = 'http://api.lod-misis.ru/developers/password/' + developerId;
+
+      return sendAuthorizationSaveRequest(POST, apiUrl, null, requestData).then(function (response) {
         return response.data;
       });
     };
@@ -171,7 +214,7 @@ angular.module('LodSite.services', [])
     this.signUp = function (requestData) {
       var apiUrl = 'http://api.lod-misis.ru/developers';
 
-      return sendAuthorizationSaveRequest(POST, apiUrl, null, requestData).then(function(response){
+      return sendAuthorizationSaveRequest(POST, apiUrl, null, requestData).then(function (response) {
         return response.data;
       });
     };
@@ -187,7 +230,9 @@ angular.module('LodSite.services', [])
     this.addProject = function (requestData) {
       var apiUrl = 'http://api.lod-misis.ru/projects';
 
-      return sendRequest(POST, apiUrl, null, requestData);
+      return sendRequest(POST, apiUrl, null, requestData).then(function (response) {
+        return response.data;
+      });
     };
   }])
 ;

@@ -69,7 +69,7 @@ angular.module('LodSite', [
         .state('developers.edit', {
           url: '/profile/:id',
           templateUrl: templateUrl('developers', 'developers-edit'),
-          controller: 'EmailConfirmationCtrl'
+          controller: 'DeveloperEditCtrl'
         })
 
         //admin-panel

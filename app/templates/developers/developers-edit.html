@@ -3,42 +3,68 @@
 
   <div class="dividing-line"></div>
 
-  <form class="" name="profileSettings">
+  <form name="profileSettingsForm">
 
     <div class="profile-settings__top-part">
 
       <div class="profile-settings__avatar-wrapper">
-        <div class="profile-settings__avatar-img"></div>
-        <div class="profile-settings__button">Загрузить фото</div>
+        <div class="profile-settings__avatar-img"
+             ng-attr-style='background-image: url("{{profile.BigPhotoUri}}")' dropzone-big-image>
+
+          <div class="adding-project__file-close adding-project__big-image__file-close"
+               ng-if="profile.BigPhotoUri!='app/imgs/developer-default-photo.png'"
+               ng-click="deleteBigPhoto()"></div>
+
+          <div class="adding-project__uploading__bar-wrap">
+            <div class="adding-project__uploading__bar" ng-if="currentUploadStateBigPhoto=='uploading'"
+                 ng-attr-style='width: {{currentPercentBigPhoto}}%'></div>
+          </div>
+
+        </div>
+
+        <div class="profile-settings__button" upload-big-image>Загрузить фото</div>
       </div>
       <div class="profile-settings__top-part__inputs">
         <div class="profile-settings__input-heading">Институт:</div>
-        <input type="text" class="profile-settings__input validate-field" ng-model="profile.InstituteName" required/>
+        <input type="text" class="profile-settings__input validate-field" ng-model="profile.InstituteName"
+               pattern="^[А-Яа-яЁё\s]+$" required/>
         <br/>
 
         <div class="profile-settings__input-heading">Кафедра:</div>
-        <input type="text" class="profile-settings__input validate-field" ng-model="profile.StudyingDirection" required/>
+        <input type="text" class="profile-settings__input validate-field" ng-model="profile.StudyingDirection"
+               pattern="^[А-Яа-яЁё\s]+$" required/>
         <br/>
 
         <div class="profile-settings__input-heading">Специальность:</div>
-        <input type="text" class="profile-settings__input validate-field" ng-model="profile.Specialization" required/>
+        <input type="text" class="profile-settings__input validate-field" ng-model="profile.Specialization"
+               pattern="^[А-Яа-яЁё\s]+$" required/>
         <br/>
 
         <div class="profile-settings__input-heading">Год поступления:</div>
-        <input type="text" class="profile-settings__input validate-field" ng-model="profile.PhoneNumber" pattern="[1-9]\d*" ng-minlength="4" ng-maxlength="4" required/>
+        <input name="studentAccessionYear" type="text" class="profile-settings__input validate-field"
+               restrict="reject" ng-model="profile.StudentAccessionYear" pattern="20[0-9]{2}" minlength="4"
+               maxlength="4" required/>
         <br/>
 
-        <div class="profile-settings__input-heading">Профиль ВКонтакте:</div>
-        <input type="url" name="vkUrl" class="profile-settings__input validate-field" ng-model="profile.VkProfileUri" required/>
+        <div class="help-message-input profile-settings__help-message"
+             ng-show="profileSettingsForm.studentAccessionYear.$error.pattern">Вы не могли поступать в этот год.
+        </div>
 
-        <div class="help-message-input" name="vkUri" ng-show="profileSettings.vkUri.$error.url">Введите адрес в формате
-          http://vk.com/[username].
+        <div class="profile-settings__input-heading">Профиль ВКонтакте:</div>
+        <input type="url" name="vkUri" class="profile-settings__input validate-field" ng-model="profile.VkProfileUri"
+               required/>
+
+        <div class="help-message-input profile-settings__help-message__vk-uri"
+             ng-show="profileSettingsForm.vkUri.$error.url">Введите адрес в формате
+          https://vk.com/[username].
         </div>
 
         <br/>
 
         <div class="profile-settings__input-heading">Номер телефона:</div>
-        <input type="text" class="profile-settings__input validate-field" ng-model="profile.PhoneNumber" required/>
+        <input type="text" class="profile-settings__input validate-field"
+               pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$"
+               ng-model="profile.PhoneNumber" required/>
         <br/>
       </div>
     </div>
@@ -49,22 +75,29 @@
     <div class="profile-settings__middle-part__wrapper">
       <div class="profile-settings__middle-part">
         <div class="profile-settings__input-heading">Новый пароль:</div>
-        <input type="password" name="password" class="profile-settings__input validate-field"
+        <input type="password" name="newPassword" class="profile-settings__input" ng-model="newPassword"
+               ng-change="compareNewPasswords(newPassword)"
+               ng-class="{'validate-field' : first}"
                pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
-               ng-minlength="8" ng-maxlength="30" ng-model="newPassword" required/>
+               ng-minlength="8" ng-maxlength="30"/>
         <br/>
 
-        <div class="help-message-input" ng-show="profileSettings.password.$error.pattern">Пароль должен быть длинной не
-          менее 8 символов и содержать латинские буквы или цифры.
+        <div class="help-message-input profile-settings__help-message__password"
+             ng-show="profileSettingsForm.newPassword.$error.pattern">Пароль должен быть длинной не
+          менее 8 символов и не более 30, а также содержать только цифры или латинские буквы.
         </div>
 
         <div class="profile-settings__input-heading">Повторите пароль:</div>
-        <input type="password" name="repeatedPassword" class="profile-settings__input validate-field"
+        <input type="password" name="repeatedPassword" class="profile-settings__input" ng-model="repeatedPassword"
+               ng-change="compareRepeatedPasswords(repeatedPassword)"
+               ng-class="{'validate-field' : second}"
                pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
-               ng-minlength="8" ng-maxlength="30" ng-change="compareProfile(password, repeatedPassword)" required/>
+               ng-minlength="8" ng-maxlength="30"/>
         <br/>
 
-        <div class="help-message-input" ng-if="repeatedPassword !== password">Пароли не совпадают.</div>
+        <div class="help-message-input" ng-show="(repeatedPassword!=newPassword)&&(first||second)">Пароли не
+          совпадают.
+        </div>
 
       </div>
 
@@ -80,42 +113,73 @@
 
       <div class="profile-settings__bottom-part__heading">Посылать на почту оповещения:</div>
 
-      <label class="profile-settings__checkbox-label" ng-switch-when="notification[0].NotificationSettingValue == 1"><input type="checkbox" ng-click="checkboxEvent()" required/>От
-        администрации</label>
-      <label class="profile-settings__checkbox-label" ng-switch-when="notification[0].NotificationSettingValue == 2"><input type="checkbox" ng-click="checkboxEvent()" required/>От
-        администрации</label>
+      <label class="profile-settings__checkbox-label">
+        <span ng-click="toggleNotifications(5)"
+              ng-class="{'profile-settings__notification--activated': notifications[5]}"
+              class="profile-settings__notification"></span>
+        <span class="profile-settings__notification__text">О поступлении заказа</span>
+      </label>
       <br/>
 
-      <label class="profile-settings__checkbox-label" ng-switch-when="notification[0].NotificationSettingValue == 1"><input type="checkbox" ng-model="" required/>О появлении
-        новых задач на проектах</label>
+      <label class="profile-settings__checkbox-label">
+        <span ng-click="toggleNotifications(4)"
+              ng-class="{'profile-settings__notification--activated': notifications[4]}"
+              class="profile-settings__notification"></span>
+        <span class="profile-settings__notification__text">О появлении новых проектов</span>
+      </label>
       <br/>
 
-      <label class="profile-settings__checkbox-label" ng-switch-when="notification[0].NotificationSettingValue == 1"><input type="checkbox" ng-model="" required/>О
-        появлении/уходе разработчика на проекте</label>
+      <label class="profile-settings__checkbox-label">
+        <span ng-click="toggleNotifications(1)"
+              ng-class="{'profile-settings__notification--activated': notifications[1]}"
+              class="profile-settings__notification"></span>
+        <span class="profile-settings__notification__text">О новом разработчике на проекте</span>
+      </label>
       <br/>
 
-      <label class="profile-settings__checkbox-label" ng-switch-when="notification[0].NotificationSettingValue == 1"> <input type="checkbox" ng-model="" required/>О
-        подтвержденной регистрации нового разработчика</label>
+      <label class="profile-settings__checkbox-label">
+        <span ng-click="toggleNotifications(0)"
+              ng-class="{'profile-settings__notification--activated': notifications[0]}"
+              class="profile-settings__notification"></span>
+        <span class="profile-settings__notification__text">Об уходе разработчика с проекта</span>
+      </label>
+      <br/>
+
+      <label class="profile-settings__checkbox-label">
+        <span ng-click="toggleNotifications(3)"
+              ng-class="{'profile-settings__notification--activated': notifications[3]}"
+              class="profile-settings__notification"></span>
+        <span class="profile-settings__notification__text">О полностью подтвержденно регистрации нового разработчика</span>
+      </label>
+      <br/>
+
+      <label class="profile-settings__checkbox-label">
+        <span ng-click="toggleNotifications(2)"
+              ng-class="{'profile-settings__notification--activated': notifications[2]}"
+              class="profile-settings__notification"></span>
+        <span class="profile-settings__notification__text">Об успешном подтверждении почты нового разработчика</span>
+      </label>
       <br/>
 
     </div>
+
 
     <div class="profile-settings__submit-wrapper">
-      <div class="profile-settings__submit">Сохранить</div>
+      <div ng-switch="currentState">
+        <p class="help-message-input" ng-switch-when="success">
+          Проект успешно добавлен.
+        </p>
+
+        <p class="help-message-input" ng-switch-when="failed">
+          Ошибка!
+        </p>
+      </div>
+
+      <button class="profile-settings__submit" ng-disabled="addProjectForm.$invalid"
+              ng-click="changeProfileSettings()">
+        Сохранить
+      </button>
     </div>
-
-  </form>
-
-
-  <div style="margin: 0 auto 30px auto;" ng-switch="isSuccess">
-    <p class="help-message-input" ng-switch-when="true">
-      Изменения успешно сохранены.
-    </p>
-
-    <p class="help-message-input" ng-switch-when="false">
-      Какое-то из полей заполнено неверно.
-    </p>
-  </div>
 
   </form>
 </div>

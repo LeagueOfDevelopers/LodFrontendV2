@@ -12,7 +12,7 @@
              ng-attr-style='background-image: url("{{profile.BigPhotoUri}}")' dropzone-big-image>
 
           <div class="adding-project__file-close adding-project__big-image__file-close"
-               ng-if="profile.BigPhotoUri!='app/imgs/developer-default-photo.png'"
+               ng-if="profile.BigPhotoUri!=defaultPhoto"
                ng-click="deleteBigPhoto()"></div>
 
           <div class="adding-project__uploading__bar-wrap">

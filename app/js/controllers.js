@@ -435,6 +435,7 @@ angular.module('LodSite.controllers', [])
 
   .controller('DeveloperEditCtrl', ['$scope', '$state', 'ApiService', function ($scope, $state, ApiService) {
     var developerId = $state.params.id;
+    $scope.defaultPhoto = 'app/imgs/developer-default-photo.png';
 
     /*GET - REQUESTS*/
     ApiService.getDeveloperForProfileSttings(developerId).then(function (data) {
@@ -490,7 +491,7 @@ angular.module('LodSite.controllers', [])
     });
 
     $scope.deleteBigPhoto = function () {
-      $scope.profile.BigPhotoUri = 'app/imgs/developer-default-photo.png';
+      $scope.profile.BigPhotoUri = $scope.defaultPhoto;
     }
 
     /*FOR EMPTY PASSWORD*/
@@ -513,6 +514,10 @@ angular.module('LodSite.controllers', [])
 
     $scope.changeProfileSettings = function () {
       if (($scope.newPassword == $scope.repeatedPassword) || (!$scope.newPassword && !$scope.repeatedPassword)) {
+
+        if($scope.profile.BigPhotoUri = $scope.defaultPhoto) {
+          $scope.profile.BigPhotoUri = null;
+        }
 
         $scope.profile.SmallPhotoUri = $scope.profile.BigPhotoUri;
 

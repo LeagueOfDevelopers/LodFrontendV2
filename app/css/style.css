@@ -1564,7 +1564,6 @@ footer {
 }
 
 .profile-settings__avatar-img {
-  background-image: url("../imgs/developer-default-photo-gray.svg");
   background-size: contain;
 }
 

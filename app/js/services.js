@@ -54,6 +54,7 @@ angular.module('LodSite.services', [])
   .service('ApiService', ['$http', 'TokenService', '$rootScope', function ($http, TokenService, $rootScope) {
     var GET = 'get';
     var POST = 'post';
+    var PUT = 'put';
 
     var sendRequest = function (method, url, requestParams, requestData, tokenValue) {
       var requestConfig = {
@@ -182,7 +183,7 @@ angular.module('LodSite.services', [])
     this.sendProfileSttings = function (developerId, requestData) {
       var apiUrl = 'http://api.lod-misis.ru/developers/' + developerId;
 
-      return sendAuthorizationSaveRequest(POST, apiUrl, null, requestData).then(function (response) {
+      return sendAuthorizationSaveRequest(PUT, apiUrl, null, requestData).then(function (response) {
         return response.data;
       });
     };
@@ -198,7 +199,7 @@ angular.module('LodSite.services', [])
     this.sendNotifications = function (developerId, requestData) {
       var apiUrl = 'http://api.lod-misis.ru/developers/notificationsettings/' + developerId;
 
-      return sendAuthorizationSaveRequest(POST, apiUrl, null, requestData).then(function (response) {
+      return sendAuthorizationSaveRequest(PUT, apiUrl, null, requestData).then(function (response) {
         return response.data;
       });
     };
@@ -206,7 +207,7 @@ angular.module('LodSite.services', [])
     this.sendNewPassword = function (developerId, requestData) {
       var apiUrl = 'http://api.lod-misis.ru/developers/password/' + developerId;
 
-      return sendAuthorizationSaveRequest(POST, apiUrl, null, requestData).then(function (response) {
+      return sendAuthorizationSaveRequest(PUT, apiUrl, null, requestData).then(function (response) {
         return response.data;
       });
     };

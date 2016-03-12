@@ -32,12 +32,12 @@
 
         <div class="profile-settings__input-heading">Кафедра:</div>
         <input type="text" class="profile-settings__input validate-field" ng-model="profile.StudyingDirection"
-               pattern="^[А-Яа-яЁё\s]+$" required/>
+               pattern="^[а-яА-Я- _\.]{1,70}$" required/>
         <br/>
 
         <div class="profile-settings__input-heading">Специальность:</div>
         <input type="text" class="profile-settings__input validate-field" ng-model="profile.Specialization"
-               pattern="^[А-Яа-яЁё\s]+$" required/>
+               pattern="[а-яА-Я- _\.]{1,50}$" required/>
         <br/>
 
         <div class="profile-settings__input-heading">Год поступления:</div>

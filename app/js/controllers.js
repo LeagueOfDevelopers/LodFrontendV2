@@ -433,8 +433,9 @@ angular.module('LodSite.controllers', [])
     $scope.$emit('toggle_black', {isblack: true});
   }])
 
-  .controller('DeveloperEditCtrl', ['$scope', '$state', '$timeout', 'ApiService', function ($scope, $state, $timeout, ApiService) {
-    var developerId = $state.params.id;
+  .controller('DeveloperEditCtrl', ['$scope', '$state', '$timeout', 'ApiService', 'TokenService', function ($scope, $state, $timeout, ApiService, TokenService) {
+    var developerId = TokenService.getToken().UserId;
+
     $scope.defaultPhoto = '/app/imgs/developer-default-photo.png';
     $scope.avatarPhoto = '';
     $scope.profile = {};

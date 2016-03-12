@@ -5,18 +5,18 @@
 angular.module('LodSite.controllers', [])
   //main controllers
   .controller('PageCtrl', ['$scope', '$rootScope',
-    function ($scope, $rootScope ) {
-    var defaultTitle = 'Лига Разработчиков НИТУ МИСиС';
-    $rootScope.$on('userRole_changed', function (e, args) {
-      $scope.userRole = args.userRole;
-    });
-    $scope.$on('change_title', function (e, args) {
-      $scope.title = args.title !== undefined && args.title.length ? args.title : defaultTitle;
-    });
-    $scope.$on('$viewContentLoaded', function () {
-      setPaddingBottom();
-    });
-  }])
+    function ($scope, $rootScope) {
+      var defaultTitle = 'Лига Разработчиков НИТУ МИСиС';
+      $rootScope.$on('userRole_changed', function (e, args) {
+        $scope.userRole = args.userRole;
+      });
+      $scope.$on('change_title', function (e, args) {
+        $scope.title = args.title !== undefined && args.title.length ? args.title : defaultTitle;
+      });
+      $scope.$on('$viewContentLoaded', function () {
+        setPaddingBottom();
+      });
+    }])
   .controller('AppCtrl', ['$scope', function ($scope) {
     $scope.isblack = false;
     $scope.$on('toggle_black', function (e, args) {
@@ -31,7 +31,7 @@ angular.module('LodSite.controllers', [])
   }])
 
   //header and footer controllers
-  .controller('HeaderCtrl', ['$scope', 'ngDialog','TokenService', function ($scope, ngDialog, TokenService) {
+  .controller('HeaderCtrl', ['$scope', 'ngDialog', 'TokenService', function ($scope, ngDialog, TokenService) {
     $scope.opened = false;
     $scope.activeToggle = function () {
       $scope.opened = !$scope.opened;
@@ -80,7 +80,7 @@ angular.module('LodSite.controllers', [])
       }
     );
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
     $scope.$emit('change_title', {
       title: 'Разработчики - Лига Разработчиков НИТУ МИСиС'
     });
@@ -94,7 +94,7 @@ angular.module('LodSite.controllers', [])
         ' - Лига Разработчиков НИТУ МИСиС'
       });
     });
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
   }])
 
   //projects controllers
@@ -126,6 +126,12 @@ angular.module('LodSite.controllers', [])
       status: false,
       index: 4
     }];
+    $scope.fullProjects = [];
+    var pageCounter = 0;
+    $scope.addProjects = function () {
+      pageCounter++;
+      $scope.updateProjects();
+    };
 
     $scope.toggleCategory = function (targetCategory) {
       targetCategory.status = !targetCategory.status;
@@ -144,19 +150,51 @@ angular.module('LodSite.controllers', [])
         });
       }
 
-      ApiService.getFullProjects(requestParams).then(function (data) {
-        $scope.fullProjects = data;
+      ApiService.getFullProjects(requestParams, pageCounter).then(function (data) {
+        $scope.fullProjects = $scope.fullProjects.concat(data);
       })
     };
     $scope.updateProjects();
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
     $scope.$emit('change_title', {
       title: 'Проекты - Лига Разработчиков НИТУ МИСиС'
     });
   }])
-  .controller('ProjectCtrl', ['$scope', '$state', 'ApiService', 'ngDialog', '$rootScope', function ($scope, $state, ApiService, ngDialog, $rootScope) {
+  .controller('ProjectCtrl', ['$scope', '$state', 'ApiService', 'ngDialog', '$rootScope', 'TokenService', function ($scope, $state, ApiService, ngDialog, $rootScope, TokenService) {
     var projectId = $state.params.id;
+    if(TokenService.getToken()){
+      var userId = TokenService.getToken().UserId;
+    }
+    var getProject = function () {
+      ApiService.getProject(projectId).then(function (data) {
+        $scope.project = data;
+        $scope.projectTypes = $scope.project.ProjectType;
+        $scope.projectIssues = $scope.project.Issues;
+        if ($scope.project.ProjectMemberships.length === 0) {
+          $scope.replacementText = "В данный момент на проекте нет разработчиков.";
+        }
+        $scope.checkMembership = function () {
+          var isProjectMember = false;
+          var userId = TokenService.getToken().UserId;
+          for (var i = 0; i < $scope.project.ProjectMemberships.length; i++) {
+            if ($scope.project.ProjectMemberships[i].DeveloperId === userId) {
+              isProjectMember = true;
+            }
+          }
+          return isProjectMember;
+        };
+
+        $scope.openViewerDialog = function (imgIndex) {
+          $rootScope.openedScreenshotUrl = $scope.project.Screenshots[imgIndex];
+          $scope.openViewer();
+        };
+
+        $scope.$emit('change_title', {
+          title: $scope.project.Name + ' - Лига Разработчиков НИТУ МИСиС'
+        });
+      });
+    };
     $scope.openViewer = function () {
       $scope.$dialog = ngDialog.open({
         template: 'viewer',
@@ -167,26 +205,17 @@ angular.module('LodSite.controllers', [])
         }]
       });
     };
+    $scope.joinToProject = function () {
+      ApiService.joinToProject(projectId, userId, $scope.projectDeveloperRole);
+      getProject();
+    };
+    $scope.escapeFromProject = function () {
+      ApiService.escapeFromProject(projectId, userId);
+      getProject();
+    };
+    getProject();
 
-    ApiService.getProject(projectId).then(function (data) {
-      $scope.project = data;
-      $scope.projectTypes = $scope.project.ProjectType;
-      $scope.projectIssues = $scope.project.Issues;
-      if ($scope.project.ProjectMemberships.length === 0) {
-        $scope.replacementText = "В данный момент на проекте нет разработчиков.";
-      }
-
-      $scope.openViewerDialog = function (imgIndex) {
-        $rootScope.openedScreenshotUrl = $scope.project.Screenshots[imgIndex];
-        $scope.openViewer();
-      };
-
-      $scope.$emit('change_title', {
-        title: $scope.project.Name + ' - Лига Разработчиков НИТУ МИСиС'
-      });
-    });
-
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
   }])
 
   .controller('SignupCtrl', ['$scope', 'ApiService', '$timeout', function ($scope, ApiService, $timeout) {
@@ -194,30 +223,30 @@ angular.module('LodSite.controllers', [])
     $scope.newDeveloper = {};
 
     $scope.signUp = function () {
-        ApiService.signUp($scope.newDeveloper).then(function (isSuccess) {
-          if (isSuccess) {
-            $scope.currentState = 'success';
-            $scope.newDeveloper = {};
-            $scope.repeatedPassword = '';
-            $scope.newDeveloper.Password = '';
-            $scope.signForm.$setPristine();
-            $timeout(function () {
-              $scope.currentState = 'filling';
-            }, 3000);
-          } else {
-            $scope.currentState = 'failed';
-          }
-        });
+      ApiService.signUp($scope.newDeveloper).then(function (isSuccess) {
+        if (isSuccess) {
+          $scope.currentState = 'success';
+          $scope.newDeveloper = {};
+          $scope.repeatedPassword = '';
+          $scope.newDeveloper.Password = '';
+          $scope.signForm.$setPristine();
+          $timeout(function () {
+            $scope.currentState = 'filling';
+          }, 3000);
+        } else {
+          $scope.currentState = 'failed';
+        }
+      });
     };
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
     $scope.$emit('change_title', {
       title: 'Стать разработчиком - Лига Разработчиков НИТУ МИСиС'
     });
   }])
   .controller('AboutCtrl', ['$scope', function ($scope) {
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
     $scope.$emit('change_title', {
       title: 'О нас - Лига Разработчиков НИТУ МИСиС'
     });
@@ -242,7 +271,6 @@ angular.module('LodSite.controllers', [])
 
     $(".order-accordion p:not(:first)").hide();
     $(".order-content > .order-accordion p:first").show();
-
 
     $(".span-wrap").click(function () {
       $(this).next("p").slideToggle("slow")
@@ -285,7 +313,7 @@ angular.module('LodSite.controllers', [])
       });
     };
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
 
     $scope.$emit('change_title', {
       title: 'Заказать - Лига Разработчиков НИТУ МИСиС'
@@ -371,7 +399,7 @@ angular.module('LodSite.controllers', [])
       });
     };
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
 
     $scope.$emit('change_title', {
       title: 'Cвязаться - Лига Разработчиков НИТУ МИСиС'
@@ -430,7 +458,7 @@ angular.module('LodSite.controllers', [])
       $scope.isSuccess = false;
     });
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
   }])
 
   .controller('EditDeveloperCtrl', ['$scope', '$http', '$state', function ($scope, $http, $state) {
@@ -457,12 +485,12 @@ angular.module('LodSite.controllers', [])
       $http.post();
     }
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
   }])
 
   .controller('AdminPanelCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
     $scope.$emit('change_title', {
       title: 'Административная панель - Лига Разработчиков НИТУ МИСиС'
     });
@@ -470,7 +498,7 @@ angular.module('LodSite.controllers', [])
 
   .controller('AllProjectsCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
     $scope.$emit('change_title', {
       title: 'Проекты - Лига Разработчиков НИТУ МИСиС'
     });
@@ -514,7 +542,7 @@ angular.module('LodSite.controllers', [])
       });
     };
 
-    $scope.$emit('toggle_black', {isblack: true});
+    $scope.$emit('toggle_black', { isblack: true });
     $scope.$emit('change_title', {
       title: 'Добавление проекта - Лига Разработчиков НИТУ МИСиС'
     });
@@ -603,7 +631,6 @@ angular.module('LodSite.controllers', [])
       $scope.currentUploadStateBigImage = '';
       $scope.currentPercentBigImage = 0;
       $scope.$apply();
-
 
     });
 

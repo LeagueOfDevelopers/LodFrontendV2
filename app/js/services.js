@@ -54,6 +54,7 @@ angular.module('LodSite.services', [])
   .service('ApiService', ['$http', 'TokenService', '$rootScope', function ($http, TokenService, $rootScope) {
     var GET = 'get';
     var POST = 'post';
+    var DELETE = 'delete';
 
     var sendRequest = function (method, url, requestParams, requestData, tokenValue) {
       var requestConfig = {
@@ -101,7 +102,7 @@ angular.module('LodSite.services', [])
     this.getRandomDevelopers = function (numberOfDevelopers) {
       var apiUrl = 'http://api.lod-misis.ru/developers/random/' + numberOfDevelopers;
 
-      return sendAuthorizationSaveRequest(GET, apiUrl).then(function(response){
+      return sendAuthorizationSaveRequest(GET, apiUrl).then(function (response) {
         return response.data;
       });
     };
@@ -149,29 +150,37 @@ angular.module('LodSite.services', [])
     this.getRandomProjects = function (numberOfProjects) {
       var apiUrl = 'http://api.lod-misis.ru/projects/random/' + numberOfProjects;
 
-      return sendAuthorizationSaveRequest(GET, apiUrl).then(function(response){
+      return sendAuthorizationSaveRequest(GET, apiUrl).then(function (response) {
         return response.data;
       });
     };
-    this.getFullProjects = function (requestParams) {
-      var apiUrl = 'http://api.lod-misis.ru/projects';
+    this.getFullProjects = function (requestParams, pageCounter) {
+      var apiUrl = 'http://api.lod-misis.ru/projects?page=' + pageCounter;
 
-      return sendAuthorizationSaveRequest(GET, apiUrl, requestParams).then(function(response){
+      return sendAuthorizationSaveRequest(GET, apiUrl, requestParams).then(function (response) {
         return response.data;
       });
     };
     this.getProject = function (projectId) {
       var apiUrl = 'http://api.lod-misis.ru/projects/' + projectId;
 
-      return sendAuthorizationSaveRequest(GET, apiUrl).then(function(response){
+      return sendAuthorizationSaveRequest(GET, apiUrl).then(function (response) {
         return response.data;
       });
+    };
+    this.joinToProject = function (projectId, userId, projectDeveloperRole) {
+      var apiUrl = 'http://api.lod-misis.ru/projects/' + projectId + '/developer/' + userId;
+      sendAuthorizationSaveRequest(POST, apiUrl, null, projectDeveloperRole);
+    };
+    this.escapeFromProject = function (projectId, userId) {
+      var apiUrl = 'http://api.lod-misis.ru/projects/' + projectId + '/developer/' + userId;
+      sendAuthorizationSaveRequest(DELETE, apiUrl);
     };
 
     this.signUp = function (requestData) {
       var apiUrl = 'http://api.lod-misis.ru/developers';
 
-      return sendAuthorizationSaveRequest(POST, apiUrl, null, requestData).then(function(response){
+      return sendAuthorizationSaveRequest(POST, apiUrl, null, requestData).then(function (response) {
         return response.data;
       });
     };

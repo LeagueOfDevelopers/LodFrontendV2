@@ -8,7 +8,7 @@
           <span class="status__value" style="background: #795548;" ng-switch-when="0">Запланирован</span>
           <span class="status__value" style="background: #1e88e5;" ng-switch-when="1">В процессе</span>
           <span class="status__value" style="background: #607d8b;" ng-switch-when="2">Заморожен</span>
-          <span class="status__value" style="background: #009688;" ng-switch-default="ng-switch-default">Завершен</span>
+          <span class="status__value" style="background: #009688;" ng-switch-default>Завершен</span>
     </span>
     </div>
     <div class="full-project__info">
@@ -19,7 +19,7 @@
           <span ng-switch-when="1">Мобильное</span>
           <span ng-switch-when="2">Десктопное</span>
           <span ng-switch-when="3">Игра</span>
-          <span ng-switch-default="ng-switch-default">Прочее</span>
+          <span ng-switch-default>Прочее</span>
       </span>
       </div>
       <div class="info__subheading">Описание:</div>
@@ -32,20 +32,20 @@
       </span>
 
       <div class="info__if-no-developers" style="color:#a4a4a4" ng-bind="replacementText"></div>
-      <div class="info__subheading">Уровень доступа:</div>
-      <div class="info__access" ng-switch="project.AccessLevel">
+      <div class="info__subheading" ng-if="userRole === 0 || userRole === 1" >Уровень доступа:</div>
+      <div class="info__access" ng-if="userRole === 0 || userRole === 1" ng-switch="project.AccessLevel">
         <span ng-switch-when="0">Закрытый</span>
-        <span ng-switch-default="ng-switch-default">Открытый</span>
+        <span ng-switch-default>Открытый</span>
       </div>
-      <div class="info__links">Проект в <a href="{{project.ProjectManagementSystemUri}}">Redmine</a>
+      <div class="info__links" ng-if="userRole === 0 || userRole === 1">Проект в <a href="{{project.ProjectManagementSystemUri}}">Redmine</a>
         и <a href="{{project.VersionControlSystemUri}}">Gitlab</a>
       </div>
-      <div class="button-style info__join-button">Присоединиться</div>
+      <div class="button-style info__join-button" ng-if="userRole === 0 || userRole === 1">Присоединиться</div>
     </div>
   </div>
   <h1 class="full-project__headline headline">Задачи на проекте</h1>
 
-  <div class="dividing-line"></div>
+  <div class="dividing-line" ></div>
   <div class="full-project-issues">
     <span class="project-issues__issue" ng-repeat="projectIssue in projectIssues" ng-bind="projectIssue.Header"></span>
   </div>

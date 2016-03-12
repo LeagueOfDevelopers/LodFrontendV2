@@ -232,7 +232,7 @@ angular.module('LodSite.services', [])
       var apiUrl = 'http://api.lod-misis.ru/projects';
 
       return sendRequest(POST, apiUrl, null, requestData).then(function (response) {
-        return response.data;
+        return response.status===200;
       });
     };
   }])

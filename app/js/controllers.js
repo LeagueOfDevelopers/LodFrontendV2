@@ -433,7 +433,7 @@ angular.module('LodSite.controllers', [])
     $scope.$emit('toggle_black', {isblack: true});
   }])
 
-  .controller('DeveloperEditCtrl', ['$scope', '$state', 'ApiService', function ($scope, $state, ApiService) {
+  .controller('DeveloperEditCtrl', ['$scope', '$state', '$timeout', 'ApiService', function ($scope, $state, $timeout, ApiService) {
     var developerId = $state.params.id;
     $scope.defaultPhoto = 'app/imgs/developer-default-photo.png';
 
@@ -499,12 +499,12 @@ angular.module('LodSite.controllers', [])
     /*FOR EMPTY PASSWORD*/
     $scope.first = true;
     $scope.compareNewPasswords = function (newPassword) {
-        $scope.first = !!newPassword;
+      $scope.first = !!newPassword;
     };
 
     $scope.second = true;
     $scope.compareRepeatedPasswords = function (repeatedPassword) {
-        $scope.second = !!repeatedPassword;
+      $scope.second = !!repeatedPassword;
     };
 
     /*FOR NOTIFICATIONS*/
@@ -517,7 +517,7 @@ angular.module('LodSite.controllers', [])
     $scope.changeProfileSettings = function () {
       if (($scope.newPassword == $scope.repeatedPassword) || (!$scope.newPassword && !$scope.repeatedPassword)) {
 
-        if($scope.profile.BigPhotoUri = $scope.defaultPhoto) {
+        if ($scope.profile.BigPhotoUri = $scope.defaultPhoto) {
           $scope.profile.BigPhotoUri = null;
         }
 
@@ -533,11 +533,9 @@ angular.module('LodSite.controllers', [])
             $scope.currentState = 'failed';
           }
         });
-
-        $scope.notificationSettings.NotificationSettingValue = $scope.notifications.map(function (value) {
-          return value ? 2 : 1;
-        });
-
+        for (var i = 0; i < $scope.notificationSettings.length; i++) {
+          $scope.notificationSettings[i].NotificationSettingValue = $scope.notifications[i] ? 2 : 1;
+        }
         ApiService.sendNotifications(developerId, $scope.notificationSettings).then(function (isSuccess) {
           if (isSuccess) {
             $scope.currentState = 'success';

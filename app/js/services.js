@@ -200,7 +200,7 @@ angular.module('LodSite.services', [])
       var apiUrl = 'http://api.lod-misis.ru/developers/notificationsettings/' + developerId;
 
       return sendAuthorizationSaveRequest(PUT, apiUrl, null, requestData).then(function (response) {
-        return response.data;
+        return response.status===200;
       });
     };
 

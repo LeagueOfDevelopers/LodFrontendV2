@@ -435,12 +435,14 @@ angular.module('LodSite.controllers', [])
 
   .controller('DeveloperEditCtrl', ['$scope', '$state', '$timeout', 'ApiService', function ($scope, $state, $timeout, ApiService) {
     var developerId = $state.params.id;
-    $scope.defaultPhoto = 'app/imgs/developer-default-photo.png';
-
+    $scope.defaultPhoto = '/app/imgs/developer-default-photo.png';
+    $scope.avatarPhoto = '';
     $scope.profile = {};
 
     /*GET - REQUESTS*/
     ApiService.getDeveloperForProfileSttings(developerId).then(function (data) {
+      $scope.avatarPhoto = data.BigPhotoUri;
+
       $scope.profile.BigPhotoUri = data.BigPhotoUri;
       $scope.profile.SmallPhotoUri = data.SmallPhotoUri;
       $scope.profile.InstituteName = data.InstituteName;
@@ -450,7 +452,6 @@ angular.module('LodSite.controllers', [])
       $scope.profile.VkProfileUri = data.VkProfileUri;
       $scope.profile.PhoneNumber = data.PhoneNumber;
     });
-
     ApiService.getNotificationsForProfileSttings(developerId).then(function (data) {
       $scope.notificationSettings = data;
       $scope.notifications = data.map(function (notification) {
@@ -485,7 +486,7 @@ angular.module('LodSite.controllers', [])
     });
 
     $scope.$on('successUploadingBigImage', function (ev, args) {
-      $scope.profile.BigPhotoUri = 'http://api.lod-misis.ru/image/' + args.data;
+      $scope.avatarPhoto = 'http://api.lod-misis.ru/image/' + args.data;
 
       $scope.currentUploadStateBigPhoto = 'waiting';
 
@@ -493,7 +494,7 @@ angular.module('LodSite.controllers', [])
     });
 
     $scope.deleteBigPhoto = function () {
-      $scope.profile.BigPhotoUri = $scope.defaultPhoto;
+      $scope.avatarPhoto = $scope.defaultPhoto;
     }
 
     /*FOR EMPTY PASSWORD*/
@@ -517,11 +518,13 @@ angular.module('LodSite.controllers', [])
     $scope.changeProfileSettings = function () {
       if (($scope.newPassword == $scope.repeatedPassword) || (!$scope.newPassword && !$scope.repeatedPassword)) {
 
-        if ($scope.profile.BigPhotoUri = $scope.defaultPhoto) {
+        if ($scope.avatarPhoto = $scope.defaultPhoto) {
           $scope.profile.BigPhotoUri = null;
+        } else {
+          $scope.profile.BigPhotoUri = $scope.avatarPhoto;
         }
 
-        $scope.profile.SmallPhotoUri = $scope.profile.BigPhotoUri;
+        $scope.profile.SmallPhotoUri = $scope.avatarPhoto;
 
         ApiService.sendProfileSttings(developerId, $scope.profile).then(function (isSuccess) {
           if (isSuccess) {

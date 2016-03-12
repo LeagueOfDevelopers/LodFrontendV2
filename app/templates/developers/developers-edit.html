@@ -9,10 +9,10 @@
 
       <div class="profile-settings__avatar-wrapper">
         <div class="profile-settings__avatar-img"
-             ng-attr-style='background-image: url("{{profile.BigPhotoUri}}")' dropzone-big-image>
+             ng-attr-style='background-image: url("{{avatarPhoto}}")' dropzone-big-image>
 
           <div class="adding-project__file-close adding-project__big-image__file-close"
-               ng-if="profile.BigPhotoUri!=defaultPhoto"
+               ng-if="avatarPhoto!=defaultPhoto"
                ng-click="deleteBigPhoto()"></div>
 
           <div class="adding-project__uploading__bar-wrap">
@@ -167,7 +167,7 @@
     <div class="profile-settings__submit-wrapper">
       <div ng-switch="currentState">
         <p class="help-message-input" ng-switch-when="success">
-          Проект успешно добавлен.
+          Изменения успешно сохранены.
         </p>
 
         <p class="help-message-input" ng-switch-when="failed">

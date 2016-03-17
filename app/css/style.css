@@ -868,7 +868,7 @@ footer {
 .info__membership-button{
   display: block;
   max-width: 200px;
-  margin: 10px auto 0 auto;
+  margin: 15px auto 0 auto;
   padding: 15px 10px;
   font-family: 'PT Sans', sans-serif;
   font-size: 0.9em;
@@ -2699,7 +2699,7 @@ footer {
 
   .contact-form {
     width: 25%;
-    min-width: 600px;
+    min-width: 550px;
   }
 
   .order-form input, .order-form textarea, .order-form select, .contact-form input, .contact-form textarea {

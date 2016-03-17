@@ -170,11 +170,11 @@ angular.module('LodSite.services', [])
     };
     this.joinToProject = function (projectId, userId, projectDeveloperRole) {
       var apiUrl = 'http://api.lod-misis.ru/projects/' + projectId + '/developer/' + userId;
-      sendAuthorizationSaveRequest(POST, apiUrl, null, projectDeveloperRole);
+      return sendAuthorizationSaveRequest(POST, apiUrl, null, projectDeveloperRole);
     };
     this.escapeFromProject = function (projectId, userId) {
       var apiUrl = 'http://api.lod-misis.ru/projects/' + projectId + '/developer/' + userId;
-      sendAuthorizationSaveRequest(DELETE, apiUrl);
+      return sendAuthorizationSaveRequest(DELETE, apiUrl);
     };
 
     this.signUp = function (requestData) {

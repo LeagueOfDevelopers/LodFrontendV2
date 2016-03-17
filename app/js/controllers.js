@@ -163,38 +163,37 @@ angular.module('LodSite.controllers', [])
   }])
   .controller('ProjectCtrl', ['$scope', '$state', 'ApiService', 'ngDialog', '$rootScope', 'TokenService', function ($scope, $state, ApiService, ngDialog, $rootScope, TokenService) {
     var projectId = $state.params.id;
-    if(TokenService.getToken()){
+    if (TokenService.getToken()) {
       var userId = TokenService.getToken().UserId;
     }
-    var getProject = function () {
-      ApiService.getProject(projectId).then(function (data) {
-        $scope.project = data;
-        $scope.projectTypes = $scope.project.ProjectType;
-        $scope.projectIssues = $scope.project.Issues;
-        if ($scope.project.ProjectMemberships.length === 0) {
-          $scope.replacementText = "В данный момент на проекте нет разработчиков.";
-        }
-        $scope.checkMembership = function () {
-          var isProjectMember = false;
-          var userId = TokenService.getToken().UserId;
-          for (var i = 0; i < $scope.project.ProjectMemberships.length; i++) {
-            if ($scope.project.ProjectMemberships[i].DeveloperId === userId) {
-              isProjectMember = true;
-            }
+    ApiService.getProject(projectId).then(function (data) {
+      $scope.project = data;
+      $scope.projectTypes = $scope.project.ProjectType;
+      $scope.projectIssues = $scope.project.Issues;
+      if ($scope.project.ProjectMemberships.length === 0) {
+        $scope.replacementText = "В данный момент на проекте нет разработчиков.";
+      }
+      $scope.checkMembership = function () {
+        var isProjectMember = false;
+        var userId = TokenService.getToken().UserId;
+        for (var i = 0; i < $scope.project.ProjectMemberships.length; i++) {
+          if ($scope.project.ProjectMemberships[i].DeveloperId === userId) {
+            isProjectMember = true;
           }
-          return isProjectMember;
-        };
+        }
+        return isProjectMember;
+      };
 
-        $scope.openViewerDialog = function (imgIndex) {
-          $rootScope.openedScreenshotUrl = $scope.project.Screenshots[imgIndex];
-          $scope.openViewer();
-        };
+      $scope.openViewerDialog = function (imgIndex) {
+        $rootScope.openedScreenshotUrl = $scope.project.Screenshots[imgIndex];
+        $scope.openViewer();
+      };
 
-        $scope.$emit('change_title', {
-          title: $scope.project.Name + ' - Лига Разработчиков НИТУ МИСиС'
-        });
+      $scope.$emit('change_title', {
+        title: $scope.project.Name + ' - Лига Разработчиков НИТУ МИСиС'
       });
-    };
+    });
+
     $scope.openViewer = function () {
       $scope.$dialog = ngDialog.open({
         template: 'viewer',
@@ -206,15 +205,15 @@ angular.module('LodSite.controllers', [])
       });
     };
     $scope.joinToProject = function () {
-      ApiService.joinToProject(projectId, userId, $scope.projectDeveloperRole);
-      getProject();
+      ApiService.joinToProject(projectId, userId, JSON.stringify($scope.projectDeveloperRole)).then(function () {
+        $state.reload();
+      });
     };
     $scope.escapeFromProject = function () {
-      ApiService.escapeFromProject(projectId, userId);
-      getProject();
+      ApiService.escapeFromProject(projectId, userId).then(function () {
+        $state.reload();
+      });
     };
-    getProject();
-
     $scope.$emit('toggle_black', { isblack: true });
   }])
 

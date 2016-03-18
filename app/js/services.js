@@ -11,7 +11,7 @@ angular.module('LodSite.services', [])
 
     this.setToken = function (token) {
       localStorage.setItem('authorization_token', JSON.stringify(token));
-      $rootScope.$emit('userRole_changed', {
+      $rootScope.$broadcast('userRole_changed', {
         userRole: token.Role
       });
     };
@@ -31,7 +31,7 @@ angular.module('LodSite.services', [])
 
     this.resetToken = function () {
       localStorage.removeItem('authorization_token');
-      $rootScope.$emit('userRole_changed', {
+      $rootScope.$broadcast('userRole_changed', {
         userRole: self.getRole()
       });
     };
@@ -231,9 +231,28 @@ angular.module('LodSite.services', [])
     this.addProject = function (requestData) {
       var apiUrl = 'http://api.lod-misis.ru/projects';
 
-      return sendRequest(POST, apiUrl, null, requestData).then(function (response) {
+      return sendAuthorizationSaveRequest(POST, apiUrl, null, requestData).then(function (response) {
         return response.status===200;
       });
     };
+
+    this.uploadFileToUrl = function(file){
+      var apiUrl = 'http://api.lod-misis.ru/image';
+
+      var fd = new FormData();
+      fd.append('file', file);
+
+      return sendAuthorizationSaveRequest(POST, apiUrl, null, fd).then(function (response) {
+        return response.status===200;
+      });
+      $http.post(apiUrl, fd, {
+        transformRequest: angular.identity,
+        headers: {'Content-Type': undefined}
+      })
+        .success(function(){
+        })
+        .error(function(){
+        });
+    }
   }])
 ;

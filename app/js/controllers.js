@@ -17,7 +17,11 @@ angular.module('LodSite.controllers', [])
         setPaddingBottom();
       });
     }])
-  .controller('AppCtrl', ['$scope', function ($scope) {
+  .controller('AppCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
+    $rootScope.$on('userRole_changed', function (e, args) {
+      $scope.userRole = args.userRole;
+    });
+
     $scope.isblack = false;
     $scope.$on('toggle_black', function (e, args) {
       $scope.isblack = args ? args.isblack : false;
@@ -434,7 +438,11 @@ angular.module('LodSite.controllers', [])
   }])
 
   .controller('DeveloperEditCtrl', ['$scope', '$state', '$timeout', 'ApiService', 'TokenService', function ($scope, $state, $timeout, ApiService, TokenService) {
-    var developerId = TokenService.getToken().UserId;
+    var token = TokenService.getToken();
+    if (!token) {
+      return $state.go('index');
+    }
+    var developerId = token.UserId;
 
     $scope.defaultPhoto = '/app/imgs/developer-default-photo.png';
     $scope.avatarPhoto = '';
@@ -519,7 +527,7 @@ angular.module('LodSite.controllers', [])
     $scope.changeProfileSettings = function () {
       if (($scope.newPassword == $scope.repeatedPassword) || (!$scope.newPassword && !$scope.repeatedPassword)) {
 
-        if ($scope.avatarPhoto = $scope.defaultPhoto) {
+        if ($scope.avatarPhoto == $scope.defaultPhoto) {
           $scope.profile.BigPhotoUri = null;
         } else {
           $scope.profile.BigPhotoUri = $scope.avatarPhoto;
@@ -573,6 +581,13 @@ angular.module('LodSite.controllers', [])
     $scope.$emit('change_title', {
       title: 'Редактирование профиля - Лига Разработчиков НИТУ МИСиС'
     });
+
+    $scope.$on('userRole_changed', function (e, args) {
+      token = TokenService.getToken();
+      if (!token || !token.UserId) {
+        return $state.go('index');
+      }
+    });
   }])
 
 
@@ -594,18 +609,23 @@ angular.module('LodSite.controllers', [])
 
   .controller('AddProjectCtrl', ['$scope', 'ApiService', '$timeout', function ($scope, ApiService, $timeout) {
     $scope.currentState = 'filling';
+    $scope.defaultImage = '/app/imgs/progect-default-photo.svg';
     $scope.newProject = {
       Name: '',
       ProjectTypes: [],
       Info: '',
       AccessLevel: '0',
       ProjectStatus: '0',
-      LandingImageUri: 'app/imgs/progect-default-photo.svg',
+      LandingImageUri: '/app/imgs/progect-default-photo.svg',
       Screenshots: []
     };
 
     //   POST REQUEST
     $scope.registerProject = function () {
+      if($scope.newProject.LandingImageUri == $scope.defaultImage){
+        $scope.newProject.LandingImageUri = null;
+      }
+
       $scope.newProject.Screenshots = $scope.images.map(function (image) {
         return image.url;
       });
@@ -737,7 +757,7 @@ angular.module('LodSite.controllers', [])
     });
 
     $scope.deleteBigImage = function () {
-      $scope.newProject.LandingImageUri = 'app/imgs/progect-default-photo.svg';
+      $scope.newProject.LandingImageUri = $scope.defaultImage;
     }
   }])
 ;

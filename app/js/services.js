@@ -51,7 +51,7 @@ angular.module('LodSite.services', [])
     };
   }])
 
-  .service('ApiService', ['$http', 'TokenService', '$rootScope', function ($http, TokenService, $rootScope) {
+  .service('ApiService', ['$http', 'TokenService', '$rootScope', function ($http, TokenService) {
     var GET = 'get';
     var POST = 'post';
     var DELETE = 'delete';

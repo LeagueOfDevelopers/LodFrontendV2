@@ -38,6 +38,7 @@ angular.module('LodSite.controllers', [])
     };
     $scope.$on('$locationChangeSuccess', function () {
       $scope.opened = false;
+      angular.element(window).scrollTop(0);
     });
 
     $scope.openLoginDialog = function () {
@@ -322,13 +323,13 @@ angular.module('LodSite.controllers', [])
     $scope.currentUploadState = "waiting"; // waiting, uploading
     $scope.currentPercent = 0;
 
-    $scope.$on('beforeSend', function (ev, args) {
+    $scope.$on('beforeSend', function () {
       $scope.currentUploadState = 'uploading';
       $scope.currentPercent = 0;
       $scope.$apply();
     });
 
-    $scope.$on('errorUploading', function (ev, args) {
+    $scope.$on('errorUploading', function () {
       alert('Размер файла не должен превышать 10 Мб. Разрешённые форматы изображения: DOC, DOCX, PDF, TTF, TXT. ' +
         'Или, возможно, вы не авторизовались.');
       $scope.currentUploadState = 'waiting';
@@ -426,7 +427,7 @@ angular.module('LodSite.controllers', [])
         });
       });
   }])
-  .controller('LoginFormCtrl', ['$scope', 'ApiService', 'TokenService', function ($scope, ApiService, TokenService) {
+  .controller('LoginFormCtrl', ['$scope', 'ApiService', 'TokenService', function ($scope, ApiService) {
     var date = new Date();
     var hour = date.getHours();
     $scope.timeOfDay = (hour > 4 && hour < 12) ? 'morning' :
@@ -482,12 +483,12 @@ angular.module('LodSite.controllers', [])
 
     $scope.saveChange = function () {
       $http.post();
-    }
+    };
 
     $scope.$emit('toggle_black', { isblack: true });
   }])
 
-  .controller('AdminPanelCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
+  .controller('AdminPanelCtrl', ['$scope', 'ApiService', function ($scope) {
 
     $scope.$emit('toggle_black', { isblack: true });
     $scope.$emit('change_title', {
@@ -495,7 +496,7 @@ angular.module('LodSite.controllers', [])
     });
   }])
 
-  .controller('AllProjectsCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
+  .controller('AllProjectsCtrl', ['$scope', 'ApiService', function ($scope) {
 
     $scope.$emit('toggle_black', { isblack: true });
     $scope.$emit('change_title', {
@@ -578,13 +579,13 @@ angular.module('LodSite.controllers', [])
     $scope.currentUploadStateImage = "waiting"; // waiting, uploading
     $scope.currentPercentImage = 0;
 
-    $scope.$on('beforeSendImage', function (ev, args) {
+    $scope.$on('beforeSendImage', function () {
       $scope.currentUploadStateImage = 'uploading';
       $scope.currentPercentImage = 0;
       $scope.$apply();
     });
 
-    $scope.$on('errorUploadingImage', function (ev, args) {
+    $scope.$on('errorUploadingImage', function () {
 
       alert('Размер файла не должен превышать 10 Мб. Разрешённые форматы изображения: JPG, JPEG, PNG, SVG, BMP, GIF. ' +
         'Или, возможно, вы не авторизовались.');
@@ -611,19 +612,19 @@ angular.module('LodSite.controllers', [])
 
     $scope.deleteImage = function (fileItem, index) {
       $scope.images.splice(index, 1);
-    }
+    };
 
     //  FOR BIG IMAGE
     $scope.currentUploadStateBigImage = ''; // null, uploading
     $scope.currentPercentBigImage = 0;
 
-    $scope.$on('beforeSendBigImage', function (ev, args) {
+    $scope.$on('beforeSendBigImage', function () {
       $scope.currentUploadStateBigImage = 'uploading';
       $scope.currentPercentBigImage = 0;
       $scope.$apply();
     });
 
-    $scope.$on('errorUploadingBigImage', function (ev, args) {
+    $scope.$on('errorUploadingBigImage', function () {
 
       alert('Размер файла не должен превышать 10 Мб. Разрешённые форматы изображения: JPG, JPEG, PNG, SVG, BMP, GIF. ' +
         'Или, возможно, вы не авторизовались.');

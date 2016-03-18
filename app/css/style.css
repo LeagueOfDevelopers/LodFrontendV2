@@ -1545,7 +1545,13 @@ footer {
   max-width: 550px;
 }
 
-.profile-settings__heading {
+.profile-settings__help-message, .profile-settings__help-message__password {
+  margin: -10px auto 10px;
+}
+
+.profile-settings__help-message__vk-uri {
+  margin-top: 10px;
+  margin-bottom: -10px;
 }
 
 .profile-settings__input-heading {
@@ -1591,8 +1597,7 @@ footer {
 }
 
 .profile-settings__avatar-img {
-  background-image: url("../imgs/developer-default-photo-gray.svg");
-  background-size: 90% 90%;
+  background-size: contain;
 }
 
 .profile-settings__avatar-img:before, .adding-project__avatar-img:before {
@@ -1624,9 +1629,10 @@ footer {
   border: none;
   outline: none;
   border-radius: 8px;
-  margin: 50px 0 10px;
   padding: 5px 30px;
   font-size: 1.7em;
+  margin-top: 20px;
+  margin-bottom: 50px;
 }
 
 .profile-settings__submit-wrapper, .adding-project__submit-wrapper {
@@ -1657,8 +1663,31 @@ footer {
 }
 
 .profile-settings__checkbox-label {
-  margin-bottom: 20px;
+  display: block;
   font-size: 1.1em;
+}
+
+.profile-settings__notification {
+  display: inline-block;
+  padding: 10px;
+  margin: 4px;
+  vertical-align: middle;
+  border: 1px solid #ffffff;
+  background-color: #717171;
+  color: white;
+  -webkit-transition: background-color .2s ease-out;
+  -moz-transition: background-color .2s ease-out;
+  -o-transition: background-color .2s ease-out;
+  transition: background-color .2s ease-out;
+  cursor: pointer;
+}
+
+.profile-settings__notification--activated, .adding-project__categories__item--activated {
+  background-color: #2980b9;
+}
+
+.profile-settings__notification__text {
+  vertical-align: middle;
 }
 
 /*************************
@@ -1676,11 +1705,6 @@ footer {
   height: 185px;
   resize: none;
   padding: 10px;
-}
-
-.profile-settings__submit.adding-project__submit {
-  margin-top: 20px;
-  margin-bottom: 50px;
 }
 
 .adding-project__avatar-img {
@@ -1818,10 +1842,6 @@ footer {
   -o-transition: background-color .2s ease-out;
   transition: background-color .2s ease-out;
   cursor: pointer;
-}
-
-.adding-project__categories__item--activated {
-  background-color: #2980b9;
 }
 
 @media only screen and (min-width: 480px) {
@@ -2086,6 +2106,14 @@ footer {
   .profile-settings__heading {
     text-align: left;
     padding-left: 0;
+  }
+
+  .profile-settings__help-message {
+    margin: 5px auto 10px;
+  }
+
+  .profile-settings__help-message__vk-uri {
+    margin-top: 30px;
   }
 
   .profile-settings__top-part__inputs {
@@ -2892,6 +2920,15 @@ footer {
   /*****************************
     PROFILE SETTINGS
   *****************************/
+  .profile-settings__help-message, .profile-settings__help-message__password {
+    margin: -10px auto 10px;
+    white-space: nowrap;
+  }
+
+  .profile-settings__help-message__vk-uri {
+    margin-top: -10px;
+  }
+
   .profile-settings__avatar-wrapper {
     width: 350px;
   }
@@ -3020,6 +3057,10 @@ footer {
 
   .profile-settings__wrap .dividing-line {
     margin-bottom: 35px;
+  }
+
+  .profile-settings__help-message, .profile-settings__help-message__password {
+    margin: -15px auto 20px;
   }
 
   .profile-settings__avatar-wrapper, .profile-settings__support-div {

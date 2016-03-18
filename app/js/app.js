@@ -10,6 +10,7 @@ angular.module('LodSite', [
     'LodSite.controllers',
     'LodSite.services'
   ])
+
   .run(function setFastMobileClick() {
     FastClick.attach(document.body);
   })
@@ -17,7 +18,6 @@ angular.module('LodSite', [
     function ($locationProvider, $stateProvider, $urlRouterProvider) {
       $locationProvider.hashPrefix('!');
       $locationProvider.html5Mode(true);
-
       $urlRouterProvider
         .otherwise('/');
 
@@ -69,7 +69,7 @@ angular.module('LodSite', [
         .state('developers.edit', {
           url: '/profile/:id',
           templateUrl: templateUrl('developers', 'developers-edit'),
-          controller: 'EmailConfirmationCtrl'
+          controller: 'DeveloperEditCtrl'
         })
 
         //admin-panel
@@ -83,7 +83,6 @@ angular.module('LodSite', [
           templateUrl: templateUrl('adminpanel', 'adminpanel-index'),
           controller: 'AdminPanelCtrl'
         })
-
         .state('adminpanel.projects', {
           url: '/projects',
           templateUrl: templateUrl('adminpanel', 'adminpanel-projects'),
@@ -117,13 +116,14 @@ angular.module('LodSite', [
           controller: 'ContactCtrl'
         })
     }
-  ]);
+  ])
+
+;
 
 // other functions
 function templateUrl(module, name) {
   return 'app/templates/' + module + '/' + name + '.html?' + Math.random();
 }
-//keeping footer at the bottom
 function setPaddingBottom() {
   $('.content').css('padding-bottom', $('footer').innerHeight());
 }

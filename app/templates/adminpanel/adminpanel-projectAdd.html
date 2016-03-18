@@ -13,11 +13,12 @@
              ng-attr-style='background-image: url("{{newProject.LandingImageUri}}")' dropzone-big-image>
 
           <div class="adding-project__file-close adding-project__big-image__file-close"
-               ng-if="newProject.LandingImageUri != 'app/imgs/progect-default-photo.svg'"
+               ng-if="newProject.LandingImageUri!='app/imgs/progect-default-photo.svg'"
                ng-click="deleteBigImage()"></div>
 
           <div class="adding-project__uploading__bar-wrap">
-            <div class="adding-project__uploading__bar" ng-if="currentUploadStateBigImage=='uploading'" ng-attr-style='width: {{currentPercentBigImage}}%'></div>
+            <div class="adding-project__uploading__bar" ng-if="currentUploadStateBigImage=='uploading'"
+                 ng-attr-style='width: {{currentPercentBigImage}}%'></div>
           </div>
 
         </div>
@@ -43,8 +44,8 @@
         <div class="profile-settings__input-heading">Статус проекта:</div>
         <label><select class="adding-project__select" ng-model="newProject.ProjectStatus" required>
           <option value='0' selected>Запланирован</option>
-          <option value='1'  >В процессе</option>
-          <option value='2' >Заморожен</option>
+          <option value='1'>В процессе</option>
+          <option value='2'>Заморожен</option>
         </select></label>
         <br/>
 

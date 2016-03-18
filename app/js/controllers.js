@@ -7,6 +7,8 @@ angular.module('LodSite.controllers', [])
        //main controllers
        .controller('PageCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
          var defaultTitle = 'Лига Разработчиков НИТУ МИСиС';
+         $scope.DEFAULT_PROJECT_LANDSCAPE = '/app/imgs/project-cap-image.png';
+         $scope.DEFAULT_DEVELOPER_PHOTO = '/app/imgs/developer-default-photo.png';
 
          $rootScope.$on('userRole_changed', function (e, args) { $scope.userRole = args.userRole; });
          $scope.$on('change_title', function (e, args) {

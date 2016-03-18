@@ -52,7 +52,7 @@
       <a ng-repeat="projectByDeveloper in developer.Projects" class="projects-section__link-to-project"
          ui-sref="projects.item({id: projectByDeveloper.ProjectId})">
         <div class="projects-section__project">
-          <div style="background: url({{projectByDeveloper.PhotoUri}}) no-repeat center; background-size: cover;"
+          <div style="background: #ffd200 url({{projectByDeveloper.PhotoUri || DEFAULT_PROJECT_LANDSCAPE}}) no-repeat center; background-size: cover;"
                class="project__background"></div>
           <div class="project__info-container">
             <div class="project__name" ng-bind="projectByDeveloper.Name"></div>

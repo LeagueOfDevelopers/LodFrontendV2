@@ -2,7 +2,7 @@
    ng-href="projects/{{randomProject.ProjectId}}">
   <div class="projects-section__project">
     <div
-      style="background: #ffd200 url({{randomProject.PhotoUri || '/app/imgs/project-cap-image.png'}}) no-repeat center; background-size: cover;"
+      style="background: #ffd200 url({{randomProject.PhotoUri || DEFAULT_PROJECT_LANDSCAPE}}) no-repeat center; background-size: cover;"
       class="project__background"></div>
     <div class="project__info-container">
       <div class="project__name" ng-bind="randomProject.Name"></div>

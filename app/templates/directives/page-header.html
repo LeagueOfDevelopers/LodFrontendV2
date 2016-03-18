@@ -1,4 +1,4 @@
-<div class="backdrop" ng-show="opened" ng-click="activeToggle()"></div>
+<div class="backdrop" ng-show="isOpened" ng-click="activeToggle()"></div>
 <header>
   <a ui-sref="index">
     <div class="header__site-logo"></div>
@@ -16,7 +16,7 @@
   </span>
 
   <div class="header__nav-toggle" ng-click="activeToggle()"
-       ng-class="{'header__nav-toggle--active': opened}">
+       ng-class="{'header__nav-toggle--active': isOpened}">
     <div class="nav-toggle__burger"></div>
   </div>
   <nav class="header__nav-full">
@@ -28,7 +28,7 @@
     <a class="nav-full__item" ui-sref="contact">Связаться</a>
   </nav>
 </header>
-<nav class="nav-mobile" ng-show="opened">
+<nav class="nav-mobile" ng-show="isOpened">
   <a class="nav-mobile__item" ng-if="userRole === 0 || userRole === 1">-</a>
   <a class="nav-mobile__item" ng-if="userRole === 0 || userRole === 1">-</a>
   <a class="nav-mobile__item" ng-if="!(userRole === 0 || userRole === 1)" ng-click="openLoginDialog($event)">Войти</a>

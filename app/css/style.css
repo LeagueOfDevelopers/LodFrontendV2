@@ -1,5 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Cuprum:400,700|PT+Sans:400,700|Noto+Serif:400,700&subset=latin,cyrillic);
-
+@import url(https://fonts.googleapis.com/css?family=Cuprum:400,700|PT+Sans:400,700|Noto+Serif:400,700&subset=latin,cyrillic) all;
 /* CSS RESET */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a,
 abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike,
@@ -13,6 +12,7 @@ time, mark, audio, video {
   font-size: 1em;
   vertical-align: baseline;
 }
+
 
 /* LOADER - STYLES */
 .blackout {
@@ -100,6 +100,7 @@ time, mark, audio, video {
     opacity: 0;
   }
 }
+
 
 /************************
           MAIN
@@ -212,6 +213,7 @@ a {
 .button-style--light {
   border: 2px solid #fff;
 }
+
 
 /************************
          HEADER
@@ -328,6 +330,7 @@ header {
   background: #f1f1f1;
 }
 
+
 /************************
      WELCOME-SECTION
 *************************/
@@ -367,6 +370,7 @@ header {
   color: #ffffff;
   text-align: center;
 }
+
 
 /************************
     PROJECTS-SECTION
@@ -502,6 +506,7 @@ header {
   margin: 40px auto;
 }
 
+
 /************************
     DEVELOPERS-SECTION
 *************************/
@@ -531,7 +536,8 @@ header {
   width: 240px;
   height: 240px;
 
-  background-size: contain;
+  background-size: cover;
+  object-fit: cover;
   border-radius: 50%;
   border: 5px solid #202d3a;
   -webkit-transition: all .2s ease;
@@ -562,6 +568,7 @@ header {
   display: block;
   margin: 40px auto;
 }
+
 
 /************************
      DEVELOPERS-PAGE
@@ -617,6 +624,7 @@ header {
   max-width: 90%;
   height: auto;
   margin: 5% 0 0 0;
+  object-fit: cover;
 }
 
 .full-developer__info {
@@ -649,6 +657,7 @@ header {
   color: #2980b9;
   text-decoration: underline;
 }
+
 
 /************************
      DEVELOPER-PAGE
@@ -729,6 +738,7 @@ header {
 .developer-projects {
   margin: 20px 0;
 }
+
 
 /************************
          FOOTER
@@ -850,7 +860,7 @@ footer {
   transition: all .15s ease-out;
 }
 
-.info__developer-role-input{
+.info__developer-role-input {
   font-family: 'PT Sans', sans-serif;
   font-size: 1em;
   text-align: center;
@@ -865,7 +875,7 @@ footer {
   outline: none;
 }
 
-.info__membership-button{
+.info__membership-button {
   display: block;
   max-width: 200px;
   margin: 15px auto 0 auto;
@@ -883,6 +893,7 @@ footer {
   outline: none;
   cursor: pointer;
 }
+
 .info__membership-button:disabled {
   cursor: default;
   border: 1px solid #aaaaaa;
@@ -914,7 +925,7 @@ footer {
 }
 
 .gallery__item {
-  -webkit-box-flex: auto;
+  -webkit-box-flex: 0;
   -ms-flex: auto;
   flex: auto;
   margin: 5px;
@@ -942,6 +953,7 @@ footer {
   cursor: pointer;
   transition: all .2s ease-out;
 }
+
 
 /*************************
         ABOUT
@@ -1025,6 +1037,7 @@ footer {
   width: 95%;
   margin: 8% auto 0;
 }
+
 
 /*************************
      CONTACT & ORDER
@@ -1120,6 +1133,7 @@ footer {
   background: url("../imgs/white_tick.svg") no-repeat center;
   background-size: cover;
 }
+
 
 /*************************
          ORDER
@@ -1299,6 +1313,7 @@ footer {
   text-align: left;
 }
 
+
 /*************************
       LOGIN-WINDOW
 *************************/
@@ -1401,6 +1416,7 @@ footer {
   font-size: 1.1em;
 }
 
+
 /*************************
       SIGNUP-PAGE
 *************************/
@@ -1492,6 +1508,7 @@ footer {
   border: 1px solid #4CAF50
 }
 
+
 /*****************************
     CONFIRMATION OF EMAIL
 *****************************/
@@ -1532,6 +1549,7 @@ footer {
   padding: 50px 0 0;
   text-align: center;
 }
+
 
 /*************************
      PROFILE SETTINGS
@@ -1690,6 +1708,7 @@ footer {
   vertical-align: middle;
 }
 
+
 /*************************
        ADDING PROJECT
 *************************/
@@ -1844,6 +1863,8 @@ footer {
   cursor: pointer;
 }
 
+
+/*media queries*/
 @media only screen and (min-width: 480px) {
   .projects-section-container {
     max-width: 400px;
@@ -1867,6 +1888,7 @@ footer {
     font-size: 1.8em;
   }
 
+
   /*************************
       WELCOME-SECTION
   *************************/
@@ -1885,6 +1907,7 @@ footer {
     margin: 40px 0 20px 0;
   }
 
+
   /*************************
       PROJECTS-SECTION
   *************************/
@@ -1894,6 +1917,7 @@ footer {
     width: 240px;
     vertical-align: top;
   }
+
 
   /************************
         PROJECT-PAGE
@@ -1905,6 +1929,7 @@ footer {
   .full-project__preview {
     height: 400px;
   }
+
 
   /************************
        DEVELOPERS-PAGE
@@ -1938,6 +1963,7 @@ footer {
     text-align: left;
   }
 
+
   /************************
        DEVELOPER-PAGE
   *************************/
@@ -1947,6 +1973,7 @@ footer {
     padding: 10px;
     font-size: 1em;
   }
+
 
   /*************************
             ABOUT
@@ -1969,6 +1996,7 @@ footer {
   .about-text {
     padding-top: 85px;
   }
+
 
   /*************************
        CONTACT & ORDER
@@ -2014,6 +2042,7 @@ footer {
   .success {
     top: 18px;
   }
+
 
   /*************************
            ORDER
@@ -2070,6 +2099,7 @@ footer {
     text-align: left;
   }
 
+
   /*************************
         SIGNUP-PAGE
   *************************/
@@ -2081,12 +2111,14 @@ footer {
     font-size: 1.8em;
   }
 
+
   /*****************************
     CONFIRMATION  OF EMAIL
   *****************************/
   .confirmation__success, .confirmation__error, .confirmation__loading {
     font-size: 1.5em;
   }
+
 
   /*************************
      PROFILE SETTINGS
@@ -2167,6 +2199,7 @@ footer {
     text-align: left;
   }
 
+
   /*************************
         ADDING PROJECT
   *************************/
@@ -2237,6 +2270,7 @@ footer {
   .header__nav-toggle {
     display: none;
   }
+
 
   /*************************
             HEADER
@@ -2319,6 +2353,7 @@ footer {
     margin-left: 15px;
   }
 
+
   /*************************
        WELCOME-SECTION
   *************************/
@@ -2356,6 +2391,7 @@ footer {
     border-radius: 10px;
   }
 
+
   /*************************
        PROJECTS-SECTION
   *************************/
@@ -2373,6 +2409,7 @@ footer {
     filter: none;
   }
 
+
   /*************************
       DEVELOPERS-SECTION
   *************************/
@@ -2384,6 +2421,7 @@ footer {
   .developer__photo:hover {
     border-color: #2980b9;
   }
+
 
   /************************
        DEVELOPERS-PAGE
@@ -2414,6 +2452,7 @@ footer {
     text-decoration: underline;
   }
 
+
   /*************************
         DEVELOPER-PAGE
   *************************/
@@ -2432,6 +2471,7 @@ footer {
   .developer-name {
     font-size: 1.8em;
   }
+
 
   /*************************
           FOOTER
@@ -2456,6 +2496,7 @@ footer {
     text-decoration: underline;
     color: #ffd200;
   }
+
 
   /************************
         PROJECT-PAGE
@@ -2510,7 +2551,8 @@ footer {
     border: 1px solid #aaaaaa;
     color: #aaaaaa;
   }
-  .info__membership-button:hover{
+
+  .info__membership-button:hover {
     background: #2980b9;
     border: 1px solid #2980b9;
     color: #fff;
@@ -2546,6 +2588,7 @@ footer {
     -o-transform: rotate(90deg);
     transform: rotate(90deg);
   }
+
 
   /*************************
             ABOUT
@@ -2712,6 +2755,7 @@ footer {
     height: 50px;
   }
 
+
   /*************************
        CONTACT & ORDER
   *************************/
@@ -2768,6 +2812,7 @@ footer {
   .contact-form [type="submit"]:hover {
     cursor: pointer;
   }
+
 
   /*************************
          ORDER
@@ -2848,6 +2893,7 @@ footer {
     width: 85%;
   }
 
+
   /*************************
           LOGIN-WINDOW
   *************************/
@@ -2857,6 +2903,7 @@ footer {
     -o-transform: rotate(90deg);
     transform: rotate(90deg);
   }
+
 
   /*************************
         SIGNUP-PAGE
@@ -2910,12 +2957,14 @@ footer {
     border-left: 25px solid transparent;
   }
 
+
   /*****************************
     CONFIRMATION  OF EMAIL
   *****************************/
   .confirmation__button {
     font-size: 1em;
   }
+
 
   /*****************************
     PROFILE SETTINGS
@@ -3001,6 +3050,7 @@ footer {
     margin-right: 20px;
   }
 
+
   /*****************************
         ADDING PROJECT
   *****************************/
@@ -3049,7 +3099,7 @@ footer {
   }
 
   /*****************************
-    PROFILE SETTINGS
+        PROFILE SETTINGS
   *****************************/
   .headline {
     font-size: 2em;
@@ -3102,6 +3152,7 @@ footer {
     font-size: 1.2em;
   }
 
+
   /*****************************
       ADDING PROJECT
   *****************************/
@@ -3140,6 +3191,7 @@ footer {
   .projects-section-container {
     max-width: 1600px;
   }
+
 
   /*****************************
     PROFILE SETTINGS

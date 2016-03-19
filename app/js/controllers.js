@@ -159,39 +159,44 @@ angular.module('LodSite.controllers', [])
       title: 'Проекты - Лига Разработчиков НИТУ МИСиС'
     });
   }])
-  .controller('ProjectCtrl', ['$scope', '$state', 'ApiService', 'ngDialog', '$rootScope', function ($scope, $state, ApiService, ngDialog, $rootScope) {
-    var projectId = $state.params.id;
-    $scope.openViewer = function () {
-      $scope.$dialog = ngDialog.open({
-        template: 'viewer',
-        showClose: true,
-        closeByNavigation: true,
-        controller: ['$rootScope', '$scope', function ($rootScope, $scope) {
-          $scope.openedScreenshotUrl = $rootScope.openedScreenshotUrl;
-        }]
-      });
-    };
-
-    ApiService.getProject(projectId).then(function (data) {
-      $scope.project = data;
-      $scope.projectTypes = $scope.project.ProjectType;
-      $scope.projectIssues = $scope.project.Issues;
-      if ($scope.project.ProjectMemberships.length === 0) {
-        $scope.replacementText = "В данный момент на проекте нет разработчиков.";
-      }
-
-      $scope.openViewerDialog = function (imgIndex) {
-        $rootScope.openedScreenshotUrl = $scope.project.Screenshots[imgIndex];
-        $scope.openViewer();
+  .controller('ProjectCtrl', ['$scope',
+    '$state',
+    'ApiService',
+    'ngDialog',
+    '$rootScope',
+    function ($scope, $state, ApiService, ngDialog, $rootScope) {
+      var projectId = $state.params.id;
+      $scope.openViewer = function () {
+        $scope.$dialog = ngDialog.open({
+          template: 'viewer',
+          showClose: true,
+          closeByNavigation: true,
+          controller: ['$rootScope', '$scope', function ($rootScope, $scope) {
+            $scope.openedScreenshotUrl = $rootScope.openedScreenshotUrl;
+          }]
+        });
       };
 
-      $scope.$emit('change_title', {
-        title: $scope.project.Name + ' - Лига Разработчиков НИТУ МИСиС'
-      });
-    });
+      ApiService.getProject(projectId).then(function (data) {
+        $scope.project = data;
+        $scope.projectTypes = $scope.project.ProjectType;
+        $scope.projectIssues = $scope.project.Issues;
+        if ($scope.project.ProjectMemberships.length === 0) {
+          $scope.replacementText = "В данный момент на проекте нет разработчиков.";
+        }
 
-    $scope.$emit('toggle_black', {isblack: true});
-  }])
+        $scope.openViewerDialog = function (imgIndex) {
+          $rootScope.openedScreenshotUrl = $scope.project.Screenshots[imgIndex];
+          $scope.openViewer();
+        };
+
+        $scope.$emit('change_title', {
+          title: $scope.project.Name + ' - Лига Разработчиков НИТУ МИСиС'
+        });
+      });
+
+      $scope.$emit('toggle_black', {isblack: true});
+    }])
 
   .controller('SignupCtrl', ['$scope', 'ApiService', '$timeout', function ($scope, ApiService, $timeout) {
     $scope.currentState = 'filling';
@@ -226,7 +231,7 @@ angular.module('LodSite.controllers', [])
       title: 'О нас - Лига Разработчиков НИТУ МИСиС'
     });
   }])
-  .controller('OrderCtrl', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
+  .controller('OrderCtrl', ['$scope', 'ApiService', '$timeout', function ($scope, ApiService, $timeout) {
 
     // FOR INPUT TYPE=DATE
 
@@ -265,30 +270,30 @@ angular.module('LodSite.controllers', [])
         return file.url;
       });
 
-      $http.post('http://api.lod-misis.ru/orders', $scope.data).success(function () {
+      ApiService.order($scope.data).then(function (isSuccess) {
+        if (isSuccess) {
+          var envelope = $("[type='submit']");
+          var tick = $('.tick');
+          var wrap_tick = $('.submit');
 
-        var envelope = $("[type='submit']");
-        var tick = $('.tick');
-        var wrap_tick = $('.submit');
+          $("input, select, textarea").removeClass('isValid');
+          $('.order-form').trigger('reset');
 
-        $("input, select, textarea").removeClass('isValid');
-        $('.order-form').trigger('reset');
+          envelope.css('display', 'none');
+          wrap_tick.css('background-color', '#2fd08e');
+          tick.addClass('success');
 
-        envelope.css('display', 'none');
-        wrap_tick.css('background-color', '#2fd08e');
-        tick.addClass('success');
+          $timeout(function () {
+            envelope.css('display', 'inline-block');
+            wrap_tick.css('background-color', '#f1f1f1');
+            tick.removeClass('success');
+          }, 4000);
 
-        $timeout(function () {
-          envelope.css('display', 'inline-block');
-          wrap_tick.css('background-color', '#f1f1f1');
-          tick.removeClass('success');
-        }, 4000);
-
-      }).error(function (err) {
-        console.log(err);
+        } else {
+          alert("Произошла ошибка.");
+        }
       });
     };
-
     $scope.$emit('toggle_black', {isblack: true});
 
     $scope.$emit('change_title', {
@@ -345,33 +350,36 @@ angular.module('LodSite.controllers', [])
 
     $scope.deleteFile = function (fileItem, index) {
       $scope.files.splice(index, 1);
-    }
+    };
   }])
-  //TODO-andrey Переделать http запросы в ContactCtrl, EmailConfirmationCtrl и EditDeveloperCtrl через ApiService.
-  .controller('ContactCtrl', ['$scope', '$http', function ($scope, $http) {
+
+
+  .controller('ContactCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
     $scope.data = {};
 
-    $scope.Request = function (form) {
-      $http.post('http://api.lod-misis.ru/contact', $scope.data).success(function () {
+    $scope.Request = function () {
+      ApiService.contact($scope.data).then(function (isSuccess) {
+        if (isSuccess) {
+          var envelope = $("[type='submit']");
+          var tick = $('.tick');
+          var wrap_tick = $('.submit');
 
-        var envelope = $("[type='submit']");
-        var tick = $('.tick');
-        var wrap_tick = $('.submit');
+          $("input, textarea").removeClass('isValid');
+          $('.contact-form').trigger('reset');
 
-        $("input, textarea").removeClass('isValid');
-        $('.contact-form').trigger('reset');
+          envelope.css('display', 'none');
+          wrap_tick.css('background-color', '#2fd08e');
+          tick.addClass('success');
 
-        envelope.css('display', 'none');
-        wrap_tick.css('background-color', '#2fd08e');
-        tick.addClass('success');
-
-        setTimeout(function () {
-            envelope.css('display', 'inline-block');
-            wrap_tick.css('background-color', '#f1f1f1');
-            tick.removeClass('success');
-          }
-          , 1000);
-
+          setTimeout(function () {
+              envelope.css('display', 'inline-block');
+              wrap_tick.css('background-color', '#f1f1f1');
+              tick.removeClass('success');
+            }
+            , 1000);
+        } else {
+          alert("Произошла ошибка.")
+        }
       });
     };
 
@@ -382,6 +390,7 @@ angular.module('LodSite.controllers', [])
     });
 
   }])
+
   .controller('FormValidationCtrl', [function () {
     Array.from($("input, textarea"))
       .forEach(function (element) {
@@ -403,13 +412,14 @@ angular.module('LodSite.controllers', [])
         });
       });
   }])
+
   .controller('LoginFormCtrl', ['$scope', 'ApiService', 'TokenService', function ($scope, ApiService, TokenService) {
     var date = new Date();
     var hour = date.getHours();
     $scope.timeOfDay = (hour > 4 && hour < 12) ? 'morning' :
-      (hour >= 12 && hour <= 18) ? 'afternoon' :
-        (hour > 18 && hour < 24) ? 'evening' :
-          'night';
+                       (hour >= 12 && hour <= 18) ? 'afternoon' :
+                       (hour > 18 && hour < 24) ? 'evening' :
+                       'night';
     $scope.isNoDeveloper = false;
     $scope.userLogin = {};
 
@@ -425,142 +435,100 @@ angular.module('LodSite.controllers', [])
       });
     };
   }])
-  .controller('EmailConfirmationCtrl', ['$scope', '$http', '$state', function ($scope, $http, $state) {
+
+  .controller('EmailConfirmationCtrl', ['$scope', 'ApiService', '$state', function ($scope, ApiService, $state) {
     var token = $state.params.token;
-    $http.post('http://api.lod-misis.ru/developers/confirmation/' + token).success(function (data) {
-      $scope.currentState = !data.Message;
-      $scope.isSuccess = true;
-    }).error(function () {
-      $scope.isSuccess = false;
+
+    ApiService.developerConfirmation().then(function (isSuccess) {
+      if (isSuccess) {
+        $scope.isSuccess = isSuccess;
+      } else {
+        $scope.isSuccess = isSuccess;
+      }
     });
 
     $scope.$emit('toggle_black', {isblack: true});
   }])
 
-  .controller('DeveloperEditCtrl', ['$scope', '$state', '$timeout', 'ApiService', 'TokenService', function ($scope, $state, $timeout, ApiService, TokenService) {
-    var token = TokenService.getToken();
-    if (!token) {
-      return $state.go('index');
-    }
-    var developerId = token.UserId;
+  .controller('DeveloperEditCtrl', ['$scope', '$state', '$timeout', 'ApiService', 'TokenService',
+    function ($scope, $state, $timeout, ApiService, TokenService) {
+      var token = TokenService.getToken();
+      if (!token) {
+        return $state.go('index');
+      }
+      var developerId = token.UserId;
 
-    $scope.defaultPhoto = '/app/imgs/developer-default-photo.png';
-    $scope.avatarPhoto = '';
-    $scope.profile = {};
+      $scope.profile = {};
 
-    /*GET - REQUESTS*/
-    ApiService.getDeveloperForProfileSttings(developerId).then(function (data) {
-      $scope.avatarPhoto = data.BigPhotoUri;
+      /*FOR UPLOADING OF PHOTO*/
+      $scope.currentUploadStateBigPhoto = 'waiting'; // waiting, uploading
+      $scope.currentPercentBigPhoto = 0;
 
-      $scope.profile.BigPhotoUri = data.BigPhotoUri;
-      $scope.profile.SmallPhotoUri = data.SmallPhotoUri;
-      $scope.profile.InstituteName = data.InstituteName;
-      $scope.profile.StudyingDirection = data.StudyingDirection;
-      $scope.profile.Specialization = data.Specialization;
-      $scope.profile.StudentAccessionYear = data.StudentAccessionYear;
-      $scope.profile.VkProfileUri = data.VkProfileUri;
-      $scope.profile.PhoneNumber = data.PhoneNumber;
-    });
-    ApiService.getNotificationsForProfileSttings(developerId).then(function (data) {
-      $scope.notificationSettings = data;
-      $scope.notifications = data.map(function (notification) {
-        return (notification.NotificationSettingValue == 2);
+      $scope.$on('beforeSendBigImage', function (ev, args) {
+        $scope.currentUploadStateBigPhoto = 'uploading';
+        $scope.currentPercentBigPhoto = 0;
+        $scope.$apply();
       });
-    });
 
-    /*FOR UPLOADING OF PHOTO*/
-    $scope.currentUploadStateBigPhoto = 'waiting'; // waiting, uploading
-    $scope.currentPercentBigPhoto = 0;
+      $scope.$on('errorUploadingBigImage', function (ev, args) {
 
-    $scope.$on('beforeSendBigImage', function (ev, args) {
-      $scope.currentUploadStateBigPhoto = 'uploading';
-      $scope.currentPercentBigPhoto = 0;
-      $scope.$apply();
-    });
-
-    $scope.$on('errorUploadingBigImage', function (ev, args) {
-
-      alert('Размер файла не должен превышать 10 Мб. Разрешённые форматы изображения: JPG, JPEG, PNG, SVG, BMP, GIF. ' +
-        'Или, возможно, вы не авторизовались.');
-      $scope.currentUploadStateBigPhoto = 'waiting';
-      $scope.currentPercentBigPhoto = 0;
-      $scope.$apply();
+        alert('Размер файла не должен превышать 10 Мб. Разрешённые форматы изображения: JPG, JPEG, PNG, SVG, BMP, GIF. ' +
+          'Или, возможно, вы не авторизовались.');
+        $scope.currentUploadStateBigPhoto = 'waiting';
+        $scope.currentPercentBigPhoto = 0;
+        $scope.$apply();
 
 
-    });
+      });
 
-    $scope.$on('progressBigImage', function (ev, args) {
-      $scope.currentPercentBigPhoto = args.progress_value;
-      $scope.$apply();
-    });
+      $scope.$on('progressBigImage', function (ev, args) {
+        $scope.currentPercentBigPhoto = args.progress_value;
+        $scope.$apply();
+      });
 
-    $scope.$on('successUploadingBigImage', function (ev, args) {
-      $scope.avatarPhoto = 'http://api.lod-misis.ru/image/' + args.data;
+      $scope.$on('successUploadingBigImage', function (ev, args) {
+        $scope.profile.BigPhotoUri = 'http://api.lod-misis.ru/image/' + args.data;
+        $scope.profile.SmallPhotoUri = 'http://api.lod-misis.ru/image/' + args.data;
 
-      $scope.currentUploadStateBigPhoto = 'waiting';
+        $scope.currentUploadStateBigPhoto = 'waiting';
 
-      $scope.$apply();
-    });
+        $scope.$apply();
+      });
 
-    $scope.deleteBigPhoto = function () {
-      $scope.avatarPhoto = $scope.defaultPhoto;
-    }
+      $scope.deleteBigPhoto = function () {
+        $scope.profile.BigPhotoUri = null;
+        $scope.profile.SmallPhotoUri = null;
+      }
 
-    /*FOR EMPTY PASSWORD*/
-    $scope.first = true;
-    $scope.compareNewPasswords = function (newPassword) {
-      $scope.first = !!newPassword;
-    };
+      /*FOR NOTIFICATIONS*/
+      $scope.toggleNotifications = function (index) {
+        $scope.notifications[index] = !$scope.notifications[index];
+      };
 
-    $scope.second = true;
-    $scope.compareRepeatedPasswords = function (repeatedPassword) {
-      $scope.second = !!repeatedPassword;
-    };
+      /*GET - REQUESTS*/
+      ApiService.getDeveloperForProfileSttings(developerId).then(function (data) {
 
-    /*FOR NOTIFICATIONS*/
-    $scope.toggleNotifications = function (index) {
-      $scope.notifications[index] = !$scope.notifications[index];
-    };
-
-    /*POST - REQUESTS*/
-
-    $scope.changeProfileSettings = function () {
-      if (($scope.newPassword == $scope.repeatedPassword) || (!$scope.newPassword && !$scope.repeatedPassword)) {
-
-        if ($scope.avatarPhoto == $scope.defaultPhoto) {
-          $scope.profile.BigPhotoUri = null;
-        } else {
-          $scope.profile.BigPhotoUri = $scope.avatarPhoto;
-        }
-
-        $scope.profile.SmallPhotoUri = $scope.avatarPhoto;
-
-        ApiService.sendProfileSttings(developerId, $scope.profile).then(function (isSuccess) {
-          if (isSuccess) {
-            $scope.currentState = 'success';
-            $timeout(function () {
-              $scope.currentState = 'filling';
-            }, 3000);
-          } else {
-            $scope.currentState = 'failed';
-          }
+        $scope.profile.BigPhotoUri = data.PhotoUri;
+        $scope.profile.SmallPhotoUri = data.PhotoUri;
+        $scope.profile.InstituteName = data.InstituteName;
+        $scope.profile.StudyingDirection = data.StudyingDirection;
+        $scope.profile.Specialization = data.Specialization;
+        $scope.profile.StudentAccessionYear = data.StudentAccessionYear;
+        $scope.profile.VkProfileUri = data.VkProfileUri;
+        $scope.profile.PhoneNumber = data.PhoneNumber;
+      });
+      ApiService.getNotificationsForProfileSttings(developerId).then(function (data) {
+        $scope.notificationSettings = data;
+        $scope.notifications = data.map(function (notification) {
+          return (notification.NotificationSettingValue == 2);
         });
-        for (var i = 0; i < $scope.notificationSettings.length; i++) {
-          $scope.notificationSettings[i].NotificationSettingValue = $scope.notifications[i] ? 2 : 1;
-        }
-        ApiService.sendNotifications(developerId, $scope.notificationSettings).then(function (isSuccess) {
-          if (isSuccess) {
-            $scope.currentState = 'success';
-            $timeout(function () {
-              $scope.currentState = 'filling';
-            }, 3000);
-          } else {
-            $scope.currentState = 'failed';
-          }
-        });
+      });
 
-        if (($scope.newPassword == $scope.repeatedPassword) && ($scope.newPassword && $scope.repeatedPassword)) {
-          ApiService.sendPassword(developerId, $scope.newPassword).then(function (isSuccess) {
+      /*POST - REQUESTS*/
+
+      $scope.changeProfileSettings = function () {
+
+          ApiService.sendProfileSttings(developerId, $scope.profile).then(function (isSuccess) {
             if (isSuccess) {
               $scope.currentState = 'success';
               $timeout(function () {
@@ -570,25 +538,48 @@ angular.module('LodSite.controllers', [])
               $scope.currentState = 'failed';
             }
           });
+          for (var i = 0; i < $scope.notificationSettings.length; i++) {
+            $scope.notificationSettings[i].NotificationSettingValue = $scope.notifications[i] ? 2 : 1;
+          }
+          ApiService.sendNotifications(developerId, $scope.notificationSettings).then(function (isSuccess) {
+            if (isSuccess) {
+              $scope.currentState = 'success';
+              $timeout(function () {
+                $scope.currentState = 'filling';
+              }, 3000);
+            } else {
+              $scope.currentState = 'failed';
+            }
+          });
+
+          if (($scope.newPassword === $scope.repeatedPassword) && $scope.newPassword && $scope.repeatedPassword) {
+            ApiService.sendNewPassword(developerId, $scope.newPassword).then(function (isSuccess) {
+              if (isSuccess) {
+                $scope.currentState = 'success';
+                $timeout(function () {
+                  $scope.currentState = 'filling';
+                }, 3000);
+              } else {
+                $scope.currentState = 'failed';
+              }
+            });
+          } else {
+            $scope.currentState = 'failed';
+          }
+      };
+
+      $scope.$on('userRole_changed', function (e, args) {
+        token = TokenService.getToken();
+        if (!token || !token.UserId) {
+          return $state.go('index');
         }
+      });
 
-      } else {
-        $scope.currentState = 'failed';
-      }
-    };
-
-    $scope.$emit('toggle_black', {isblack: true});
-    $scope.$emit('change_title', {
-      title: 'Редактирование профиля - Лига Разработчиков НИТУ МИСиС'
-    });
-
-    $scope.$on('userRole_changed', function (e, args) {
-      token = TokenService.getToken();
-      if (!token || !token.UserId) {
-        return $state.go('index');
-      }
-    });
-  }])
+      $scope.$emit('toggle_black', {isblack: true});
+      $scope.$emit('change_title', {
+        title: 'Редактирование профиля - Лига Разработчиков НИТУ МИСиС'
+      });
+    }])
 
 
   .controller('AdminPanelCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
@@ -599,165 +590,216 @@ angular.module('LodSite.controllers', [])
     });
   }])
 
-  .controller('AllProjectsCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
+  .controller('AllProjectsCtrl', ['$scope', '$state', 'ApiService', 'TokenService', function ($scope, $state, ApiService, TokenService) {
+    $scope.fullProjects = [];
 
-    $scope.$emit('toggle_black', {isblack: true});
-    $scope.$emit('change_title', {
-      title: 'Проекты - Лига Разработчиков НИТУ МИСиС'
-    });
-  }])
-
-  .controller('AddProjectCtrl', ['$scope', 'ApiService', '$timeout', function ($scope, ApiService, $timeout) {
-    $scope.currentState = 'filling';
-    $scope.defaultImage = '/app/imgs/progect-default-photo.svg';
-    $scope.newProject = {
-      Name: '',
-      ProjectTypes: [],
-      Info: '',
-      AccessLevel: '0',
-      ProjectStatus: '0',
-      LandingImageUri: '/app/imgs/progect-default-photo.svg',
-      Screenshots: []
+    $scope.fullProjects[0] = {
+      PhotoUri: 'app/imgs/envelope.svg',
+      Name: 'LodSite',
+      ProjectStatus: 3,
+      AccessLevel: 1
+    };$scope.fullProjects[1] = {
+      PhotoUri: 'app/imgs/envelope.svg',
+      Name: 'LodSite',
+      ProjectStatus: 3,
+      AccessLevel: 1
+    };$scope.fullProjects[2] = {
+      PhotoUri: 'app/imgs/envelope.svg',
+      Name: 'LodSite',
+      ProjectStatus: 3,
+      AccessLevel: 1
+    };$scope.fullProjects[3] = {
+      PhotoUri: 'app/imgs/envelope.svg',
+      Name: 'LodSite',
+      ProjectStatus: 3,
+      AccessLevel: 1
+    };$scope.fullProjects[4] = {
+      PhotoUri: 'app/imgs/envelope.svg',
+      Name: 'LodSite',
+      ProjectStatus: 3,
+      AccessLevel: 1
     };
 
-    //   POST REQUEST
-    $scope.registerProject = function () {
-      if($scope.newProject.LandingImageUri == $scope.defaultImage){
-        $scope.newProject.LandingImageUri = null;
+      $scope.$on('userRole_changed', function (e, args) {
+        var token = TokenService.getToken();
+        if (!token || !token.UserId) {
+          return $state.go('index');
+        }
+      });
+
+      $scope.$emit('toggle_black', {isblack: true});
+      $scope.$emit('change_title', {
+        title: 'Проекты - Лига Разработчиков НИТУ МИСиС'
+      });
+    }])
+
+  .controller('AddProjectCtrl', ['$scope',
+    'ApiService',
+    'TokenService',
+    '$timeout',
+    function ($scope, ApiService, TokenService, $timeout) {
+      var token = TokenService.getToken();
+      if (!token) {
+        return $state.go('index');
       }
 
-      $scope.newProject.Screenshots = $scope.images.map(function (image) {
-        return image.url;
-      });
+      $scope.currentState = 'filling';
+      $scope.defaultImage = '/app/imgs/progect-default-photo.svg';
+      $scope.newProject = {
+        Name: '',
+        ProjectTypes: [],
+        Info: '',
+        AccessLevel: '0',
+        ProjectStatus: '0',
+        LandingImageUri: '/app/imgs/progect-default-photo.svg',
+        Screenshots: []
+      };
 
-      $scope.newProject.ProjectTypes = $scope.categories.map(function (categoryItem) {
-        if (categoryItem.status) {
-          return categoryItem.index;
+      //   POST REQUEST
+      $scope.registerProject = function () {
+        if ($scope.newProject.LandingImageUri == $scope.defaultImage) {
+          $scope.newProject.LandingImageUri = null;
         }
-      });
 
-      ApiService.addProject($scope.newProject).then(function (isSuccess) {
-        if (isSuccess) {
-          $scope.currentState = 'success';
-          $scope.newProgect = {};
-          $scope.addProjectForm.$setPristine();
-          $timeout(function () {
-            $scope.currentState = 'filling';
-          }, 3000);
-        } else {
-          $scope.currentState = 'failed';
-        }
-      });
-    };
-
-    $scope.$emit('toggle_black', {isblack: true});
-    $scope.$emit('change_title', {
-      title: 'Добавление проекта - Лига Разработчиков НИТУ МИСиС'
-    });
-
-    //   FOR TYPE OF PROJECT
-    $scope.categories = [{
-      category: 'Веб',
-      status: false,
-      index: 0
-    }, {
-      category: 'Мобильное',
-      status: false,
-      index: 1
-    }, {
-      category: 'Десктопное',
-      status: false,
-      index: 2
-    }, {
-      category: 'Игра',
-      status: false,
-      index: 3
-    }, {
-      category: 'Прочее',
-      status: false,
-      index: 4
-    }];
-
-    $scope.toggleCategory = function (targetCategory) {
-      targetCategory.status = !targetCategory.status;
-    };
-
-    //   FOR SMALL IMAGES
-    $scope.images = [];
-    $scope.currentUploadStateImage = "waiting"; // waiting, uploading
-    $scope.currentPercentImage = 0;
-
-    $scope.$on('beforeSendImage', function (ev, args) {
-      $scope.currentUploadStateImage = 'uploading';
-      $scope.currentPercentImage = 0;
-      $scope.$apply();
-    });
-
-    $scope.$on('errorUploadingImage', function (ev, args) {
-
-      alert('Размер файла не должен превышать 10 Мб. Разрешённые форматы изображения: JPG, JPEG, PNG, SVG, BMP, GIF. ' +
-        'Или, возможно, вы не авторизовались.');
-      $scope.currentUploadStateImage = 'waiting';
-      $scope.currentPercentImage = 0;
-      $scope.$apply();
-    });
-
-    $scope.$on('progressImage', function (ev, args) {
-      $scope.currentPercentImage = args.progress_value;
-      $scope.$apply();
-    });
-
-    $scope.$on('successUploadingImage', function (ev, args) {
-        $scope.images.push({
-          url: 'http://api.lod-misis.ru/image/' + args.data
+        $scope.newProject.Screenshots = $scope.images.map(function (image) {
+          return image.url;
         });
 
+        $scope.newProject.ProjectTypes = $scope.categories.map(function (categoryItem) {
+          if (categoryItem.status) {
+            return categoryItem.index;
+          }
+        });
+
+        ApiService.addProject($scope.newProject).then(function (isSuccess) {
+          if (isSuccess) {
+            $scope.currentState = 'success';
+            $scope.newProgect = {};
+            $scope.addProjectForm.$setPristine();
+            $timeout(function () {
+              $scope.currentState = 'filling';
+            }, 3000);
+          } else {
+            $scope.currentState = 'failed';
+          }
+        });
+      };
+
+      //   FOR TYPE OF PROJECT
+      $scope.categories = [{
+        category: 'Веб',
+        status: false,
+        index: 0
+      }, {
+        category: 'Мобильное',
+        status: false,
+        index: 1
+      }, {
+        category: 'Десктопное',
+        status: false,
+        index: 2
+      }, {
+        category: 'Игра',
+        status: false,
+        index: 3
+      }, {
+        category: 'Прочее',
+        status: false,
+        index: 4
+      }];
+
+      $scope.toggleCategory = function (targetCategory) {
+        targetCategory.status = !targetCategory.status;
+      };
+
+      //   FOR SMALL IMAGES
+      $scope.images = [];
+      $scope.currentUploadStateImage = "waiting"; // waiting, uploading
+      $scope.currentPercentImage = 0;
+
+      $scope.$on('beforeSendImage', function (ev, args) {
+        $scope.currentUploadStateImage = 'uploading';
+        $scope.currentPercentImage = 0;
+        $scope.$apply();
+      });
+
+      $scope.$on('errorUploadingImage', function (ev, args) {
+
+        alert('Размер файла не должен превышать 10 Мб. Разрешённые форматы изображения: JPG, JPEG, PNG, SVG, BMP, GIF. ' +
+          'Или, возможно, вы не авторизовались.');
         $scope.currentUploadStateImage = 'waiting';
+        $scope.currentPercentImage = 0;
+        $scope.$apply();
+      });
+
+      $scope.$on('progressImage', function (ev, args) {
+        $scope.currentPercentImage = args.progress_value;
+        $scope.$apply();
+      });
+
+      $scope.$on('successUploadingImage', function (ev, args) {
+          $scope.images.push({
+            url: 'http://api.lod-misis.ru/image/' + args.data
+          });
+
+          $scope.currentUploadStateImage = 'waiting';
+
+          $scope.$apply();
+        }
+      );
+
+      $scope.deleteImage = function (fileItem, index) {
+        $scope.images.splice(index, 1);
+      }
+
+      //  FOR BIG IMAGE
+      $scope.currentUploadStateBigImage = 'waiting'; // waiting, uploading
+      $scope.currentPercentBigImage = 0;
+
+      $scope.$on('beforeSendBigImage', function (ev, args) {
+        $scope.currentUploadStateBigImage = 'uploading';
+        $scope.currentPercentBigImage = 0;
+        $scope.$apply();
+      });
+
+      $scope.$on('errorUploadingBigImage', function (ev, args) {
+
+        alert('Размер файла не должен превышать 10 Мб. Разрешённые форматы изображения: JPG, JPEG, PNG, SVG, BMP, GIF. ' +
+          'Или, возможно, вы не авторизовались.');
+        $scope.currentUploadStateBigImage = 'waiting';
+        $scope.currentPercentBigImage = 0;
+        $scope.$apply();
+
+
+      });
+
+      $scope.$on('progressBigImage', function (ev, args) {
+        $scope.currentPercentBigImage = args.progress_value;
+        $scope.$apply();
+      });
+
+      $scope.$on('successUploadingBigImage', function (ev, args) {
+        $scope.newProject.LandingImageUri = 'http://api.lod-misis.ru/image/' + args.data;
+
+        $scope.currentUploadStateBigImage = 'waiting';
 
         $scope.$apply();
+      });
+
+      $scope.deleteBigImage = function () {
+        $scope.newProject.LandingImageUri = $scope.defaultImage;
       }
-    );
 
-    $scope.deleteImage = function (fileItem, index) {
-      $scope.images.splice(index, 1);
-    }
+      $scope.$on('userRole_changed', function (e, args) {
+        token = TokenService.getToken();
+        if (!token || !token.UserId) {
+          return $state.go('index');
+        }
+      });
 
-    //  FOR BIG IMAGE
-    $scope.currentUploadStateBigImage = 'waiting'; // waiting, uploading
-    $scope.currentPercentBigImage = 0;
-
-    $scope.$on('beforeSendBigImage', function (ev, args) {
-      $scope.currentUploadStateBigImage = 'uploading';
-      $scope.currentPercentBigImage = 0;
-      $scope.$apply();
-    });
-
-    $scope.$on('errorUploadingBigImage', function (ev, args) {
-
-      alert('Размер файла не должен превышать 10 Мб. Разрешённые форматы изображения: JPG, JPEG, PNG, SVG, BMP, GIF. ' +
-        'Или, возможно, вы не авторизовались.');
-      $scope.currentUploadStateBigImage = 'waiting';
-      $scope.currentPercentBigImage = 0;
-      $scope.$apply();
-
-
-    });
-
-    $scope.$on('progressBigImage', function (ev, args) {
-      $scope.currentPercentBigImage = args.progress_value;
-      $scope.$apply();
-    });
-
-    $scope.$on('successUploadingBigImage', function (ev, args) {
-      $scope.newProject.LandingImageUri = 'http://api.lod-misis.ru/image/' + args.data;
-
-      $scope.currentUploadStateBigImage = 'waiting';
-
-      $scope.$apply();
-    });
-
-    $scope.deleteBigImage = function () {
-      $scope.newProject.LandingImageUri = $scope.defaultImage;
-    }
-  }])
+      $scope.$emit('toggle_black', {isblack: true});
+      $scope.$emit('change_title', {
+        title: 'Добавление проекта - Лига Разработчиков НИТУ МИСиС'
+      });
+    }])
 ;

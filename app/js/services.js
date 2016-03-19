@@ -174,9 +174,6 @@ angular.module('LodSite.services', [])
 
       return sendAuthorizationSaveRequest(GET, apiUrl)
         .then(function setImageCap(response) {
-          if (response.data.BigPhotoUri == null) {
-            response.data.BigPhotoUri = '/app/imgs/developer-default-photo.png';
-          }
           return response.data;
         })
     };
@@ -236,23 +233,28 @@ angular.module('LodSite.services', [])
       });
     };
 
-    this.uploadFileToUrl = function(file){
-      var apiUrl = 'http://api.lod-misis.ru/image';
+    this.order = function (requestData) {
+      var apiUrl = 'http://api.lod-misis.ru/orders';
 
-      var fd = new FormData();
-      fd.append('file', file);
-
-      return sendAuthorizationSaveRequest(POST, apiUrl, null, fd).then(function (response) {
+      return sendAuthorizationSaveRequest(POST, apiUrl, null, requestData).then(function (response) {
         return response.status===200;
       });
-      $http.post(apiUrl, fd, {
-        transformRequest: angular.identity,
-        headers: {'Content-Type': undefined}
-      })
-        .success(function(){
-        })
-        .error(function(){
-        });
-    }
+    };
+
+    this.contact = function (requestData) {
+      var apiUrl = 'http://api.lod-misis.ru/contact';
+
+      return sendAuthorizationSaveRequest(POST, apiUrl, null, requestData).then(function (response) {
+        return response.status===200;
+      });
+    };
+
+    this.developerConfirmation = function (token) {
+      var apiUrl = 'http://api.lod-misis.ru/developers/confirmation/' + token;
+
+      return sendAuthorizationSaveRequest(POST, apiUrl, null, null).then(function (response) {
+        return response.status===200;
+      });
+    };
   }])
 ;

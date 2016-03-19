@@ -139,6 +139,7 @@ angular.module('LodSite', [
 
 ;
 
+var DOMAIN_NAME = 'http://api.lod-misis.ru';
 
 // other functions
 function templateUrl(module, name) {

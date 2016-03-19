@@ -59,17 +59,17 @@ angular.module('LodSite.services', [])
        }])
 
        .service('ApiService', ['$http', 'TokenService', '$rootScope', function ($http, TokenService) {
+
          var GET = 'get';
          var POST = 'post';
          var DELETE = 'delete';
          var PUT = 'put';
 
-
          // requests
-         var sendRequest = function (method, url, requestParams, requestData, tokenValue) {
+         var sendRequest = function (method, apiUrl, requestParams, requestData, tokenValue) {
            var requestConfig = {
              method: method,
-             url: url
+             url: apiUrl
            };
            if (tokenValue) {
              requestConfig.headers = {'Authorization': 'Basic ' + tokenValue};
@@ -84,11 +84,12 @@ angular.module('LodSite.services', [])
          };
 
          var sendAuthorizationSaveRequest = function (method, url, requestParams, requestData) {
+           var apiUrl = DOMAIN_NAME + url;
            var userRole = TokenService.getRole();
            if (userRole !== false) {
              var token = TokenService.getToken().Token;
            }
-           var responsePromise = sendRequest(method, url, requestParams, requestData, token);
+           var responsePromise = sendRequest(method, apiUrl, requestParams, requestData, token);
 
            return responsePromise.then(
              function successCallback(response) {
@@ -99,7 +100,7 @@ angular.module('LodSite.services', [])
              function errorCallback(response) {
                if (response.status === 401) {
                  TokenService.resetToken();
-                 return sendRequest(method, url, requestParams, requestData, null).then(
+                 return sendRequest(method, apiUrl, requestParams, requestData, null).then(
                    function successCallback(response) {
                      TokenService.refreshTokenDate();
 
@@ -119,33 +120,33 @@ angular.module('LodSite.services', [])
 
          // developers
          this.getRandomDevelopers = function (numberOfDevelopers) {
-           var apiUrl = 'http://api.lod-misis.ru/developers/random/' + numberOfDevelopers;
+           var url = '/developers/random/' + numberOfDevelopers;
 
-           return sendAuthorizationSaveRequest(GET, apiUrl).then(function (response) {
+           return sendAuthorizationSaveRequest(GET, url).then(function (response) {
              return response.data;
            });
          };
 
          this.getFullDevelopers = function () {
-           var apiUrl = 'http://api.lod-misis.ru/developers';
+           var url = '/developers';
 
-           return sendAuthorizationSaveRequest(GET, apiUrl).then(function (response) {
+           return sendAuthorizationSaveRequest(GET, url).then(function (response) {
              return response.data;
            });
          };
 
          this.getFullDevelopersBySearch = function (searchText) {
-           var apiUrl = 'http://api.lod-misis.ru/developers/search/' + searchText;
+           var url = '/developers/search/' + searchText;
 
-           return sendAuthorizationSaveRequest(GET, apiUrl).then(function (response) {
+           return sendAuthorizationSaveRequest(GET, url).then(function (response) {
              return response.data;
            });
          };
 
          this.getDeveloper = function (developerId) {
-           var apiUrl = 'http://api.lod-misis.ru/developers/' + developerId;
+           var url = '/developers/' + developerId;
 
-           return sendAuthorizationSaveRequest(GET, apiUrl)
+           return sendAuthorizationSaveRequest(GET, url)
              .then(function (response) {
                var date = new Date();
                response.data.studyingYear = date.getFullYear() - response.data.StudentAccessionYear || 1;
@@ -154,9 +155,9 @@ angular.module('LodSite.services', [])
          };
 
          this.getDeveloperForProfileSttings = function (developerId) {
-           var apiUrl = 'http://api.lod-misis.ru/developers/' + developerId;
+           var url = '/developers/' + developerId;
 
-           return sendAuthorizationSaveRequest(GET, apiUrl).then(function setImageCap(response) {
+           return sendAuthorizationSaveRequest(GET, url).then(function setImageCap(response) {
              if (response.data.BigPhotoUri == null) {
                response.data.BigPhotoUri = '/app/imgs/developer-default-photo.png';
              }
@@ -166,33 +167,33 @@ angular.module('LodSite.services', [])
          };
 
          this.sendProfileSttings = function (developerId, requestData) {
-           var apiUrl = 'http://api.lod-misis.ru/developers/' + developerId;
+           var url = '/developers/' + developerId;
 
-           return sendAuthorizationSaveRequest(PUT, apiUrl, null, requestData).then(function (response) {
+           return sendAuthorizationSaveRequest(PUT, url, null, requestData).then(function (response) {
              return response.status === 200;
            });
          };
 
          this.getNotificationsForProfileSttings = function (developerId) {
-           var apiUrl = 'http://api.lod-misis.ru/developers/notificationsettings/' + developerId;
+           var url = '/developers/notificationsettings/' + developerId;
 
-           return sendAuthorizationSaveRequest(GET, apiUrl).then(function setImageCap(response) {
+           return sendAuthorizationSaveRequest(GET, url).then(function setImageCap(response) {
              return response.data;
            })
          };
 
          this.sendNotifications = function (developerId, requestData) {
-           var apiUrl = 'http://api.lod-misis.ru/developers/notificationsettings/' + developerId;
+           var url = '/developers/notificationsettings/' + developerId;
 
-           return sendAuthorizationSaveRequest(PUT, apiUrl, null, requestData).then(function (response) {
+           return sendAuthorizationSaveRequest(PUT, url, null, requestData).then(function (response) {
              return response.status === 200;
            });
          };
 
          this.sendNewPassword = function (developerId, requestData) {
-           var apiUrl = 'http://api.lod-misis.ru/developers/password/' + developerId;
+           var url = '/developers/password/' + developerId;
 
-           return sendAuthorizationSaveRequest(PUT, apiUrl, null, requestData).then(function (response) {
+           return sendAuthorizationSaveRequest(PUT, url, null, requestData).then(function (response) {
              return response.data;
            });
          };
@@ -200,64 +201,64 @@ angular.module('LodSite.services', [])
 
          // projects
          this.getRandomProjects = function (numberOfProjects) {
-           var apiUrl = 'http://api.lod-misis.ru/projects/random/' + numberOfProjects;
+           var url = '/projects/random/' + numberOfProjects;
 
-           return sendAuthorizationSaveRequest(GET, apiUrl).then(function (response) {
+           return sendAuthorizationSaveRequest(GET, url).then(function (response) {
              return response.data;
            });
          };
 
          this.getFullProjects = function (requestParams, pageCounter) {
-           var apiUrl = 'http://api.lod-misis.ru/projects?page=' + pageCounter;
+           var url = '/projects?page=' + pageCounter;
 
-           return sendAuthorizationSaveRequest(GET, apiUrl, requestParams).then(function (response) {
+           return sendAuthorizationSaveRequest(GET, url, requestParams).then(function (response) {
              return response.data;
            });
          };
 
          this.getProject = function (projectId) {
-           var apiUrl = 'http://api.lod-misis.ru/projects/' + projectId;
+           var url = '/projects/' + projectId;
 
-           return sendAuthorizationSaveRequest(GET, apiUrl).then(function (response) {
+           return sendAuthorizationSaveRequest(GET, url).then(function (response) {
              return response.data;
            });
          };
 
          this.addProject = function (requestData) {
-           var apiUrl = 'http://api.lod-misis.ru/projects';
+           var url = '/projects';
 
-           return sendRequest(POST, apiUrl, null, requestData).then(function (response) {
+           return sendRequest(POST, url, null, requestData).then(function (response) {
              return response.status === 200;
            });
          };
 
          this.joinToProject = function (projectId, userId, projectDeveloperRole) {
-           var apiUrl = 'http://api.lod-misis.ru/projects/' + projectId + '/developer/' + userId;
+           var url = '/projects/' + projectId + '/developer/' + userId;
 
-           return sendAuthorizationSaveRequest(POST, apiUrl, null, projectDeveloperRole);
+           return sendAuthorizationSaveRequest(POST, url, null, projectDeveloperRole);
          };
 
          this.escapeFromProject = function (projectId, userId) {
-           var apiUrl = 'http://api.lod-misis.ru/projects/' + projectId + '/developer/' + userId;
+           var url = '/projects/' + projectId + '/developer/' + userId;
 
-           return sendAuthorizationSaveRequest(DELETE, apiUrl);
+           return sendAuthorizationSaveRequest(DELETE, url);
          };
 
 
          // other
          this.signUp = function (requestData) {
-           var apiUrl = 'http://api.lod-misis.ru/developers';
+           var url = '/developers';
 
-           return sendAuthorizationSaveRequest(POST, apiUrl, null, JSON.stringify(requestData))
+           return sendAuthorizationSaveRequest(POST, url, null, JSON.stringify(requestData))
              .then(function (responseObject) {
                return responseObject;
              });
          };
 
          this.signIn = function (requestData) {
-           var apiUrl = 'http://api.lod-misis.ru/login';
+           var url = '/login';
 
-           return sendAuthorizationSaveRequest(POST, apiUrl, null, requestData).then(function (responseObject) {
+           return sendAuthorizationSaveRequest(POST, url, null, requestData).then(function (responseObject) {
              if (responseObject.status === 200) {
                TokenService.setToken(responseObject.data);
              }

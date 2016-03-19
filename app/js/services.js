@@ -38,7 +38,6 @@ angular.module('LodSite.services', [])
            $rootScope.$emit('userRole_changed', {
              userRole: self.getRole()
            });
-           $state.go('index');
          };
 
          this.getRole = function () {

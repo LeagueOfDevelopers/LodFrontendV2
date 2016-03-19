@@ -5,7 +5,7 @@
 angular.module('LodSite.controllers', [])
 
        //main controllers
-       .controller('PageCtrl', ['$scope', '$rootScope','$state', function ($scope, $rootScope, $state) {
+       .controller('PageCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
          var defaultTitle = 'Лига Разработчиков НИТУ МИСиС';
          $scope.DEFAULT_PROJECT_LANDSCAPE = '/app/imgs/project-cap-image.png';
          $scope.DEFAULT_DEVELOPER_PHOTO = '/app/imgs/developer-default-photo.png';
@@ -37,7 +37,7 @@ angular.module('LodSite.controllers', [])
 
 
        //header and footer controllers
-       .controller('HeaderCtrl', ['$scope', 'ngDialog', 'TokenService', function ($scope, ngDialog, TokenService) {
+       .controller('HeaderCtrl', ['$scope', 'ngDialog', 'TokenService','$state', function ($scope, ngDialog, TokenService, $state) {
          $scope.isOpened = false;
 
          $scope.activeToggle = function () { $scope.isOpened = !$scope.isOpened; };
@@ -51,6 +51,7 @@ angular.module('LodSite.controllers', [])
          $scope.signOut = function () {
            TokenService.resetToken();
            TokenService.getRole();
+           $state.reload();
          };
 
          $scope.$on('$locationChangeSuccess', function () {
@@ -743,7 +744,7 @@ angular.module('LodSite.controllers', [])
               });
        }])
 
-       .controller('LoginFormCtrl', ['$scope', 'ApiService', 'TokenService', function ($scope, ApiService) {
+       .controller('LoginFormCtrl', ['$scope', 'ApiService', '$state', function ($scope, ApiService, $state) {
          var date = new Date();
          var hour = date.getHours();
          $scope.timeOfDay = (hour > 4 && hour < 12) ? 'morning' :
@@ -759,6 +760,7 @@ angular.module('LodSite.controllers', [])
                $scope.userLogin = {};
                $scope.loginForm.$setPristine();
                $scope.closeThisDialog('.form__close-button');
+               $state.reload();
              } else {
                $scope.isNoDeveloper = true;
              }

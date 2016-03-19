@@ -10,7 +10,7 @@
     </span>
     <span class="header__reg-or-login" ng-if="userRole === 0 || userRole === 1">
       <span class="reg-or-login__login">-</span> |
-      <a class="reg-or-login__reg" ui-sref="signup">-</a> |
+      <a class="reg-or-login__reg">-</a> |
       <span class="reg-or-login__login" ng-click="signOut()">Выйти</span>
     </span>
   </span>
@@ -59,9 +59,9 @@
                pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
                ng-minlength="8" ng-maxlength="30" required/>
         <button ng-disabled="loginForm.$invalid" ng-click="signIn()">Войти</button>
-        <p ng-if="isNoDeveloper" style="margin: 10px; color: #2980b9;"> Не удалось войти, проверьте введенные
-                                                                        данные.</p>
-
+        <p ng-if="isNoDeveloper" style="margin: 10px; color: #2980b9;">
+          Не удалось войти, проверьте введенныеданные.
+        </p>
         <div class="form__question">Не являетесь разработчиком?
           <a class="form__become-dev" ui-sref="signup">Стать разработчиком</a>
         </div>

@@ -4,8 +4,8 @@
     <span style="color: #ccc;" ng-switch-when="2">Подтверждён администратором</span>
     <span style="color: #ccc;" ng-switch-default="ng-switch-default">Не подтверждён</span>
   </div>
-  <div class="developer-photo" style="
-  background: url({{developer.PhotoUri}}) no-repeat center; background-size: contain;"></div>
+  <div class="developer-photo"
+       style=" background: url({{developer.PhotoUri}}) no-repeat center; background-size: cover;"></div>
   <div class="developer-name" ng-bind="developer.FirstName + ' ' + developer.LastName"></div>
   <div class="developer-role" ng-bind="developer.Role"></div>
   <div class="dividing-line"></div>
@@ -52,7 +52,7 @@
       <a ng-repeat="projectByDeveloper in developer.Projects" class="projects-section__link-to-project"
          ui-sref="projects.item({id: projectByDeveloper.ProjectId})">
         <div class="projects-section__project">
-          <div style="background: url({{projectByDeveloper.PhotoUri}}) no-repeat center; background-size: cover;"
+          <div style="background: #ffd200 url({{projectByDeveloper.PhotoUri || DEFAULT_PROJECT_LANDSCAPE}}) no-repeat center; background-size: cover;"
                class="project__background"></div>
           <div class="project__info-container">
             <div class="project__name" ng-bind="projectByDeveloper.Name"></div>

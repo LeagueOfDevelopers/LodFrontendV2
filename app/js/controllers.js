@@ -5,12 +5,14 @@
 angular.module('LodSite.controllers', [])
 
        //main controllers
-       .controller('PageCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
+       .controller('PageCtrl', ['$scope', '$rootScope','$state', function ($scope, $rootScope, $state) {
          var defaultTitle = 'Лига Разработчиков НИТУ МИСиС';
          $scope.DEFAULT_PROJECT_LANDSCAPE = '/app/imgs/project-cap-image.png';
          $scope.DEFAULT_DEVELOPER_PHOTO = '/app/imgs/developer-default-photo.png';
 
-         $rootScope.$on('userRole_changed', function (e, args) { $scope.userRole = args.userRole; });
+         $rootScope.$on('userRole_changed', function (e, args) {
+           $scope.userRole = args.userRole;
+         });
          $scope.$on('change_title', function (e, args) {
            $scope.title = args.title !== undefined && args.title.length ? args.title : defaultTitle;
          });
@@ -185,23 +187,33 @@ angular.module('LodSite.controllers', [])
            index: 4
          }];
          $scope.fullProjects = [];
+         $scope.isMoreProjects = true;
          var pageCounter = 0;
 
+         $scope.resetPageCounter = function () {
+           pageCounter = 0;
+         };
+         $scope.resetFullProjects = function () {
+           $scope.fullProjects = [];
+         };
          $scope.addProjects = function () {
            pageCounter++;
            $scope.updateProjects();
          };
          $scope.toggleCategory = function (targetCategory) {
            targetCategory.status = !targetCategory.status;
+           $scope.resetPageCounter();
+           $scope.resetFullProjects();
            $scope.updateProjects();
          };
          $scope.updateProjects = function () {
+           var requestParams = {};
            var indexes = $scope.categories.filter(function (category) {
              return category.status;
            }).map(function (category) {
              return category.index;
            });
-           var requestParams = {};
+
            if (indexes.length) {
              angular.extend(requestParams, {
                categories: indexes.join(',')
@@ -210,9 +222,15 @@ angular.module('LodSite.controllers', [])
 
            ApiService.getFullProjects(requestParams, pageCounter)
                      .then(function (data) {
-                       $scope.fullProjects = $scope.fullProjects.concat(data);
+                       if (!data || data.length === 0) {
+                         $scope.isMoreProjects = false;
+                       } else {
+                         $scope.fullProjects = $scope.fullProjects.concat(data);
+                         $scope.isMoreProjects = true;
+                       }
                      })
          };
+
          $scope.updateProjects();
 
          $scope.$emit('toggle_black', {isBlack: true});
@@ -521,21 +539,35 @@ angular.module('LodSite.controllers', [])
 
        //other
        .controller('SignupCtrl', ['$scope', 'ApiService', '$timeout', function ($scope, ApiService, $timeout) {
-         $scope.currentState = 'filling';
+         $scope.currentStates = {};
          $scope.newDeveloper = {};
+
          $scope.signUp = function () {
-           ApiService.signUp($scope.newDeveloper).then(function (isSuccess) {
-             if (isSuccess) {
-               $scope.currentState = 'success';
-               $scope.newDeveloper = {};
-               $scope.repeatedPassword = '';
-               $scope.newDeveloper.Password = '';
-               $scope.signForm.$setPristine();
-               $timeout(function () {
-                 $scope.currentState = 'filling';
-               }, 3000);
+           ApiService.signUp($scope.newDeveloper).then(function (responseObject) {
+             $scope.currentStates = {};
+
+             if (responseObject) {
+               if (responseObject.status === 200) {
+                 $scope.currentStates.isSuccess = true;
+               } else if (responseObject.status === 409) {
+                 $scope.currentStates.isRegisteredEmail = true;
+               } else {
+                 $scope.currentStates.isFailed = true;
+               }
+
              } else {
-               $scope.currentState = 'failed';
+               $scope.currentStates.isFailed = true;
+             }
+
+             if ($scope.currentStates.isSuccess) {
+               $scope.newDeveloper = {};
+               $scope.repeatedPassword = null;
+               $scope.newDeveloper.Password = null;
+               $scope.signForm.$setPristine();
+
+               $timeout(function () {
+                 $scope.currentStates.isSuccess = null;
+               }, 4000);
              }
            });
          };
@@ -686,9 +718,7 @@ angular.module('LodSite.controllers', [])
          };
 
          $scope.$emit('toggle_black', {isBlack: true});
-         $scope.$emit('change_title', {
-           title: 'Cвязаться - Лига Разработчиков НИТУ МИСиС'
-         });
+         $scope.$emit('change_title', {title: 'Cвязаться - Лига Разработчиков НИТУ МИСиС'});
        }])
 
        .controller('FormValidationCtrl', [function () {

@@ -105,10 +105,6 @@ time, mark, audio, video {
 /************************
           MAIN
 *************************/
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-  display: none;
-}
-
 body {
   font-size: 1em;
   font-family: 'PT Sans', sans-serif;
@@ -503,7 +499,7 @@ header {
 
 .projects-section__see-more-button {
   display: block;
-  margin: 40px auto;
+  margin: 20px auto;
 }
 
 
@@ -2415,7 +2411,7 @@ footer {
   *************************/
   .developers-section,
   .projects-section {
-    padding: 0 40px;
+    padding: 0 40px 20px;
   }
 
   .developer__photo:hover {

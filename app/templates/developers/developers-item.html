@@ -5,7 +5,7 @@
     <span style="color: #ccc;" ng-switch-default="ng-switch-default">Не подтверждён</span>
   </div>
   <div class="developer-photo"
-       style=" background: url({{developer.PhotoUri}}) no-repeat center; background-size: cover;"></div>
+       style=" background: url({{developer.PhotoUri || DEFAULT_DEVELOPER_PHOTO}}) no-repeat center; background-size: cover;"></div>
   <div class="developer-name" ng-bind="developer.FirstName + ' ' + developer.LastName"></div>
   <div class="developer-role" ng-bind="developer.Role"></div>
   <div class="dividing-line"></div>

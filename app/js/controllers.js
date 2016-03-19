@@ -37,27 +37,31 @@ angular.module('LodSite.controllers', [])
 
 
        //header and footer controllers
-       .controller('HeaderCtrl', ['$scope', 'ngDialog', 'TokenService','$state', function ($scope, ngDialog, TokenService, $state) {
-         $scope.isOpened = false;
-
-         $scope.activeToggle = function () { $scope.isOpened = !$scope.isOpened; };
-         $scope.openLoginDialog = function () {
-           $scope.$dialog = ngDialog.open({
-             template: 'loginTemplate',
-             showClose: true,
-             closeByNavigation: true
-           });
-         };
-         $scope.signOut = function () {
-           TokenService.resetToken();
-           TokenService.getRole();
-           $state.reload();
-         };
-
-         $scope.$on('$locationChangeSuccess', function () {
+       .controller('HeaderCtrl', ['$scope',
+         'ngDialog',
+         'TokenService',
+         '$state',
+         function ($scope, ngDialog, TokenService, $state) {
            $scope.isOpened = false;
-         });
-       }])
+
+           $scope.activeToggle = function () { $scope.isOpened = !$scope.isOpened; };
+           $scope.openLoginDialog = function () {
+             $scope.$dialog = ngDialog.open({
+               template: 'loginTemplate',
+               showClose: true,
+               closeByNavigation: true
+             });
+           };
+           $scope.signOut = function () {
+             TokenService.resetToken();
+             TokenService.getRole();
+             $state.reload();
+           };
+
+           $scope.$on('$locationChangeSuccess', function () {
+             $scope.isOpened = false;
+           });
+         }])
 
        .controller('FooterCtrl', ['$scope', function ($scope) {
          $scope.currentDate = new Date();
@@ -159,10 +163,10 @@ angular.module('LodSite.controllers', [])
        //projects controllers
        .controller('RandomProjectsCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
          var numberOfProjects = 6;
-         ApiService.getRandomProjects(numberOfProjects)
-                   .then(function (data) {
-                     $scope.randomProjects = data;
-                   })
+
+         ApiService.getRandomProjects(numberOfProjects).then(function (data) {
+           $scope.randomProjects = data;
+         })
        }])
 
        .controller('FullProjectsCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {

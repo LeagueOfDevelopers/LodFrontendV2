@@ -129,13 +129,7 @@ angular.module('LodSite.services', [])
          this.getFullDevelopers = function () {
            var apiUrl = 'http://api.lod-misis.ru/developers';
 
-           return sendAuthorizationSaveRequest(GET, apiUrl).then(function setImageCap(response) {
-             for (var i = 0; i < response.data.length; i++) {
-               if (response.data[i].PhotoUri == null) {
-                 response.data[i].PhotoUri = '/app/imgs/developer-default-photo.png';
-               }
-             }
-
+           return sendAuthorizationSaveRequest(GET, apiUrl).then(function (response) {
              return response.data;
            });
          };
@@ -143,13 +137,7 @@ angular.module('LodSite.services', [])
          this.getFullDevelopersBySearch = function (searchText) {
            var apiUrl = 'http://api.lod-misis.ru/developers/search/' + searchText;
 
-           return sendAuthorizationSaveRequest(GET, apiUrl).then(function setImageCap(response) {
-             for (var i = 0; i < response.data.length; i++) {
-               if (response.data[i].PhotoUri == null) {
-                 response.data[i].PhotoUri = '/app/imgs/developer-default-photo.png';
-               }
-             }
-
+           return sendAuthorizationSaveRequest(GET, apiUrl).then(function (response) {
              return response.data;
            });
          };
@@ -158,18 +146,10 @@ angular.module('LodSite.services', [])
            var apiUrl = 'http://api.lod-misis.ru/developers/' + developerId;
 
            return sendAuthorizationSaveRequest(GET, apiUrl)
-             .then(function setImageCap(response) {
-               if (response.data.PhotoUri == null) {
-                 response.data.PhotoUri = '/app/imgs/developer-default-photo.png';
-               }
-
-               return response.data;
-             })
-             .then(function setStudyingYear(data) {
+             .then(function (response) {
                var date = new Date();
-               data.studyingYear = date.getFullYear() - data.StudentAccessionYear || 1;
-
-               return data;
+               response.data.studyingYear = date.getFullYear() - response.data.StudentAccessionYear || 1;
+               return response.data;
              });
          };
 
@@ -268,9 +248,10 @@ angular.module('LodSite.services', [])
          this.signUp = function (requestData) {
            var apiUrl = 'http://api.lod-misis.ru/developers';
 
-           return sendAuthorizationSaveRequest(POST, apiUrl, null, JSON.stringify(requestData)).then(function (responseObject) {
-             return responseObject;
-           });
+           return sendAuthorizationSaveRequest(POST, apiUrl, null, JSON.stringify(requestData))
+             .then(function (responseObject) {
+               return responseObject;
+             });
          };
 
          this.signIn = function (requestData) {

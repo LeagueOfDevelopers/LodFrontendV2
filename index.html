@@ -45,27 +45,31 @@
   <base href="/"/>
 </head>
 <body ng-controller="AppCtrl" ng-cloak>
-<!--<div class="loader" ng-hide="isLoaded">-->
-<!--<div class="loading"></div>-->
-<!--<div class="blackout"></div>-->
-<!--</div>-->
-<div class="wrapper">
-  <page-header ng-class="{'header--black': isblack}"></page-header>
-  <div class="content">
-    <ui-view></ui-view>
+  <!--<div class="loader" ng-hide="isLoaded">-->
+  <!--<div class="loading"></div>-->
+  <!--<div class="blackout"></div>-->
+  <!--</div>-->
+  <div class="wrapper">
+    <page-header ng-class="{'header--black': isblack}"></page-header>
+    <div class="content">
+      <div class="admin__nav" ng-show="userRole===1">
+
+      </div>
+      <ui-view></ui-view>
+    </div>
+    <page-footer></page-footer>
   </div>
-  <page-footer></page-footer>
-</div>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" type="text/javascript"></script>
-<script src="/app/bower_components/angular/angular.min.js" type="text/javascript"></script>
-<script src="/app/bower_components/angular-route/angular-route.min.js" type="text/javascript"></script>
-<script src="/app/bower_components/angular-ui-router/release/angular-ui-router.min.js" type="text/javascript"></script>
-<script src="/app/lib/ngDialog/ngDialog.min.js"></script>
-<script src="/app/lib/ajaxJqueryUploader/uploader.js"></script>
-<script src="/app/js/app.js"></script>
-<script src="/app/js/controllers.js"></script>
-<script src="/app/js/directives.js"></script>
-<script src="/app/js/services.js"></script>
-<script src="/app/bower_components/fastclick/lib/fastclick.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" type="text/javascript"></script>
+  <script src="/app/bower_components/angular/angular.min.js" type="text/javascript"></script>
+  <script src="/app/bower_components/angular-route/angular-route.min.js" type="text/javascript"></script>
+  <script src="/app/bower_components/angular-ui-router/release/angular-ui-router.min.js"
+          type="text/javascript"></script>
+  <script src="/app/lib/ngDialog/ngDialog.min.js"></script>
+  <script src="/app/lib/ajaxJqueryUploader/uploader.js"></script>
+  <script src="/app/js/app.js"></script>
+  <script src="/app/js/controllers.js"></script>
+  <script src="/app/js/directives.js"></script>
+  <script src="/app/js/services.js"></script>
+  <script src="/app/bower_components/fastclick/lib/fastclick.js"></script>
 </body>
 </html>

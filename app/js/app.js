@@ -94,6 +94,11 @@ angular.module('LodSite', [
           templateUrl: templateUrl('adminpanel', 'adminpanel-projectAdd'),
           controller: 'AddProjectCtrl'
         })
+        .state('adminpanel.projectEdit', {
+          url: '/projects/edit/:id',
+          templateUrl: templateUrl('adminpanel', 'adminpanel-projectEdit'),
+          controller: 'EditProjectCtrl'
+        })
 
         //other
         .state('signup', {

@@ -4,14 +4,15 @@
     <div class="header__site-logo"></div>
   </a>
   <span ng-switch="userRole">
-    <span class="header__reg-or-login" ng-if="!(userRole === 0 || userRole === 1)">
-      <a class="reg-or-login__reg" ui-sref="signup">Стать разработчиком</a>
-      или <a class="reg-or-login__login" ng-click="openLoginDialog($event)">Войти</a>
+    <span class="header__additional-nav" ng-if="!(userRole === 0 || userRole === 1)">
+      <a class="additional-nav__item" ui-sref="signup">Стать разработчиком</a>
+      или <a class="additional-nav__item" ng-click="openLoginDialog($event)">Войти</a>
     </span>
-    <span class="header__reg-or-login" ng-if="userRole === 0 || userRole === 1">
-      <span class="reg-or-login__login">-</span> |
-      <a class="reg-or-login__reg" ui-sref="developers.edit">Мой профиль</a> |
-      <span class="reg-or-login__login" ng-click="signOut()">Выйти</span>
+    <span class="header__additional-nav" ng-if="userRole === 0 || userRole === 1">
+      <span class="additional-nav__item">-</span> |
+      <span class="additional-nav__item">-</span> |
+      <a class="additional-nav__item" ui-sref="developers.edit">Настройки</a> |
+      <span class="additional-nav__item" ng-click="signOut()">Выйти</span>
     </span>
   </span>
 

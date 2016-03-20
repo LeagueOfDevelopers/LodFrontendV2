@@ -4,7 +4,7 @@
 
 angular.module('LodSite.services', [])
 
-       .service('TokenService', ['$rootScope', '$state', function ($rootScope, $state) {
+       .service('TokenService', ['$rootScope', function ($rootScope) {
          var HOURS = 24;
          var TOKEN_VALIDITY = 3600 * 1000 * HOURS;
          var self = this;
@@ -59,7 +59,6 @@ angular.module('LodSite.services', [])
        }])
 
        .service('ApiService', ['$http', 'TokenService', '$rootScope', function ($http, TokenService) {
-
          var GET = 'get';
          var POST = 'post';
          var DELETE = 'delete';

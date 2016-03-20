@@ -13,7 +13,6 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-
 /* LOADER - STYLES */
 .blackout {
   position: fixed;
@@ -100,7 +99,6 @@ time, mark, audio, video {
     opacity: 0;
   }
 }
-
 
 /************************
           MAIN
@@ -210,7 +208,6 @@ a {
   border: 2px solid #fff;
 }
 
-
 /************************
          HEADER
 *************************/
@@ -232,7 +229,7 @@ header {
   background-size: contain;
 }
 
-.header__reg-or-login {
+.header__additional-nav {
   display: none;
 }
 
@@ -326,7 +323,6 @@ header {
   background: #f1f1f1;
 }
 
-
 /************************
      WELCOME-SECTION
 *************************/
@@ -366,7 +362,6 @@ header {
   color: #ffffff;
   text-align: center;
 }
-
 
 /************************
     PROJECTS-SECTION
@@ -502,7 +497,6 @@ header {
   margin: 20px auto;
 }
 
-
 /************************
     DEVELOPERS-SECTION
 *************************/
@@ -564,7 +558,6 @@ header {
   display: block;
   margin: 40px auto;
 }
-
 
 /************************
      DEVELOPERS-PAGE
@@ -654,7 +647,6 @@ header {
   text-decoration: underline;
 }
 
-
 /************************
      DEVELOPER-PAGE
 *************************/
@@ -734,7 +726,6 @@ header {
 .developer-projects {
   margin: 20px 0;
 }
-
 
 /************************
          FOOTER
@@ -948,7 +939,6 @@ footer {
   transition: all .2s ease-out;
 }
 
-
 /*************************
         ABOUT
 *************************/
@@ -1031,7 +1021,6 @@ footer {
   width: 95%;
   margin: 8% auto 0;
 }
-
 
 /*************************
      CONTACT & ORDER
@@ -1127,7 +1116,6 @@ footer {
   background: url("../imgs/white_tick.svg") no-repeat center;
   background-size: cover;
 }
-
 
 /*************************
          ORDER
@@ -1307,7 +1295,6 @@ footer {
   text-align: left;
 }
 
-
 /*************************
       LOGIN-WINDOW
 *************************/
@@ -1410,7 +1397,6 @@ footer {
   font-size: 1.1em;
 }
 
-
 /*************************
       SIGNUP-PAGE
 *************************/
@@ -1502,7 +1488,6 @@ footer {
   border: 1px solid #4CAF50
 }
 
-
 /*****************************
     CONFIRMATION OF EMAIL
 *****************************/
@@ -1543,7 +1528,6 @@ footer {
   padding: 50px 0 0;
   text-align: center;
 }
-
 
 /*************************
      PROFILE SETTINGS
@@ -1714,7 +1698,6 @@ footer {
 .profile-settings__notification__text {
   vertical-align: middle;
 }
-
 
 /*************************
        ADDING PROJECT
@@ -1900,7 +1883,7 @@ footer {
   object-fit: cover;
 }
 
-.all-project__status-wrap{
+.all-project__status-wrap {
   margin-bottom: 30px;
 }
 
@@ -1989,7 +1972,6 @@ footer {
     font-size: 1.8em;
   }
 
-
   /*************************
       WELCOME-SECTION
   *************************/
@@ -2008,7 +1990,6 @@ footer {
     margin: 40px 0 20px 0;
   }
 
-
   /*************************
       PROJECTS-SECTION
   *************************/
@@ -2018,7 +1999,6 @@ footer {
     width: 240px;
     vertical-align: top;
   }
-
 
   /************************
         PROJECT-PAGE
@@ -2030,7 +2010,6 @@ footer {
   .full-project__preview {
     height: 400px;
   }
-
 
   /************************
        DEVELOPERS-PAGE
@@ -2064,7 +2043,6 @@ footer {
     text-align: left;
   }
 
-
   /************************
        DEVELOPER-PAGE
   *************************/
@@ -2074,7 +2052,6 @@ footer {
     padding: 10px;
     font-size: 1em;
   }
-
 
   /*************************
             ABOUT
@@ -2097,7 +2074,6 @@ footer {
   .about-text {
     padding-top: 85px;
   }
-
 
   /*************************
        CONTACT & ORDER
@@ -2143,7 +2119,6 @@ footer {
   .success {
     top: 18px;
   }
-
 
   /*************************
            ORDER
@@ -2200,7 +2175,6 @@ footer {
     text-align: left;
   }
 
-
   /*************************
         SIGNUP-PAGE
   *************************/
@@ -2212,14 +2186,12 @@ footer {
     font-size: 1.8em;
   }
 
-
   /*****************************
     CONFIRMATION  OF EMAIL
   *****************************/
   .confirmation__success, .confirmation__error, .confirmation__loading {
     font-size: 1.5em;
   }
-
 
   /*************************
      PROFILE SETTINGS
@@ -2300,7 +2272,6 @@ footer {
     text-align: left;
   }
 
-
   /*************************
         ADDING PROJECT
   *************************/
@@ -2325,7 +2296,6 @@ footer {
   /*************************
      ADMIN PROJECTS-PAGE
   *************************/
-
   .projects__all-project {
     margin-top: 20px;
     height: 210px;
@@ -2401,7 +2371,6 @@ footer {
     display: none;
   }
 
-
   /*************************
             HEADER
   *************************/
@@ -2418,7 +2387,7 @@ footer {
     width: 200px;
   }
 
-  .header__reg-or-login {
+  .header__additional-nav {
     display: inline-block;
     position: absolute;
     top: 15px;
@@ -2426,8 +2395,7 @@ footer {
     color: rgba(255, 255, 255, 0.5);
   }
 
-  .reg-or-login__reg,
-  .reg-or-login__login {
+  .additional-nav__item {
     color: rgba(255, 255, 255, 0.71);
     margin: 0 5px;
     -webkit-transition: all .2s ease-out;
@@ -2437,8 +2405,7 @@ footer {
     cursor: pointer;
   }
 
-  .reg-or-login__reg:hover,
-  .reg-or-login__login:hover {
+  .additional-nav__item:hover {
     text-decoration: underline;
     color: white;
   }
@@ -2483,7 +2450,6 @@ footer {
     margin-left: 15px;
   }
 
-
   /*************************
        WELCOME-SECTION
   *************************/
@@ -2521,7 +2487,6 @@ footer {
     border-radius: 10px;
   }
 
-
   /*************************
        PROJECTS-SECTION
   *************************/
@@ -2539,7 +2504,6 @@ footer {
     filter: none;
   }
 
-
   /*************************
       DEVELOPERS-SECTION
   *************************/
@@ -2551,7 +2515,6 @@ footer {
   .developer__photo:hover {
     border-color: #2980b9;
   }
-
 
   /************************
        DEVELOPERS-PAGE
@@ -2582,7 +2545,6 @@ footer {
     text-decoration: underline;
   }
 
-
   /*************************
         DEVELOPER-PAGE
   *************************/
@@ -2601,7 +2563,6 @@ footer {
   .developer-name {
     font-size: 1.8em;
   }
-
 
   /*************************
           FOOTER
@@ -2626,7 +2587,6 @@ footer {
     text-decoration: underline;
     color: #ffd200;
   }
-
 
   /************************
         PROJECT-PAGE
@@ -2718,7 +2678,6 @@ footer {
     -o-transform: rotate(90deg);
     transform: rotate(90deg);
   }
-
 
   /*************************
             ABOUT
@@ -2885,7 +2844,6 @@ footer {
     height: 50px;
   }
 
-
   /*************************
        CONTACT & ORDER
   *************************/
@@ -2942,7 +2900,6 @@ footer {
   .contact-form [type="submit"]:hover {
     cursor: pointer;
   }
-
 
   /*************************
          ORDER
@@ -3023,7 +2980,6 @@ footer {
     width: 85%;
   }
 
-
   /*************************
           LOGIN-WINDOW
   *************************/
@@ -3033,7 +2989,6 @@ footer {
     -o-transform: rotate(90deg);
     transform: rotate(90deg);
   }
-
 
   /*************************
         SIGNUP-PAGE
@@ -3087,14 +3042,12 @@ footer {
     border-left: 25px solid transparent;
   }
 
-
   /*****************************
     CONFIRMATION  OF EMAIL
   *****************************/
   .confirmation__button {
     font-size: 1em;
   }
-
 
   /*****************************
     PROFILE SETTINGS
@@ -3180,7 +3133,6 @@ footer {
     margin-right: 20px;
   }
 
-
   /*****************************
         ADDING PROJECT
   *****************************/
@@ -3222,11 +3174,9 @@ footer {
     margin: 5px;
   }
 
-
-/*************************
-   ADMIN PROJECTS-PAGE
-*************************/
-
+  /*************************
+     ADMIN PROJECTS-PAGE
+  *************************/
   .all-projects-page {
 
   }
@@ -3235,10 +3185,10 @@ footer {
     max-width: 580px;
   }
 
-.all-projects__section {
+  .all-projects__section {
 
-  padding: 0 30px;
-}
+    padding: 0 30px;
+  }
 }
 
 @media only screen and (min-width: 1300px) {
@@ -3334,7 +3284,6 @@ footer {
     max-width: 1600px;
   }
 
-
   /*****************************
     PROFILE SETTINGS
   *****************************/
@@ -3346,10 +3295,9 @@ footer {
     width: 228px;
   }
 
-/*************************
-   ADMIN PROJECTS-PAGE
-*************************/
-
+  /*************************
+     ADMIN PROJECTS-PAGE
+  *************************/
   .info__project-types {
     margin-bottom: 40px;
   }

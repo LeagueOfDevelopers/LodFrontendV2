@@ -55,16 +55,28 @@ angular.module('LodSite.directives', [])
       }
     };
   })
-  .directive('uploadFile', ['$rootScope', function ($rootScope) {
+  .directive('uploadFile', ['$rootScope', 'TokenService', function ($rootScope, TokenService) {
     return {
       resctrict: 'A',
       link: link
     };
 
     function link($scope, element, attrs) {
+      var token = TokenService.getToken();
+      if (!token) {
+        return;
+      }
+      var tokenValue = token.Token;
+
+      var headers = {};
+      if (tokenValue) {
+        headers.Authorization = 'Basic ' + tokenValue;
+      }
       // Set promptzone
       $(element[0]).ajaxUploadPrompt({
         url: 'http://api.lod-misis.ru/file',
+        headers: headers,
+
         beforeSend: function () {
           $rootScope.$broadcast('beforeSend');
           console.log('before send');
@@ -88,16 +100,28 @@ angular.module('LodSite.directives', [])
       });
     }
   }])
-  .directive('dropzoneFile', ['$rootScope', function ($rootScope) {
+  .directive('dropzoneFile', ['$rootScope', 'TokenService', function ($rootScope, TokenService) {
     return {
       resctrict: 'A',
       link: link
     };
 
     function link($scope, element, attrs) {
+      var token = TokenService.getToken();
+      if (!token) {
+        return;
+      }
+      var tokenValue = token.Token;
+
+      var headers = {};
+      if (tokenValue) {
+        headers.Authorization = 'Basic ' + tokenValue;
+      }
       // Set promptzone
       $(element[0]).ajaxUploadDrop({
         url: 'http://api.lod-misis.ru/file',
+        headers: headers,
+
         beforeSend: function () {
           $rootScope.$broadcast('beforeSend');
           console.log('before send');
@@ -122,16 +146,28 @@ angular.module('LodSite.directives', [])
     }
   }])
 
-  .directive('dropzoneImage', ['$rootScope', function ($rootScope) {
+  .directive('dropzoneImage', ['$rootScope', 'TokenService', function ($rootScope, TokenService) {
     return {
       resctrict: 'A',
       link: link
     };
 
     function link($scope, element, attrs) {
+      var token = TokenService.getToken();
+      if (!token) {
+        return;
+      }
+      var tokenValue = token.Token;
+
+      var headers = {};
+      if (tokenValue) {
+        headers.Authorization = 'Basic ' + tokenValue;
+      }
       // Set promptzone
       $(element[0]).ajaxUploadDrop({
         url: 'http://api.lod-misis.ru/image',
+        headers: headers,
+
         beforeSend: function () {
           $rootScope.$broadcast('beforeSendImage');
           console.log('before send');
@@ -156,16 +192,28 @@ angular.module('LodSite.directives', [])
     }
   }])
 
-  .directive('uploadImage', ['$rootScope', function ($rootScope) {
+  .directive('uploadImage', ['$rootScope', 'TokenService', function ($rootScope, TokenService) {
     return {
       resctrict: 'A',
       link: link
     };
 
     function link($scope, element, attrs) {
+      var token = TokenService.getToken();
+      if (!token) {
+        return;
+      }
+      var tokenValue = token.Token;
+
+      var headers = {};
+      if (tokenValue) {
+        headers.Authorization = 'Basic ' + tokenValue;
+      }
       // Set promptzone
       $(element[0]).ajaxUploadPrompt({
         url: 'http://api.lod-misis.ru/image',
+        headers: headers,
+
         beforeSend: function () {
           $rootScope.$broadcast('beforeSendImage');
           console.log('before send');
@@ -190,16 +238,28 @@ angular.module('LodSite.directives', [])
     }
   }])
 
-  .directive('dropzoneBigImage', ['$rootScope', function ($rootScope) {
+  .directive('dropzoneBigImage', ['$rootScope', 'TokenService', function ($rootScope, TokenService) {
     return {
       resctrict: 'A',
       link: link
     };
 
     function link($scope, element, attrs) {
+      var token = TokenService.getToken();
+      if (!token) {
+        return;
+      }
+      var tokenValue = token.Token;
+
+      var headers = {};
+      if (tokenValue) {
+        headers.Authorization = 'Basic ' + tokenValue;
+      }
       // Set promptzone
       $(element[0]).ajaxUploadDrop({
         url: 'http://api.lod-misis.ru/image',
+        headers: headers,
+
         beforeSend: function () {
           $rootScope.$broadcast('beforeSendBigImage');
           console.log('before send');
@@ -224,16 +284,28 @@ angular.module('LodSite.directives', [])
     }
   }])
 
-  .directive('uploadBigImage', ['$rootScope', function ($rootScope) {
+  .directive('uploadBigImage', ['$rootScope', 'TokenService', function ($rootScope, TokenService) {
     return {
       resctrict: 'A',
       link: link
     };
 
     function link($scope, element, attrs) {
+      var token = TokenService.getToken();
+      if (!token) {
+        return;
+      }
+      var tokenValue = token.Token;
+
+      var headers = {};
+      if (tokenValue) {
+        headers.Authorization = 'Basic ' + tokenValue;
+      }
       // Set promptzone
       $(element[0]).ajaxUploadPrompt({
         url: 'http://api.lod-misis.ru/image',
+        headers: headers,
+
         beforeSend: function () {
           $rootScope.$broadcast('beforeSendBigImage');
           console.log('before send');

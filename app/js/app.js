@@ -90,7 +90,6 @@ angular.module('LodSite', [
                template: '<ui-view/>',
                abstract: true
              })
-
              .state('adminpanel.index', {
                url: '',
                templateUrl: templateUrl('adminpanel', 'adminpanel-index'),
@@ -102,11 +101,15 @@ angular.module('LodSite', [
                templateUrl: templateUrl('adminpanel', 'adminpanel-projects'),
                controller: 'AllProjectsCtrl'
              })
-
              .state('adminpanel.projectAdd', {
                url: '/projects/add',
                templateUrl: templateUrl('adminpanel', 'adminpanel-projectAdd'),
                controller: 'AddProjectCtrl'
+             })
+             .state('adminpanel.projectEdit', {
+               url: '/projects/edit/:id',
+               templateUrl: templateUrl('adminpanel', 'adminpanel-projectEdit'),
+               controller: 'EditProjectCtrl'
              })
 
 

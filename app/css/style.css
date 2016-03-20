@@ -3287,7 +3287,6 @@ footer {
   }
 
   .profile-settings__input-heading {
-    font-size: 1.2em;
     width: 193px;
   }
 
@@ -3295,11 +3294,6 @@ footer {
     width: 350px;
     margin-bottom: 30px;
   }
-
-  .profile-settings__bottom-part__heading, .profile-settings__checkbox-label {
-    font-size: 1.2em;
-  }
-
 
   /*****************************
       ADDING PROJECT

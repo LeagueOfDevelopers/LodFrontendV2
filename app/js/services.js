@@ -173,14 +173,14 @@ angular.module('LodSite.services', [])
              });
          };
 
-         this.getDeveloperForProfileSttings = function (developerId) {
+         this.getDeveloperForProfileSettings = function (developerId) {
            var apiUrl = 'http://api.lod-misis.ru/developers/' + developerId;
 
            return sendAuthorizationSaveRequest(GET, apiUrl).then(function setImageCap(response) {
           return response.data;
         })
     };
-    this.sendProfileSttings = function (developerId, requestData) {
+    this.sendProfileSettings = function (developerId, requestData) {
       var apiUrl = 'http://api.lod-misis.ru/developers/' + developerId;
 
            return sendAuthorizationSaveRequest(PUT, apiUrl, null, requestData).then(function (response) {

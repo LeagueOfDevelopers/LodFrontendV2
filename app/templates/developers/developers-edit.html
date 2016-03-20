@@ -9,10 +9,11 @@
 
       <div class="profile-settings__avatar-wrapper">
         <div class="profile-settings__avatar-img"
-             ng-attr-style='background-image: url("{{avatarPhoto}}")' dropzone-big-image>
+             ng-attr-style="background-image: url({{profile.BigPhotoUri || DEFAULT_DEVELOPER_PHOTO}})"
+             dropzone-big-image>
 
           <div class="adding-project__file-close adding-project__big-image__file-close"
-               ng-if="avatarPhoto!=defaultPhoto"
+               ng-if="profile.BigPhotoUri"
                ng-click="deleteBigPhoto()"></div>
 
           <div class="adding-project__uploading__bar-wrap">
@@ -56,7 +57,7 @@
 
         <div class="help-message-input profile-settings__help-message__vk-uri"
              ng-show="profileSettingsForm.vkUri.$error.url">Введите адрес в формате
-          https://vk.com/[username].
+                                                            https://vk.com/[username].
         </div>
 
         <br/>
@@ -76,27 +77,28 @@
       <div class="profile-settings__middle-part">
         <div class="profile-settings__input-heading">Новый пароль:</div>
         <input type="password" name="newPassword" class="profile-settings__input" ng-model="newPassword"
-               ng-change="compareNewPasswords(newPassword)"
-               ng-class="{'validate-field' : first}"
-               pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
-               ng-minlength="8" ng-maxlength="30"/>
+               ng-class="{'validate-field': newPassword||newPassword==undefined}"
+               ng-pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
+               ng-minlength="8" ng-maxlength="30"
+               ng-required="profileSettingsForm.newPassword.$error.pattern||newPassword||repeatedPassword"/>
         <br/>
 
         <div class="help-message-input profile-settings__help-message__password"
              ng-show="profileSettingsForm.newPassword.$error.pattern">Пароль должен быть длинной не
-          менее 8 символов и не более 30, а также содержать только цифры или латинские буквы.
+                                                                      менее 8 символов и не более 30, а также содержать
+                                                                      только цифры или латинские буквы.
         </div>
 
         <div class="profile-settings__input-heading">Повторите пароль:</div>
         <input type="password" name="repeatedPassword" class="profile-settings__input" ng-model="repeatedPassword"
-               ng-change="compareRepeatedPasswords(repeatedPassword)"
-               ng-class="{'validate-field' : second}"
-               pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
-               ng-minlength="8" ng-maxlength="30"/>
+               ng-class="{'validate-field': repeatedPassword||repeatedPassword==undefined}"
+               ng-pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
+               ng-minlength="8" ng-maxlength="30"
+               ng-required="profileSettingsForm.repeatedPassword.$error.pattern||newPassword||repeatedPassword"/>
         <br/>
 
-        <div class="help-message-input" ng-show="(repeatedPassword!=newPassword)&&(first||second)">Пароли не
-          совпадают.
+        <div class="help-message-input" ng-show="repeatedPassword!=newPassword&&newPassword&&repeatedPassword">Пароли не
+                                                                                                               совпадают.
         </div>
 
       </div>
@@ -149,7 +151,8 @@
         <span ng-click="toggleNotifications(3)"
               ng-class="{'profile-settings__notification--activated': notifications[3]}"
               class="profile-settings__notification"></span>
-        <span class="profile-settings__notification__text">О полностью подтвержденно регистрации нового разработчика</span>
+        <span
+          class="profile-settings__notification__text">О полностью подтвержденно регистрации нового разработчика</span>
       </label>
       <br/>
 
@@ -175,7 +178,8 @@
         </p>
       </div>
 
-      <button class="profile-settings__submit" ng-disabled="addProjectForm.$invalid"
+      <button class="profile-settings__submit"
+              ng-disabled="profileSettingsForm.$invalid||(newPasswor!=repeatedPassword)"
               ng-click="changeProfileSettings()">
         Сохранить
       </button>

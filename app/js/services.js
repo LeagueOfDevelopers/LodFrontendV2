@@ -198,6 +198,13 @@ angular.module('LodSite.services', [])
            });
          };
 
+         this.developerConfirmation = function (token) {
+           var url = '/developers/confirmation/' + token;
+
+           return sendAuthorizationSaveRequest(POST, url, null, null).then(function (response) {
+             return response.status === 200;
+           });
+         };
 
          // projects
          this.getRandomProjects = function (numberOfProjects) {
@@ -267,5 +274,20 @@ angular.module('LodSite.services', [])
            });
          };
 
+         this.order = function (requestData) {
+           var apiUrl = 'http://api.lod-misis.ru/orders';
+
+           return sendAuthorizationSaveRequest(POST, apiUrl, null, requestData).then(function (response) {
+             return response.status === 200;
+           });
+         };
+
+         this.contact = function (requestData) {
+           var apiUrl = 'http://api.lod-misis.ru/contact';
+
+           return sendAuthorizationSaveRequest(POST, apiUrl, null, requestData).then(function (response) {
+             return response.status === 200;
+           });
+         };
        }])
 ;

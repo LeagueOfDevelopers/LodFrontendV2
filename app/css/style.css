@@ -785,14 +785,12 @@ footer {
 }
 
 .full-project__name {
-  display: block;
-  margin: 15px auto;
-  font-size: 1.8em;
+  font-family: 'Noto Serif', serif;
   font-weight: bold;
-  font-family: 'Cuprum', sans-serif;
-  text-transform: uppercase;
+  font-size: 1.3em;
+  border-bottom: 1px solid #202d3a;
   text-align: center;
-  text-shadow: 2px 2px rgba(0, 0, 0, .1);
+  padding-bottom: 5px;
 }
 
 .full-project__preview {
@@ -1649,6 +1647,12 @@ footer {
   margin-bottom: 50px;
 }
 
+.profile-settings__submit:disabled {
+  background: #f1f1f1;
+  border: 1px solid #808080;
+  color: #808080;
+}
+
 .profile-settings__submit-wrapper, .adding-project__submit-wrapper {
   width: 100%;
   text-align: center;
@@ -1661,6 +1665,13 @@ footer {
 .profile-settings__button:hover, .profile-settings__submit:hover {
   cursor: pointer;
   background-color: #1e88e5;
+}
+
+.profile-settings__submit:disabled:hover {
+  cursor: default;
+  background: none;
+  border: 1px solid #808080;
+  color: #808080;
 }
 
 .profile-settings__bottom-part {
@@ -1859,8 +1870,102 @@ footer {
   cursor: pointer;
 }
 
+/************************
+     ADMIN PROJECTS-PAGE
+*************************/
+.all-projects__section {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 15px;
+}
 
-/*media queries*/
+.all-projects-page {
+
+}
+
+.projects__all-project {
+  text-align: center;
+  background: white;
+  max-width: 400px;
+  margin: 0 auto 30px auto;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, .15);
+  cursor: pointer;
+}
+
+.all-project__photo {
+  display: inline-block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.all-project__status-wrap{
+  margin-bottom: 30px;
+}
+
+.all-project__info {
+  text-align: left;
+  padding: 0 5% 5% 5%;
+}
+
+.all-project__name {
+  font-family: 'Cuprum', sans-serif;
+  font-size: 2em;
+  border-bottom: 1px solid #202d3a;
+  text-align: center;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.info__project-types {
+  margin-bottom: 20px;
+}
+
+.all-project__subheading {
+  font-size: 1.1em;
+}
+
+.status__value, .access__value {
+  margin-left: 10px;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: normal;
+}
+
+/*************************
+          ADMIN PANEL
+ *************************/
+.admin {
+  position: fixed;
+  width: 200px;
+  text-align: center;
+  z-index: 8;
+  transition: left 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  background: rgba(21, 21, 21, 1);
+  color: #fff;
+}
+
+.admin__nav {
+  display: block;
+  position: fixed;
+  top: 200px;
+  width: 20px;
+  height: 20px;
+  border-radius: 0 3px 3px 0;
+  font-size: 1.2em;
+  cursor: pointer;
+  background-color: #222;
+  background-image: url("../imgs/settings.svg");
+  background-position: center;
+  background-size: contain;
+  border: 3px solid #222;
+  color: #fff;
+  z-index: 1;
+}
+
 @media only screen and (min-width: 480px) {
   .projects-section-container {
     max-width: 400px;
@@ -2215,6 +2320,35 @@ footer {
   .adding-project__categories__item {
     padding: 9px;
     margin: 4px;
+  }
+
+  /*************************
+     ADMIN PROJECTS-PAGE
+  *************************/
+
+  .projects__all-project {
+    margin-top: 20px;
+    height: 210px;
+    max-width: 750px;
+  }
+
+  .all-project__photo {
+    margin: 5px;
+    max-width: 200px;
+    height: 200px;
+    float: left;
+  }
+
+  .all-project__info {
+    padding: 10px 15px 10px 220px;
+  }
+
+  .all-project__name {
+    text-align: left;
+  }
+
+  .info__project-types {
+    margin-bottom: 50px;
   }
 }
 
@@ -3087,6 +3221,24 @@ footer {
     padding: 10px;
     margin: 5px;
   }
+
+
+/*************************
+   ADMIN PROJECTS-PAGE
+*************************/
+
+  .all-projects-page {
+
+  }
+
+  .projects__all-project {
+    max-width: 580px;
+  }
+
+.all-projects__section {
+
+  padding: 0 30px;
+}
 }
 
 @media only screen and (min-width: 1300px) {
@@ -3198,5 +3350,13 @@ footer {
 
   .profile-settings__input-heading {
     width: 228px;
+  }
+
+/*************************
+   ADMIN PROJECTS-PAGE
+*************************/
+
+  .info__project-types {
+    margin-bottom: 40px;
   }
 }

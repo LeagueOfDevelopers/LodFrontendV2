@@ -216,7 +216,7 @@ header {
   position: relative;
   width: 100%;
   height: 70px;
-  padding: 0 15px;
+  padding: 0 20px;
   background: #000;
   z-index: 20;
 }
@@ -2396,25 +2396,45 @@ footer {
   }
 
   .additional-nav__item {
-    color: rgba(255, 255, 255, 0.71);
+    position: relative;
+    color: #ffffff;
     margin: 0 5px;
-    -webkit-transition: all .2s ease-out;
-    -moz-transition: all .2s ease-out;
-    -o-transition: all .2s ease-out;
-    transition: all .2s ease-out;
+    -webkit-transition: all .1s ease;
+    -moz-transition: all .1s ease;
+    -o-transition: all .1s ease;
+    transition: all .1s ease;
     cursor: pointer;
+    opacity: .7;
+  }
+
+  .separator{
+    display:inline-block;
+  }
+
+  .log-in, .log-out{
+    display: inline-block;
+    width: 0.8em;
+    height: 0.8em;
+  }
+
+  .log-in{
+    background: url("/app/imgs/log-in-icon.png") no-repeat center;
+    background-size: contain;
+  }
+  .log-out{
+    background: url("/app/imgs/log-out-icon.png") no-repeat center;
+    background-size: contain;
   }
 
   .additional-nav__item:hover {
-    text-decoration: underline;
-    color: white;
+    opacity: 1;
   }
 
   .header__nav-full {
     display: inline-block;
     position: absolute;
     bottom: 15px;
-    right: 20px;
+    right: 25px;
     font-size: 1.3em;
   }
 

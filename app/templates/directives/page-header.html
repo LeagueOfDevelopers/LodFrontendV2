@@ -5,14 +5,19 @@
   </a>
   <span ng-switch="userRole">
     <span class="header__additional-nav" ng-if="!(userRole === 0 || userRole === 1)">
-      <a class="additional-nav__item" ui-sref="signup">Стать разработчиком</a>
-      или <a class="additional-nav__item" ng-click="openLoginDialog($event)">Войти</a>
+      <span class="additional-nav__item" ui-sref="signup">Стать разработчиком</span>
+      <span>или</span>
+      <span class="additional-nav__item" ng-click="openLoginDialog($event)">
+      <span class="log-in"></span> Войти
+    </span>
     </span>
     <span class="header__additional-nav" ng-if="userRole === 0 || userRole === 1">
-      <span class="additional-nav__item">-</span> |
-      <span class="additional-nav__item">-</span> |
-      <a class="additional-nav__item" ui-sref="developers.edit">Настройки</a> |
-      <span class="additional-nav__item" ng-click="signOut()">Выйти</span>
+      <span class="additional-nav__item">Портфолио</span> |
+      <span class="additional-nav__item">Оповещений: 0</span> |
+      <a class="additional-nav__item" ui-sref="developers.edit">Профиль</a> |
+      <span class="additional-nav__item" ng-click="signOut()">
+        <span class="log-out"></span> Выйти
+      </span>
     </span>
   </span>
 

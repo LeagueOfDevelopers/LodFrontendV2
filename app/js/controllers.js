@@ -78,9 +78,10 @@ angular.module('LodSite.controllers', [])
                    });
        }])
 
-       .controller('FullDevelopersCtrl', ['$scope', 'ApiService', 'DateService',
-         function ($scope, ApiService, DateService) {
+       .controller('FullDevelopersCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
            $scope.searchText = '';
+           $scope.isMoreDevs = true;
+           var pageCounter = 0;
 
            $scope.$watch("searchText", function (newValue, oldValue) {
              if (newValue === '') {
@@ -329,6 +330,7 @@ angular.module('LodSite.controllers', [])
          function ($scope, $state, ApiService, ngDialog, $rootScope, TokenService) {
            var projectId = $state.params.id;
            var token = TokenService.getToken();
+
            $scope.openViewer = function () {
              $scope.$dialog = ngDialog.open({
                template: 'viewer',

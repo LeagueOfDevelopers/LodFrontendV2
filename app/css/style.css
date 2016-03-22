@@ -719,6 +719,13 @@ header {
   min-height: 43px;
 }
 
+.residence-time{
+  display: inline-block;
+  border: 1px solid #f1f1f1;
+  padding: 0 5px;
+  margin: 5px 0;
+}
+
 .project__developer-role, .project__developer-role-text {
   color: #fff;
 }
@@ -2051,6 +2058,11 @@ footer {
     float: left;
     padding: 10px;
     font-size: 1em;
+  }
+
+  .developer-photo {
+    width: 250px;
+    height: 250px;
   }
 
   /*************************

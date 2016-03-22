@@ -312,7 +312,7 @@ angular.module('LodSite.services', [])
          };
 
          this.getFormattedTime = function (registrationDate) {
-           var formattedTime;
+           var formattedTime = 'первый день';
            var residenceTimeObject = self.getResidenceTimeObject(registrationDate);
 
            function getInclinedWord(value, declensionArray) {
@@ -327,16 +327,17 @@ angular.module('LodSite.services', [])
 
            if (residenceTimeObject.days < 20 && residenceTimeObject.days !== 0) {
              formattedTime = residenceTimeObject.days + INCLINED_DAY_WORD ;
-           } else if (residenceTimeObject.weeks) {
+           }
+           if (residenceTimeObject.weeks) {
              formattedTime = residenceTimeObject.weeks + INCLINED_WEEK_WORD;
-           } else if (residenceTimeObject.months) {
-             formattedTime = residenceTimeObject.months + INCLINED_MONTH_WORD + ' и' + residenceTimeObject.days -
-               - residenceTimeObject.months * 30 + INCLINED_DAY_WORD;
-           } else if (residenceTimeObject.years) {
-             formattedTime = residenceTimeObject.years + INCLINED_YEAR_WORD + ' и' + residenceTimeObject.months -
-               - residenceTimeObject.years * 12 + INCLINED_MONTH_WORD;
-           } else {
-             formattedTime = 0;
+           }
+           if (residenceTimeObject.months) {
+             formattedTime = residenceTimeObject.months + INCLINED_MONTH_WORD + ' и ' + (residenceTimeObject.days -
+                residenceTimeObject.months * 30) + INCLINED_DAY_WORD;
+           }
+           if (residenceTimeObject.years) {
+             formattedTime = residenceTimeObject.years + INCLINED_YEAR_WORD + ' и ' + (residenceTimeObject.months -
+                residenceTimeObject.years * 12) + INCLINED_MONTH_WORD;
            }
 
            return formattedTime;

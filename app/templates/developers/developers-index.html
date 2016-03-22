@@ -15,8 +15,9 @@
         <div class="full-developer__info">
           <div class="full-developer__name" ng-bind="fullDeveloper.FirstName + ' ' + fullDeveloper.LastName"></div>
           <div class="full-developer__role" ng-bind="fullDeveloper.Role"></div>
-          <div class="full-developer__experience"
-               ng-bind="'В Лиге Разработчиков уже' + fullDeveloper.residenceTime|| '1 день' "></div>
+          <div class="full-developer__experience">
+            В Лиге Разработчиков: <span class="residence-time" ng-bind="fullDeveloper.residenceTime"></span>
+          </div>
           <div class="full-developer__projects-count"
                ng-bind="'Количество проектов: ' + fullDeveloper.ProjectCount "></div>
           <a class="full-developer__vk" href="{{fullDeveloper.VkPageUri}}">Профиль Вконтакте</a>

@@ -78,7 +78,7 @@
         <div class="profile-settings__input-heading">Новый пароль:</div>
         <input type="password" name="newPassword" class="profile-settings__input" ng-model="newPassword"
                ng-class="{'validate-field': newPassword||newPassword==undefined}"
-               ng-pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
+               pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
                ng-minlength="8" ng-maxlength="30"
                ng-required="profileSettingsForm.newPassword.$error.pattern||newPassword||repeatedPassword"/>
         <br/>
@@ -92,7 +92,7 @@
         <div class="profile-settings__input-heading">Повторите пароль:</div>
         <input type="password" name="repeatedPassword" class="profile-settings__input" ng-model="repeatedPassword"
                ng-class="{'validate-field': repeatedPassword||repeatedPassword==undefined}"
-               ng-pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
+               pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
                ng-minlength="8" ng-maxlength="30"
                ng-required="profileSettingsForm.repeatedPassword.$error.pattern||newPassword||repeatedPassword"/>
         <br/>

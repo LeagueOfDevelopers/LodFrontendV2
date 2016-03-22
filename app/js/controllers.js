@@ -112,7 +112,28 @@ angular.module('LodSite.controllers', [])
       }
       var developerId = token.UserId;
 
+      $scope.state = [];
+      $scope.currentState = null;
       $scope.profile = {};
+
+
+
+      $scope.changeCurrentState = function() {
+        for(var i=0; i<3; i++) {
+          if(!$scope.state[i]) {
+            return;
+          }
+        }
+
+        for(i=0; i<3; i++) {
+         if($scope.state[i] == 'failed') {
+           $scope.currentState = 'failed';
+           return;
+         }
+        }
+        $scope.currentState == 'success';
+      };
+
 
       /*FOR UPLOADING OF PHOTO*/
       $scope.currentUploadStateBigPhoto = 'waiting'; // waiting, uploading
@@ -184,43 +205,40 @@ angular.module('LodSite.controllers', [])
 
         ApiService.sendProfileSttings(developerId, $scope.profile).then(function (isSuccess) {
           if (isSuccess) {
-            $scope.currentState = 'success';
-            $timeout(function () {
-              $scope.currentState = 'filling';
-            }, 3000);
+            $scope.state[0] = 'success';
           } else {
-            $scope.currentState = 'failed';
+            $scope.state[0] = 'failed';
           }
+          $scope.changeCurrentState();
         });
+
         for (var i = 0; i < $scope.notificationSettings.length; i++) {
           $scope.notificationSettings[i].NotificationSettingValue = $scope.notifications[i] ? 2 : 1;
         }
+
         ApiService.sendNotifications(developerId, $scope.notificationSettings).then(function (isSuccess) {
           if (isSuccess) {
-            $scope.currentState = 'success';
-            $timeout(function () {
-              $scope.currentState = 'filling';
-            }, 3000);
+            $scope.state[1] = 'success';
           } else {
-            $scope.currentState = 'failed';
+            $scope.state[1] = 'failed';
           }
+          $scope.changeCurrentState();
         });
 
         if (($scope.newPassword === $scope.repeatedPassword) && $scope.newPassword && $scope.repeatedPassword) {
           ApiService.sendNewPassword(developerId, $scope.newPassword).then(function (isSuccess) {
             if (isSuccess) {
-              $scope.currentState = 'success';
-              $timeout(function () {
-                $scope.currentState = 'filling';
-              }, 3000);
+              $scope.state[2] = 'success';
             } else {
-              $scope.currentState = 'failed';
+              $scope.state[2] = 'failed';
             }
+            $scope.changeCurrentState();
           });
         } else {
           $scope.currentState = 'failed';
         }
       };
+
 
       $scope.$on('userRole_changed', function (e, args) {
         token = TokenService.getToken();

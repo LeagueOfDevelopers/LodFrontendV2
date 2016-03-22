@@ -94,7 +94,7 @@
                ng-minlength="8" ng-maxlength="30" ng-required="profileSettingsForm.repeatedPassword.$error.pattern||newPassword||repeatedPassword"/>
         <br/>
 
-        <div class="help-message-input" ng-show="repeatedPassword!=newPassword&&newPassword&&repeatedPassword">Пароли не
+        <div class="help-message-input" ng-show="repeatedPassword!=newPassword && newPassword && repeatedPassword">Пароли не
                                                                                                    совпадают.
         </div>
 
@@ -175,7 +175,7 @@
         </p>
       </div>
 
-      <button class="profile-settings__submit" ng-disabled="profileSettingsForm.$invalid||(newPasswor!=repeatedPassword)"
+      <button class="profile-settings__submit" ng-disabled="profileSettingsForm.$invalid||(newPassword!=repeatedPassword)"
               ng-click="changeProfileSettings()">
         Сохранить
       </button>

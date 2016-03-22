@@ -248,7 +248,7 @@ angular.module('LodSite.controllers', [])
           $scope.changeCurrentState();
              });
 
-             if (($scope.newPassword === $scope.repeatedPassword) && $scope.newPassword && $scope.repeatedPassword) {
+             if ($scope.newPassword && $scope.repeatedPassword) {
                ApiService.sendNewPassword(developerId, JSON.stringify($scope.newPassword)).then(function (isSuccess) {
                  if (isSuccess) {
               $scope.state[2] = 'success';
@@ -258,7 +258,7 @@ angular.module('LodSite.controllers', [])
             $scope.changeCurrentState();
                });
              } else {
-               $scope.currentState = 'failed';
+               $scope.state[2] = 'success';
              }
            };
 

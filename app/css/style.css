@@ -3244,11 +3244,11 @@ footer {
   }
 
   .profile-settings__top-part__inputs, .profile-settings__middle-part, .profile-settings__bottom-part {
-    width: 850px
+    width: 830px
   }
 
   .profile-settings__input, .adding-project__select, .adding-project__textarea, .adding-project__type {
-    width: 620px;
+    width: 580px;
     margin-bottom: 30px;
   }
 

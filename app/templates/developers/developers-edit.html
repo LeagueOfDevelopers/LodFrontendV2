@@ -9,7 +9,8 @@
 
       <div class="profile-settings__avatar-wrapper">
         <div class="profile-settings__avatar-img"
-             ng-attr-style="background-image: url({{profile.BigPhotoUri || DEFAULT_DEVELOPER_PHOTO}})" dropzone-big-image>
+             ng-attr-style="background-image: url({{profile.BigPhotoUri || DEFAULT_DEVELOPER_PHOTO}})"
+             dropzone-big-image>
 
           <div class="adding-project__file-close adding-project__big-image__file-close"
                ng-if="profile.BigPhotoUri"
@@ -78,7 +79,8 @@
         <input type="password" name="newPassword" class="profile-settings__input" ng-model="newPassword"
                ng-class="{'validate-field': newPassword||newPassword==undefined}"
                ng-pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
-               ng-minlength="8" ng-maxlength="30" ng-required="profileSettingsForm.newPassword.$error.pattern||newPassword||repeatedPassword"/>
+               ng-minlength="8" ng-maxlength="30"
+               ng-required="profileSettingsForm.newPassword.$error.pattern||newPassword||repeatedPassword"/>
         <br/>
 
         <div class="help-message-input profile-settings__help-message__password"
@@ -91,11 +93,12 @@
         <input type="password" name="repeatedPassword" class="profile-settings__input" ng-model="repeatedPassword"
                ng-class="{'validate-field': repeatedPassword||repeatedPassword==undefined}"
                ng-pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
-               ng-minlength="8" ng-maxlength="30" ng-required="profileSettingsForm.repeatedPassword.$error.pattern||newPassword||repeatedPassword"/>
+               ng-minlength="8" ng-maxlength="30"
+               ng-required="profileSettingsForm.repeatedPassword.$error.pattern||newPassword||repeatedPassword"/>
         <br/>
 
         <div class="help-message-input" ng-show="repeatedPassword!=newPassword && newPassword && repeatedPassword">Пароли не
-                                                                                                   совпадают.
+                                                                                                               совпадают.
         </div>
 
       </div>

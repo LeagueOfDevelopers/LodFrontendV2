@@ -5,13 +5,13 @@
     <span style="color: #ccc;" ng-switch-default="ng-switch-default">Не подтверждён</span>
   </div>
   <div class="developer-photo"
-       style=" background: url({{developer.PhotoUri}}) no-repeat center; background-size: cover;"></div>
+       style=" background: url({{developer.PhotoUri || DEFAULT_DEVELOPER_PHOTO}}) no-repeat center; background-size: cover;"></div>
   <div class="developer-name" ng-bind="developer.FirstName + ' ' + developer.LastName"></div>
   <div class="developer-role" ng-bind="developer.Role"></div>
   <div class="dividing-line"></div>
   <div class="developer-info">
     <div class="developer-info__item">
-      <div class="developer-info__item-name">Инстиутут</div>
+      <div class="developer-info__item-name">Институт</div>
       <div class="developer-info__item-text" ng-bind="developer.InstituteName"></div>
     </div>
     <div class="developer-info__item">
@@ -27,13 +27,13 @@
       <div class="developer-info__item-text" ng-bind="developer.studyingYear"></div>
     </div>
     <div class="developer-info__item">
-      <div class="developer-info__item-name">Дата регистрации</div>
-      <div class="developer-info__item-text" ng-bind="developer.RegistrationDate"></div>
+      <div class="developer-info__item-name">В Лиге Разработчиков</div>
+      <div class="developer-info__item-text" ng-bind="developer.residenceTime"></div>
     </div>
     <div class="developer-info__item">
       <div class="developer-info__item-name">Профиль Вконтакте</div>
       <div class="developer-info__item-text"><a style="text-decoration: underline;
-    color: #0072bc;" href="{{developer.VkProfileUri}}">{{developer.VkProfileUri}}</a></div>
+    color: #0072bc;" ng-href="{{developer.VkProfileUri}}">{{developer.VkProfileUri}}</a></div>
     </div>
     <div class="developer-info__item" ng-if="developer.Email">
       <div class="developer-info__item-name">E-mail</div>

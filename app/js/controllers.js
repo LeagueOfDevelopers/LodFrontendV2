@@ -4,7 +4,7 @@
 
 angular.module('LodSite.controllers', [])
 
-       //main controllers
+       //main
        .controller('PageCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
          var defaultTitle = 'Лига Разработчиков НИТУ МИСиС';
          $scope.DEFAULT_PROJECT_LANDSCAPE = '/app/imgs/project-cap-image.png';
@@ -36,35 +36,40 @@ angular.module('LodSite.controllers', [])
        }])
 
 
-       //header and footer controllers
-       .controller('HeaderCtrl', ['$scope', 'ngDialog', 'TokenService','$state', function ($scope, ngDialog, TokenService, $state) {
-         $scope.isOpened = false;
-
-         $scope.activeToggle = function () { $scope.isOpened = !$scope.isOpened; };
-         $scope.openLoginDialog = function () {
-           $scope.$dialog = ngDialog.open({
-             template: 'loginTemplate',
-             showClose: true,
-             closeByNavigation: true
-           });
-         };
-         $scope.signOut = function () {
-           TokenService.resetToken();
-           TokenService.getRole();
-           $state.reload();
-         };
-
-         $scope.$on('$locationChangeSuccess', function () {
+       //header and footer
+       .controller('HeaderCtrl', ['$scope',
+         'ngDialog',
+         'TokenService',
+         '$state',
+         function ($scope, ngDialog, TokenService, $state) {
            $scope.isOpened = false;
-         });
-       }])
+           $scope.linkToPortfolio = DOMAIN_NAME + "/developers/" + TokenService.getToken().UserId;
+
+           $scope.activeToggle = function () { $scope.isOpened = !$scope.isOpened; };
+           $scope.openLoginDialog = function () {
+             $scope.$dialog = ngDialog.open({
+               template: 'loginTemplate',
+               showClose: true,
+               closeByNavigation: true
+             });
+           };
+           $scope.signOut = function () {
+             TokenService.resetToken();
+             TokenService.getRole();
+             $state.reload();
+           };
+
+           $scope.$on('$locationChangeSuccess', function () {
+             $scope.isOpened = false;
+           });
+         }])
 
        .controller('FooterCtrl', ['$scope', function ($scope) {
          $scope.currentDate = new Date();
        }])
 
 
-       //developers controllers
+       //developers
        .controller('RandomDevelopersCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
          var numberOfDevelopers = 6;
 
@@ -75,20 +80,26 @@ angular.module('LodSite.controllers', [])
        }])
 
        .controller('FullDevelopersCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
-         $scope.searchText = '';
+           $scope.searchText = '';
+           $scope.isMoreDevs = true;
+           var pageCounter = 0;
 
-         $scope.$watch("searchText", function (newValue, oldValue) {
-           if (newValue === '') {
-             ApiService.getFullDevelopers()
-                       .then(function (data) { $scope.fullDevelopers = data; });
-           } else if (newValue !== oldValue) {
-             ApiService.getFullDevelopersBySearch($scope.searchText)
-                       .then(function (data) { $scope.fullDevelopers = data; });
-           }
-         });
-         $scope.$emit('toggle_black', {isBlack: true});
-         $scope.$emit('change_title', {title: 'Разработчики - Лига Разработчиков НИТУ МИСиС'});
-       }])
+           $scope.$watch("searchText", function (newValue, oldValue) {
+             if (newValue === '') {
+               ApiService.getFullDevelopers()
+                         .then(function (data) {
+                           $scope.fullDevelopers = data;
+                         });
+             } else if (newValue !== oldValue) {
+               ApiService.getFullDevelopersBySearch($scope.searchText)
+                         .then(function (data) {
+                           $scope.fullDevelopers = data;
+                         });
+             }
+           });
+           $scope.$emit('toggle_black', {isBlack: true});
+           $scope.$emit('change_title', {title: 'Разработчики - Лига Разработчиков НИТУ МИСиС'});
+         }])
 
        .controller('DeveloperCtrl', ['$scope', '$state', 'ApiService', function ($scope, $state, ApiService) {
          var developerId = $state.params.id;
@@ -104,17 +115,17 @@ angular.module('LodSite.controllers', [])
          $scope.$emit('toggle_black', {isBlack: true});
        }])
 
-  .controller('DeveloperEditCtrl', ['$scope', '$state', '$timeout', 'ApiService', 'TokenService',
-    function ($scope, $state, $timeout, ApiService, TokenService) {
-      var token = TokenService.getToken();
-      if (!token) {
-        return $state.go('index');
-      }
-      var developerId = token.UserId;
+       .controller('DeveloperEditCtrl', ['$scope', '$state', '$timeout', 'ApiService', 'TokenService',
+         function ($scope, $state, $timeout, ApiService, TokenService) {
+           var token = TokenService.getToken();
+           if (!token) {
+             return $state.go('index');
+           }
+           var developerId = token.UserId;
 
       $scope.state = [];
       $scope.currentState = null;
-      $scope.profile = {};
+           $scope.profile = {};
 
 
 
@@ -135,132 +146,130 @@ angular.module('LodSite.controllers', [])
       };
 
 
-      /*FOR UPLOADING OF PHOTO*/
-      $scope.currentUploadStateBigPhoto = 'waiting'; // waiting, uploading
-      $scope.currentPercentBigPhoto = 0;
+           /*FOR UPLOADING OF PHOTO*/
+           $scope.currentUploadStateBigPhoto = 'waiting'; // waiting, uploading
+           $scope.currentPercentBigPhoto = 0;
 
-      $scope.$on('beforeSendBigImage', function (ev, args) {
-        $scope.currentUploadStateBigPhoto = 'uploading';
-        $scope.currentPercentBigPhoto = 0;
-        $scope.$apply();
-      });
+           $scope.$on('beforeSendBigImage', function (ev, args) {
+             $scope.currentUploadStateBigPhoto = 'uploading';
+             $scope.currentPercentBigPhoto = 0;
+             $scope.$apply();
+           });
 
-      $scope.$on('errorUploadingBigImage', function (ev, args) {
+           $scope.$on('errorUploadingBigImage', function (ev, args) {
 
-        alert('Размер файла не должен превышать 10 Мб. Разрешённые форматы изображения: JPG, JPEG, PNG, SVG, BMP, GIF. ' +
-          'Или, возможно, вы не авторизовались.');
-        $scope.currentUploadStateBigPhoto = 'waiting';
-        $scope.currentPercentBigPhoto = 0;
-        $scope.$apply();
+             alert('Размер файла не должен превышать 10 Мб. Разрешённые форматы изображения: JPG, JPEG, PNG, SVG, BMP, GIF. ' +
+               'Или, возможно, вы не авторизовались.');
+             $scope.currentUploadStateBigPhoto = 'waiting';
+             $scope.currentPercentBigPhoto = 0;
+             $scope.$apply();
+           });
 
+           $scope.$on('progressBigImage', function (ev, args) {
+             $scope.currentPercentBigPhoto = args.progress_value;
+             $scope.$apply();
+           });
 
-      });
+           $scope.$on('successUploadingBigImage', function (ev, args) {
+             $scope.profile.BigPhotoUri = 'http://api.lod-misis.ru/image/' + args.data;
+             $scope.profile.SmallPhotoUri = 'http://api.lod-misis.ru/image/' + args.data;
 
-      $scope.$on('progressBigImage', function (ev, args) {
-        $scope.currentPercentBigPhoto = args.progress_value;
-        $scope.$apply();
-      });
+             $scope.currentUploadStateBigPhoto = 'waiting';
 
-      $scope.$on('successUploadingBigImage', function (ev, args) {
-        $scope.profile.BigPhotoUri = 'http://api.lod-misis.ru/image/' + args.data;
-        $scope.profile.SmallPhotoUri = 'http://api.lod-misis.ru/image/' + args.data;
+             $scope.$apply();
+           });
 
-        $scope.currentUploadStateBigPhoto = 'waiting';
+           $scope.deleteBigPhoto = function () {
+             $scope.profile.BigPhotoUri = null;
+             $scope.profile.SmallPhotoUri = null;
+           };
 
-        $scope.$apply();
-      });
+           /*FOR NOTIFICATIONS*/
+           $scope.toggleNotifications = function (index) {
+             $scope.notifications[index] = !$scope.notifications[index];
+           };
 
-      $scope.deleteBigPhoto = function () {
-        $scope.profile.BigPhotoUri = null;
-        $scope.profile.SmallPhotoUri = null;
-      }
+           /*GET - REQUESTS*/
+           ApiService.getDeveloperForProfileSttings(developerId).then(function (data) {
 
-      /*FOR NOTIFICATIONS*/
-      $scope.toggleNotifications = function (index) {
-        $scope.notifications[index] = !$scope.notifications[index];
-      };
+             $scope.profile.BigPhotoUri = data.PhotoUri;
+             $scope.profile.SmallPhotoUri = data.PhotoUri;
+             $scope.profile.InstituteName = data.InstituteName;
+             $scope.profile.StudyingDirection = data.StudyingDirection;
+             $scope.profile.Specialization = data.Specialization;
+             $scope.profile.StudentAccessionYear = data.StudentAccessionYear;
+             $scope.profile.VkProfileUri = data.VkProfileUri;
+             $scope.profile.PhoneNumber = data.PhoneNumber;
+           });
+           ApiService.getNotificationsForProfileSttings(developerId).then(function (data) {
+             $scope.notificationSettings = data;
+             $scope.notifications = data.map(function (notification) {
+               return (notification.NotificationSettingValue == 2);
+             });
+           });
 
-      /*GET - REQUESTS*/
-      ApiService.getDeveloperForProfileSttings(developerId).then(function (data) {
+           /*POST - REQUESTS*/
 
-        $scope.profile.BigPhotoUri = data.PhotoUri;
-        $scope.profile.SmallPhotoUri = data.PhotoUri;
-        $scope.profile.InstituteName = data.InstituteName;
-        $scope.profile.StudyingDirection = data.StudyingDirection;
-        $scope.profile.Specialization = data.Specialization;
-        $scope.profile.StudentAccessionYear = data.StudentAccessionYear;
-        $scope.profile.VkProfileUri = data.VkProfileUri;
-        $scope.profile.PhoneNumber = data.PhoneNumber;
-      });
-      ApiService.getNotificationsForProfileSttings(developerId).then(function (data) {
-        $scope.notificationSettings = data;
-        $scope.notifications = data.map(function (notification) {
-          return (notification.NotificationSettingValue == 2);
-        });
-      });
+           $scope.changeProfileSettings = function () {
 
-      /*POST - REQUESTS*/
-
-      $scope.changeProfileSettings = function () {
-
-        ApiService.sendProfileSttings(developerId, $scope.profile).then(function (isSuccess) {
-          if (isSuccess) {
+             ApiService.sendProfileSttings(developerId, $scope.profile).then(function (isSuccess) {
+               if (isSuccess) {
             $scope.state[0] = 'success';
-          } else {
+               } else {
             $scope.state[0] = 'failed';
-          }
+               }
           $scope.changeCurrentState();
-        });
+             });
 
-        for (var i = 0; i < $scope.notificationSettings.length; i++) {
-          $scope.notificationSettings[i].NotificationSettingValue = $scope.notifications[i] ? 2 : 1;
-        }
+             for (var i = 0; i < $scope.notificationSettings.length; i++) {
+               $scope.notificationSettings[i].NotificationSettingValue = $scope.notifications[i] ? 2 : 1;
+             }
 
-        ApiService.sendNotifications(developerId, $scope.notificationSettings).then(function (isSuccess) {
-          if (isSuccess) {
+             ApiService.sendNotifications(developerId, $scope.notificationSettings).then(function (isSuccess) {
+               if (isSuccess) {
             $scope.state[1] = 'success';
-          } else {
+               } else {
             $scope.state[1] = 'failed';
-          }
+               }
           $scope.changeCurrentState();
-        });
+             });
 
-        if (($scope.newPassword === $scope.repeatedPassword) && $scope.newPassword && $scope.repeatedPassword) {
-          ApiService.sendNewPassword(developerId, $scope.newPassword).then(function (isSuccess) {
-            if (isSuccess) {
+             if (($scope.newPassword === $scope.repeatedPassword) && $scope.newPassword && $scope.repeatedPassword) {
+               ApiService.sendNewPassword(developerId, $scope.newPassword).then(function (isSuccess) {
+                 if (isSuccess) {
               $scope.state[2] = 'success';
-            } else {
+                 } else {
               $scope.state[2] = 'failed';
-            }
+                 }
             $scope.changeCurrentState();
-          });
-        } else {
-          $scope.currentState = 'failed';
-        }
-      };
+               });
+             } else {
+               $scope.currentState = 'failed';
+             }
+           };
 
 
-      $scope.$on('userRole_changed', function (e, args) {
-        token = TokenService.getToken();
-        if (!token || !token.UserId) {
-          return $state.go('index');
-        }
-      });
+           $scope.$on('userRole_changed', function (e, args) {
+             token = TokenService.getToken();
+             if (!token || !token.UserId) {
+               return $state.go('index');
+             }
+           });
 
-      $scope.$emit('toggle_black', {isBlack: true});
-      $scope.$emit('change_title', {
-        title: 'Редактирование профиля - Лига Разработчиков НИТУ МИСиС'
-      });
-    }])
+           $scope.$emit('toggle_black', {isBlack: true});
+           $scope.$emit('change_title', {
+             title: 'Редактирование профиля - Лига Разработчиков НИТУ МИСиС'
+           });
+         }])
 
 
-       //projects controllers
+       //projects
        .controller('RandomProjectsCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
          var numberOfProjects = 6;
-         ApiService.getRandomProjects(numberOfProjects)
-                   .then(function (data) {
-                     $scope.randomProjects = data;
-                   })
+
+         ApiService.getRandomProjects(numberOfProjects).then(function (data) {
+           $scope.randomProjects = data;
+         })
        }])
 
        .controller('FullProjectsCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
@@ -340,6 +349,7 @@ angular.module('LodSite.controllers', [])
          function ($scope, $state, ApiService, ngDialog, $rootScope, TokenService) {
            var projectId = $state.params.id;
            var token = TokenService.getToken();
+
            $scope.openViewer = function () {
              $scope.$dialog = ngDialog.open({
                template: 'viewer',
@@ -400,198 +410,206 @@ angular.module('LodSite.controllers', [])
          }])
 
 
-       //admin controllers
-  .controller('AdminPanelCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
+       //admin
+       .controller('AdminPanelCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
 
-    $scope.$emit('toggle_black', {iBblack: true});
-    $scope.$emit('change_title', {
-      title: 'Административная панель - Лига Разработчиков НИТУ МИСиС'
-    });
-  }])
+         $scope.$emit('toggle_black', {iBblack: true});
+         $scope.$emit('change_title', {
+           title: 'Административная панель - Лига Разработчиков НИТУ МИСиС'
+         });
+       }])
 
-  .controller('AllProjectsCtrl', ['$scope', '$state', 'ApiService', 'TokenService', function ($scope, $state, ApiService, TokenService) {
-    var token = TokenService.getToken();
-    var role = TokenService.getRole();
-    if (!token || role != 1) {
-      return $state.go('index');
-    }
-    $scope.fullProjects = [];
+       .controller('AllProjectsCtrl', ['$scope',
+         '$state',
+         'ApiService',
+         'TokenService',
+         function ($scope, $state, ApiService, TokenService) {
+           var token = TokenService.getToken();
+           var role = TokenService.getRole();
+           if (!token || role != 1) {
+             return $state.go('index');
+           }
+           $scope.fullProjects = [];
 
-    $scope.$on('userRole_changed', function (e, args) {
-      role = TokenService.getRole();
-      if (role != 1) {
-        return $state.go('index');
-      }
-    });
+           $scope.$on('userRole_changed', function (e, args) {
+             role = TokenService.getRole();
+             if (role != 1) {
+               return $state.go('index');
+             }
+           });
 
-    $scope.$emit('toggle_black', {isBlack: true});
-    $scope.$emit('change_title', {
-      title: 'Проекты - Лига Разработчиков НИТУ МИСиС'
-    });
-  }])
+           $scope.$emit('toggle_black', {isBlack: true});
+           $scope.$emit('change_title', {
+             title: 'Проекты - Лига Разработчиков НИТУ МИСиС'
+           });
+         }])
 
-  .controller('AddProjectCtrl', ['$scope', 'ApiService','TokenService', '$timeout', function ($scope, ApiService, TokenService, $timeout) {
-      var token = TokenService.getToken();
-      var role = TokenService.getRole();
-      if (!token || role != 1) {
-        return $state.go('index');
-      }
+       .controller('AddProjectCtrl', ['$scope',
+         'ApiService',
+         'TokenService',
+         '$timeout',
+         function ($scope, ApiService, TokenService, $timeout) {
+           var token = TokenService.getToken();
+           var role = TokenService.getRole();
+           if (!token || role != 1) {
+             return $state.go('index');
+           }
 
-      $scope.currentState = 'filling';
-      $scope.newProject = {
-        Name: '',
-        ProjectTypes: [],
-        Info: '',
-        AccessLevel: '0',
-        ProjectStatus: '0',
-        LandingImageUri: '',
-        Screenshots: []
-      };
+           $scope.currentState = 'filling';
+           $scope.newProject = {
+             Name: '',
+             ProjectTypes: [],
+             Info: '',
+             AccessLevel: '0',
+             ProjectStatus: '0',
+             LandingImageUri: '',
+             Screenshots: []
+           };
 
-      //   POST REQUEST
-      $scope.registerProject = function () {
+           //   POST REQUEST
+           $scope.registerProject = function () {
 
-        $scope.newProject.Screenshots = $scope.images.map(function (image) {
-          return image.url;
-        });
+             $scope.newProject.Screenshots = $scope.images.map(function (image) {
+               return image.url;
+             });
 
-        $scope.newProject.ProjectTypes = $scope.categories.map(function (categoryItem) {
-          if (categoryItem.status) {
-            return categoryItem.index;
-          }
-        });
+             $scope.newProject.ProjectTypes = $scope.categories.map(function (categoryItem) {
+               if (categoryItem.status) {
+                 return categoryItem.index;
+               }
+             });
 
-        ApiService.addProject($scope.newProject).then(function (isSuccess) {
-          if (isSuccess) {
-            $scope.currentState = 'success';
-            $scope.newProgect = {};
-            $scope.addProjectForm.$setPristine();
-            $timeout(function () {
-              $scope.currentState = 'filling';
-            }, 3000);
-          } else {
-            $scope.currentState = 'failed';
-          }
-        });
-      };
+             ApiService.addProject($scope.newProject).then(function (isSuccess) {
+               if (isSuccess) {
+                 $scope.currentState = 'success';
+                 $scope.newProgect = {};
+                 $scope.addProjectForm.$setPristine();
+                 $timeout(function () {
+                   $scope.currentState = 'filling';
+                 }, 3000);
+               } else {
+                 $scope.currentState = 'failed';
+               }
+             });
+           };
 
-      //   FOR TYPE OF PROJECT
-      $scope.categories = [{
-        category: 'Веб',
-        status: false,
-        index: 0
-      }, {
-        category: 'Мобильное',
-        status: false,
-        index: 1
-      }, {
-        category: 'Десктопное',
-        status: false,
-        index: 2
-      }, {
-        category: 'Игра',
-        status: false,
-        index: 3
-      }, {
-        category: 'Прочее',
-        status: false,
-        index: 4
-      }];
+           //   FOR TYPE OF PROJECT
+           $scope.categories = [{
+             category: 'Веб',
+             status: false,
+             index: 0
+           }, {
+             category: 'Мобильное',
+             status: false,
+             index: 1
+           }, {
+             category: 'Десктопное',
+             status: false,
+             index: 2
+           }, {
+             category: 'Игра',
+             status: false,
+             index: 3
+           }, {
+             category: 'Прочее',
+             status: false,
+             index: 4
+           }];
 
-      $scope.toggleCategory = function (targetCategory) {
-        targetCategory.status = !targetCategory.status;
-      };
+           $scope.toggleCategory = function (targetCategory) {
+             targetCategory.status = !targetCategory.status;
+           };
 
-      //   FOR SMALL IMAGES
-      $scope.images = [];
-      $scope.currentUploadStateImage = "waiting"; // waiting, uploading
-      $scope.currentPercentImage = 0;
+           //   FOR SMALL IMAGES
+           $scope.images = [];
+           $scope.currentUploadStateImage = "waiting"; // waiting, uploading
+           $scope.currentPercentImage = 0;
 
-      $scope.$on('beforeSendImage', function (ev, args) {
-        $scope.currentUploadStateImage = 'uploading';
-        $scope.currentPercentImage = 0;
-        $scope.$apply();
-      });
+           $scope.$on('beforeSendImage', function (ev, args) {
+             $scope.currentUploadStateImage = 'uploading';
+             $scope.currentPercentImage = 0;
+             $scope.$apply();
+           });
 
-      $scope.$on('errorUploadingImage', function (ev, args) {
+           $scope.$on('errorUploadingImage', function (ev, args) {
 
-        alert('Размер файла не должен превышать 10 Мб. Разрешённые форматы изображения: JPG, JPEG, PNG, SVG, BMP, GIF. ' +
-          'Или, возможно, вы не авторизовались.');
-        $scope.currentUploadStateImage = 'waiting';
-        $scope.currentPercentImage = 0;
-        $scope.$apply();
-      });
+             alert('Размер файла не должен превышать 10 Мб. Разрешённые форматы изображения: JPG, JPEG, PNG, SVG, BMP, GIF. ' +
+               'Или, возможно, вы не авторизовались.');
+             $scope.currentUploadStateImage = 'waiting';
+             $scope.currentPercentImage = 0;
+             $scope.$apply();
+           });
 
-      $scope.$on('progressImage', function (ev, args) {
-        $scope.currentPercentImage = args.progress_value;
-        $scope.$apply();
-      });
+           $scope.$on('progressImage', function (ev, args) {
+             $scope.currentPercentImage = args.progress_value;
+             $scope.$apply();
+           });
 
-      $scope.$on('successUploadingImage', function (ev, args) {
-          $scope.images.push({
-            url: 'http://api.lod-misis.ru/image/' + args.data
-          });
+           $scope.$on('successUploadingImage', function (ev, args) {
+               $scope.images.push({
+                 url: 'http://api.lod-misis.ru/image/' + args.data
+               });
 
-          $scope.currentUploadStateImage = 'waiting';
+               $scope.currentUploadStateImage = 'waiting';
 
-          $scope.$apply();
-        }
-      );
+               $scope.$apply();
+             }
+           );
 
-      $scope.deleteImage = function (fileItem, index) {
-        $scope.images.splice(index, 1);
-      }
+           $scope.deleteImage = function (fileItem, index) {
+             $scope.images.splice(index, 1);
+           };
 
-      //  FOR BIG IMAGE
-      $scope.currentUploadStateBigImage = 'waiting'; // waiting, uploading
-      $scope.currentPercentBigImage = 0;
+           //  FOR BIG IMAGE
+           $scope.currentUploadStateBigImage = 'waiting'; // waiting, uploading
+           $scope.currentPercentBigImage = 0;
 
-      $scope.$on('beforeSendBigImage', function (ev, args) {
-        $scope.currentUploadStateBigImage = 'uploading';
-        $scope.currentPercentBigImage = 0;
-        $scope.$apply();
-      });
+           $scope.$on('beforeSendBigImage', function (ev, args) {
+             $scope.currentUploadStateBigImage = 'uploading';
+             $scope.currentPercentBigImage = 0;
+             $scope.$apply();
+           });
 
-      $scope.$on('errorUploadingBigImage', function (ev, args) {
+           $scope.$on('errorUploadingBigImage', function (ev, args) {
 
-        alert('Размер файла не должен превышать 10 Мб. Разрешённые форматы изображения: JPG, JPEG, PNG, SVG, BMP, GIF. ' +
-          'Или, возможно, вы не авторизовались.');
-        $scope.currentUploadStateBigImage = 'waiting';
-        $scope.currentPercentBigImage = 0;
-        $scope.$apply();
+             alert('Размер файла не должен превышать 10 Мб. Разрешённые форматы изображения: JPG, JPEG, PNG, SVG, BMP, GIF. ' +
+               'Или, возможно, вы не авторизовались.');
+             $scope.currentUploadStateBigImage = 'waiting';
+             $scope.currentPercentBigImage = 0;
+             $scope.$apply();
 
 
-      });
+           });
 
-      $scope.$on('progressBigImage', function (ev, args) {
-        $scope.currentPercentBigImage = args.progress_value;
-        $scope.$apply();
-      });
+           $scope.$on('progressBigImage', function (ev, args) {
+             $scope.currentPercentBigImage = args.progress_value;
+             $scope.$apply();
+           });
 
-      $scope.$on('successUploadingBigImage', function (ev, args) {
-        $scope.newProject.LandingImageUri = 'http://api.lod-misis.ru/image/' + args.data;
+           $scope.$on('successUploadingBigImage', function (ev, args) {
+             $scope.newProject.LandingImageUri = 'http://api.lod-misis.ru/image/' + args.data;
 
-        $scope.currentUploadStateBigImage = 'waiting';
+             $scope.currentUploadStateBigImage = 'waiting';
 
-        $scope.$apply();
-      });
+             $scope.$apply();
+           });
 
-      $scope.deleteBigImage = function () {
-        $scope.newProject.LandingImageUri = null;
-      }
+           $scope.deleteBigImage = function () {
+             $scope.newProject.LandingImageUri = null;
+           };
 
-      $scope.$on('userRole_changed', function (e, args) {
-        role = TokenService.getRole();
-        if (role != 1) {
-          return $state.go('index');
-        }
-      });
+           $scope.$on('userRole_changed', function (e, args) {
+             role = TokenService.getRole();
+             if (role != 1) {
+               return $state.go('index');
+             }
+           });
 
-      $scope.$emit('toggle_black', {isBlack: true});
-      $scope.$emit('change_title', {
-        title: 'Добавление проекта - Лига Разработчиков НИТУ МИСиС'
-      });
-    }])
+           $scope.$emit('toggle_black', {isBlack: true});
+           $scope.$emit('change_title', {
+             title: 'Добавление проекта - Лига Разработчиков НИТУ МИСиС'
+           });
+         }])
 
 
        //other
@@ -633,170 +651,170 @@ angular.module('LodSite.controllers', [])
          $scope.$emit('change_title', {title: 'Стать разработчиком - Лига Разработчиков НИТУ МИСиС'});
        }])
 
-  .controller('AboutCtrl', ['$scope', function ($scope) {
-    $scope.$emit('toggle_black', {isBlack: true});
-    $scope.$emit('change_title', {
-      title: 'О нас - Лига Разработчиков НИТУ МИСиС'
-    });
-  }])
+       .controller('AboutCtrl', ['$scope', function ($scope) {
+         $scope.$emit('toggle_black', {isBlack: true});
+         $scope.$emit('change_title', {
+           title: 'О нас - Лига Разработчиков НИТУ МИСиС'
+         });
+       }])
 
-  .controller('OrderCtrl', ['$scope', 'ApiService', '$timeout', function ($scope, ApiService, $timeout) {
+       .controller('OrderCtrl', ['$scope', 'ApiService', '$timeout', function ($scope, ApiService, $timeout) {
 
-    // FOR INPUT TYPE=DATE
+         // FOR INPUT TYPE=DATE
 
-    Array.from($("[name='deadline']"))
-      .forEach(function (element) {
-        element.addEventListener('focus', function () {
-          this.setAttribute('type', 'date');
-        });
-        element.addEventListener('blur', function () {
-          if (this.value.length == 0) {
-            this.setAttribute('type', 'text');
-          }
-        });
-      });
+         Array.from($("[name='deadline']"))
+              .forEach(function (element) {
+                element.addEventListener('focus', function () {
+                  this.setAttribute('type', 'date');
+                });
+                element.addEventListener('blur', function () {
+                  if (this.value.length == 0) {
+                    this.setAttribute('type', 'text');
+                  }
+                });
+              });
 
-    // ACCORDION
+         // ACCORDION
 
-    $(".order-accordion p:not(:first)").hide();
-    $(".order-content > .order-accordion p:first").show();
+         $(".order-accordion p:not(:first)").hide();
+         $(".order-content > .order-accordion p:first").show();
 
 
-    $(".span-wrap").click(function () {
-      $(this).next("p").slideToggle("slow")
-        .siblings("p:visible").slideUp("slow");
-    });
+         $(".span-wrap").click(function () {
+           $(this).next("p").slideToggle("slow")
+                  .siblings("p:visible").slideUp("slow");
+         });
 
-    // FILE SENDING
+         // FILE SENDING
 
-    // FORM SENDING
+         // FORM SENDING
 
-    $scope.data = {};
+         $scope.data = {};
 
-    $scope.Request = function (form) {
+         $scope.Request = function (form) {
 
-      $scope.data.Attachments = $scope.files.map(function (file) {
-        return file.url;
-      });
+           $scope.data.Attachments = $scope.files.map(function (file) {
+             return file.url;
+           });
 
-      ApiService.order($scope.data).then(function (isSuccess) {
-        if (isSuccess) {
-          var envelope = $("[type='submit']");
-          var tick = $('.tick');
-          var wrap_tick = $('.submit');
+           ApiService.order($scope.data).then(function (isSuccess) {
+             if (isSuccess) {
+               var envelope = $("[type='submit']");
+               var tick = $('.tick');
+               var wrap_tick = $('.submit');
 
-          $("input, select, textarea").removeClass('isValid');
-          $('.order-form').trigger('reset');
+               $("input, select, textarea").removeClass('isValid');
+               $('.order-form').trigger('reset');
 
-          envelope.css('display', 'none');
-          wrap_tick.css('background-color', '#2fd08e');
-          tick.addClass('success');
+               envelope.css('display', 'none');
+               wrap_tick.css('background-color', '#2fd08e');
+               tick.addClass('success');
 
-          $timeout(function () {
-            envelope.css('display', 'inline-block');
-            wrap_tick.css('background-color', '#f1f1f1');
-            tick.removeClass('success');
-          }, 4000);
+               $timeout(function () {
+                 envelope.css('display', 'inline-block');
+                 wrap_tick.css('background-color', '#f1f1f1');
+                 tick.removeClass('success');
+               }, 4000);
 
-        } else {
-          alert("Произошла ошибка.");
-        }
-      });
-    };
-    $scope.$emit('toggle_black', {isBlack: true});
+             } else {
+               alert("Произошла ошибка.");
+             }
+           });
+         };
+         $scope.$emit('toggle_black', {isBlack: true});
 
-    $scope.$emit('change_title', {
-      title: 'Заказать - Лига Разработчиков НИТУ МИСиС'
-    });
+         $scope.$emit('change_title', {
+           title: 'Заказать - Лига Разработчиков НИТУ МИСиС'
+         });
 
-    $scope.files = [];
-    $scope.currentUploadState = "waiting"; // waiting, uploading
-    $scope.currentPercent = 0;
+         $scope.files = [];
+         $scope.currentUploadState = "waiting"; // waiting, uploading
+         $scope.currentPercent = 0;
 
-    $scope.$on('beforeSend', function (ev, args) {
-      $scope.currentUploadState = 'uploading';
-      $scope.currentPercent = 0;
-      $scope.$apply();
-    });
+         $scope.$on('beforeSend', function (ev, args) {
+           $scope.currentUploadState = 'uploading';
+           $scope.currentPercent = 0;
+           $scope.$apply();
+         });
 
-    $scope.$on('errorUploading', function (ev, args) {
-      alert('Размер файла не должен превышать 10 Мб. Разрешённые форматы изображения: DOC, DOCX, PDF, TTF, TXT. ' +
-        'Или, возможно, вы не авторизовались.');
-      $scope.currentUploadState = 'waiting';
-      $scope.currentPercent = 0;
-      $scope.$apply();
-    });
+         $scope.$on('errorUploading', function (ev, args) {
+           alert('Размер файла не должен превышать 10 Мб. Разрешённые форматы изображения: DOC, DOCX, PDF, TTF, TXT. ' +
+             'Или, возможно, вы не авторизовались.');
+           $scope.currentUploadState = 'waiting';
+           $scope.currentPercent = 0;
+           $scope.$apply();
+         });
 
-    $scope.$on('progress', function (ev, args) {
-      $scope.currentPercent = args.progress_value;
-      $scope.$apply();
-    });
+         $scope.$on('progress', function (ev, args) {
+           $scope.currentPercent = args.progress_value;
+           $scope.$apply();
+         });
 
-    $scope.$on('successUploading', function (ev, args) {
+         $scope.$on('successUploading', function (ev, args) {
 
-      if (args.data) {
-        var dataSplit = args.data.split('.');
+           if (args.data) {
+             var dataSplit = args.data.split('.');
 
-        if (dataSplit[dataSplit.length - 2].length == 17) {
-          dataSplit[dataSplit.length - 2] = '';
-        }
-        else {
-          dataSplit[dataSplit.length - 2] = dataSplit[dataSplit.length - 2].slice(0, dataSplit[dataSplit.length - 2].length - 17);
-        }
+             if (dataSplit[dataSplit.length - 2].length == 17) {
+               dataSplit[dataSplit.length - 2] = '';
+             }
+             else {
+               dataSplit[dataSplit.length - 2] = dataSplit[dataSplit.length - 2].slice(0, dataSplit[dataSplit.length - 2].length - 17);
+             }
 
-        var name = dataSplit.join('.');
-        $scope.files.push({
-          name: name,
-          url: 'http://api.lod-misis.ru/file/' + args.data
-        });
+             var name = dataSplit.join('.');
+             $scope.files.push({
+               name: name,
+               url: 'http://api.lod-misis.ru/file/' + args.data
+             });
 
-        $scope.currentUploadState = 'waiting';
+             $scope.currentUploadState = 'waiting';
 
-        $scope.$apply();
-      }
+             $scope.$apply();
+           }
 
-    });
+         });
 
-    $scope.deleteFile = function (fileItem, index) {
-      $scope.files.splice(index, 1);
-    };
-  }])
+         $scope.deleteFile = function (fileItem, index) {
+           $scope.files.splice(index, 1);
+         };
+       }])
 
-  .controller('ContactCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
-    $scope.data = {};
+       .controller('ContactCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
+         $scope.data = {};
 
-    $scope.Request = function () {
-      ApiService.contact($scope.data).then(function (isSuccess) {
-        if (isSuccess) {
-          var envelope = $("[type='submit']");
-          var tick = $('.tick');
-          var wrap_tick = $('.submit');
+         $scope.Request = function () {
+           ApiService.contact($scope.data).then(function (isSuccess) {
+             if (isSuccess) {
+               var envelope = $("[type='submit']");
+               var tick = $('.tick');
+               var wrap_tick = $('.submit');
 
-          $("input, textarea").removeClass('isValid');
-          $('.contact-form').trigger('reset');
+               $("input, textarea").removeClass('isValid');
+               $('.contact-form').trigger('reset');
 
-          envelope.css('display', 'none');
-          wrap_tick.css('background-color', '#2fd08e');
-          tick.addClass('success');
+               envelope.css('display', 'none');
+               wrap_tick.css('background-color', '#2fd08e');
+               tick.addClass('success');
 
-          setTimeout(function () {
-              envelope.css('display', 'inline-block');
-              wrap_tick.css('background-color', '#f1f1f1');
-              tick.removeClass('success');
-            }
-            , 1000);
-        } else {
-          alert("Произошла ошибка.")
-        }
-      });
-    };
+               setTimeout(function () {
+                   envelope.css('display', 'inline-block');
+                   wrap_tick.css('background-color', '#f1f1f1');
+                   tick.removeClass('success');
+                 }
+                 , 1000);
+             } else {
+               alert("Произошла ошибка.")
+             }
+           });
+         };
 
-    $scope.$emit('toggle_black', {isBlack: true});
+         $scope.$emit('toggle_black', {isBlack: true});
 
-    $scope.$emit('change_title', {
-      title: 'Cвязаться - Лига Разработчиков НИТУ МИСиС'
-    });
-  }])
+         $scope.$emit('change_title', {
+           title: 'Cвязаться - Лига Разработчиков НИТУ МИСиС'
+         });
+       }])
 
        .controller('FormValidationCtrl', [function () {
          Array.from($("input, textarea"))
@@ -844,18 +862,18 @@ angular.module('LodSite.controllers', [])
          };
        }])
 
-      .controller('EmailConfirmationCtrl', ['$scope', 'ApiService', '$state', function ($scope, ApiService, $state) {
-        var token = $state.params.token;
+       .controller('EmailConfirmationCtrl', ['$scope', 'ApiService', '$state', function ($scope, ApiService, $state) {
+         var token = $state.params.token;
 
-        ApiService.developerConfirmation().then(function (isSuccess) {
-          if (isSuccess) {
-            $scope.isSuccess = isSuccess;
-          } else {
-            $scope.isSuccess = isSuccess;
-          }
-        });
+         ApiService.developerConfirmation().then(function (isSuccess) {
+           if (isSuccess) {
+             $scope.isSuccess = isSuccess;
+           } else {
+             $scope.isSuccess = isSuccess;
+           }
+         });
 
-        $scope.$emit('toggle_black', {isBlack: true});
-      }])
+         $scope.$emit('toggle_black', {isBlack: true});
+       }])
 
 ;

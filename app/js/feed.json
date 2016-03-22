@@ -1,0 +1,6 @@
+"feed": {
+  "notifications": [
+    {"%BELL%": "1"}
+  ],
+  "refresh_time" :  "10"
+}

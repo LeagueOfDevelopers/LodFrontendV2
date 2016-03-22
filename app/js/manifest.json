@@ -1,0 +1,10 @@
+{
+  "version": "0.0.1",
+  "api_version": 4,
+  "layout": {
+    "logo": "http://lod-misis.ru/app/imgs/yandex-table-logo.png",
+    "color": "#090706",
+    "show_title": "none"
+  },
+  "feed": "http://lod-misis.ru/app/js/feed.json"
+}

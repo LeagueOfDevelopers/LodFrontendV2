@@ -196,7 +196,7 @@ angular.module('LodSite.services', [])
            var url = '/developers/password/' + developerId;
 
            return sendAuthorizationSaveRequest(PUT, url, null, requestData).then(function (response) {
-             return response.data;
+             return response.status === 200;
            });
          };
 
@@ -236,7 +236,7 @@ angular.module('LodSite.services', [])
          this.addProject = function (requestData) {
            var url = '/projects';
 
-           return sendRequest(POST, url, null, requestData).then(function (response) {
+           return sendAuthorizationSaveRequest(POST, url, null, requestData).then(function (response) {
              return response.status === 200;
            });
          };

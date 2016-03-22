@@ -84,7 +84,7 @@ angular.module('LodSite.services', [])
          };
 
          var sendAuthorizationSaveRequest = function (method, url, requestParams, requestData) {
-           var apiUrl = DOMAIN_NAME + url;
+           var apiUrl = API_DOMAIN_NAME + url;
            var userRole = TokenService.getRole();
            if (userRole !== false) {
              var token = TokenService.getToken().Token;

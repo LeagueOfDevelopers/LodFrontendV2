@@ -128,7 +128,7 @@ angular.module('LodSite.services', [])
          };
 
          this.getFullDevelopers = function () {
-           var url = '/developers';
+           var url = '/developers/all';
 
            return sendAuthorizationSaveRequest(GET, url).then(function (response) {
              return DateService.getFormattedTimeDevsList(response.data);

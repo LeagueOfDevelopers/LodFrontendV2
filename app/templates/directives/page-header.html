@@ -12,8 +12,8 @@
     </span>
     </span>
     <span class="header__additional-nav" ng-if="userRole === 0 || userRole === 1">
-      <span class="additional-nav__item">Портфолио</span> |
       <span class="additional-nav__item">Оповещений: 0</span> |
+      <span class="additional-nav__item">Портфолио</span> |
       <a class="additional-nav__item" ui-sref="developers.edit">Профиль</a> |
       <span class="additional-nav__item" ng-click="signOut()">
         <span class="log-out"></span> Выйти
@@ -35,11 +35,12 @@
   </nav>
 </header>
 <nav class="nav-mobile" ng-show="isOpened">
-  <a class="nav-mobile__item" ng-if="userRole === 0 || userRole === 1">-</a>
-  <a class="nav-mobile__item" ng-if="userRole === 0 || userRole === 1">-</a>
+  <a class="nav-mobile__item" ng-if="userRole === 0 || userRole === 1">Оповещений: 0</a>
+  <a class="nav-mobile__item" ng-if="userRole === 0 || userRole === 1">Портфолио</a>
+  <a class="nav-mobile__item" ui-sref="developers.edit" ng-if="userRole === 0 || userRole === 1">Профиль</a>
   <a class="nav-mobile__item" ng-if="!(userRole === 0 || userRole === 1)" ng-click="openLoginDialog($event)">Войти</a>
   <a class="nav-mobile__item" ng-if="!(userRole === 0 || userRole === 1)" ui-sref="signup">Стать разработчиком</a>
-  <a class="nav-mobile__item" ui-sref="order">Сделать заказ</a>
+  <a class="nav-mobile__item" ng-if="!(userRole === 0 || userRole === 1)" ui-sref="order">Сделать заказ</a>
   <a class="nav-mobile__item" ui-sref="projects.index">Наши проекты</a>
   <a class="nav-mobile__item" ui-sref="developers.index">Разработчики</a>
   <a class="nav-mobile__item" href="//endowment.misis.ru/blog/liga">Блог</a>

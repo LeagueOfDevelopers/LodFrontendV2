@@ -18,9 +18,10 @@
           <div class="full-developer__experience">
             В Лиге Разработчиков: <span class="residence-time" ng-bind="fullDeveloper.residenceTime"></span>
           </div>
-          <div class="full-developer__projects-count"
-               ng-bind="'Количество проектов: ' + fullDeveloper.ProjectCount "></div>
-          <a class="full-developer__vk" href="{{fullDeveloper.VkPageUri}}">Профиль Вконтакте</a>
+          <div class="full-developer__projects-count" >
+            Количество проектов: <span class="residence-time" ng-bind="fullDeveloper.ProjectCount"></span>
+          </div>
+          <a class="full-developer__vk" ng-href="{{fullDeveloper.VkPageUri}}">Профиль Вконтакте</a>
         </div>
       </a>
     </div>

@@ -614,6 +614,7 @@ header {
   height: auto;
   margin: 5% 0 0 0;
   object-fit: cover;
+  border: 1px solid #f1f1f1;
 }
 
 .full-developer__info {
@@ -2036,14 +2037,16 @@ footer {
   }
 
   .full-developer__photo {
+    box-sizing: border-box;
+    width: 200px;
     max-width: 200px;
     height: 200px;
-    margin: 5px;
+    margin: 10px;
     float: left;
   }
 
   .full-developer__info {
-    padding: 10px 15px 10px 220px;
+    padding: 5px 10px 10px 220px;
   }
 
   .full-developer__name, .full-developer__role {
@@ -2594,6 +2597,10 @@ footer {
 
   .developer-name {
     font-size: 1.8em;
+  }
+
+  .residence-time {
+     margin: 0;
   }
 
   /*************************

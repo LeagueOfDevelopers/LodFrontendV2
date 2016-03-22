@@ -58,7 +58,8 @@ angular.module('LodSite.services', [])
          };
        }])
 
-       .service('ApiService', ['$http', 'TokenService', '$rootScope', function ($http, TokenService) {
+
+       .service('ApiService', ['$http', 'TokenService', 'DateService', function ($http, TokenService, DateService) {
          var GET = 'get';
          var POST = 'post';
          var DELETE = 'delete';
@@ -130,7 +131,7 @@ angular.module('LodSite.services', [])
            var url = '/developers';
 
            return sendAuthorizationSaveRequest(GET, url).then(function (response) {
-             return response.data;
+             return DateService.getFormattedTimeDevsList(response.data);
            });
          };
 
@@ -138,7 +139,7 @@ angular.module('LodSite.services', [])
            var url = '/developers/search/' + searchText;
 
            return sendAuthorizationSaveRequest(GET, url).then(function (response) {
-             return response.data;
+             return DateService.getFormattedTimeDevsList(response.data);
            });
          };
 
@@ -148,8 +149,10 @@ angular.module('LodSite.services', [])
            return sendAuthorizationSaveRequest(GET, url)
              .then(function (response) {
                var date = new Date();
-               response.data.studyingYear = date.getFullYear() - response.data.StudentAccessionYear || 1;
-               return response.data;
+               var developer = response.data;
+               developer.studyingYear = date.getFullYear() - response.data.StudentAccessionYear || 1;
+
+               return DateService.getFormattedTimeDev(developer);
              });
          };
 
@@ -289,4 +292,70 @@ angular.module('LodSite.services', [])
            });
          };
        }])
+
+
+       .service('DateService', [function () {
+         var self = this;
+
+         this.getFormattedTimeDev = function (developer) {
+           developer.residenceTime = self.getFormattedTime(developer.RegistrationDate);
+
+           return developer;
+         };
+
+         this.getFormattedTimeDevsList = function (developers) {
+           for (var i = 0; i < developers.length; i++) {
+             developers[i].residenceTime = self.getFormattedTime(developers[i].RegistrationDate);
+           }
+
+           return developers;
+         };
+
+         this.getFormattedTime = function (registrationDate) {
+           var formattedTime;
+           var residenceTimeObject = self.getResidenceTimeObject(registrationDate);
+
+           function getInclinedWord(value, declensionArray) {
+             var cases = [2, 0, 1, 1, 1, 2];
+             return declensionArray[(value % 100 > 4 && value % 100 < 20) ? 2 : cases[(value % 10 < 5) ? value % 10 : 5]];
+           }
+
+           var INCLINED_DAY_WORD = getInclinedWord(residenceTimeObject.days, [' день', ' дня', ' дней']);
+           var INCLINED_WEEK_WORD = getInclinedWord(residenceTimeObject.weeks, [' неделю', ' недели', ' недель']);
+           var INCLINED_MONTH_WORD = getInclinedWord(residenceTimeObject.months, [' месяц', ' месяца', ' месяцев']);
+           var INCLINED_YEAR_WORD = getInclinedWord(residenceTimeObject.years, [' год', ' года', ' лет']);
+
+           if (residenceTimeObject.days < 20 && residenceTimeObject.days !== 0) {
+             formattedTime = residenceTimeObject.days + INCLINED_DAY_WORD ;
+           } else if (residenceTimeObject.weeks) {
+             formattedTime = residenceTimeObject.weeks + INCLINED_WEEK_WORD;
+           } else if (residenceTimeObject.months) {
+             formattedTime = residenceTimeObject.months + INCLINED_MONTH_WORD + ' и' + residenceTimeObject.days -
+               - residenceTimeObject.months * 30 + INCLINED_DAY_WORD;
+           } else if (residenceTimeObject.years) {
+             formattedTime = residenceTimeObject.years + INCLINED_YEAR_WORD + ' и' + residenceTimeObject.months -
+               - residenceTimeObject.years * 12 + INCLINED_MONTH_WORD;
+           } else {
+             formattedTime = 0;
+           }
+
+           return formattedTime;
+         };
+
+         this.getResidenceTimeObject = function (registrationDate) {
+           var MSEC_IN_DAY = 86400000;
+           var now = new Date();
+           var nowMs = Date.parse(now);
+           var registrationDateMs = Date.parse(registrationDate);
+           var residenceTimeMs = nowMs - registrationDateMs;
+           var residenceTime = {};
+           residenceTime.days = Math.floor(residenceTimeMs / MSEC_IN_DAY);
+           residenceTime.weeks = Math.floor(residenceTimeMs / MSEC_IN_DAY / 7);
+           residenceTime.months = Math.floor(residenceTimeMs / MSEC_IN_DAY / 30);
+           residenceTime.years = Math.floor(residenceTimeMs / MSEC_IN_DAY / 30 / 12);
+
+           return residenceTime;
+         };
+       }])
+
 ;

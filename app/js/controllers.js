@@ -78,21 +78,26 @@ angular.module('LodSite.controllers', [])
                    });
        }])
 
-       .controller('FullDevelopersCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
-         $scope.searchText = '';
+       .controller('FullDevelopersCtrl', ['$scope', 'ApiService', 'DateService',
+         function ($scope, ApiService, DateService) {
+           $scope.searchText = '';
 
-         $scope.$watch("searchText", function (newValue, oldValue) {
-           if (newValue === '') {
-             ApiService.getFullDevelopers()
-                       .then(function (data) { $scope.fullDevelopers = data; });
-           } else if (newValue !== oldValue) {
-             ApiService.getFullDevelopersBySearch($scope.searchText)
-                       .then(function (data) { $scope.fullDevelopers = data; });
-           }
-         });
-         $scope.$emit('toggle_black', {isBlack: true});
-         $scope.$emit('change_title', {title: 'Разработчики - Лига Разработчиков НИТУ МИСиС'});
-       }])
+           $scope.$watch("searchText", function (newValue, oldValue) {
+             if (newValue === '') {
+               ApiService.getFullDevelopers()
+                         .then(function (data) {
+                           $scope.fullDevelopers = data;
+                         });
+             } else if (newValue !== oldValue) {
+               ApiService.getFullDevelopersBySearch($scope.searchText)
+                         .then(function (data) {
+                           $scope.fullDevelopers = data;
+                         });
+             }
+           });
+           $scope.$emit('toggle_black', {isBlack: true});
+           $scope.$emit('change_title', {title: 'Разработчики - Лига Разработчиков НИТУ МИСиС'});
+         }])
 
        .controller('DeveloperCtrl', ['$scope', '$state', 'ApiService', function ($scope, $state, ApiService) {
          var developerId = $state.params.id;

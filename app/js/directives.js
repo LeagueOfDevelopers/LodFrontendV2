@@ -84,7 +84,6 @@ angular.module('LodSite.directives', [])
 
              beforeSend: function () {
                $rootScope.$broadcast('beforeSend');
-               console.log('before send');
              },
              onprogress: function (e) {
                if (e.lengthComputable) {
@@ -130,7 +129,6 @@ angular.module('LodSite.directives', [])
 
              beforeSend: function () {
                $rootScope.$broadcast('beforeSend');
-               console.log('before send');
              },
              onprogress: function (e) {
                if (e.lengthComputable) {
@@ -176,7 +174,6 @@ angular.module('LodSite.directives', [])
 
              beforeSend: function () {
                $rootScope.$broadcast('beforeSendImage');
-               console.log('before send');
              },
              onprogress: function (e) {
                if (e.lengthComputable) {
@@ -222,7 +219,6 @@ angular.module('LodSite.directives', [])
 
              beforeSend: function () {
                $rootScope.$broadcast('beforeSendImage');
-               console.log('before send');
              },
              onprogress: function (e) {
                if (e.lengthComputable) {
@@ -268,7 +264,6 @@ angular.module('LodSite.directives', [])
 
              beforeSend: function () {
                $rootScope.$broadcast('beforeSendBigImage');
-               console.log('before send');
              },
              onprogress: function (e) {
                if (e.lengthComputable) {
@@ -314,7 +309,6 @@ angular.module('LodSite.directives', [])
 
              beforeSend: function () {
                $rootScope.$broadcast('beforeSendBigImage');
-               console.log('before send');
              },
              onprogress: function (e) {
                if (e.lengthComputable) {

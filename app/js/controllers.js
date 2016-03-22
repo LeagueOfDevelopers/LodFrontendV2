@@ -142,7 +142,7 @@ angular.module('LodSite.controllers', [])
            return;
          }
         }
-        $scope.currentState == 'success';
+        $scope.currentState = 'success';
       };
 
 

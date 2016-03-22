@@ -785,12 +785,15 @@ footer {
 }
 
 .full-project__name {
-  font-family: 'Noto Serif', serif;
+  display: block;
+  margin: 15px auto;
+  font-size: 1.8em;
   font-weight: bold;
-  font-size: 1.3em;
-  border-bottom: 1px solid #202d3a;
+  font-family: 'Cuprum', sans-serif;
+  text-transform: uppercase;
   text-align: center;
-  padding-bottom: 5px;
+  text-shadow: 2px 2px rgba(0, 0, 0, .1);
+
 }
 
 .full-project__preview {
@@ -1786,7 +1789,6 @@ footer {
 .adding-project__uploaded-file__image-wrap {
   height: 100%;
   width: 100%;
-  background-image: url("../imgs/Logotip.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -1794,16 +1796,15 @@ footer {
 
 .adding-project__file-close, .adding-project__big-image__file-close {
   position: absolute;
-  background-image: url("../imgs/close-button.svg");
-  background-repeat: no-repeat;
-  background-position: center;
+  opacity: 0.7;
+  background: rgba(0, 0, 0, 0.75) url(../imgs/close-button-white.svg) no-repeat center;
   background-size: contain;
   cursor: pointer;
   transition: all .2s ease-out;
 }
 
 .adding-project__file-close:hover, .adding-project__big-image__file-close:hover {
-  background-color: #ffffff;
+  opacity: 1;
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);
   -o-transform: rotate(90deg);
@@ -1879,9 +1880,6 @@ footer {
   padding: 0 15px;
 }
 
-.all-projects-page {
-
-}
 
 .projects__all-project {
   text-align: center;
@@ -1919,15 +1917,11 @@ footer {
   text-transform: uppercase;
 }
 
-.info__project-types {
-  margin-bottom: 20px;
-}
-
 .all-project__subheading {
   font-size: 1.1em;
 }
 
-.status__value, .access__value {
+.all-project__status .status__value, .access__value {
   margin-left: 10px;
   color: white;
   padding: 5px 10px;
@@ -2345,10 +2339,6 @@ footer {
 
   .all-project__name {
     text-align: left;
-  }
-
-  .info__project-types {
-    margin-bottom: 50px;
   }
 }
 
@@ -3227,18 +3217,13 @@ footer {
    ADMIN PROJECTS-PAGE
 *************************/
 
-  .all-projects-page {
-
-  }
-
   .projects__all-project {
     max-width: 580px;
   }
 
-.all-projects__section {
-
-  padding: 0 30px;
-}
+  .all-projects__section {
+    padding: 0 30px;
+  }
 }
 
 @media only screen and (min-width: 1300px) {
@@ -3270,7 +3255,7 @@ footer {
   }
 
   .profile-settings__top-part__inputs, .profile-settings__middle-part, .profile-settings__bottom-part {
-    width: 1000px
+    width: 850px
   }
 
   .profile-settings__input, .adding-project__select, .adding-project__textarea, .adding-project__type {
@@ -3352,11 +3337,7 @@ footer {
     width: 228px;
   }
 
-/*************************
-   ADMIN PROJECTS-PAGE
-*************************/
-
-  .info__project-types {
-    margin-bottom: 40px;
+  .profile-settings__top-part__inputs, .profile-settings__middle-part, .profile-settings__bottom-part {
+    width: 1000px;
   }
 }

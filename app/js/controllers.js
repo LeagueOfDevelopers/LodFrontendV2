@@ -139,10 +139,22 @@ angular.module('LodSite.controllers', [])
         for(i=0; i<3; i++) {
          if($scope.state[i] == 'failed') {
            $scope.currentState = 'failed';
+
+           $scope.state = [];
+
+           $timeout(function () {
+             $scope.currentState = null;
+           },5000);
            return;
          }
         }
         $scope.currentState = 'success';
+
+        $scope.state = [];
+
+        $timeout(function () {
+          $scope.currentState = null;
+        }, 3000);
       };
 
 

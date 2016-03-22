@@ -43,7 +43,9 @@ angular.module('LodSite.controllers', [])
          '$state',
          function ($scope, ngDialog, TokenService, $state) {
            $scope.isOpened = false;
-           $scope.linkToPortfolio = DOMAIN_NAME + "/developers/" + TokenService.getToken().UserId;
+           if(TokenService.getToken()){
+             $scope.linkToPortfolio = DOMAIN_NAME + "/developers/" + TokenService.getToken().UserId;
+           }
 
            $scope.activeToggle = function () { $scope.isOpened = !$scope.isOpened; };
            $scope.openLoginDialog = function () {

@@ -1565,8 +1565,6 @@ footer {
   width: 90%;
   max-width: 450px;
   margin: 0 auto 5px;
-
-  font-weight: 600;
   font-size: 1.1em;
 }
 
@@ -1677,7 +1675,6 @@ footer {
 
 .profile-settings__bottom-part__heading {
   font-size: 1.1em;
-  font-weight: 900;
   margin: 0 auto 10px;
   text-align: left;
 }

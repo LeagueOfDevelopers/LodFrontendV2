@@ -127,8 +127,8 @@ angular.module('LodSite.services', [])
            });
          };
 
-         this.getFullDevelopers = function () {
-           var url = '/developers/all';
+         this.getFullDevelopers = function (pageCounter) {
+           var url = '/developers?page='+ pageCounter;
 
            return sendAuthorizationSaveRequest(GET, url).then(function (response) {
              return DateService.getFormattedTimeDevsList(response.data);

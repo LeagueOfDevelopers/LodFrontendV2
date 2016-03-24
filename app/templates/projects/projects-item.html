@@ -25,11 +25,11 @@
       <div class="info__subheading">Описание:</div>
       <div class="info__description" ng-bind="project.Info"></div>
       <div class="info__subheading">Разработчики:</div>
-      <span class="info__developers" ng-repeat="developer in project.ProjectMemberships">
+      <div class="info__developers" ng-repeat="developer in project.ProjectMemberships">
         <a ng-href="{{'/developers/'+developer.DeveloperId}}"
            ng-bind="developer.FirstName + ' ' + developer.LastName"></a>
-        <span ng-bind=" '(' + developer.Role + '),' "></span>
-      </span>
+        <span ng-bind=" '(' + developer.Role + ')' "></span>
+      </div>
 
       <div class="info__if-no-developers" style="color:#a4a4a4" ng-bind="replacementText"></div>
       <div class="info__subheading" ng-if="userRole === 0 || userRole === 1">Уровень доступа:</div>

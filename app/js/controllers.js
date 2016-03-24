@@ -118,6 +118,7 @@ angular.module('LodSite.controllers', [])
                        });
            }
          });
+
          $scope.$emit('toggle_black', {isBlack: true});
          $scope.$emit('change_title', {title: 'Разработчики - Лига Разработчиков НИТУ МИСиС'});
        }])

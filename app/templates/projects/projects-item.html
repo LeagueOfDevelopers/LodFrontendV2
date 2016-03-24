@@ -55,9 +55,9 @@
       </div>
     </div>
   </div>
-  <h1 class="full-project__headline headline">Задачи на проекте</h1>
+  <h1 class="full-project__headline headline" ng-if="projectIssues.length">Задачи на проекте</h1>
 
-  <div class="dividing-line"></div>
+  <div class="dividing-line" ng-if="projectIssues.length"></div>
   <div class="full-project-issues">
     <span class="project-issues__issue" ng-repeat="projectIssue in projectIssues" ng-bind="projectIssue.Header"></span>
   </div>

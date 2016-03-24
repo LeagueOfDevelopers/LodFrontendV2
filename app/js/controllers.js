@@ -43,7 +43,7 @@ angular.module('LodSite.controllers', [])
          '$state',
          function ($scope, ngDialog, TokenService, $state) {
            $scope.isOpened = false;
-           if(TokenService.getToken()){
+           if (TokenService.getToken()) {
              $scope.linkToPortfolio = DOMAIN_NAME + "/developers/" + TokenService.getToken().UserId;
            }
 
@@ -82,26 +82,45 @@ angular.module('LodSite.controllers', [])
        }])
 
        .controller('FullDevelopersCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
-           $scope.searchText = '';
-           $scope.isMoreDevs = true;
-           var pageCounter = 0;
+         $scope.searchText = '';
+         $scope.fullDevelopers = [];
+         $scope.isMoreDevs = true;
+         var pageCounter = 0;
 
-           $scope.$watch("searchText", function (newValue, oldValue) {
-             if (newValue === '') {
-               ApiService.getFullDevelopers()
-                         .then(function (data) {
-                           $scope.fullDevelopers = data;
-                         });
-             } else if (newValue !== oldValue) {
-               ApiService.getFullDevelopersBySearch($scope.searchText)
-                         .then(function (data) {
-                           $scope.fullDevelopers = data;
-                         });
-             }
-           });
-           $scope.$emit('toggle_black', {isBlack: true});
-           $scope.$emit('change_title', {title: 'Разработчики - Лига Разработчиков НИТУ МИСиС'});
-         }])
+         $scope.resetPageCounter = function () {
+           pageCounter = 0;
+         };
+         $scope.addDevelopers = function () {
+           pageCounter++;
+           ApiService.getFullDevelopers(pageCounter)
+                     .then(function (data) {
+                       if (!data || data.length === 0) {
+                         $scope.isMoreDevs = false;
+                       } else {
+                         $scope.fullDevelopers = $scope.fullDevelopers.concat(data);;
+                       }
+                     });
+         };
+
+         $scope.$watch("searchText", function (newValue, oldValue) {
+           if (newValue === '') {
+             $scope.resetPageCounter();
+             ApiService.getFullDevelopers(pageCounter)
+                       .then(function (data) {
+                         $scope.isMoreDevs = true;
+                         $scope.fullDevelopers = data;
+                       });
+           } else if (newValue !== oldValue) {
+             ApiService.getFullDevelopersBySearch($scope.searchText)
+                       .then(function (data) {
+                         $scope.isMoreDevs = false;
+                         $scope.fullDevelopers = data;
+                       });
+           }
+         });
+         $scope.$emit('toggle_black', {isBlack: true});
+         $scope.$emit('change_title', {title: 'Разработчики - Лига Разработчиков НИТУ МИСиС'});
+       }])
 
        .controller('DeveloperCtrl', ['$scope', '$state', 'ApiService', function ($scope, $state, ApiService) {
          var developerId = $state.params.id;
@@ -125,39 +144,38 @@ angular.module('LodSite.controllers', [])
            }
            var developerId = token.UserId;
 
-      $scope.state = [];
-      $scope.currentState = null;
+           $scope.state = [];
+           $scope.currentState = null;
            $scope.profile = {};
 
 
+           $scope.changeCurrentState = function () {
+             for (var i = 0; i < 3; i++) {
+               if (!$scope.state[i]) {
+                 return;
+               }
+             }
 
-      $scope.changeCurrentState = function() {
-        for(var i=0; i<3; i++) {
-          if(!$scope.state[i]) {
-            return;
-          }
-        }
+             for (i = 0; i < 3; i++) {
+               if ($scope.state[i] == 'failed') {
+                 $scope.currentState = 'failed';
 
-        for(i=0; i<3; i++) {
-         if($scope.state[i] == 'failed') {
-           $scope.currentState = 'failed';
+                 $scope.state = [];
 
-           $scope.state = [];
+                 $timeout(function () {
+                   $scope.currentState = null;
+                 }, 5000);
+                 return;
+               }
+             }
+             $scope.currentState = 'success';
 
-           $timeout(function () {
-             $scope.currentState = null;
-           },5000);
-           return;
-         }
-        }
-        $scope.currentState = 'success';
+             $scope.state = [];
 
-        $scope.state = [];
-
-        $timeout(function () {
-          $scope.currentState = null;
-        }, 3000);
-      };
+             $timeout(function () {
+               $scope.currentState = null;
+             }, 3000);
+           };
 
 
            /*FOR UPLOADING OF PHOTO*/
@@ -228,11 +246,11 @@ angular.module('LodSite.controllers', [])
 
              ApiService.sendProfileSttings(developerId, $scope.profile).then(function (isSuccess) {
                if (isSuccess) {
-            $scope.state[0] = 'success';
+                 $scope.state[0] = 'success';
                } else {
-            $scope.state[0] = 'failed';
+                 $scope.state[0] = 'failed';
                }
-          $scope.changeCurrentState();
+               $scope.changeCurrentState();
              });
 
              for (var i = 0; i < $scope.notificationSettings.length; i++) {
@@ -241,21 +259,21 @@ angular.module('LodSite.controllers', [])
 
              ApiService.sendNotifications(developerId, $scope.notificationSettings).then(function (isSuccess) {
                if (isSuccess) {
-            $scope.state[1] = 'success';
+                 $scope.state[1] = 'success';
                } else {
-            $scope.state[1] = 'failed';
+                 $scope.state[1] = 'failed';
                }
-          $scope.changeCurrentState();
+               $scope.changeCurrentState();
              });
 
              if ($scope.newPassword && $scope.repeatedPassword) {
                ApiService.sendNewPassword(developerId, JSON.stringify($scope.newPassword)).then(function (isSuccess) {
                  if (isSuccess) {
-              $scope.state[2] = 'success';
+                   $scope.state[2] = 'success';
                  } else {
-              $scope.state[2] = 'failed';
+                   $scope.state[2] = 'failed';
                  }
-            $scope.changeCurrentState();
+                 $scope.changeCurrentState();
                });
              } else {
                $scope.state[2] = 'success';

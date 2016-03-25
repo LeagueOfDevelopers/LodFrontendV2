@@ -7,16 +7,17 @@ angular.module('LodSite.controllers', [])
        //main
        .controller('PageCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
          var defaultTitle = 'Лига Разработчиков НИТУ МИСиС';
+         $rootScope.dataLoading = null;
          $scope.DEFAULT_PROJECT_LANDSCAPE = '/app/imgs/project-cap-image.png';
          $scope.DEFAULT_DEVELOPER_PHOTO = '/app/imgs/developer-default-photo.png';
-
+         
          $rootScope.$on('userRole_changed', function (e, args) {
            $scope.userRole = args.userRole;
          });
          $scope.$on('change_title', function (e, args) {
            $scope.title = args.title !== undefined && args.title.length ? args.title : defaultTitle;
          });
-         $scope.$on('$viewContentLoaded', function () { setPaddingBottom();});
+         $scope.$on('$viewContentLoaded', setPaddingBottom );
          $scope.$on('$locationChangeSuccess', function () {
            angular.element(window).scrollTop(0);
          });

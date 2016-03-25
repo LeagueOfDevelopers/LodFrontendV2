@@ -152,7 +152,9 @@ var API_DOMAIN_NAME = 'http://api.lod-misis.ru';
 function templateUrl(module, name) {
   return 'app/templates/' + module + '/' + name + '.html?' + Math.random();
 }
-
-function setPaddingBottom() {
-  $('.content').css('padding-bottom', $('footer').innerHeight());
+function setPaddingBottom(){
+  angular.element('.content').css('padding-bottom', $('footer').innerHeight());
 }
+
+setPaddingBottom();
+setTimeout(setPaddingBottom, 3000);

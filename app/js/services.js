@@ -59,239 +59,256 @@ angular.module('LodSite.services', [])
        }])
 
 
-       .service('ApiService', ['$http', 'TokenService', 'DateService', function ($http, TokenService, DateService) {
-         var GET = 'get';
-         var POST = 'post';
-         var DELETE = 'delete';
-         var PUT = 'put';
+       .service('ApiService', ['$http',
+         'TokenService',
+         'DateService',
+         '$rootScope',
+         '$timeout',
+         function ($http, TokenService, DateService, $rootScope, $timeout) {
+           var GET = 'get';
+           var POST = 'post';
+           var DELETE = 'delete';
+           var PUT = 'put';
 
-         // requests
-         var sendRequest = function (method, apiUrl, requestParams, requestData, tokenValue) {
-           var requestConfig = {
-             method: method,
-             url: apiUrl
+           // requests
+           var sendRequest = function (method, apiUrl, requestParams, requestData, tokenValue) {
+             var requestConfig = {
+               method: method,
+               url: apiUrl
+             };
+             if (tokenValue) {
+               requestConfig.headers = {'Authorization': 'Basic ' + tokenValue};
+             }
+             if (requestParams) {
+               requestConfig.params = requestParams;
+             }
+             if (requestData) {
+               requestConfig.data = requestData;
+             }
+
+             return $http(requestConfig);
            };
-           if (tokenValue) {
-             requestConfig.headers = {'Authorization': 'Basic ' + tokenValue};
-           }
-           if (requestParams) {
-             requestConfig.params = requestParams;
-           }
-           if (requestData) {
-             requestConfig.data = requestData;
-           }
-           return $http(requestConfig);
-         };
 
-         var sendAuthorizationSaveRequest = function (method, url, requestParams, requestData) {
-           var apiUrl = API_DOMAIN_NAME + url;
-           var userRole = TokenService.getRole();
-           if (userRole !== false) {
-             var token = TokenService.getToken().Token;
-           }
-           var responsePromise = sendRequest(method, apiUrl, requestParams, requestData, token);
+           var sendAuthorizationSaveRequest = function (method, url, requestParams, requestData) {
+             var apiUrl = API_DOMAIN_NAME + url;
+             var userRole = TokenService.getRole();
+             if (userRole !== false) {
+               var token = TokenService.getToken().Token;
+             }
+             var responsePromise = sendRequest(method, apiUrl, requestParams, requestData, token);
 
-           return responsePromise.then(
-             function successCallback(response) {
-               TokenService.refreshTokenDate();
+             //show Spinner if request duration > 500ms
+             $timeout(function onSpinner() {
+               if($rootScope.dataLoading !== false){
+                 $rootScope.dataLoading = true;
+               }
+             }, 150);
 
-               return response;
-             },
-             function errorCallback(response) {
-               if (response.status === 401) {
-                 TokenService.resetToken();
-                 return sendRequest(method, apiUrl, requestParams, requestData, null).then(
-                   function successCallback(response) {
-                     TokenService.refreshTokenDate();
+             return responsePromise
+               .then(function successCallback(response) {
+                   TokenService.refreshTokenDate();
 
-                     return response;
-                   },
-                   function errorCallback() {
-                     return false;
+                   return response;
+                 },
+                 function errorCallback(response) {
+                   if (response.status === 401) {
+                     TokenService.resetToken();
+                     return sendRequest(method, apiUrl, requestParams, requestData, null).then(
+                       function successCallback(response) {
+                         TokenService.refreshTokenDate();
+
+                         return response;
+                       },
+                       function errorCallback() {
+                         return false;
+                       }
+                     );
                    }
-                 );
+
+                   return response;
+                 })
+               .then(function offSpinner(response) { //off Spinner after getting request data
+                 $rootScope.dataLoading = false;
+
+                 return response;
+               });
+           };
+
+
+           // developers
+           this.getRandomDevelopers = function (numberOfDevelopers) {
+             var url = '/developers/random/' + numberOfDevelopers;
+
+             return sendAuthorizationSaveRequest(GET, url).then(function (response) {
+               return response.data;
+             });
+           };
+
+           this.getFullDevelopers = function (pageCounter) {
+             var url = '/developers?page=' + pageCounter;
+
+             return sendAuthorizationSaveRequest(GET, url).then(function (response) {
+               return DateService.getFormattedTimeDevsList(response.data);
+             });
+           };
+
+           this.getFullDevelopersBySearch = function (searchText) {
+             var url = '/developers/search/' + searchText;
+
+             return sendAuthorizationSaveRequest(GET, url).then(function (response) {
+               return DateService.getFormattedTimeDevsList(response.data);
+             });
+           };
+
+           this.getDeveloper = function (developerId) {
+             var url = '/developers/' + developerId;
+
+             return sendAuthorizationSaveRequest(GET, url)
+               .then(function (response) {
+                 var date = new Date();
+                 var developer = response.data;
+                 developer.studyingYear = date.getFullYear() - response.data.StudentAccessionYear || 1;
+
+                 return DateService.getFormattedTimeDev(developer);
+               });
+           };
+
+           this.getDeveloperForProfileSttings = function (developerId) {
+             var url = '/developers/' + developerId;
+
+             return sendAuthorizationSaveRequest(GET, url).then(function setImageCap(response) {
+               if (response.data.BigPhotoUri == null) {
+                 response.data.BigPhotoUri = '/app/imgs/developer-default-photo.png';
                }
 
-               return response;
-             }
-           );
-         };
+               return response.data;
+             })
+           };
 
+           this.sendProfileSttings = function (developerId, requestData) {
+             var url = '/developers/' + developerId;
 
-         // developers
-         this.getRandomDevelopers = function (numberOfDevelopers) {
-           var url = '/developers/random/' + numberOfDevelopers;
-
-           return sendAuthorizationSaveRequest(GET, url).then(function (response) {
-             return response.data;
-           });
-         };
-
-         this.getFullDevelopers = function (pageCounter) {
-           var url = '/developers?page='+ pageCounter;
-
-           return sendAuthorizationSaveRequest(GET, url).then(function (response) {
-             return DateService.getFormattedTimeDevsList(response.data);
-           });
-         };
-
-         this.getFullDevelopersBySearch = function (searchText) {
-           var url = '/developers/search/' + searchText;
-
-           return sendAuthorizationSaveRequest(GET, url).then(function (response) {
-             return DateService.getFormattedTimeDevsList(response.data);
-           });
-         };
-
-         this.getDeveloper = function (developerId) {
-           var url = '/developers/' + developerId;
-
-           return sendAuthorizationSaveRequest(GET, url)
-             .then(function (response) {
-               var date = new Date();
-               var developer = response.data;
-               developer.studyingYear = date.getFullYear() - response.data.StudentAccessionYear || 1;
-
-               return DateService.getFormattedTimeDev(developer);
+             return sendAuthorizationSaveRequest(PUT, url, null, requestData).then(function (response) {
+               return response.status === 200;
              });
-         };
+           };
 
-         this.getDeveloperForProfileSttings = function (developerId) {
-           var url = '/developers/' + developerId;
+           this.getNotificationsForProfileSttings = function (developerId) {
+             var url = '/developers/notificationsettings/' + developerId;
 
-           return sendAuthorizationSaveRequest(GET, url).then(function setImageCap(response) {
-             if (response.data.BigPhotoUri == null) {
-               response.data.BigPhotoUri = '/app/imgs/developer-default-photo.png';
-             }
+             return sendAuthorizationSaveRequest(GET, url).then(function setImageCap(response) {
+               return response.data;
+             })
+           };
 
-             return response.data;
-           })
-         };
+           this.sendNotifications = function (developerId, requestData) {
+             var url = '/developers/notificationsettings/' + developerId;
 
-         this.sendProfileSttings = function (developerId, requestData) {
-           var url = '/developers/' + developerId;
-
-           return sendAuthorizationSaveRequest(PUT, url, null, requestData).then(function (response) {
-             return response.status === 200;
-           });
-         };
-
-         this.getNotificationsForProfileSttings = function (developerId) {
-           var url = '/developers/notificationsettings/' + developerId;
-
-           return sendAuthorizationSaveRequest(GET, url).then(function setImageCap(response) {
-             return response.data;
-           })
-         };
-
-         this.sendNotifications = function (developerId, requestData) {
-           var url = '/developers/notificationsettings/' + developerId;
-
-           return sendAuthorizationSaveRequest(PUT, url, null, requestData).then(function (response) {
-             return response.status === 200;
-           });
-         };
-
-         this.sendNewPassword = function (developerId, requestData) {
-           var url = '/developers/password/' + developerId;
-
-           return sendAuthorizationSaveRequest(PUT, url, null, requestData).then(function (response) {
-             return response.status === 200;
-           });
-         };
-
-         this.developerConfirmation = function (token) {
-           var url = '/developers/confirmation/' + token;
-
-           return sendAuthorizationSaveRequest(POST, url, null, null).then(function (response) {
-             return response.status === 200;
-           });
-         };
-
-         // projects
-         this.getRandomProjects = function (numberOfProjects) {
-           var url = '/projects/random/' + numberOfProjects;
-
-           return sendAuthorizationSaveRequest(GET, url).then(function (response) {
-             return response.data;
-           });
-         };
-
-         this.getFullProjects = function (requestParams, pageCounter) {
-           var url = '/projects?page=' + pageCounter;
-
-           return sendAuthorizationSaveRequest(GET, url, requestParams).then(function (response) {
-             return response.data;
-           });
-         };
-
-         this.getProject = function (projectId) {
-           var url = '/projects/' + projectId;
-
-           return sendAuthorizationSaveRequest(GET, url).then(function (response) {
-             return response.data;
-           });
-         };
-
-         this.addProject = function (requestData) {
-           var url = '/projects';
-
-           return sendAuthorizationSaveRequest(POST, url, null, requestData).then(function (response) {
-             return response.status === 200;
-           });
-         };
-
-         this.joinToProject = function (projectId, userId, projectDeveloperRole) {
-           var url = '/projects/' + projectId + '/developer/' + userId;
-
-           return sendAuthorizationSaveRequest(POST, url, null, projectDeveloperRole);
-         };
-
-         this.escapeFromProject = function (projectId, userId) {
-           var url = '/projects/' + projectId + '/developer/' + userId;
-
-           return sendAuthorizationSaveRequest(DELETE, url);
-         };
-
-
-         // other
-         this.signUp = function (requestData) {
-           var url = '/developers';
-
-           return sendAuthorizationSaveRequest(POST, url, null, JSON.stringify(requestData))
-             .then(function (responseObject) {
-               return responseObject;
+             return sendAuthorizationSaveRequest(PUT, url, null, requestData).then(function (response) {
+               return response.status === 200;
              });
-         };
+           };
 
-         this.signIn = function (requestData) {
-           var url = '/login';
+           this.sendNewPassword = function (developerId, requestData) {
+             var url = '/developers/password/' + developerId;
 
-           return sendAuthorizationSaveRequest(POST, url, null, requestData).then(function (responseObject) {
-             if (responseObject.status === 200) {
-               TokenService.setToken(responseObject.data);
-             }
+             return sendAuthorizationSaveRequest(PUT, url, null, requestData).then(function (response) {
+               return response.status === 200;
+             });
+           };
 
-             return responseObject.status === 200;
-           });
-         };
+           this.developerConfirmation = function (token) {
+             var url = '/developers/confirmation/' + token;
 
-         this.order = function (requestData) {
-           var apiUrl = 'http://api.lod-misis.ru/orders';
+             return sendAuthorizationSaveRequest(POST, url, null, null).then(function (response) {
+               return response.status === 200;
+             });
+           };
 
-           return sendAuthorizationSaveRequest(POST, apiUrl, null, requestData).then(function (response) {
-             return response.status === 200;
-           });
-         };
+           // projects
+           this.getRandomProjects = function (numberOfProjects) {
+             var url = '/projects/random/' + numberOfProjects;
 
-         this.contact = function (requestData) {
-           var apiUrl = 'http://api.lod-misis.ru/contact';
+             return sendAuthorizationSaveRequest(GET, url).then(function (response) {
+               return response.data;
+             });
+           };
 
-           return sendAuthorizationSaveRequest(POST, apiUrl, null, requestData).then(function (response) {
-             return response.status === 200;
-           });
-         };
-       }])
+           this.getFullProjects = function (requestParams, pageCounter) {
+             var url = '/projects?page=' + pageCounter;
+
+             return sendAuthorizationSaveRequest(GET, url, requestParams).then(function (response) {
+               return response.data;
+             });
+           };
+
+           this.getProject = function (projectId) {
+             var url = '/projects/' + projectId;
+
+             return sendAuthorizationSaveRequest(GET, url).then(function (response) {
+               return response.data;
+             });
+           };
+
+           this.addProject = function (requestData) {
+             var url = '/projects';
+
+             return sendAuthorizationSaveRequest(POST, url, null, requestData).then(function (response) {
+               return response.status === 200;
+             });
+           };
+
+           this.joinToProject = function (projectId, userId, projectDeveloperRole) {
+             var url = '/projects/' + projectId + '/developer/' + userId;
+
+             return sendAuthorizationSaveRequest(POST, url, null, projectDeveloperRole);
+           };
+
+           this.escapeFromProject = function (projectId, userId) {
+             var url = '/projects/' + projectId + '/developer/' + userId;
+
+             return sendAuthorizationSaveRequest(DELETE, url);
+           };
+
+
+           // other
+           this.signUp = function (requestData) {
+             var url = '/developers';
+
+             return sendAuthorizationSaveRequest(POST, url, null, JSON.stringify(requestData))
+               .then(function (responseObject) {
+                 return responseObject;
+               });
+           };
+
+           this.signIn = function (requestData) {
+             var url = '/login';
+
+             return sendAuthorizationSaveRequest(POST, url, null, requestData).then(function (responseObject) {
+               if (responseObject.status === 200) {
+                 TokenService.setToken(responseObject.data);
+               }
+
+               return responseObject.status === 200;
+             });
+           };
+
+           this.order = function (requestData) {
+             var apiUrl = 'http://api.lod-misis.ru/orders';
+
+             return sendAuthorizationSaveRequest(POST, apiUrl, null, requestData).then(function (response) {
+               return response.status === 200;
+             });
+           };
+
+           this.contact = function (requestData) {
+             var apiUrl = 'http://api.lod-misis.ru/contact';
+
+             return sendAuthorizationSaveRequest(POST, apiUrl, null, requestData).then(function (response) {
+               return response.status === 200;
+             });
+           };
+         }])
 
 
        .service('DateService', [function () {
@@ -326,18 +343,18 @@ angular.module('LodSite.services', [])
            var INCLINED_YEAR_WORD = getInclinedWord(residenceTimeObject.years, [' год', ' года', ' лет']);
 
            if (residenceTimeObject.days < 20 && residenceTimeObject.days !== 0) {
-             formattedTime = residenceTimeObject.days + INCLINED_DAY_WORD ;
+             formattedTime = residenceTimeObject.days + INCLINED_DAY_WORD;
            }
            if (residenceTimeObject.weeks) {
              formattedTime = residenceTimeObject.weeks + INCLINED_WEEK_WORD;
            }
            if (residenceTimeObject.months) {
              formattedTime = residenceTimeObject.months + INCLINED_MONTH_WORD + ' и ' + (residenceTimeObject.days -
-                residenceTimeObject.months * 30) + INCLINED_DAY_WORD;
+               residenceTimeObject.months * 30) + INCLINED_DAY_WORD;
            }
            if (residenceTimeObject.years) {
              formattedTime = residenceTimeObject.years + INCLINED_YEAR_WORD + ' и ' + (residenceTimeObject.months -
-                residenceTimeObject.years * 12) + INCLINED_MONTH_WORD;
+               residenceTimeObject.years * 12) + INCLINED_MONTH_WORD;
            }
 
            return formattedTime;

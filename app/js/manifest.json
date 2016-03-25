@@ -6,5 +6,10 @@
     "color": "#090706",
     "show_title": "none"
   },
-  "feed": "http://lod-misis.ru/app/js/feed.json"
+  "feed": {
+    "notifications": [
+      {"%BELL%": "1"}
+    ],
+    "refresh_time" :  "10"
+  }
 }

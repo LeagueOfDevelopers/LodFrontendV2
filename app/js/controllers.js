@@ -10,14 +10,14 @@ angular.module('LodSite.controllers', [])
          $rootScope.dataLoading = null;
          $scope.DEFAULT_PROJECT_LANDSCAPE = '/app/imgs/project-cap-image.png';
          $scope.DEFAULT_DEVELOPER_PHOTO = '/app/imgs/developer-default-photo.png';
-         
+
          $rootScope.$on('userRole_changed', function (e, args) {
            $scope.userRole = args.userRole;
          });
          $scope.$on('change_title', function (e, args) {
            $scope.title = args.title !== undefined && args.title.length ? args.title : defaultTitle;
          });
-         $scope.$on('$viewContentLoaded', setPaddingBottom );
+         $scope.$on('$viewContentLoaded', setPaddingBottom);
          $scope.$on('$locationChangeSuccess', function () {
            angular.element(window).scrollTop(0);
          });
@@ -74,7 +74,7 @@ angular.module('LodSite.controllers', [])
 
        //developers
        .controller('RandomDevelopersCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
-         var numberOfDevelopers = 6;
+         var numberOfDevelopers = getDevsSectionAmount();
 
          ApiService.getRandomDevelopers(numberOfDevelopers)
                    .then(function (data) {
@@ -98,7 +98,8 @@ angular.module('LodSite.controllers', [])
                        if (!data || data.length === 0) {
                          $scope.isMoreDevs = false;
                        } else {
-                         $scope.fullDevelopers = $scope.fullDevelopers.concat(data);;
+                         $scope.fullDevelopers = $scope.fullDevelopers.concat(data);
+                         ;
                        }
                      });
          };
@@ -299,7 +300,7 @@ angular.module('LodSite.controllers', [])
 
        //projects
        .controller('RandomProjectsCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
-         var numberOfProjects = 6;
+         var numberOfProjects = getProjsSectionAmount();
 
          ApiService.getRandomProjects(numberOfProjects).then(function (data) {
            $scope.randomProjects = data;

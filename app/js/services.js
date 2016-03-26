@@ -329,32 +329,36 @@ angular.module('LodSite.services', [])
          };
 
          this.getFormattedTime = function (registrationDate) {
-           var formattedTime = 'первый день';
            var residenceTimeObject = self.getResidenceTimeObject(registrationDate);
+
+           var formattedTime = 'первый день';
+
+           var daysReminder = residenceTimeObject.days - residenceTimeObject.months * 30;
+           var monthsReminder = residenceTimeObject.months -  residenceTimeObject.years * 12;
+
+           var inclinedDayWord = getInclinedWord(residenceTimeObject.days, [' день', ' дня', ' дней']);
+           var inclinedWeekWord = getInclinedWord(residenceTimeObject.weeks, [' неделю', ' недели', ' недель']);
+           var inclinedMonthWord = getInclinedWord(residenceTimeObject.months, [' месяц', ' месяца', ' месяцев']);
+           var inclinedYearWord = getInclinedWord(residenceTimeObject.years, [' год', ' года', ' лет']);
+           var inclinedDaysRemainderWord = getInclinedWord(daysReminder, [' день', ' дня', ' дней']);
+           var inclinedMonthsRemainderWord = getInclinedWord(monthsReminder, [' месяц', ' месяца', ' месяцев']);
 
            function getInclinedWord(value, declensionArray) {
              var cases = [2, 0, 1, 1, 1, 2];
              return declensionArray[(value % 100 > 4 && value % 100 < 20) ? 2 : cases[(value % 10 < 5) ? value % 10 : 5]];
            }
 
-           var INCLINED_DAY_WORD = getInclinedWord(residenceTimeObject.days, [' день', ' дня', ' дней']);
-           var INCLINED_WEEK_WORD = getInclinedWord(residenceTimeObject.weeks, [' неделю', ' недели', ' недель']);
-           var INCLINED_MONTH_WORD = getInclinedWord(residenceTimeObject.months, [' месяц', ' месяца', ' месяцев']);
-           var INCLINED_YEAR_WORD = getInclinedWord(residenceTimeObject.years, [' год', ' года', ' лет']);
-
            if (residenceTimeObject.days < 20 && residenceTimeObject.days !== 0) {
-             formattedTime = residenceTimeObject.days + INCLINED_DAY_WORD;
+             formattedTime = residenceTimeObject.days + inclinedDayWord;
            }
            if (residenceTimeObject.weeks) {
-             formattedTime = residenceTimeObject.weeks + INCLINED_WEEK_WORD;
+             formattedTime = residenceTimeObject.weeks + inclinedWeekWord;
            }
            if (residenceTimeObject.months) {
-             formattedTime = residenceTimeObject.months + INCLINED_MONTH_WORD + ' и ' + (residenceTimeObject.days -
-               residenceTimeObject.months * 30) + INCLINED_DAY_WORD;
+             formattedTime = residenceTimeObject.months + inclinedMonthWord + ' и ' + daysReminder + inclinedDaysRemainderWord;
            }
            if (residenceTimeObject.years) {
-             formattedTime = residenceTimeObject.years + INCLINED_YEAR_WORD + ' и ' + (residenceTimeObject.months -
-               residenceTimeObject.years * 12) + INCLINED_MONTH_WORD;
+             formattedTime = residenceTimeObject.years + inclinedYearWord + ' и ' + monthsReminder + inclinedMonthsRemainderWord;
            }
 
            return formattedTime;

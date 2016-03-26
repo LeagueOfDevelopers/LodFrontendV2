@@ -97,7 +97,7 @@ angular.module('LodSite.services', [])
              }
              var responsePromise = sendRequest(method, apiUrl, requestParams, requestData, token);
 
-             //show Spinner if request duration > 500ms
+             //show Spinner if request duration > 150ms
              $timeout(function onSpinner() {
                if($rootScope.dataLoading !== false){
                  $rootScope.dataLoading = true;

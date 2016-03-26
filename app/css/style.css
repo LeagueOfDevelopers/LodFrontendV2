@@ -718,7 +718,7 @@ header {
 .developer-info__item-text {
   border-radius: 0 0 5px 5px;
   box-sizing: border-box;
-  min-height: 43px;
+  min-height: 70px;
 }
 
 .residence-time{
@@ -2582,6 +2582,9 @@ footer {
     margin: 0;
     top: 0;
     right: 40px;
+  }
+  .developer-info__item-text {
+    min-height: 43px;
   }
 
   .developer-name {

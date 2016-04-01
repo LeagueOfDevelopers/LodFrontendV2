@@ -258,6 +258,14 @@ angular.module('LodSite.services', [])
              });
            };
 
+           this.editProject = function (projectId, requestData) {
+             var url = '/projects/' + projectId;
+
+             return sendAuthorizationSaveRequest(PUT, url, null, requestData).then(function (response) {
+               return response.status === 200;
+             });
+           };
+
            this.joinToProject = function (projectId, userId, projectDeveloperRole) {
              var url = '/projects/' + projectId + '/developer/' + userId;
 

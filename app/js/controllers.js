@@ -504,7 +504,7 @@ angular.module('LodSite.controllers', [])
       $scope.currentState = 'filling';
       $scope.newProject = {
         Name: '',
-        ProjectTypes: [],
+        ProjectType: [],
         Info: '',
         AccessLevel: '0',
         ProjectStatus: '0',
@@ -627,7 +627,7 @@ angular.module('LodSite.controllers', [])
         var j = 0;
         for (var i = 0; i < $scope.categories.length; i++) {
           if ($scope.categories[i].status) {
-            $scope.newProject.ProjectTypes[j] = i;
+            $scope.newProject.ProjectType[j] = i;
             j++;
           }
         }
@@ -791,20 +791,16 @@ angular.module('LodSite.controllers', [])
 
       //   PUT REQUEST
       $scope.editProject = function () {
-
-        $scope.editedProject.Screenshots = $scope.images.map(function (image) {
-          return image.url;
-        });
-
         var j = 0;
+
         for (var i = 0; i < $scope.categories.length; i++) {
           if ($scope.categories[i].status) {
-            $scope.editedProject.ProjectTypes[j] = i;
+            $scope.editedProject.ProjectType[j] = i;
             j++;
           }
         }
 
-        ApiService.editProject($scope.editedProject).then(function (isSuccess) {
+        ApiService.editProject(projectId, $scope.editedProject).then(function (isSuccess) {
           if (isSuccess) {
             $scope.currentState = 'success';
             $timeout(function () {

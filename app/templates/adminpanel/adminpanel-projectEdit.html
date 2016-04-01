@@ -1,9 +1,9 @@
 <div class="profile-settings__wrap">
-  <h1 class="profile-settings__heading headline">Добавление проекта</h1>
+  <h1 class="profile-settings__heading headline">Редактирование проекта</h1>
 
   <div class="dividing-line"></div>
 
-  <form name="addProjectForm">
+  <form name="editProjectForm">
 
     <div class="profile-settings__top-part">
 
@@ -108,9 +108,9 @@
         </p>
       </div>
 
-      <button class="profile-settings__submit adding-project__submit" ng-disabled="addProjectForm.$invalid"
-              ng-click="registerProject()">
-        Добавить
+      <button class="profile-settings__submit adding-project__submit" ng-disabled="editProjectForm.$invalid"
+              ng-click="editProject()">
+        Сохранить
       </button>
     </div>
 

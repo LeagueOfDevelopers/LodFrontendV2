@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Cuprum:400,700|PT+Sans:400,700|Noto+Serif:400,700&subset=latin,cyrillic) all;
+
 /* CSS RESET */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a,
 abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike,
@@ -720,7 +721,7 @@ header {
   min-height: 43px;
 }
 
-.residence-time{
+.residence-time {
   display: inline-block;
   border: 1px solid #f1f1f1;
   padding: 0 5px;
@@ -1700,7 +1701,7 @@ footer {
 }
 
 .profile-settings__notification--activated, .adding-project__categories__item--activated {
-  background-color: #2980b9;
+  background-color: #2980b9 !important;
 }
 
 .profile-settings__notification__text {
@@ -1726,7 +1727,7 @@ footer {
 
 .adding-project__avatar-img {
   background-size: contain;
-  background-image: url("../imgs/progect-default-photo.svg");
+  background-color: #000000;
 }
 
 .adding-project__upload-wrap {
@@ -1868,12 +1869,11 @@ footer {
   padding: 0 15px;
 }
 
-
 .projects__all-project {
   text-align: center;
   background: white;
   max-width: 400px;
-  margin: 0 auto 30px auto;
+  margin: 0 auto 30px;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, .15);
   cursor: pointer;
 }
@@ -1884,6 +1884,7 @@ footer {
   max-width: 100%;
   height: auto;
   object-fit: cover;
+  background-color: #000000;
 }
 
 .all-project__status-wrap {
@@ -2306,6 +2307,7 @@ footer {
     margin-top: 20px;
     height: 210px;
     max-width: 750px;
+    width: 90%;
   }
 
   .all-project__photo {
@@ -2409,21 +2411,22 @@ footer {
     opacity: .7;
   }
 
-  .separator{
-    display:inline-block;
+  .separator {
+    display: inline-block;
   }
 
-  .log-in, .log-out{
+  .log-in, .log-out {
     display: inline-block;
     width: 0.8em;
     height: 0.8em;
   }
 
-  .log-in{
+  .log-in {
     background: url("/app/imgs/log-in-icon.png") no-repeat center;
     background-size: contain;
   }
-  .log-out{
+
+  .log-out {
     background: url("/app/imgs/log-out-icon.png") no-repeat center;
     background-size: contain;
   }
@@ -2587,7 +2590,7 @@ footer {
   }
 
   .residence-time {
-     margin: 0;
+    margin: 0;
   }
 
   /*************************
@@ -3204,7 +3207,7 @@ footer {
      ADMIN PROJECTS-PAGE
   *************************/
   .projects__all-project {
-    max-width: 580px;
+    width: 70%;
   }
 
   .all-projects__section {
@@ -3290,6 +3293,24 @@ footer {
     height: 141px;
   }
 
+  /*************************
+     ADMIN PROJECTS-PAGE
+  *************************/
+  .all-projects__section {
+    text-align: center;
+  }
+
+  .all-projects-page {
+    display: inline-block;
+    text-align: left;
+    width: 1220px;
+  }
+
+  .projects__all-project {
+    display: inline-block;
+    margin: 15px;
+    width: 580px;
+  }
 }
 
 @media only screen and (min-width: 1700px) {
@@ -3318,5 +3339,17 @@ footer {
 
   .profile-settings__top-part__inputs, .profile-settings__middle-part, .profile-settings__bottom-part {
     width: 1000px;
+  }
+
+  /*************************
+     ADMIN PROJECTS-PAGE
+  *************************/
+  .all-projects-page {
+    width: 1400px;
+  }
+
+  .projects__all-project {
+    margin: 25px;
+    width: 650px;
   }
 }

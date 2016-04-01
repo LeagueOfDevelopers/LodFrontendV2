@@ -443,7 +443,7 @@ angular.module('LodSite.controllers', [])
 
 
        //admin
-       .controller('AdminPanelCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
+       .controller('AdminPanelCtrl', ['$scope', '$state', 'ApiService', function ($scope, $state, ApiService) {
 
          $scope.$emit('toggle_black', {iBblack: true});
          $scope.$emit('change_title', {
@@ -462,6 +462,27 @@ angular.module('LodSite.controllers', [])
              return $state.go('index');
            }
            $scope.fullProjects = [];
+           $scope.isMoreProjects = true;
+           var pageCounter = 0;
+
+           $scope.addProjects = function () {
+             pageCounter++;
+             $scope.updateProjects();
+           };
+
+           $scope.updateProjects = function () {
+             ApiService.getFullProjects(null, pageCounter)
+               .then(function (data) {
+                 if (!data || data.length === 0) {
+                   $scope.isMoreProjects = false;
+                 } else {
+                   $scope.fullProjects = $scope.fullProjects.concat(data);
+                   $scope.isMoreProjects = true;
+                 }
+               })
+           };
+
+           $scope.updateProjects();
 
            $scope.$on('userRole_changed', function (e, args) {
              role = TokenService.getRole();
@@ -476,14 +497,13 @@ angular.module('LodSite.controllers', [])
            });
          }])
 
-       .controller('AddProjectCtrl', ['$scope',
+       .controller('AddProjectCtrl', ['$scope', '$state',
          'ApiService',
          'TokenService',
          '$timeout',
-         function ($scope, ApiService, TokenService, $timeout) {
-           var token = TokenService.getToken();
+         function ($scope, $state, ApiService, TokenService, $timeout) {
            var role = TokenService.getRole();
-           if (!token || role != 1) {
+           if (role != 1) {
              return $state.go('index');
            }
 
@@ -496,33 +516,6 @@ angular.module('LodSite.controllers', [])
              ProjectStatus: '0',
              LandingImageUri: '',
              Screenshots: []
-           };
-
-           //   POST REQUEST
-           $scope.registerProject = function () {
-
-             $scope.newProject.Screenshots = $scope.images.map(function (image) {
-               return image.url;
-             });
-
-             $scope.newProject.ProjectTypes = $scope.categories.map(function (categoryItem) {
-               if (categoryItem.status) {
-                 return categoryItem.index;
-               }
-             });
-
-             ApiService.addProject($scope.newProject).then(function (isSuccess) {
-               if (isSuccess) {
-                 $scope.currentState = 'success';
-                 $scope.newProgect = {};
-                 $scope.addProjectForm.$setPristine();
-                 $timeout(function () {
-                   $scope.currentState = 'filling';
-                 }, 3000);
-               } else {
-                 $scope.currentState = 'failed';
-               }
-             });
            };
 
            //   FOR TYPE OF PROJECT
@@ -636,6 +629,36 @@ angular.module('LodSite.controllers', [])
                return $state.go('index');
              }
            });
+
+            //   POST REQUEST
+           $scope.registerProject = function () {
+
+             $scope.newProject.Screenshots = $scope.images.map(function (image) {
+               return image.url;
+             });
+
+             var j = 0;
+             for(var i=0; i<$scope.categories.length; i++) {
+               if($scope.categories[i].status) {
+                 $scope.newProject.ProjectTypes[j] = i;
+                 j++;
+               }
+             }
+
+             ApiService.addProject($scope.newProject).then(function (isSuccess) {
+               if (isSuccess) {
+                 $scope.currentState = 'success';
+                 $scope.newProgect = {};
+                 $scope.addProjectForm.$setPristine();
+                 $timeout(function () {
+                   $scope.currentState = 'filling';
+                 }, 3000);
+               } else {
+                 $scope.currentState = 'failed';
+               }
+             });
+           };
+
 
            $scope.$emit('toggle_black', {isBlack: true});
            $scope.$emit('change_title', {

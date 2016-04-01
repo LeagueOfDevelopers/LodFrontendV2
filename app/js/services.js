@@ -296,7 +296,7 @@ angular.module('LodSite.services', [])
            this.order = function (requestData) {
              var url = '/orders';
 
-             return sendAuthorizationSaveRequest(PUT, url, null, requestData).then(function (response) {
+             return sendAuthorizationSaveRequest(POST, url, null, requestData).then(function (response) {
                return response.status === 200;
              });
            };
@@ -304,7 +304,7 @@ angular.module('LodSite.services', [])
            this.contact = function (requestData) {
              var url = '/contact';
 
-             return sendAuthorizationSaveRequest(PUT, url, null, requestData).then(function (response) {
+             return sendAuthorizationSaveRequest(POST, url, null, requestData).then(function (response) {
                return response.status === 200;
              });
            };

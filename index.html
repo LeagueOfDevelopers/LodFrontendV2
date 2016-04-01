@@ -46,10 +46,10 @@
   <base href="/"/>
 </head>
 <body ng-controller="AppCtrl" ng-cloak>
-  <!--<div class="loader" ng-hide="isLoaded">-->
-  <!--<div class="loading"></div>-->
-  <!--<div class="blackout"></div>-->
-  <!--</div>-->
+  <div class="loader" ng-show="dataLoading">
+  <div class="loading"></div>
+  <div class="blackout"></div>
+  </div>
   <div class="wrapper">
     <page-header ng-class="{'header--black': isBlack}"></page-header>
     <div class="content">

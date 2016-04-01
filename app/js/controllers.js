@@ -7,6 +7,7 @@ angular.module('LodSite.controllers', [])
        //main
        .controller('PageCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
          var defaultTitle = 'Лига Разработчиков НИТУ МИСиС';
+         $rootScope.dataLoading = null;
          $scope.DEFAULT_PROJECT_LANDSCAPE = '/app/imgs/project-cap-image.png';
          $scope.DEFAULT_DEVELOPER_PHOTO = '/app/imgs/developer-default-photo.png';
 
@@ -16,7 +17,7 @@ angular.module('LodSite.controllers', [])
          $scope.$on('change_title', function (e, args) {
            $scope.title = args.title !== undefined && args.title.length ? args.title : defaultTitle;
          });
-         $scope.$on('$viewContentLoaded', function () { setPaddingBottom();});
+         $scope.$on('$viewContentLoaded', setPaddingBottom);
          $scope.$on('$locationChangeSuccess', function () {
            angular.element(window).scrollTop(0);
          });
@@ -73,7 +74,7 @@ angular.module('LodSite.controllers', [])
 
        //developers
        .controller('RandomDevelopersCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
-         var numberOfDevelopers = 6;
+         var numberOfDevelopers = getDevsSectionAmount();
 
          ApiService.getRandomDevelopers(numberOfDevelopers)
                    .then(function (data) {
@@ -97,7 +98,8 @@ angular.module('LodSite.controllers', [])
                        if (!data || data.length === 0) {
                          $scope.isMoreDevs = false;
                        } else {
-                         $scope.fullDevelopers = $scope.fullDevelopers.concat(data);;
+                         $scope.fullDevelopers = $scope.fullDevelopers.concat(data);
+                         ;
                        }
                      });
          };
@@ -118,6 +120,7 @@ angular.module('LodSite.controllers', [])
                        });
            }
          });
+
          $scope.$emit('toggle_black', {isBlack: true});
          $scope.$emit('change_title', {title: 'Разработчики - Лига Разработчиков НИТУ МИСиС'});
        }])
@@ -297,7 +300,7 @@ angular.module('LodSite.controllers', [])
 
        //projects
        .controller('RandomProjectsCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
-         var numberOfProjects = 6;
+         var numberOfProjects = getProjsSectionAmount();
 
          ApiService.getRandomProjects(numberOfProjects).then(function (data) {
            $scope.randomProjects = data;

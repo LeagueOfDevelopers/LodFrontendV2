@@ -504,7 +504,7 @@ angular.module('LodSite.controllers', [])
       $scope.currentState = 'filling';
       $scope.newProject = {
         Name: '',
-        ProjectType: [],
+        ProjectTypes: [],
         Info: '',
         AccessLevel: '0',
         ProjectStatus: '0',
@@ -627,7 +627,7 @@ angular.module('LodSite.controllers', [])
         var j = 0;
         for (var i = 0; i < $scope.categories.length; i++) {
           if ($scope.categories[i].status) {
-            $scope.newProject.ProjectType[j] = i;
+            $scope.newProject.ProjectTypes[j] = i;
             j++;
           }
         }

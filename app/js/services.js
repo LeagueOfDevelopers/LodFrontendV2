@@ -294,17 +294,17 @@ angular.module('LodSite.services', [])
            };
 
            this.order = function (requestData) {
-             var apiUrl = 'http://api.lod-misis.ru/orders';
+             var url = '/orders';
 
-             return sendAuthorizationSaveRequest(POST, apiUrl, null, requestData).then(function (response) {
+             return sendAuthorizationSaveRequest(PUT, url, null, requestData).then(function (response) {
                return response.status === 200;
              });
            };
 
            this.contact = function (requestData) {
-             var apiUrl = 'http://api.lod-misis.ru/contact';
+             var url = '/contact';
 
-             return sendAuthorizationSaveRequest(POST, apiUrl, null, requestData).then(function (response) {
+             return sendAuthorizationSaveRequest(PUT, url, null, requestData).then(function (response) {
                return response.status === 200;
              });
            };

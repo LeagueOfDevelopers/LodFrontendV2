@@ -1087,4 +1087,12 @@ angular.module('LodSite.controllers', [])
     $scope.$emit('toggle_black', {isBlack: true});
   }])
 
+  .controller('NotificationsCtrl',['$scope', function ($scope) {
+
+
+    $scope.$emit('change_title', {
+      title: 'Оповещения - Лига Разработчиков НИТУ МИСиС'
+    });
+    $scope.$emit('toggle_black', {isBlack: true});
+  }])
 ;

@@ -140,6 +140,12 @@ angular.module('LodSite', [
                templateUrl: templateUrl('contact', 'contact-index'),
                controller: 'ContactCtrl'
              })
+
+             .state('notifications', {
+               url: '/notifications',
+               templateUrl: templateUrl('notifications', 'notifications-index'),
+               controller: 'NotificationsCtrl'
+             })
          }
        ])
 

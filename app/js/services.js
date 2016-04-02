@@ -363,17 +363,17 @@ angular.module('LodSite.services', [])
              formattedTime = residenceTimeObject.weeks + inclinedWeekWord;
            }
            if (residenceTimeObject.months) {
-             if(daysReminder !== 0){
-               formattedTime = residenceTimeObject.months + inclinedMonthWord + ' и ' + daysReminder + inclinedDaysRemainderWord;
-             }else{
+             if(daysReminder === 0){
                formattedTime = residenceTimeObject.months + inclinedMonthWord;
+             }else{
+               formattedTime = residenceTimeObject.months + inclinedMonthWord + ' и ' + daysReminder + inclinedDaysRemainderWord;
              }
            }
            if (residenceTimeObject.years) {
-             if(monthsReminder !== 0){
-               formattedTime = residenceTimeObject.years + inclinedYearWord + ' и ' + monthsReminder + inclinedMonthsRemainderWord;
+             if(monthsReminder === 0){
+               formattedTime = residenceTimeObject.years + inclinedYearWord;
              }else{
-               formattedTime = residenceTimeObject.years;
+               formattedTime = residenceTimeObject.years + inclinedYearWord + ' и ' + monthsReminder + inclinedMonthsRemainderWord;
              }
            }
 

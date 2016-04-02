@@ -1922,10 +1922,73 @@ footer {
 /************************
   NOTIFICATIONS - PAGE
 ************************/
+.notifications-page{
+  box-sizing: border-box;
+  padding: 1px 15px 20px;
+}
+
 .notifications__header{
-  display: block;
+  margin: 20px auto 10px auto;
+  padding-bottom: 5px;
   text-align: center;
-  color: rgb(136, 143, 149);
+  color: #aaa;
+}
+
+.notifications__notification{
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 40px auto;
+  padding: 1px 0;
+  text-align: center;
+}
+
+.notification__date-and-type {
+  display: inline-block;
+  box-sizing: border-box;
+  position: relative;
+  margin: 0 auto 20px auto;
+  background-color: #2d81b9;
+  border-radius: 5px;
+}
+
+.notification__date {
+  padding: 10px 45px 10px 10px;
+  color: #fff;
+}
+
+.notification__type-icon{
+  position: absolute;
+  box-sizing: border-box;
+  height: 25px;
+  width: 25px;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.notification__information{
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 15px;
+  text-align: left;
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: 2px 2px rgba(0, 0, 0, .15);
+}
+
+.notification__information::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%,-100%);
+  border: 15px solid transparent;
+  border-bottom: 15px solid #fff;
+}
+
+.notifications__see-more-button{
+  display: block;
   margin: 20px auto;
 }
 
@@ -2305,6 +2368,49 @@ footer {
   .all-project__name {
     text-align: left;
   }
+
+  /************************
+  NOTIFICATIONS - PAGE
+************************/
+  .notifications-page{
+    padding: 1px 40px 20px;
+  }
+
+  .notifications__header{
+    width: 600px;
+    margin: 20px auto 20px auto;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .notifications__notification {
+    position: relative;
+    max-width: 600px;
+    padding: 0;
+    text-align:left;
+  }
+
+  .notification__date-and-type {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+  }
+
+  .notification__information {
+    width: calc(100% - 150px);
+    display: inline-block;
+    margin-left: 150px;
+  }
+
+  .notification__information::before {
+    left: 0;
+    top: 0;
+    transform: translate(-100%, 5px);
+    border-bottom: 15px solid transparent;
+    border-right: 15px solid #fff;
+  }
+
 }
 
 @media only screen and (min-width: 1000px) {
@@ -3197,6 +3303,18 @@ footer {
   .all-projects__section {
     padding: 0 30px;
   }
+
+  /************************
+     NOTIFICATIONS - PAGE
+  ************************/
+  .notifications__header{
+    width: 800px;
+  }
+
+  .notifications__notification {
+    max-width: 800px;
+  }
+
 }
 
 @media only screen and (min-width: 1300px) {
@@ -3335,5 +3453,21 @@ footer {
   .projects__all-project {
     margin: 25px;
     width: 650px;
+  }
+
+  /************************
+     NOTIFICATIONS - PAGE
+  ************************/
+  .notifications__header {
+    width: 1000px;
+  }
+
+  .notifications__notification {
+    max-width: 1000px;
+  }
+
+  .notification__information {
+    width: calc(100% - 160px);
+    margin-left: 160px;
   }
 }

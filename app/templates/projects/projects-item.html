@@ -34,7 +34,7 @@
       <div class="info__if-no-developers" style="color:#a4a4a4" ng-bind="replacementText"></div>
       <div class="info__subheading" ng-if="userRole === 0 || userRole === 1">Уровень доступа:</div>
       <div class="info__access" ng-if="userRole === 0 || userRole === 1" ng-switch="project.AccessLevel">
-        <span ng-switch-when="0">Закрытый</span>
+        <span ng-switch-when="1">Закрытый</span>
         <span ng-switch-default>Открытый</span>
       </div>
       <div class="info__links" ng-if="userRole === 0 || userRole === 1">Проект в <a

@@ -1,22 +1,31 @@
-<div class="notifications-page">
-  <div class="notifications-page__new-notifications">
-    <div class="notifications__header">Новые оповещения</div>
-    <div class="notifications__notification">
-      <div class="notification__date-and-type">
-        <div class="notification__date"></div>
-        <div class="notification__type-icon"></div>
+<div class="notifications-page ng-scope">
+  <h1 class="projects-section__headline headline">Оповещения</h1>
+  <div class="dividing-line"></div>
+  <div class="notifications__header">Новые</div>
+  <div class="notifications__notification">
+    <div class="notification__date-and-type">
+      <div class="notification__date">20.03.15</div>
+      <div class="notification__type-icon"
+           style=" background: url('app/imgs/event-icon.png') no-repeat center;
+           background-size: contain;">
       </div>
-      <div class="notification__information"></div>
+    </div>
+    <div class="notification__information">В лиге объявился бла бла бла бла, бла бла блааа бла бла серьезно будет идти
+                                           намного быстрее!
     </div>
   </div>
-  <div class="notifications-page__old-notifications">
-    <div class="notifications__header">Прочитанные оповещения</div>
-    <div class="notifications__notification">
-      <div class="notification__date-and-type">
-        <div class="notification__date"></div>
-        <div class="notification__type-icon"></div>
+  <div class="notifications__header">Прочитанные</div>
+  <div class="notifications__notification">
+    <div class="notification__date-and-type">
+      <div class="notification__date">20.03.15</div>
+      <div class="notification__type-icon"
+           style=" background: url('app/imgs/event-icon.png') no-repeat center;
+           background-size: contain;">
       </div>
-      <div class="notification__information"></div>
+    </div>
+    <div class="notification__information">В лиге объявился бла бла бла бла, бла бла блааа бла бла серьезно будет идти
+                                           намного быстрее!
     </div>
   </div>
+  <a class="notifications__see-more-button button-style"  ng-click="addEvents()">Показать больше</a>
 </div>

@@ -339,7 +339,7 @@ angular.module('LodSite.services', [])
          this.getFormattedTime = function (registrationDate) {
            var residenceTimeObject = self.getResidenceTimeObject(registrationDate);
 
-           var formattedTime = 'первый день';
+           var formattedTime = 'Первый день';
 
            var daysReminder = residenceTimeObject.days - residenceTimeObject.months * 30;
            var monthsReminder = residenceTimeObject.months -  residenceTimeObject.years * 12;

@@ -99,7 +99,7 @@ angular.module('LodSite.services', [])
 
              //show Spinner if request duration > 150ms
              $timeout(function onSpinner() {
-               if($rootScope.dataLoading !== false){
+               if ($rootScope.dataLoading !== false) {
                  $rootScope.dataLoading = true;
                }
              }, 150);
@@ -316,11 +316,47 @@ angular.module('LodSite.services', [])
                return response.status === 200;
              });
            };
+
+           this.getNotifications = function (pageCounter) {
+             var url = '/event/' + pageCounter;
+             function convertNotificationsDates(notifications){
+               for(var i =0; i<notifications.length;i++){
+                 notifications[i].OccuredOn = DateService.getDDMMYYFromISODate(notifications[i].OccuredOn);
+               }
+             }
+
+             return sendAuthorizationSaveRequest(GET, url).then(function (response) {
+               var notifications = response.data;
+               convertNotificationsDates(notifications);
+
+               return notifications;
+             });
+           };
+
+           this.readNotifications = function () {
+             var url = 'event/read';
+             sendAuthorizationSaveRequest(PUT, url);
+           };
+
          }])
 
 
        .service('DateService', [function () {
          var self = this;
+
+         this.getDDMMYYFromISODate = function (ISODate) {
+           var ms = Date.parse(ISODate);
+           var date = new Date(ms);
+           var dd = date.getDate();
+           var mm = date.getMonth() + 1;
+           var yy = date.getFullYear() % 100;
+
+           if (dd < 10) dd = '0' + dd;
+           if (mm < 10) mm = '0' + mm;
+           if (yy < 10) yy = '0' + yy;
+
+           return dd + '.' + mm + '.' + yy;
+         };
 
          this.getFormattedTimeDev = function (developer) {
            developer.residenceTime = self.getFormattedTime(developer.RegistrationDate);
@@ -342,7 +378,7 @@ angular.module('LodSite.services', [])
            var formattedTime = 'Первый день';
 
            var daysReminder = residenceTimeObject.days - residenceTimeObject.months * 30;
-           var monthsReminder = residenceTimeObject.months -  residenceTimeObject.years * 12;
+           var monthsReminder = residenceTimeObject.months - residenceTimeObject.years * 12;
 
            var inclinedDayWord = getInclinedWord(residenceTimeObject.days, [' день', ' дня', ' дней']);
            var inclinedWeekWord = getInclinedWord(residenceTimeObject.weeks, [' неделю', ' недели', ' недель']);
@@ -363,16 +399,16 @@ angular.module('LodSite.services', [])
              formattedTime = residenceTimeObject.weeks + inclinedWeekWord;
            }
            if (residenceTimeObject.months) {
-             if(daysReminder === 0){
+             if (daysReminder === 0) {
                formattedTime = residenceTimeObject.months + inclinedMonthWord;
-             }else{
+             } else {
                formattedTime = residenceTimeObject.months + inclinedMonthWord + ' и ' + daysReminder + inclinedDaysRemainderWord;
              }
            }
            if (residenceTimeObject.years) {
-             if(monthsReminder === 0){
+             if (monthsReminder === 0) {
                formattedTime = residenceTimeObject.years + inclinedYearWord;
-             }else{
+             } else {
                formattedTime = residenceTimeObject.years + inclinedYearWord + ' и ' + monthsReminder + inclinedMonthsRemainderWord;
              }
            }

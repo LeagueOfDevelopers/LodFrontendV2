@@ -1,10 +1,10 @@
-<div class="notifications-page ng-scope">
+<div class="notifications-page">
   <h1 class="projects-section__headline headline">Оповещения</h1>
   <div class="dividing-line"></div>
   <div class="notifications__header">Новые</div>
-  <div class="notifications__notification">
+  <div class="notifications__notification" ng-repeat="notification in notifications">
     <div class="notification__date-and-type">
-      <div class="notification__date">20.03.15</div>
+      <div class="notification__date" ng-bind="notification.OccuredOn"></div>
       <div class="notification__type-icon"
            style=" background: url('app/imgs/event-icon.png') no-repeat center;
            background-size: contain;">
@@ -17,7 +17,7 @@
   <div class="notifications__header">Прочитанные</div>
   <div class="notifications__notification">
     <div class="notification__date-and-type">
-      <div class="notification__date">20.03.15</div>
+      <div class="notification__date" >20.03.15</div>
       <div class="notification__type-icon"
            style=" background: url('app/imgs/event-icon.png') no-repeat center;
            background-size: contain;">

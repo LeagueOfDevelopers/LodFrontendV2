@@ -1087,11 +1087,15 @@ angular.module('LodSite.controllers', [])
     $scope.$emit('toggle_black', {isBlack: true});
   }])
 
-  .controller('NotificationsCtrl',['$scope','$state', 'TokenService', function ($scope, $state, TokenService) {
+  .controller('NotificationsCtrl',['$scope','$state','TokenService','ApiService', function ($scope, $state, TokenService, ApiService) {
     var token = TokenService.getToken();
     if (!token) {
       return $state.go('index');
     }
+    $scope.notifications = [];
+    ApiService.getNotifications(0).then(function(data){
+      $scope.notifications = data;
+    });
 
     $scope.$emit('change_title', {
       title: 'Оповещения - Лига Разработчиков НИТУ МИСиС'

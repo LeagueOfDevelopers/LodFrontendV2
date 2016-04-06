@@ -2870,6 +2870,7 @@ footer {
     padding: 20px;
     max-width: 65%;
     min-height: 160px;
+    border-radius: 5px;
   }
 
   .right-text::before {

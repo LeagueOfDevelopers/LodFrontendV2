@@ -10,7 +10,8 @@
       <div class="profile-settings__avatar-wrapper">
 
         <div class="adding-project__avatar-img"
-             ng-attr-style='background-image: url("{{newProject.LandingImageUri || DEFAULT_PROJECT_LANDSCAPE}}")' dropzone-big-image>
+             ng-attr-style='background-image: url("{{newProject.LandingImageUri || DEFAULT_PROJECT_LANDSCAPE}}")'
+             dropzone-big-image>
 
           <div class="adding-project__file-close adding-project__big-image__file-close"
                ng-if="newProject.LandingImageUri"
@@ -46,6 +47,7 @@
           <option value='0' selected>Запланирован</option>
           <option value='1'>В процессе</option>
           <option value='2'>Заморожен</option>
+          <option value='3'>Завершен</option>
         </select></label>
         <br/>
 
@@ -54,6 +56,30 @@
           <option value="0" selected>Публичный</option>
           <option value="1">Приватный</option>
         </select></label>
+        <br/>
+
+        <div class="profile-settings__input-heading adding-project__input-heading">Разработчики:</div>
+
+        <div class="adding-developer__button-wrapper">
+          <div class="adding-project__developers" ng-if="chosenDevelopers.length != 0">
+            <div class="adding-project__developer-wrap" ng-repeat="developer in chosenDevelopers">
+              <a class="adding-project__developer" ng-href="{{'/developers/' + developer.UserId}}"
+                 ng-class="{'adding-project__developer--disable': delete}">
+                <div class="adding-project__developer-info">
+                  <div ng-bind="developer.FirstName + ' ' + developer.LastName"></div>
+                  <div ng-bind=" '(' + developer.Role + ')' "></div>
+                </div>
+              </a>
+              <div class="adding-project__developer__delete" ng-mouseenter="delete = true"
+                   ng-mouseleave="delete = false"
+                   ng-click="deleteDeveloper($index)"></div>
+            </div>
+          </div>
+
+          <div class="profile-settings__button adding-developer__button" ng-click="openDevelopersDialog($event)">
+            Добавить
+          </div>
+        </div>
         <br/>
 
         <div class="profile-settings__input-heading adding-project__input-heading">Описание проекта:</div>
@@ -69,7 +95,7 @@
           <div class="adding-project__upload-box adding-project__uploaded-file" ng-repeat="image in images">
             <div class="adding-project__uploaded-file__image-wrap"
                  ng-attr-style="background-image: url('{{image.url}}')">
-              <div class="adding-project__file-close" ng-click="deleteImage(image, $index)"></div>
+              <div class="adding-project__file-close" ng-click="deleteImage($index)"></div>
             </div>
           </div>
 
@@ -116,3 +142,21 @@
 
   </form>
 </div>
+
+<script type="text/ng-template" id="developersTemplate">
+  <div class="modal-window">
+    <div class="modal-window__developers">
+      <div class="modal-window__close-button"
+           ng-click="resetPageCounter(); closeThisDialog('.modal-window__close-button')"></div>
+      <div class="modal-window__developer" ng-repeat="developer in developers"
+           ng-click="chooseDeveloper($index); closeThisDialog('.modal-window__close-button')">
+        <div ng-href="{{'/developers/' + developer.UserId}}"
+             ng-bind="developer.FirstName + ' ' + developer.LastName"></div>
+      </div>
+
+      <a class="modal-window__see-more-button button-style" ng-if="isMoreDevs" ng-click="addDevelopers()">Показать
+                                                                                                          больше</a>
+
+    </div>
+  </div>
+</script>

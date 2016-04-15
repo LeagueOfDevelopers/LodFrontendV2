@@ -176,11 +176,7 @@ angular.module('LodSite.services', [])
            this.getDeveloperForProfileSttings = function (developerId) {
              var url = '/developers/' + developerId;
 
-             return sendAuthorizationSaveRequest(GET, url).then(function setImageCap(response) {
-               if (response.data.BigPhotoUri == null) {
-                 response.data.BigPhotoUri = '/app/imgs/developer-default-photo.png';
-               }
-
+             return sendAuthorizationSaveRequest(GET, url).then(function (response) {
                return response.data;
              })
            };
@@ -196,7 +192,7 @@ angular.module('LodSite.services', [])
            this.getNotificationsForProfileSttings = function (developerId) {
              var url = '/developers/notificationsettings/' + developerId;
 
-             return sendAuthorizationSaveRequest(GET, url).then(function setImageCap(response) {
+             return sendAuthorizationSaveRequest(GET, url).then(function (response) {
                return response.data;
              })
            };
@@ -254,7 +250,10 @@ angular.module('LodSite.services', [])
              var url = '/projects';
 
              return sendAuthorizationSaveRequest(POST, url, null, requestData).then(function (response) {
-               return response.status === 200;
+               return {
+                 isSuccsess: response.status === 200,
+                 projectId: response.data.ProjectId
+               }
              });
            };
 
@@ -363,17 +362,17 @@ angular.module('LodSite.services', [])
              formattedTime = residenceTimeObject.weeks + inclinedWeekWord;
            }
            if (residenceTimeObject.months) {
-             if(daysReminder === 0){
-               formattedTime = residenceTimeObject.months + inclinedMonthWord;
-             }else{
+             if(daysReminder !== 0){
                formattedTime = residenceTimeObject.months + inclinedMonthWord + ' и ' + daysReminder + inclinedDaysRemainderWord;
+             }else{
+               formattedTime = residenceTimeObject.months + inclinedMonthWord;
              }
            }
            if (residenceTimeObject.years) {
-             if(monthsReminder === 0){
-               formattedTime = residenceTimeObject.years + inclinedYearWord;
-             }else{
+             if(monthsReminder !== 0){
                formattedTime = residenceTimeObject.years + inclinedYearWord + ' и ' + monthsReminder + inclinedMonthsRemainderWord;
+             }else{
+               formattedTime = residenceTimeObject.years;
              }
            }
 

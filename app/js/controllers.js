@@ -389,7 +389,7 @@ angular.module('LodSite.controllers', [])
           closeByNavigation: true,
           controller: [
             '$rootScope', '$scope', function ($rootScope, $scope) {
-              $scope.openedScreenshotUrl = $rootScope.openedScreenshot.BigPhotoUri;
+              $scope.openedScreenshotUrl = $rootScope.openedScreenshotUrl;
             }
           ]
         });
@@ -429,7 +429,7 @@ angular.module('LodSite.controllers', [])
             return isProjectMember;
           };
           $scope.openViewerDialog = function (imgIndex) {
-            $rootScope.openedScreenshot = $scope.project.Screenshots[imgIndex];
+            $rootScope.openedScreenshotUrl = $scope.project.Screenshots[imgIndex];
             $scope.openViewer();
           };
 
@@ -445,7 +445,7 @@ angular.module('LodSite.controllers', [])
   //admin
   .controller('AdminPanelCtrl', ['$scope', '$state', 'ApiService', function ($scope, $state, ApiService) {
 
-    $scope.$emit('toggle_black', {iBblack: true});
+    $scope.$emit('toggle_black', {isBlack: true});
     $scope.$emit('change_title', {
       title: 'Административная панель - Лига Разработчиков НИТУ МИСиС'
     });
@@ -494,13 +494,17 @@ angular.module('LodSite.controllers', [])
       });
     }])
 
-  .controller('AddProjectCtrl', ['$scope', '$state', 'ApiService', 'TokenService', '$timeout',
-    function ($scope, $state, ApiService, TokenService, $timeout) {
+  .controller('AddProjectCtrl', ['$scope', '$state', 'ngDialog', 'ApiService', 'TokenService', '$timeout',
+    function ($scope, $state, ngDialog, ApiService, TokenService, $timeout) {
       var role = TokenService.getRole();
       if (role != 1) {
         return $state.go('index');
       }
-
+$scope.delete = false;
+      $scope.images = [];
+      $scope.developers = [];
+      $scope.chosenDevelopers = [];
+      $scope.isMoreDevs = true;
       $scope.currentState = 'filling';
       $scope.newProject = {
         Name: '',
@@ -511,6 +515,7 @@ angular.module('LodSite.controllers', [])
         LandingImageUri: '',
         Screenshots: []
       };
+      var pageCounter = 0;
 
       //   FOR TYPE OF PROJECT
       $scope.categories = [{
@@ -539,8 +544,164 @@ angular.module('LodSite.controllers', [])
         targetCategory.status = !targetCategory.status;
       };
 
+      //   FOR DEVELOPERS
+
+      $scope.resetPageCounter = function () {
+        pageCounter = 0;
+        $scope.developers = [];
+      };
+
+      var inArray = function (value, array, strict) {
+        var found = false, key, strict = !!strict;
+
+        for (key in array) {
+          if ((strict && array[key] === value) || (!strict && array[key] == value)) {
+            found = true;
+            break;
+          }
+        }
+        return found;
+      }
+
+
+      $scope.showFirstPage = function () {
+        ApiService.getFullDevelopers(pageCounter)
+          .then(function (data) {
+            if ($scope.chosenDevelopers.length == 0) {
+              $scope.developers = $scope.developers.concat(data);
+              return;
+            } else {
+              var dataId = data.map(function (dataItem) {
+                return dataItem.UserId;
+              });
+              var chosenDevelopersId = $scope.chosenDevelopers.map(function (developerItem) {
+                return developerItem.UserId;
+              });
+
+              dataId = dataId.filter(function (id) {
+                return !inArray(id, chosenDevelopersId);
+              });
+
+              data = data.filter(function (dataItem) {
+                return inArray(dataItem.UserId, dataId);
+              });
+              if (data.length == 0) {
+                $scope.addDevelopers();
+              } else {
+                $scope.developers = $scope.developers.concat(data);
+              }
+            }
+          });
+      };
+
+      $scope.addDevelopers = function () {
+        pageCounter++;
+        ApiService.getFullDevelopers(pageCounter)
+          .then(function (data) {
+            if (!data || data.length === 0) {
+              $scope.isMoreDevs = false;
+              return;
+            } else if ($scope.chosenDevelopers.length == 0) {
+              $scope.developers = $scope.developers.concat(data);
+              return;
+            } else {
+              var dataId = data.map(function (dataItem) {
+                return dataItem.UserId;
+              });
+              var chosenDevelopersId = $scope.chosenDevelopers.map(function (developerItem) {
+                return developerItem.UserId;
+              });
+
+              dataId = dataId.filter(function (id) {
+                return !inArray(id, chosenDevelopersId);
+              });
+
+              data = data.filter(function (dataItem) {
+                return inArray(dataItem.UserId, dataId);
+              });
+
+              if (data.length == 0) {
+                $scope.addDevelopers();
+              } else {
+                $scope.developers = $scope.developers.concat(data);
+              }
+            }
+          });
+      };
+
+      $scope.$watch("searchText", function (newValue, oldValue) {
+        if (newValue === '') {
+          $scope.resetPageCounter();
+          ApiService.getFullDevelopers(pageCounter)
+            .then(function (data) {
+              $scope.isMoreDevs = true;
+
+              var dataId = data.map(function (dataItem) {
+                return dataItem.UserId;
+              });
+              var chosenDevelopersId = $scope.chosenDevelopers.map(function (developerItem) {
+                return developerItem.UserId;
+              });
+
+              dataId = dataId.filter(function (id) {
+                return !inArray(id, chosenDevelopersId);
+              });
+
+              data = data.filter(function (dataItem) {
+                return inArray(dataItem.UserId, dataId);
+              });
+
+              $scope.developers = $scope.developers.concat(data);
+
+            });
+        } else if (newValue !== oldValue) {
+          ApiService.getFullDevelopersBySearch($scope.searchText)
+            .then(function (data) {
+              $scope.isMoreDevs = false;
+
+              var dataId = data.map(function (dataItem) {
+                return dataItem.UserId;
+              });
+              var chosenDevelopersId = $scope.chosenDevelopers.map(function (developerItem) {
+                return developerItem.UserId;
+              });
+
+              dataId = dataId.filter(function (id) {
+                return !inArray(id, chosenDevelopersId);
+              });
+
+              data = data.filter(function (dataItem) {
+                return inArray(dataItem.UserId, dataId);
+              });
+
+              $scope.developers = $scope.developers.concat(data);
+
+            });
+        }
+      });
+
+      $scope.chooseDeveloper = function (index) {
+        $scope.chosenDevelopers.push($scope.developers[index]);
+        $scope.developers = [];
+        $scope.resetPageCounter();
+      }
+
+      $scope.deleteDeveloper = function (index) {
+        $scope.chosenDevelopers.splice(index, 1);
+      }
+
+      $scope.openDevelopersDialog = function () {
+        $scope.$dialog = ngDialog.open({
+          template: 'developersTemplate',
+          showClose: true,
+          closeByNavigation: true,
+          scope: $scope
+        });
+
+        $scope.showFirstPage();
+      };
+
       //   FOR SMALL IMAGES
-      $scope.images = [];
       $scope.currentUploadStateImage = "waiting"; // waiting, uploading
       $scope.currentPercentImage = 0;
 
@@ -575,7 +736,7 @@ angular.module('LodSite.controllers', [])
         }
       );
 
-      $scope.deleteImage = function (fileItem, index) {
+      $scope.deleteImage = function (index) {
         $scope.images.splice(index, 1);
       };
 
@@ -617,6 +778,9 @@ angular.module('LodSite.controllers', [])
         $scope.newProject.LandingImageUri = null;
       };
 
+      //   GET REQUEST
+
+
       //   POST REQUEST
       $scope.registerProject = function () {
 
@@ -632,11 +796,16 @@ angular.module('LodSite.controllers', [])
           }
         }
 
-        ApiService.addProject($scope.newProject).then(function (isSuccess) {
-          if (isSuccess) {
+        ApiService.addProject($scope.newProject).then(function (response) {
+          if (response.isSuccess) {
             $scope.currentState = 'success';
             $scope.newProgect = {};
             $scope.addProjectForm.$setPristine();
+
+            $scope.chosenDevelopers.forEach(function(developer) {
+              ApiService.joinToProject(response.projectId, developer.UserId, JSON.stringify(developer.Role));
+            });
+
             $timeout(function () {
               $scope.currentState = 'filling';
             }, 3000);
@@ -657,9 +826,11 @@ angular.module('LodSite.controllers', [])
       $scope.$emit('change_title', {
         title: 'Добавление проекта - Лига Разработчиков НИТУ МИСиС'
       });
-    }])
+    }
+  ])
 
-  .controller('EditProjectCtrl', ['$scope', '$state', 'ApiService', 'TokenService', '$timeout',
+  .
+  controller('EditProjectCtrl', ['$scope', '$state', 'ApiService', 'TokenService', '$timeout',
     function ($scope, $state, ApiService, TokenService, $timeout) {
       var role = TokenService.getRole();
       if (role != 1) {
@@ -780,7 +951,7 @@ angular.module('LodSite.controllers', [])
         .then(function (data) {
           $scope.editedProject = data;
 
-          for(var i=0; i<$scope.editedProject.ProjectType.length; i++) {
+          for (var i = 0; i < $scope.editedProject.ProjectType.length; i++) {
             $scope.categories[$scope.editedProject.ProjectType[i]].status = true;
           }
 
@@ -1076,7 +1247,7 @@ angular.module('LodSite.controllers', [])
   .controller('EmailConfirmationCtrl', ['$scope', 'ApiService', '$state', function ($scope, ApiService, $state) {
     var token = $state.params.token;
 
-    ApiService.developerConfirmation().then(function (isSuccess) {
+    ApiService.developerConfirmation(token).then(function (isSuccess) {
       if (isSuccess) {
         $scope.isSuccess = isSuccess;
       } else {

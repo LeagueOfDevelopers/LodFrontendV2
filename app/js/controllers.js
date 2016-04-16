@@ -389,7 +389,7 @@ angular.module('LodSite.controllers', [])
           closeByNavigation: true,
           controller: [
             '$rootScope', '$scope', function ($rootScope, $scope) {
-              $scope.openedScreenshotUrl = $rootScope.openedScreenshotUrl;
+              $scope.openedScreenshotUrl = $rootScope.openedScreenshot.BigPhotoUri;
             }
           ]
         });
@@ -429,7 +429,7 @@ angular.module('LodSite.controllers', [])
             return isProjectMember;
           };
           $scope.openViewerDialog = function (imgIndex) {
-            $rootScope.openedScreenshotUrl = $scope.project.Screenshots[imgIndex];
+            $rootScope.openedScreenshot = $scope.project.Screenshots[imgIndex];
             $scope.openViewer();
           };
 

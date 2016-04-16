@@ -65,8 +65,8 @@
 
   <div class="dividing-line"></div>
   <div class='gallery'>
-    <div class="gallery__item" ng-repeat="screenshotUrl in project.Screenshots"
-         style='background: url({{screenshotUrl}}) no-repeat center;  background-size: cover;'
+    <div class="gallery__item" ng-repeat="screenshot in project.Screenshots"
+         style='background: url({{screenshot.SmallPhotoUri}}) no-repeat center;  background-size: cover;'
          ng-click="openViewerDialog($index)"></div>
   </div>
   <script type="text/ng-template" id="viewer">

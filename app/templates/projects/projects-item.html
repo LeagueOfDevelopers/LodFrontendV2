@@ -3,7 +3,7 @@
 
   <div class="full-project-wrapper">
     <div class="full-project__preview"
-         style="background: #000 url({{project.LandingImageUri || DEFAULT_PROJECT_LANDSCAPE}}) no-repeat center; background-size: cover;">
+         style="background: #000 url({{project.LandingImage.SmallPhotoUri || DEFAULT_PROJECT_LANDSCAPE}}) no-repeat center; background-size: cover;">
     <span class="preview__project-status" ng-switch="project.ProjectStatus">
           <span class="status__value" style="background: #795548;" ng-switch-when="0">Запланирован</span>
           <span class="status__value" style="background: #1e88e5;" ng-switch-when="1">В процессе</span>
@@ -61,9 +61,9 @@
   <div class="full-project-issues">
     <span class="project-issues__issue" ng-repeat="projectIssue in projectIssues" ng-bind="projectIssue.Header"></span>
   </div>
-  <h1 class="full-project__headline headline">Скриншоты</h1>
+  <h1 class="full-project__headline headline" ng-if="project.Screenshots.length">Скриншоты</h1>
 
-  <div class="dividing-line"></div>
+  <div class="dividing-line" ng-if="project.Screenshots.length"></div>
   <div class='gallery'>
     <div class="gallery__item" ng-repeat="screenshot in project.Screenshots"
          style='background: url({{screenshot.SmallPhotoUri}}) no-repeat center;  background-size: cover;'

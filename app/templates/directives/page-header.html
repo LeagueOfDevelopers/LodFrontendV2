@@ -12,8 +12,8 @@
     </span>
     </span>
     <span class="header__additional-nav" ng-if="userRole === 0 || userRole === 1">
-      <span class="additional-nav__item" ui-sref="notifications" >Оповещений: 0</span> |
-      <a class="additional-nav__item" ng-href="{{linkToPortfolio}}">Портфолио</a> |
+      <span class="additional-nav__item" ui-sref="notifications">Оповещений: {{notificationsAmount || 0}}</span> |
+      <a class="additional-nav__item">Портфолио</a> |
       <a class="additional-nav__item" ui-sref="developers.edit">Профиль</a> |
       <span class="additional-nav__item" ng-click="signOut()">
         <span class="log-out"></span> Выйти
@@ -35,7 +35,7 @@
   </nav>
 </header>
 <nav class="nav-mobile" ng-show="isOpened">
-  <a class="nav-mobile__item" ui-sref="notifications" ng-if="userRole === 0 || userRole === 1" >Оповещений: 0</a>
+  <a class="nav-mobile__item" ui-sref="notifications" ng-if="userRole === 0 || userRole === 1">Оповещений: 0</a>
   <a class="nav-mobile__item" ng-href="{{linkToPortfolio}}" ng-if="userRole === 0 || userRole === 1">Портфолио</a>
   <a class="nav-mobile__item" ui-sref="developers.edit" ng-if="userRole === 0 || userRole === 1">Профиль</a>
   <a class="nav-mobile__item" ng-if="!(userRole === 0 || userRole === 1)" ng-click="openLoginDialog($event)">Войти</a>

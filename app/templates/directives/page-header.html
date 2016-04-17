@@ -12,7 +12,7 @@
     </span>
     </span>
     <span class="header__additional-nav" ng-if="userRole === 0 || userRole === 1">
-      <span class="additional-nav__item" ui-sref="notifications">Оповещений: {{notificationsAmount || 0}}</span> |
+      <span class="additional-nav__item" ng-bind="'Оповещений: '+ notificationsAmount || 0" ui-sref="notifications"></span> |
       <a class="additional-nav__item">Портфолио</a> |
       <a class="additional-nav__item" ui-sref="developers.edit">Профиль</a> |
       <span class="additional-nav__item" ng-click="signOut()">

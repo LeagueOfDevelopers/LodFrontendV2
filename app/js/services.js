@@ -58,6 +58,7 @@ angular.module('LodSite.services', [])
          };
        }])
 
+
        .service('ApiService', ['$http',
          'TokenService',
          'DateService',
@@ -89,7 +90,7 @@ angular.module('LodSite.services', [])
            };
 
            var sendAuthorizationSaveRequest = function (method, url, requestParams, requestData) {
-             var apiUrl = API_DOMAIN_URL + url;
+             var apiUrl = API_DOMAIN_NAME + url;
              var userRole = TokenService.getRole();
              if (userRole !== false) {
                var token = TokenService.getToken().Token;
@@ -191,7 +192,7 @@ angular.module('LodSite.services', [])
                return response.status === 200;
              });
            };
-
+           
            this.getNotificationsForProfileSttings = function (developerId) {
              var url = '/developers/notificationsettings/' + developerId;
 
@@ -280,9 +281,8 @@ angular.module('LodSite.services', [])
            //notifications
            this.getNotifications = function (pageCounter) {
              var url = '/event/' + pageCounter;
-
-             function convertNotificationsDates(notifications) {
-               for (var i = 0; i < notifications.length; i++) {
+             function convertNotificationsDates(notifications){
+               for(var i =0; i<notifications.length;i++){
                  notifications[i].OccuredOn = DateService.getDDMMYYFromISODate(notifications[i].OccuredOn);
                }
              }
@@ -297,7 +297,6 @@ angular.module('LodSite.services', [])
 
            this.readNotifications = function () {
              var url = 'event/read';
-
              sendAuthorizationSaveRequest(PUT, url);
            };
 
@@ -306,7 +305,7 @@ angular.module('LodSite.services', [])
 
              return sendAuthorizationSaveRequest(GET, url).then(function (response) {
                return response.data
-             }, function () {
+             },function () {
                return 0;
              });
            };
@@ -350,6 +349,7 @@ angular.module('LodSite.services', [])
            };
 
          }])
+
 
        .service('DateService', [function () {
          var self = this;
@@ -440,27 +440,6 @@ angular.module('LodSite.services', [])
 
            return residenceTime;
          };
-       }])
-
-       .service('NotificationsService', ['$rootScope', 'ApiService', function ($rootScope, ApiService) {
-         function getNotificationsNumber() {
-           ApiService.getNotificationsAmount().then(function (notificationsAmount) {
-             $rootScope.notificationsAmount = notificationsAmount;
-           });
-         }
-
-         var NOTIFICATIONS_REQUEST_INTERVAL = 5000,
-             notificationsTimer;
-
-         this.startShowNotificationsAmount = function () {
-           getNotificationsNumber();
-           notificationsTimer = setInterval(getNotificationsNumber, NOTIFICATIONS_REQUEST_INTERVAL);
-         };
-
-         this.stopShowNotificationsAmount = function () {
-           clearInterval(notificationsTimer);
-         };
-
        }])
 
 ;

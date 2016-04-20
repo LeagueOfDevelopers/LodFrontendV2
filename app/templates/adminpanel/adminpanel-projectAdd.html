@@ -10,7 +10,7 @@
       <div class="profile-settings__avatar-wrapper">
 
         <div class="adding-project__avatar-img"
-             ng-attr-style='background-image: url("{{newProject.LandingImageUri || DEFAULT_PROJECT_LANDSCAPE}}")' dropzone-big-image>
+             ng-attr-style='background-image: url("{{newProject.LandingImage.BigPhotoUri || DEFAULT_PROJECT_LANDSCAPE}}")' dropzone-big-image>
 
           <div class="adding-project__file-close adding-project__big-image__file-close"
                ng-if="newProject.LandingImageUri"
@@ -68,7 +68,7 @@
 
           <div class="adding-project__upload-box adding-project__uploaded-file" ng-repeat="image in images">
             <div class="adding-project__uploaded-file__image-wrap"
-                 ng-attr-style="background-image: url('{{image.url}}')">
+                 ng-attr-style="background-image: url('{{image.SmallPhotoUri}}')">
               <div class="adding-project__file-close" ng-click="deleteImage(image, $index)"></div>
             </div>
           </div>

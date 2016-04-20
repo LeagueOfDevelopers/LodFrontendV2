@@ -565,9 +565,7 @@ angular.module('LodSite.controllers', [])
            });
 
            $scope.$on('successUploadingImage', function (ev, args) {
-               $scope.images.push({
-                 url: 'http://api.lod-misis.ru/image/' + args.data
-               });
+               $scope.images.push(args.data);
 
                $scope.currentUploadStateImage = 'waiting';
 
@@ -606,7 +604,11 @@ angular.module('LodSite.controllers', [])
            });
 
            $scope.$on('successUploadingBigImage', function (ev, args) {
-             $scope.newProject.LandingImageUri = 'http://api.lod-misis.ru/image/' + args.data;
+             $scope.newProject.LandingImage = 
+			{
+				BigPhotoUri: 'http://api.lod-misis.ru/image/' + args.data.BigPhotoName,
+				SmallPhotoUri: 'http://api.lod-misis.ru/image/' + args.data.SmallPhotoName
+			}
 
              $scope.currentUploadStateBigImage = 'waiting';
 
@@ -621,7 +623,10 @@ angular.module('LodSite.controllers', [])
            $scope.registerProject = function () {
 
              $scope.newProject.Screenshots = $scope.images.map(function (image) {
-               return image.url;
+               return {
+				BigPhotoUri: 'http://api.lod-misis.ru/image/' + image.BigPhotoName,
+				SmallPhotoUri: 'http://api.lod-misis.ru/image/' + image.SmallPhotoName
+			}
              });
 
              var j = 0;

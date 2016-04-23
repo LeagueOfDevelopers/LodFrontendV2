@@ -1757,10 +1757,6 @@ footer {
   background-color: #2980b9;
 }
 
-.adding-project__developer > .adding-project__developer-info {
-
-}
-
 .adding-project__developer__delete {
   background: url("../imgs/close-button-white.svg") no-repeat center;
   position: absolute;
@@ -1777,18 +1773,6 @@ footer {
   -moz-transform: rotate(90deg);
   -o-transform: rotate(90deg);
   transform: rotate(90deg);
-}
-
-.adding-project__search input {
-  display: block;
-  width: 100%;
-  height: inherit;
-  box-sizing: border-box;
-  padding: 0 40px 0 10px;
-  border: none;
-  font-size: 1em;
-  font-family: 'PT Sans', sans-serif;
-  outline: none;
 }
 
 .adding-project__avatar-img {
@@ -1956,6 +1940,34 @@ footer {
   transition: all .2s ease-out;
 }
 
+.modal-window__close-button:hover {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.modal-window__search {
+  display: inline-block;
+  width: 100%;
+  margin-top: 10px;
+  position: relative;
+}
+
+.modal-window__search input{
+  display: block;
+  width: 60%;
+  min-width: 200px;
+  height: 40px;
+  float: right;
+  box-sizing: border-box;
+  padding: 0 40px 0 10px;
+  border: none;
+  font-size: 1em;
+  font-family: 'PT Sans', sans-serif;
+  outline: none;
+}
+
 .modal-window__developers {
   display: inline-block;
   position: relative;
@@ -1994,7 +2006,30 @@ footer {
 /************************
        ADMINPANEL
 *************************/
+.adminpanel {
+  margin-bottom: 20px;
+}
 
+.adminpanel__points {
+  text-align: center;
+}
+
+.adminpanel__point {
+  display: block;
+  width: 80%;
+  margin: 5px auto;
+  text-align: center;
+  height: 70px;
+  line-height: 70px;
+  background-color: #717171;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  font-size: 1.2em;
+}
+
+.adminpanel__point:hover {
+  background-color: #2980b9;
+}
 
 /************************
      ADMIN PROJECTS-PAGE
@@ -2322,7 +2357,7 @@ footer {
   }
 
   .profile-settings__heading {
-    text-align: left;
+    text-align: center;
     padding-left: 0;
   }
 
@@ -2414,6 +2449,17 @@ footer {
     padding: 9px;
     margin: 4px;
   }
+
+/************************
+       ADMINPANEL
+*************************/
+  .adminpanel__point {
+    display: inline-block;
+    max-width: 400px;
+    height: 90px;
+    line-height: 90px;
+  }
+
 
   /*************************
      ADMIN PROJECTS-PAGE
@@ -3333,6 +3379,16 @@ footer {
     margin: 5px;
   }
 
+/************************
+       ADMINPANEL
+*************************/
+  .adminpanel__point {
+    margin: 0 10px;
+    height: 100px;
+    line-height: 100px;
+    font-size: 1.3em;
+  }
+
   /*************************
      ADMIN PROJECTS-PAGE
   *************************/
@@ -3457,7 +3513,7 @@ footer {
   }
 
   /*****************************
-    PROFILE SETTINGS
+        PROFILE SETTINGS
   *****************************/
   .profile-settings__input, .adding-project__select, .adding-project__textarea, .adding-project__type, .adding-developer__button-wrapper, .adding-project__developers {
     width: 740px;
@@ -3483,6 +3539,10 @@ footer {
     width: 650px;
   }
 
+  /*************************
+       ADDING PROJECT
+  *************************/
+
   .modal-window__close-button {
     width: 35px;
     height: 35px;
@@ -3490,5 +3550,9 @@ footer {
 
   .modal-window__developers {
     padding: 35px;
+  }
+
+  .modal-window__search input{
+    height: 45px;
   }
 }

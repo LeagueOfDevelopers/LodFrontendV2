@@ -10,11 +10,11 @@
       <div class="profile-settings__avatar-wrapper">
 
         <div class="adding-project__avatar-img"
-             ng-attr-style='background-image: url("{{newProject.LandingImageUri || DEFAULT_PROJECT_LANDSCAPE}}")'
+             ng-attr-style='background-image: url("{{newProject.LandingImageUri.SmallPhotoUri || DEFAULT_PROJECT_LANDSCAPE}}")'
              dropzone-big-image>
 
           <div class="adding-project__file-close adding-project__big-image__file-close"
-               ng-if="newProject.LandingImageUri"
+               ng-if="newProject.LandingImageUri.SmallPhotoUri"
                ng-click="deleteBigImage()"></div>
 
           <div class="adding-project__uploading__bar-wrap">
@@ -53,8 +53,8 @@
 
         <div class="profile-settings__input-heading">Уровень доступа:</div>
         <label><select class="adding-project__select" ng-model="newProject.AccessLevel" required>
-          <option value="0" selected>Публичный</option>
-          <option value="1">Приватный</option>
+          <option value="1" selected>Публичный</option>
+          <option value="0">Приватный</option>
         </select></label>
         <br/>
 
@@ -63,16 +63,13 @@
         <div class="adding-developer__button-wrapper">
           <div class="adding-project__developers" ng-if="chosenDevelopers.length != 0">
             <div class="adding-project__developer-wrap" ng-repeat="developer in chosenDevelopers">
-              <a class="adding-project__developer" ng-href="{{'/developers/' + developer.UserId}}"
-                 ng-class="{'adding-project__developer--disable': delete}">
+              <a class="adding-project__developer" ng-href="{{'/developers/' + developer.UserId}}">
                 <div class="adding-project__developer-info">
                   <div ng-bind="developer.FirstName + ' ' + developer.LastName"></div>
                   <div ng-bind=" '(' + developer.Role + ')' "></div>
                 </div>
               </a>
-              <div class="adding-project__developer__delete" ng-mouseenter="delete = true"
-                   ng-mouseleave="delete = false"
-                   ng-click="deleteDeveloper($index)"></div>
+              <div class="adding-project__developer__delete" ng-click="deleteDeveloper($index)"></div>
             </div>
           </div>
 
@@ -94,7 +91,7 @@
 
           <div class="adding-project__upload-box adding-project__uploaded-file" ng-repeat="image in images">
             <div class="adding-project__uploaded-file__image-wrap"
-                 ng-attr-style="background-image: url('{{image.url}}')">
+                 ng-attr-style="background-image: url('{{image.SmallPhotoUri}}')">
               <div class="adding-project__file-close" ng-click="deleteImage($index)"></div>
             </div>
           </div>
@@ -148,6 +145,13 @@
     <div class="modal-window__developers">
       <div class="modal-window__close-button"
            ng-click="resetPageCounter(); closeThisDialog('.modal-window__close-button')"></div>
+
+      <div class="modal-window__search">
+        <input placeholder="Поиск" ng-model="searchText" ng-change="search(searchText)"/>
+
+        <div class="search__icon"></div>
+      </div>
+
       <div class="modal-window__developer" ng-repeat="developer in developers"
            ng-click="chooseDeveloper($index); closeThisDialog('.modal-window__close-button')">
         <div ng-href="{{'/developers/' + developer.UserId}}"

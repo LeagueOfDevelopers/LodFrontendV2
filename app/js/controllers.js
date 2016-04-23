@@ -443,7 +443,18 @@ angular.module('LodSite.controllers', [])
 
 
   //admin
-  .controller('AdminPanelCtrl', ['$scope', '$state', 'ApiService', function ($scope, $state, ApiService) {
+  .controller('AdminPanelCtrl', ['$scope', '$state', 'TokenService', function ($scope, $state, TokenService) {
+    var role = TokenService.getRole();
+    if (role != 1) {
+      return $state.go('index');
+    }
+
+    $scope.$on('userRole_changed', function (e, args) {
+      role = TokenService.getRole();
+      if (role != 1) {
+        return $state.go('index');
+      }
+    });
 
     $scope.$emit('toggle_black', {isBlack: true});
     $scope.$emit('change_title', {
@@ -500,24 +511,25 @@ angular.module('LodSite.controllers', [])
       if (role != 1) {
         return $state.go('index');
       }
-$scope.delete = false;
+
+      var pageCounter = 0;
+      $scope.searchText = '';
       $scope.images = [];
       $scope.developers = [];
       $scope.chosenDevelopers = [];
       $scope.isMoreDevs = true;
       $scope.currentState = 'filling';
-      $scope.newProject = {
-        Name: '',
-        ProjectTypes: [],
-        Info: '',
-        AccessLevel: '0',
-        ProjectStatus: '0',
-        LandingImageUri: '',
-        Screenshots: []
+      var sampleProject = function () {
+        this.Name = '';
+        this.ProjectTypes = [];
+        this.Info = '';
+        this.AccessLevel = '0';
+        this.ProjectStatus = '0';
+        this.LandingImageUri = {};
+        this.Screenshots = [];
       };
-      var pageCounter = 0;
+      $scope.newProject = new sampleProject();
 
-      //   FOR TYPE OF PROJECT
       $scope.categories = [{
         category: 'Веб',
         status: false,
@@ -539,6 +551,9 @@ $scope.delete = false;
         status: false,
         index: 4
       }];
+
+      //   FOR TYPE OF PROJECT
+
 
       $scope.toggleCategory = function (targetCategory) {
         targetCategory.status = !targetCategory.status;
@@ -629,33 +644,16 @@ $scope.delete = false;
           });
       };
 
-      $scope.$watch("searchText", function (newValue, oldValue) {
-        if (newValue === '') {
+    /*  $scope.search = function(text) {
+        if (text == '') {
+          $scope.isMoreDevs = true;
+
           $scope.resetPageCounter();
-          ApiService.getFullDevelopers(pageCounter)
-            .then(function (data) {
-              $scope.isMoreDevs = true;
 
-              var dataId = data.map(function (dataItem) {
-                return dataItem.UserId;
-              });
-              var chosenDevelopersId = $scope.chosenDevelopers.map(function (developerItem) {
-                return developerItem.UserId;
-              });
+          $scope.showFirstPage();
 
-              dataId = dataId.filter(function (id) {
-                return !inArray(id, chosenDevelopersId);
-              });
-
-              data = data.filter(function (dataItem) {
-                return inArray(dataItem.UserId, dataId);
-              });
-
-              $scope.developers = $scope.developers.concat(data);
-
-            });
-        } else if (newValue !== oldValue) {
-          ApiService.getFullDevelopersBySearch($scope.searchText)
+        } else if (text != ''){
+          ApiService.getFullDevelopersBySearch(text)
             .then(function (data) {
               $scope.isMoreDevs = false;
 
@@ -674,11 +672,48 @@ $scope.delete = false;
                 return inArray(dataItem.UserId, dataId);
               });
 
+              $scope.developers = data;
+
+            });
+        }
+      };*/
+
+      $scope.$watch("searchText", function (newValue, oldValue) {
+        if (newValue === '') {
+          $scope.resetPageCounter();
+
+          $scope.showFirstPage();
+
+        } else if (newValue !== oldValue) {
+          ApiService.getFullDevelopersBySearch($scope.searchText)
+            .then(function (data) {
+              $scope.isMoreDevs = false;
+
+              var dataId = data.map(function (dataItem) {
+                return dataItem.UserId;
+              });
+              var chosenDevelopersId = $scope.editedProject.ProjectMemberships.map(function (developerItem) {
+                return developerItem.UserId || developerItem.Developerd;
+              });
+
+              dataId = dataId.filter(function (id) {
+                return !inArray(id, chosenDevelopersId);
+              });
+
+              data = data.filter(function (dataItem) {
+                return inArray(dataItem.UserId, dataId);
+              });
+
               $scope.developers = $scope.developers.concat(data);
 
             });
         }
       });
+
+      $scope.$on('searchT', function(event, data) {
+        $scope.searchText = data;
+      });
+
 
       $scope.chooseDeveloper = function (index) {
         $scope.chosenDevelopers.push($scope.developers[index]);
@@ -695,7 +730,10 @@ $scope.delete = false;
           template: 'developersTemplate',
           showClose: true,
           closeByNavigation: true,
-          scope: $scope
+          scope: $scope,
+          controller: [function() {
+            $scope.$emit('searchT', $scope.searchText);
+          }]
         });
 
         $scope.showFirstPage();
@@ -727,7 +765,8 @@ $scope.delete = false;
 
       $scope.$on('successUploadingImage', function (ev, args) {
           $scope.images.push({
-            url: 'http://api.lod-misis.ru/image/' + args.data
+            BigPhotoUri: 'http://api.lod-misis.ru/image/' + args.data.BigPhotoName,
+            SmallPhotoUri: 'http://api.lod-misis.ru/image/' + args.data.SmallPhotoName
           });
 
           $scope.currentUploadStateImage = 'waiting';
@@ -767,7 +806,10 @@ $scope.delete = false;
       });
 
       $scope.$on('successUploadingBigImage', function (ev, args) {
-        $scope.newProject.LandingImageUri = 'http://api.lod-misis.ru/image/' + args.data;
+        $scope.newProject.LandingImageUri = {
+          BigPhotoUri: 'http://api.lod-misis.ru/image/' + args.data.BigPhotoName,
+          SmallPhotoUri: 'http://api.lod-misis.ru/image/' + args.data.SmallPhotoName
+        };
 
         $scope.currentUploadStateBigImage = 'waiting';
 
@@ -775,17 +817,14 @@ $scope.delete = false;
       });
 
       $scope.deleteBigImage = function () {
-        $scope.newProject.LandingImageUri = null;
+        $scope.newProject.LandingImageUri = {};
       };
 
-      //   GET REQUEST
-
-
-      //   POST REQUEST
+      //   POST REQUESTS
       $scope.registerProject = function () {
 
         $scope.newProject.Screenshots = $scope.images.map(function (image) {
-          return image.url;
+          return image;
         });
 
         var j = 0;
@@ -799,12 +838,40 @@ $scope.delete = false;
         ApiService.addProject($scope.newProject).then(function (response) {
           if (response.isSuccess) {
             $scope.currentState = 'success';
-            $scope.newProgect = {};
-            $scope.addProjectForm.$setPristine();
 
-            $scope.chosenDevelopers.forEach(function(developer) {
+            $scope.chosenDevelopers.forEach(function (developer) {
               ApiService.joinToProject(response.projectId, developer.UserId, JSON.stringify(developer.Role));
             });
+
+            pageCounter = 0;
+            $scope.images = [];
+            $scope.developers = [];
+            $scope.chosenDevelopers = [];
+            $scope.isMoreDevs = true;
+            $scope.newProject = new sampleProject();
+            $scope.categories = [{
+              category: 'Веб',
+              status: false,
+              index: 0
+            }, {
+              category: 'Мобильное',
+              status: false,
+              index: 1
+            }, {
+              category: 'Десктопное',
+              status: false,
+              index: 2
+            }, {
+              category: 'Игра',
+              status: false,
+              index: 3
+            }, {
+              category: 'Прочее',
+              status: false,
+              index: 4
+            }];
+
+            $scope.addProjectForm.$setPristine();
 
             $timeout(function () {
               $scope.currentState = 'filling';
@@ -830,17 +897,22 @@ $scope.delete = false;
   ])
 
   .
-  controller('EditProjectCtrl', ['$scope', '$state', 'ApiService', 'TokenService', '$timeout',
-    function ($scope, $state, ApiService, TokenService, $timeout) {
+  controller('EditProjectCtrl', ['$scope', '$state', 'ApiService', 'TokenService', 'ngDialog', '$timeout',
+    function ($scope, $state, ApiService, TokenService, ngDialog, $timeout) {
       var role = TokenService.getRole();
       if (role != 1) {
         return $state.go('index');
       }
 
       var projectId = $state.params.id;
+      var pageCounter = 0;
+
+      $scope.searchText = '';
+      $scope.developers = [];
+      $scope.chosenDevelopers = [];
+      $scope.isMoreDevs = true;
       $scope.currentState = 'filling';
       $scope.editedProject = {};
-      $scope.images = [];
 
       //   FOR TYPE OF PROJECT
       $scope.categories = [{
@@ -869,6 +941,149 @@ $scope.delete = false;
         targetCategory.status = !targetCategory.status;
       };
 
+      //   FOR DEVELOPERS
+
+      $scope.resetPageCounter = function () {
+        pageCounter = 0;
+        $scope.developers = [];
+      };
+
+      var inArray = function (value, array, strict) {
+        var found = false, key, strict = !!strict;
+
+        for (key in array) {
+          if ((strict && array[key] === value) || (!strict && array[key] == value)) {
+            found = true;
+            break;
+          }
+        }
+        return found;
+      }
+
+
+      $scope.showFirstPage = function () {
+        ApiService.getFullDevelopers(pageCounter)
+          .then(function (data) {
+            if ($scope.editedProject.ProjectMemberships.length == 0) {
+              $scope.developers = $scope.developers.concat(data);
+              return;
+            } else {
+              var dataId = data.map(function (dataItem) {
+                return dataItem.UserId;
+              });
+              var chosenDevelopersId = $scope.editedProject.ProjectMemberships.map(function (developerItem) {
+                return developerItem.UserId;
+              });
+
+              dataId = dataId.filter(function (id) {
+                return !inArray(id, chosenDevelopersId);
+              });
+
+              data = data.filter(function (dataItem) {
+                return inArray(dataItem.UserId, dataId);
+              });
+              if (data.length == 0) {
+                $scope.addDevelopers();
+              } else {
+                $scope.developers = $scope.developers.concat(data);
+              }
+            }
+          });
+      };
+
+      $scope.addDevelopers = function () {
+        pageCounter++;
+        ApiService.getFullDevelopers(pageCounter)
+          .then(function (data) {
+            if (!data || data.length === 0) {
+              $scope.isMoreDevs = false;
+              return;
+            } else if ($scope.editedProject.ProjectMemberships.length == 0) {
+              $scope.developers = $scope.developers.concat(data);
+              return;
+            } else {
+              var dataId = data.map(function (dataItem) {
+                return dataItem.UserId;
+              });
+              var chosenDevelopersId = $scope.editedProject.ProjectMemberships.map(function (developerItem) {
+                return developerItem.UserId;
+              });
+
+              dataId = dataId.filter(function (id) {
+                return !inArray(id, chosenDevelopersId);
+              });
+
+              data = data.filter(function (dataItem) {
+                return inArray(dataItem.UserId, dataId);
+              });
+
+              if (data.length == 0) {
+                $scope.addDevelopers();
+              } else {
+                $scope.developers = $scope.developers.concat(data);
+              }
+            }
+          });
+      };
+
+      $scope.$watch("searchText", function (newValue, oldValue) {
+        if (newValue === '') {
+          $scope.resetPageCounter();
+
+          $scope.showFirstPage();
+
+        } else if (newValue !== oldValue) {
+          ApiService.getFullDevelopersBySearch($scope.searchText)
+            .then(function (data) {
+              $scope.isMoreDevs = false;
+
+              var dataId = data.map(function (dataItem) {
+                return dataItem.UserId;
+              });
+              var chosenDevelopersId = $scope.editedProject.ProjectMemberships.map(function (developerItem) {
+                return developerItem.UserId || developerItem.Developerd;
+              });
+
+              dataId = dataId.filter(function (id) {
+                return !inArray(id, chosenDevelopersId);
+              });
+
+              data = data.filter(function (dataItem) {
+                return inArray(dataItem.UserId, dataId);
+              });
+
+              $scope.developers = $scope.developers.concat(data);
+
+            });
+        }
+      });
+
+      $scope.chooseDeveloper = function (index) {
+        $scope.editedProject.ProjectMemberships.push($scope.developers[index]);
+        ApiService.joinToProject($scope.editedProject.ProjectId, $scope.developers[index].UserId, JSON.stringify($scope.developers[index].Role));
+        $scope.developers = [];
+        $scope.resetPageCounter();
+      }
+
+      $scope.deleteDeveloper = function (index) {
+        ApiService.escapeFromProject($scope.editedProject.ProjectId, $scope.editedProject.ProjectMemberships[index].UserId || $scope.editedProject.ProjectMemberships[index].DeveloperId);
+
+        $scope.editedProject.ProjectMemberships.splice(index, 1);
+      }
+
+      $scope.openDevelopersDialog = function () {
+        $scope.$dialog = ngDialog.open({
+          template: 'developersTemplate',
+          showClose: true,
+          closeByNavigation: true,
+          scope: $scope
+        });
+
+        $emit.
+
+        $scope.showFirstPage();
+      };
+
       //   FOR SMALL IMAGES
       $scope.currentUploadStateImage = "waiting"; // waiting, uploading
       $scope.currentPercentImage = 0;
@@ -894,9 +1109,10 @@ $scope.delete = false;
       });
 
       $scope.$on('successUploadingImage', function (ev, args) {
-          $scope.editedProject.Screenshots.push(
-            'http://api.lod-misis.ru/image/' + args.data
-          );
+          $scope.editedProject.Screenshots.push({
+            BigPhotoUri: 'http://api.lod-misis.ru/image/' + args.data.BigPhotoName,
+            SmallPhotoUri: 'http://api.lod-misis.ru/image/' + args.data.SmallPhotoName
+          });
 
           $scope.currentUploadStateImage = 'waiting';
 
@@ -935,7 +1151,10 @@ $scope.delete = false;
       });
 
       $scope.$on('successUploadingBigImage', function (ev, args) {
-        $scope.editedProject.LandingImageUri = 'http://api.lod-misis.ru/image/' + args.data;
+        $scope.newProject.LandingImageUri = {
+          BigPhotoUri: 'http://api.lod-misis.ru/image/' + args.data.BigPhotoName,
+          SmallPhotoUri: 'http://api.lod-misis.ru/image/' + args.data.SmallPhotoName
+        };
 
         $scope.currentUploadStateBigImage = 'waiting';
 
@@ -943,7 +1162,7 @@ $scope.delete = false;
       });
 
       $scope.deleteBigImage = function () {
-        $scope.editedProject.LandingImageUri = null;
+        $scope.editedProject.LandingImageUri = {};
       };
 
       //   GET REQUEST
@@ -974,6 +1193,7 @@ $scope.delete = false;
         ApiService.editProject(projectId, $scope.editedProject).then(function (isSuccess) {
           if (isSuccess) {
             $scope.currentState = 'success';
+
             $timeout(function () {
               $scope.currentState = 'filling';
             }, 3000);

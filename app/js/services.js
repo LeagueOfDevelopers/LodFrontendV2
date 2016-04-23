@@ -251,8 +251,8 @@ angular.module('LodSite.services', [])
 
              return sendAuthorizationSaveRequest(POST, url, null, requestData).then(function (response) {
                return {
-                 isSuccsess: response.status === 200,
-                 projectId: response.data.ProjectId
+                 isSuccess: response.status === 200,
+                 projectId: response.data
                }
              });
            };

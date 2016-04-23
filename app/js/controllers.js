@@ -686,7 +686,7 @@ angular.module('LodSite.controllers', [])
        }
        };*/
 
-      $scope.$watch("searchText", function (newValue, oldValue) {
+      /*$scope.$watch("searchText", function (newValue, oldValue) {
         if (newValue === '') {
           $scope.resetPageCounter();
 
@@ -716,7 +716,7 @@ angular.module('LodSite.controllers', [])
 
             });
         }
-      });
+      });*/
 
       $scope.$on('searchT', function (event, data) {
         $scope.searchText = data;
@@ -739,9 +739,6 @@ angular.module('LodSite.controllers', [])
           showClose: true,
           closeByNavigation: true,
           scope: $scope,
-          controller: [function () {
-            $scope.$emit('searchT', $scope.searchText);
-          }]
         });
 
         $scope.showFirstPage();
@@ -1033,7 +1030,7 @@ angular.module('LodSite.controllers', [])
           });
       };
 
-      $scope.$watch("searchText", function (newValue, oldValue) {
+      /*$scope.$watch("searchText", function (newValue, oldValue) {
         if (newValue === '') {
           $scope.resetPageCounter();
 
@@ -1063,7 +1060,7 @@ angular.module('LodSite.controllers', [])
 
             });
         }
-      });
+      });*/
 
       $scope.chooseDeveloper = function (index) {
         $scope.editedProject.ProjectMemberships.push($scope.developers[index]);
@@ -1085,9 +1082,6 @@ angular.module('LodSite.controllers', [])
           closeByNavigation: true,
           scope: $scope
         });
-
-        $emit.
-
           $scope.showFirstPage();
       };
 

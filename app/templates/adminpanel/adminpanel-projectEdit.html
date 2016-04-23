@@ -63,7 +63,7 @@
         <div class="adding-developer__button-wrapper">
           <div class="adding-project__developers" ng-if="editedProject.ProjectMemberships.length != 0">
             <div class="adding-project__developer-wrap" ng-repeat="developer in editedProject.ProjectMemberships">
-              <a class="adding-project__developer" ng-href="{{'/developers/' + developer.UserId}}">
+              <a class="adding-project__developer" ng-href="{{'/developers/' + (developer.UserId||developer.DeveloperId)}}">
                 <div class="adding-project__developer-info">
                   <div ng-bind="developer.FirstName + ' ' + developer.LastName"></div>
                   <div ng-bind=" '(' + developer.Role + ')' "></div>

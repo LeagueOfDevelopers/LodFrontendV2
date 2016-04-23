@@ -38,11 +38,12 @@ angular.module('LodSite.controllers', [])
 
 
   //header and footer
-  .controller('HeaderCtrl', ['$scope', 'ngDialog', 'TokenService', '$state',
-    function ($scope, ngDialog, TokenService, $state) {
+  .controller('HeaderCtrl', ['$scope', 'ngDialog', 'TokenService', '$state', 'NotificationsService',
+    function ($scope, ngDialog, TokenService, $state, NotificationsService) {
       $scope.isOpened = false;
+
       if (TokenService.getToken()) {
-        $scope.linkToPortfolio = DOMAIN_NAME + "/developers/" + TokenService.getToken().UserId;
+        $scope.userId = TokenService.getToken().UserId;
       }
 
       $scope.activeToggle = function () { $scope.isOpened = !$scope.isOpened; };
@@ -56,8 +57,12 @@ angular.module('LodSite.controllers', [])
       $scope.signOut = function () {
         TokenService.resetToken();
         TokenService.getRole();
+        NotificationsService.stopShowNotificationsAmount();
         $state.reload();
       };
+      if (TokenService.getToken()) {
+        NotificationsService.startShowNotificationsAmount();
+      }
 
       $scope.$on('$locationChangeSuccess', function () {
         $scope.isOpened = false;
@@ -389,7 +394,7 @@ angular.module('LodSite.controllers', [])
           closeByNavigation: true,
           controller: [
             '$rootScope', '$scope', function ($rootScope, $scope) {
-              $scope.openedScreenshotUrl = $rootScope.openedScreenshotUrl;
+              $scope.openedScreenshotUrl = $rootScope.openedScreenshot.BigPhotoUri;
             }
           ]
         });
@@ -429,7 +434,7 @@ angular.module('LodSite.controllers', [])
             return isProjectMember;
           };
           $scope.openViewerDialog = function (imgIndex) {
-            $rootScope.openedScreenshotUrl = $scope.project.Screenshots[imgIndex];
+            $rootScope.openedScreenshot = $scope.project.Screenshots[imgIndex];
             $scope.openViewer();
           };
 
@@ -519,6 +524,8 @@ angular.module('LodSite.controllers', [])
       $scope.chosenDevelopers = [];
       $scope.isMoreDevs = true;
       $scope.currentState = 'filling';
+      $scope.currentState = 'filling';
+
       var sampleProject = function () {
         this.Name = '';
         this.ProjectTypes = [];
@@ -528,6 +535,7 @@ angular.module('LodSite.controllers', [])
         this.LandingImageUri = {};
         this.Screenshots = [];
       };
+
       $scope.newProject = new sampleProject();
 
       $scope.categories = [{
@@ -644,39 +652,39 @@ angular.module('LodSite.controllers', [])
           });
       };
 
-    /*  $scope.search = function(text) {
-        if (text == '') {
-          $scope.isMoreDevs = true;
+      /*  $scope.search = function(text) {
+       if (text == '') {
+       $scope.isMoreDevs = true;
 
-          $scope.resetPageCounter();
+       $scope.resetPageCounter();
 
-          $scope.showFirstPage();
+       $scope.showFirstPage();
 
-        } else if (text != ''){
-          ApiService.getFullDevelopersBySearch(text)
-            .then(function (data) {
-              $scope.isMoreDevs = false;
+       } else if (text != ''){
+       ApiService.getFullDevelopersBySearch(text)
+       .then(function (data) {
+       $scope.isMoreDevs = false;
 
-              var dataId = data.map(function (dataItem) {
-                return dataItem.UserId;
-              });
-              var chosenDevelopersId = $scope.chosenDevelopers.map(function (developerItem) {
-                return developerItem.UserId;
-              });
+       var dataId = data.map(function (dataItem) {
+       return dataItem.UserId;
+       });
+       var chosenDevelopersId = $scope.chosenDevelopers.map(function (developerItem) {
+       return developerItem.UserId;
+       });
 
-              dataId = dataId.filter(function (id) {
-                return !inArray(id, chosenDevelopersId);
-              });
+       dataId = dataId.filter(function (id) {
+       return !inArray(id, chosenDevelopersId);
+       });
 
-              data = data.filter(function (dataItem) {
-                return inArray(dataItem.UserId, dataId);
-              });
+       data = data.filter(function (dataItem) {
+       return inArray(dataItem.UserId, dataId);
+       });
 
-              $scope.developers = data;
+       $scope.developers = data;
 
-            });
-        }
-      };*/
+       });
+       }
+       };*/
 
       $scope.$watch("searchText", function (newValue, oldValue) {
         if (newValue === '') {
@@ -710,7 +718,7 @@ angular.module('LodSite.controllers', [])
         }
       });
 
-      $scope.$on('searchT', function(event, data) {
+      $scope.$on('searchT', function (event, data) {
         $scope.searchText = data;
       });
 
@@ -731,7 +739,7 @@ angular.module('LodSite.controllers', [])
           showClose: true,
           closeByNavigation: true,
           scope: $scope,
-          controller: [function() {
+          controller: [function () {
             $scope.$emit('searchT', $scope.searchText);
           }]
         });
@@ -896,8 +904,7 @@ angular.module('LodSite.controllers', [])
     }
   ])
 
-  .
-  controller('EditProjectCtrl', ['$scope', '$state', 'ApiService', 'TokenService', 'ngDialog', '$timeout',
+  .controller('EditProjectCtrl', ['$scope', '$state', 'ApiService', 'TokenService', 'ngDialog', '$timeout',
     function ($scope, $state, ApiService, TokenService, ngDialog, $timeout) {
       var role = TokenService.getRole();
       if (role != 1) {
@@ -1081,7 +1088,7 @@ angular.module('LodSite.controllers', [])
 
         $emit.
 
-        $scope.showFirstPage();
+          $scope.showFirstPage();
       };
 
       //   FOR SMALL IMAGES
@@ -1151,7 +1158,7 @@ angular.module('LodSite.controllers', [])
       });
 
       $scope.$on('successUploadingBigImage', function (ev, args) {
-        $scope.newProject.LandingImageUri = {
+        $scope.editedProject.LandingImageUri = {
           BigPhotoUri: 'http://api.lod-misis.ru/image/' + args.data.BigPhotoName,
           SmallPhotoUri: 'http://api.lod-misis.ru/image/' + args.data.SmallPhotoName
         };
@@ -1440,29 +1447,34 @@ angular.module('LodSite.controllers', [])
       });
   }])
 
-  .controller('LoginFormCtrl', ['$scope', 'ApiService', '$state', function ($scope, ApiService, $state) {
-    var date = new Date();
-    var hour = date.getHours();
-    $scope.timeOfDay = (hour > 4 && hour < 12) ? 'morning' :
-                       (hour >= 12 && hour <= 18) ? 'afternoon' :
-                       (hour > 18 && hour < 24) ? 'evening' :
-                       'night';
-    $scope.isNoDeveloper = false;
-    $scope.userLogin = {};
+  .controller('LoginFormCtrl', ['$scope',
+    'ApiService',
+    '$state',
+    'NotificationsService',
+    function ($scope, ApiService, $state, NotificationsService) {
+      var date = new Date();
+      var hour = date.getHours();
+      $scope.timeOfDay = (hour > 4 && hour < 12) ? 'morning' :
+                         (hour >= 12 && hour <= 18) ? 'afternoon' :
+                         (hour > 18 && hour < 24) ? 'evening' :
+                         'night';
+      $scope.isNoDeveloper = false;
+      $scope.userLogin = {};
 
-    $scope.signIn = function () {
-      ApiService.signIn($scope.userLogin).then(function (isSuccess) {
-        if (isSuccess) {
-          $scope.userLogin = {};
-          $scope.loginForm.$setPristine();
-          $scope.closeThisDialog('.form__close-button');
-          $state.reload();
-        } else {
-          $scope.isNoDeveloper = true;
-        }
-      });
-    };
-  }])
+      $scope.signIn = function () {
+        ApiService.signIn($scope.userLogin).then(function (isSuccess) {
+          if (isSuccess) {
+            $scope.userLogin = {};
+            $scope.loginForm.$setPristine();
+            $scope.closeThisDialog('.form__close-button');
+            NotificationsService.startShowNotificationsAmount();
+            $state.reload();
+          } else {
+            $scope.isNoDeveloper = true;
+          }
+        });
+      };
+    }])
 
   .controller('EmailConfirmationCtrl', ['$scope', 'ApiService', '$state', function ($scope, ApiService, $state) {
     var token = $state.params.token;
@@ -1478,4 +1490,23 @@ angular.module('LodSite.controllers', [])
     $scope.$emit('toggle_black', {isBlack: true});
   }])
 
+  .controller('NotificationsCtrl', ['$scope',
+    '$state',
+    'TokenService',
+    'ApiService',
+    function ($scope, $state, TokenService, ApiService) {
+      var token = TokenService.getToken();
+      if (!token) {
+        return $state.go('index');
+      }
+      $scope.notifications = [];
+      ApiService.getNotifications(0).then(function (data) {
+        $scope.notifications = data;
+      });
+
+      $scope.$emit('change_title', {
+        title: 'Оповещения - Лига Разработчиков НИТУ МИСиС'
+      });
+      $scope.$emit('toggle_black', {isBlack: true});
+    }])
 ;

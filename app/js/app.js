@@ -140,57 +140,63 @@ angular.module('LodSite', [
                templateUrl: templateUrl('contact', 'contact-index'),
                controller: 'ContactCtrl'
              })
+
+             .state('notifications', {
+               url: '/notifications',
+               templateUrl: templateUrl('notifications', 'notifications-index'),
+               controller: 'NotificationsCtrl'
+             })
          }
        ])
 
 ;
 
-var DOMAIN_NAME = 'http://lod-misis.ru';
-var API_DOMAIN_NAME = 'http://api.lod-misis.ru';
+var DOMAIN_NAME = 'lod-misis.ru';
+var DOMAIN_URL = 'http://'+ DOMAIN_NAME;
+var API_DOMAIN_URL = 'http://api.'+ DOMAIN_NAME;
 var numberOfProjects = null;
+
 // other functions
 function templateUrl(module, name) {
   return 'app/templates/' + module + '/' + name + '.html?' + Math.random();
 }
-
-function getDevsSectionAmount(){
+function getDevsSectionAmount() {
   var _devsAmount = 4;
   var viewportWidth = $(window).width();
 
-  if(viewportWidth <= 640){
+  if (viewportWidth <= 640) {
     _devsAmount = 4;
-  }else if(viewportWidth > 640 && viewportWidth <= 890){
+  } else if (viewportWidth > 640 && viewportWidth <= 890) {
     _devsAmount = 4;
-  }else if(viewportWidth > 890 && viewportWidth <= 1230){
+  } else if (viewportWidth > 890 && viewportWidth <= 1230) {
     _devsAmount = 6;
-  }else if(viewportWidth > 1230 && viewportWidth <= 1520){
+  } else if (viewportWidth > 1230 && viewportWidth <= 1520) {
     _devsAmount = 4;
-  }else if(viewportWidth > 1520 && viewportWidth <= 1810){
+  } else if (viewportWidth > 1520 && viewportWidth <= 1810) {
     _devsAmount = 5;
   }
 
   return _devsAmount;
 }
-function getProjsSectionAmount(){
+function getProjsSectionAmount() {
   var _projsAmount = 4;
   var viewportWidth = $(window).width();
 
-  if(viewportWidth <= 1000){
+  if (viewportWidth <= 1000) {
     _projsAmount = 3;
-  }else if(viewportWidth > 1000&& viewportWidth <= 1300){
+  } else if (viewportWidth > 1000 && viewportWidth <= 1300) {
     _projsAmount = 4;
-  }else if(viewportWidth > 1300 && viewportWidth <= 1700){
+  } else if (viewportWidth > 1300 && viewportWidth <= 1700) {
     _projsAmount = 3;
-  }else if(viewportWidth > 1700 && viewportWidth <= 2000){
+  } else if (viewportWidth > 1700 && viewportWidth <= 2000) {
     _projsAmount = 4;
   }
 
   return _projsAmount;
 }
 
-function setPaddingBottom(){
+function setPaddingBottom() {
   angular.element('.content').css('padding-bottom', $('footer').innerHeight());
 }
-
 setPaddingBottom();
 setTimeout(setPaddingBottom, 3000);

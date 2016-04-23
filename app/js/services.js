@@ -58,7 +58,6 @@ angular.module('LodSite.services', [])
          };
        }])
 
-
        .service('ApiService', ['$http',
          'TokenService',
          'DateService',
@@ -90,7 +89,7 @@ angular.module('LodSite.services', [])
            };
 
            var sendAuthorizationSaveRequest = function (method, url, requestParams, requestData) {
-             var apiUrl = API_DOMAIN_NAME + url;
+             var apiUrl = API_DOMAIN_URL + url;
              var userRole = TokenService.getRole();
              if (userRole !== false) {
                var token = TokenService.getToken().Token;
@@ -99,7 +98,7 @@ angular.module('LodSite.services', [])
 
              //show Spinner if request duration > 150ms
              $timeout(function onSpinner() {
-               if($rootScope.dataLoading !== false){
+               if ($rootScope.dataLoading !== false) {
                  $rootScope.dataLoading = true;
                }
              }, 150);
@@ -277,6 +276,39 @@ angular.module('LodSite.services', [])
              return sendAuthorizationSaveRequest(DELETE, url);
            };
 
+           //notifications
+           this.getNotifications = function (pageCounter) {
+             var url = '/event/' + pageCounter;
+
+             function convertNotificationsDates(notifications) {
+               for (var i = 0; i < notifications.length; i++) {
+                 notifications[i].OccuredOn = DateService.getDDMMYYFromISODate(notifications[i].OccuredOn);
+               }
+             }
+
+             return sendAuthorizationSaveRequest(GET, url).then(function (response) {
+               var notifications = response.data;
+               convertNotificationsDates(notifications);
+
+               return notifications;
+             });
+           };
+
+           this.readNotifications = function () {
+             var url = 'event/read';
+
+             sendAuthorizationSaveRequest(PUT, url);
+           };
+
+           this.getNotificationsAmount = function () {
+             var url = '/event/count';
+
+             return sendAuthorizationSaveRequest(GET, url).then(function (response) {
+               return response.data
+             }, function () {
+               return 0;
+             });
+           };
 
            // other
            this.signUp = function (requestData) {
@@ -315,11 +347,25 @@ angular.module('LodSite.services', [])
                return response.status === 200;
              });
            };
-         }])
 
+         }])
 
        .service('DateService', [function () {
          var self = this;
+
+         this.getDDMMYYFromISODate = function (ISODate) {
+           var ms = Date.parse(ISODate);
+           var date = new Date(ms);
+           var dd = date.getDate();
+           var mm = date.getMonth() + 1;
+           var yy = date.getFullYear() % 100;
+
+           if (dd < 10) dd = '0' + dd;
+           if (mm < 10) mm = '0' + mm;
+           if (yy < 10) yy = '0' + yy;
+
+           return dd + '.' + mm + '.' + yy;
+         };
 
          this.getFormattedTimeDev = function (developer) {
            developer.residenceTime = self.getFormattedTime(developer.RegistrationDate);
@@ -338,10 +384,10 @@ angular.module('LodSite.services', [])
          this.getFormattedTime = function (registrationDate) {
            var residenceTimeObject = self.getResidenceTimeObject(registrationDate);
 
-           var formattedTime = 'первый день';
+           var formattedTime = 'Первый день';
 
            var daysReminder = residenceTimeObject.days - residenceTimeObject.months * 30;
-           var monthsReminder = residenceTimeObject.months -  residenceTimeObject.years * 12;
+           var monthsReminder = residenceTimeObject.months - residenceTimeObject.years * 12;
 
            var inclinedDayWord = getInclinedWord(residenceTimeObject.days, [' день', ' дня', ' дней']);
            var inclinedWeekWord = getInclinedWord(residenceTimeObject.weeks, [' неделю', ' недели', ' недель']);
@@ -362,17 +408,17 @@ angular.module('LodSite.services', [])
              formattedTime = residenceTimeObject.weeks + inclinedWeekWord;
            }
            if (residenceTimeObject.months) {
-             if(daysReminder !== 0){
-               formattedTime = residenceTimeObject.months + inclinedMonthWord + ' и ' + daysReminder + inclinedDaysRemainderWord;
-             }else{
+             if (daysReminder === 0) {
                formattedTime = residenceTimeObject.months + inclinedMonthWord;
+             } else {
+               formattedTime = residenceTimeObject.months + inclinedMonthWord + ' и ' + daysReminder + inclinedDaysRemainderWord;
              }
            }
            if (residenceTimeObject.years) {
-             if(monthsReminder !== 0){
+             if (monthsReminder === 0) {
+               formattedTime = residenceTimeObject.years + inclinedYearWord;
+             } else {
                formattedTime = residenceTimeObject.years + inclinedYearWord + ' и ' + monthsReminder + inclinedMonthsRemainderWord;
-             }else{
-               formattedTime = residenceTimeObject.years;
              }
            }
 
@@ -393,6 +439,27 @@ angular.module('LodSite.services', [])
 
            return residenceTime;
          };
+       }])
+
+       .service('NotificationsService', ['$rootScope', 'ApiService', function ($rootScope, ApiService) {
+         function getNotificationsNumber() {
+           ApiService.getNotificationsAmount().then(function (notificationsAmount) {
+             $rootScope.notificationsAmount = notificationsAmount;
+           });
+         }
+
+         var NOTIFICATIONS_REQUEST_INTERVAL = 5000,
+             notificationsTimer;
+
+         this.startShowNotificationsAmount = function () {
+           getNotificationsNumber();
+           notificationsTimer = setInterval(getNotificationsNumber, NOTIFICATIONS_REQUEST_INTERVAL);
+         };
+
+         this.stopShowNotificationsAmount = function () {
+           clearInterval(notificationsTimer);
+         };
+
        }])
 
 ;

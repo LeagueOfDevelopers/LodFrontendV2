@@ -147,7 +147,10 @@ angular.module('LodSite.services', [])
              var url = '/developers?page=' + pageCounter;
 
              return sendAuthorizationSaveRequest(GET, url).then(function (response) {
-               return DateService.getFormattedTimeDevsList(response.data);
+               return {
+				Data: DateService.getFormattedTimeDevsList(response.data.Data),
+				CountOfEntities: response.data.CountOfEntities
+			   };
              });
            };
 

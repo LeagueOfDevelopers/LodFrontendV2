@@ -97,11 +97,11 @@ angular.module('LodSite.controllers', [])
       pageCounter++;
       ApiService.getFullDevelopers(pageCounter)
         .then(function (data) {
-          if (!data || data.length === 0) {
+          if (!data || data.Data.length === 0) {
             $scope.isMoreDevs = false;
           } else {
-            $scope.fullDevelopers = $scope.fullDevelopers.concat(data);
-            ;
+            $scope.fullDevelopers = $scope.fullDevelopers.concat(data.Data);
+            $scope.isMoreDevs = $scope.fullDevelopers.length < data.CountOfEntities;
           }
         });
     };
@@ -111,8 +111,8 @@ angular.module('LodSite.controllers', [])
         $scope.resetPageCounter();
         ApiService.getFullDevelopers(pageCounter)
           .then(function (data) {
-            $scope.isMoreDevs = true;
-            $scope.fullDevelopers = data;
+            $scope.fullDevelopers = data.Data;
+            $scope.isMoreDevs = $scope.fullDevelopers.length < data.CountOfEntities;
           });
       } else if (newValue !== oldValue) {
         ApiService.getFullDevelopersBySearch($scope.searchText)
@@ -367,11 +367,11 @@ angular.module('LodSite.controllers', [])
 
       ApiService.getFullProjects(requestParams, pageCounter)
         .then(function (data) {
-          if (!data || data.length === 0) {
+          if (!data || data.Data.length === 0) {
             $scope.isMoreProjects = false;
           } else {
-            $scope.fullProjects = $scope.fullProjects.concat(data);
-            $scope.isMoreProjects = true;
+            $scope.fullProjects = $scope.fullProjects.concat(data.Data);
+            $scope.isMoreProjects = $scope.fullProjects.Length < data.CountOfEntities;
           }
         })
     };

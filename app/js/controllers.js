@@ -208,8 +208,10 @@ angular.module('LodSite.controllers', [])
       });
 
       $scope.$on('successUploadingBigImage', function (ev, args) {
-        $scope.profile.BigPhotoUri = 'http://api.lod-misis.ru/image/' + args.data;
-        $scope.profile.SmallPhotoUri = 'http://api.lod-misis.ru/image/' + args.data;
+        $scope.profile.Image = {
+          BigPhotoUri: 'http://api.lod-misis.ru/image/' + args.data.BigPhotoName,
+          SmallPhotoUri: 'http://api.lod-misis.ru/image/' + args.data.SmallPhotoName
+        };
 
         $scope.currentUploadStateBigPhoto = 'waiting';
 
@@ -217,8 +219,7 @@ angular.module('LodSite.controllers', [])
       });
 
       $scope.deleteBigPhoto = function () {
-        $scope.profile.BigPhotoUri = null;
-        $scope.profile.SmallPhotoUri = null;
+        $scope.profile.Image = null;
       };
 
       /*FOR NOTIFICATIONS*/
@@ -229,8 +230,10 @@ angular.module('LodSite.controllers', [])
       /*GET - REQUESTS*/
       ApiService.getDeveloperForProfileSttings(developerId).then(function (data) {
 
-        $scope.profile.BigPhotoUri = data.PhotoUri;
-        $scope.profile.SmallPhotoUri = data.PhotoUri;
+        $scope.profile.Image = {
+          BigPhotoUri: data.PhotoUri,
+          SmallPhotoUri: data.PhotoUri
+        };
         $scope.profile.InstituteName = data.InstituteName;
         $scope.profile.StudyingDirection = data.StudyingDirection;
         $scope.profile.Specialization = data.Specialization;
@@ -486,11 +489,11 @@ angular.module('LodSite.controllers', [])
       $scope.updateProjects = function () {
         ApiService.getFullProjects(null, pageCounter)
           .then(function (data) {
-            if (!data || data.length === 0) {
+            if (!data || data.Data.length === 0) {
               $scope.isMoreProjects = false;
             } else {
-              $scope.fullProjects = $scope.fullProjects.concat(data);
-              $scope.isMoreProjects = true;
+              $scope.fullProjects = $scope.fullProjects.concat(data.Data);
+              $scope.isMoreProjects = $scope.fullProjects.length < data.CountOfEntities;
             }
           })
       };
@@ -532,7 +535,7 @@ angular.module('LodSite.controllers', [])
         this.Info = '';
         this.AccessLevel = '0';
         this.ProjectStatus = '0';
-        this.LandingImageUri = {};
+        this.LandingImage = {};
         this.Screenshots = [];
       };
 
@@ -811,7 +814,7 @@ angular.module('LodSite.controllers', [])
       });
 
       $scope.$on('successUploadingBigImage', function (ev, args) {
-        $scope.newProject.LandingImageUri = {
+        $scope.newProject.LandingImage = {
           BigPhotoUri: 'http://api.lod-misis.ru/image/' + args.data.BigPhotoName,
           SmallPhotoUri: 'http://api.lod-misis.ru/image/' + args.data.SmallPhotoName
         };
@@ -822,7 +825,7 @@ angular.module('LodSite.controllers', [])
       });
 
       $scope.deleteBigImage = function () {
-        $scope.newProject.LandingImageUri = {};
+        $scope.newProject.LandingImage = {};
       };
 
       //   POST REQUESTS
@@ -1152,7 +1155,7 @@ angular.module('LodSite.controllers', [])
       });
 
       $scope.$on('successUploadingBigImage', function (ev, args) {
-        $scope.editedProject.LandingImageUri = {
+        $scope.editedProject.LandingImage = {
           BigPhotoUri: 'http://api.lod-misis.ru/image/' + args.data.BigPhotoName,
           SmallPhotoUri: 'http://api.lod-misis.ru/image/' + args.data.SmallPhotoName
         };
@@ -1163,7 +1166,7 @@ angular.module('LodSite.controllers', [])
       });
 
       $scope.deleteBigImage = function () {
-        $scope.editedProject.LandingImageUri = {};
+        $scope.editedProject.LandingImage = {};
       };
 
       //   GET REQUEST

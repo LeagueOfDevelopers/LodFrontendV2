@@ -643,7 +643,6 @@ angular.module('LodSite.controllers', [])
               }
 
               $scope.isMoreDevs = ($scope.developers.length + $scope.chosenDevelopers.length) < data.CountOfEntities;
-
             }
           });
       };
@@ -652,7 +651,7 @@ angular.module('LodSite.controllers', [])
         pageCounter++;
         ApiService.getFullDevelopers(pageCounter)
           .then(function (data) {
-            if (!data.Data || data.Data.length === 0) {
+            if (!data || data.Data.length === 0) {
               $scope.isMoreDevs = false;
               return;
             } else if ($scope.chosenDevelopers.length == 0) {
@@ -687,31 +686,38 @@ angular.module('LodSite.controllers', [])
             }
           });
       };
+
       $scope.$watch("searchText", function (newValue, oldValue) {
         if (newValue === '') {
           $scope.resetPageCounter();
           $scope.showFirstPage();
+
         } else if (newValue !== oldValue) {
           ApiService.getFullDevelopersBySearch($scope.searchText)
             .then(function (data) {
-              $scope.isMoreDevs = false;
+              if (data.Message) {
+                $scope.resetPageCounter();
+                $scope.showFirstPage();
+              } else {
+                $scope.isMoreDevs = false;
 
-              var dataId = data.map(function (dataItem) {
-                return dataItem.UserId;
-              });
-              var chosenDevelopersId = $scope.chosenDevelopers.map(function (developerItem) {
-                return developerItem.UserId || developerItem.Developerd;
-              });
+                var dataId = data.map(function (dataItem) {
+                  return dataItem.UserId;
+                });
+                var chosenDevelopersId = $scope.chosenDevelopers.map(function (developerItem) {
+                  return developerItem.UserId;
+                });
 
-              dataId = dataId.filter(function (id) {
-                return !inArray(id, chosenDevelopersId);
-              });
+                dataId = dataId.filter(function (id) {
+                  return !inArray(id, chosenDevelopersId);
+                });
 
-              data = data.filter(function (dataItem) {
-                return inArray(dataItem.UserId, dataId);
-              });
+                data = data.filter(function (dataItem) {
+                  return inArray(dataItem.UserId, dataId);
+                });
 
-              $scope.developers = data;
+                $scope.developers = data;
+              }
             });
         }
       });
@@ -908,7 +914,6 @@ angular.module('LodSite.controllers', [])
       var projectId = $state.params.id;
       var pageCounter = 0;
 
-      $scope.searchText = '';
       $scope.developers = [];
       $scope.chosenDevelopers = [];
       $scope.isMoreDevs = true;
@@ -949,6 +954,16 @@ angular.module('LodSite.controllers', [])
         $scope.developers = [];
       };
 
+      $scope.toggleOpened = function () {
+        $scope.isOpen = !$scope.isOpen;
+
+        if ($scope.isOpen) {
+          $scope.showFirstPage();
+        } else {
+          $scope.resetPageCounter();
+        }
+      };
+
       var inArray = function (value, array, strict) {
         var found = false, key, strict = !!strict;
 
@@ -966,10 +981,13 @@ angular.module('LodSite.controllers', [])
         ApiService.getFullDevelopers(pageCounter)
           .then(function (data) {
             if ($scope.projectMemberships.length == 0) {
-              $scope.developers = $scope.developers.concat(data);
+              $scope.developers = $scope.developers.concat(data.Data);
+
+              $scope.isMoreDevs = ($scope.developers.length + $scope.projectMemberships.length) < data.CountOfEntities;
+
               return;
             } else {
-              var dataId = data.map(function (dataItem) {
+              var dataId = data.Data.map(function (dataItem) {
                 return dataItem.UserId;
               });
               var chosenDevelopersId = $scope.projectMemberships.map(function (developerItem) {
@@ -980,14 +998,16 @@ angular.module('LodSite.controllers', [])
                 return !inArray(id, chosenDevelopersId);
               });
 
-              data = data.filter(function (dataItem) {
+              data.Data = data.Data.filter(function (dataItem) {
                 return inArray(dataItem.UserId, dataId);
               });
-              if (data.length == 0) {
+              if (data.Data.length == 0) {
                 $scope.addDevelopers();
               } else {
-                $scope.developers = $scope.developers.concat(data);
+                $scope.developers = $scope.developers.concat(data.Data);
               }
+
+              $scope.isMoreDevs = ($scope.developers.length + $scope.projectMemberships.length) < data.CountOfEntities;
             }
           });
       };
@@ -996,13 +1016,52 @@ angular.module('LodSite.controllers', [])
         pageCounter++;
         ApiService.getFullDevelopers(pageCounter)
           .then(function (data) {
-            if (!data || data.length === 0) {
+            if (!data || data.Data.length === 0) {
               $scope.isMoreDevs = false;
               return;
             } else if ($scope.projectMemberships.length == 0) {
-              $scope.developers = $scope.developers.concat(data);
+              $scope.developers = $scope.developers.concat(data.Data);
+
+              $scope.isMoreDevs = ($scope.developers.length + $scope.projectMemberships.length) < data.CountOfEntities;
+
               return;
             } else {
+              var dataId = data.Data.map(function (dataItem) {
+                return dataItem.UserId;
+              });
+              var chosenDevelopersId = $scope.projectMemberships.map(function (developerItem) {
+                return developerItem.UserId;
+              });
+
+              dataId = dataId.filter(function (id) {
+                return !inArray(id, chosenDevelopersId);
+              });
+
+              data.Data = data.Data.filter(function (dataItem) {
+                return inArray(dataItem.UserId, dataId);
+              });
+
+              if (data.Data.length == 0) {
+                $scope.addDevelopers();
+              } else {
+                $scope.developers = $scope.developers.concat(data.Data);
+              }
+
+              $scope.isMoreDevs = ($scope.developers.length + $scope.projectMemberships.length) < data.CountOfEntities;
+            }
+          });
+      };
+
+      $scope.$watch("searchText", function (newValue, oldValue) {
+        if (newValue === '') {
+          $scope.resetPageCounter();
+          $scope.showFirstPage();
+
+        } else if (newValue !== oldValue) {
+          ApiService.getFullDevelopersBySearch($scope.searchText)
+            .then(function (data) {
+              $scope.isMoreDevs = false;
+
               var dataId = data.map(function (dataItem) {
                 return dataItem.UserId;
               });
@@ -1018,68 +1077,33 @@ angular.module('LodSite.controllers', [])
                 return inArray(dataItem.UserId, dataId);
               });
 
-              if (data.length == 0) {
-                $scope.addDevelopers();
-              } else {
-                $scope.developers = $scope.developers.concat(data);
-              }
-            }
-          });
+              $scope.developers = data;
+            });
+        }
+      });
+
+      $scope.selectDeveloper = function (index) {
+        $scope.developers.forEach(function (developerItem, i) {
+          developerItem.isSelect = (index == i);
+          developerItem.Role = ''
+        });
       };
 
-      /*$scope.$watch("searchText", function (newValue, oldValue) {
-       if (newValue === '') {
-       $scope.resetPageCounter();
-
-       $scope.showFirstPage();
-
-       } else if (newValue !== oldValue) {
-       ApiService.getFullDevelopersBySearch($scope.searchText)
-       .then(function (data) {
-       $scope.isMoreDevs = false;
-
-       var dataId = data.map(function (dataItem) {
-       return dataItem.UserId;
-       });
-       var chosenDevelopersId = $scope.projectMemberships.map(function (developerItem) {
-       return developerItem.UserId || developerItem.Developerd;
-       });
-
-       dataId = dataId.filter(function (id) {
-       return !inArray(id, chosenDevelopersId);
-       });
-
-       data = data.filter(function (dataItem) {
-       return inArray(dataItem.UserId, dataId);
-       });
-
-       $scope.developers = $scope.developers.concat(data);
-
-       });
-       }
-       });*/
-
       $scope.chooseDeveloper = function (index) {
-        $scope.projectMemberships.push($scope.developers[index]);
-        ApiService.joinToProject($scope.projectId, $scope.developers[index].UserId, JSON.stringify($scope.developers[index].Role));
-        $scope.developers = [];
-        $scope.resetPageCounter();
-      }
+        if ($scope.developers[index].Role) {
+          $scope.projectMemberships.push($scope.developers[index]);
+
+          ApiService.joinToProject(projectId, $scope.developers[index].UserId, JSON.stringify($scope.developers[index].Role));
+
+          $scope.developers = [];
+          $scope.toggleOpened();
+        }
+      };
 
       $scope.deleteDeveloper = function (index) {
-        ApiService.escapeFromProject($scope.projectId, $scope.projectMemberships[index].UserId || $scope.projectMemberships[index].DeveloperId);
+        ApiService.escapeFromProject(projectId, $scope.projectMemberships[index].UserId);
 
         $scope.projectMemberships.splice(index, 1);
-      }
-
-      $scope.openDevelopersDialog = function () {
-        $scope.$dialog = ngDialog.open({
-          template: 'developersTemplate',
-          showClose: true,
-          closeByNavigation: true,
-          scope: $scope
-        });
-        $scope.showFirstPage();
       };
 
       //   FOR SMALL IMAGES
@@ -1166,8 +1190,14 @@ angular.module('LodSite.controllers', [])
       //   GET REQUEST
       ApiService.getProject(projectId)
         .then(function (data) {
-          $scope.projectId - data.ProjectId;
-          $scope.projectMemberships = data.ProjectMemberships;
+          $scope.projectMemberships = data.ProjectMemberships.map(function (developer) {
+            return {
+              UserId: developer.DeveloperId,
+              FirstName: developer.FirstName,
+              LastName: developer.FirstName,
+              Role: developer.Role
+            }
+          });
           $scope.editedProject.Name = data.Name;
           $scope.editedProject.ProjectTypes = data.ProjectType;
           $scope.editedProject.Info = data.Info;

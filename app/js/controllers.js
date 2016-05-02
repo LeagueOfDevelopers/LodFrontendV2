@@ -32,6 +32,14 @@ angular.module('LodSite.controllers', [])
   }])
 
   .controller('IndexCtrl', ['$scope', function ($scope) {
+    $scope.$watch("searchText", function (newValue, oldValue) {
+      if (newValue === '') {
+        alert('Пусто!)');
+      } else if (newValue !== oldValue) {
+        alert('Не пусто!)');
+      }
+    });
+
     $scope.$emit('change_title', {title: 'Лига Разработчиков НИТУ МИСиС'});
     $scope.$emit('toggle_black');
   }])
@@ -46,7 +54,9 @@ angular.module('LodSite.controllers', [])
         $scope.userId = TokenService.getToken().UserId;
       }
 
-      $scope.activeToggle = function () { $scope.isOpened = !$scope.isOpened; };
+      $scope.activeToggle = function () {
+        $scope.isOpened = !$scope.isOpened;
+      };
       $scope.openLoginDialog = function () {
         $scope.$dialog = ngDialog.open({
           template: 'loginTemplate',
@@ -521,12 +531,12 @@ angular.module('LodSite.controllers', [])
       }
 
       var pageCounter = 0;
-      $scope.searchText = '';
+      $scope.isInvalid = [];
+      $scope.isOpen = false;
       $scope.images = [];
       $scope.developers = [];
       $scope.chosenDevelopers = [];
       $scope.isMoreDevs = true;
-      $scope.currentState = 'filling';
       $scope.currentState = 'filling';
 
       var sampleProject = function () {
@@ -577,6 +587,16 @@ angular.module('LodSite.controllers', [])
         $scope.developers = [];
       };
 
+      $scope.toggleOpened = function () {
+        $scope.isOpen = !$scope.isOpen;
+
+        if ($scope.isOpen) {
+          $scope.showFirstPage();
+        } else {
+          $scope.resetPageCounter();
+        }
+      };
+
       var inArray = function (value, array, strict) {
         var found = false, key, strict = !!strict;
 
@@ -587,17 +607,22 @@ angular.module('LodSite.controllers', [])
           }
         }
         return found;
-      }
+      };
 
 
       $scope.showFirstPage = function () {
         ApiService.getFullDevelopers(pageCounter)
           .then(function (data) {
+            $scope.developers = [];
+
             if ($scope.chosenDevelopers.length == 0) {
-              $scope.developers = $scope.developers.concat(data);
+              $scope.developers = $scope.developers.concat(data.Data);
+
+              $scope.isMoreDevs = ($scope.developers.length + $scope.chosenDevelopers.length) < data.CountOfEntities;
+
               return;
             } else {
-              var dataId = data.map(function (dataItem) {
+              var dataId = data.Data.map(function (dataItem) {
                 return dataItem.UserId;
               });
               var chosenDevelopersId = $scope.chosenDevelopers.map(function (developerItem) {
@@ -608,14 +633,17 @@ angular.module('LodSite.controllers', [])
                 return !inArray(id, chosenDevelopersId);
               });
 
-              data = data.filter(function (dataItem) {
+              data.Data = data.Data.filter(function (dataItem) {
                 return inArray(dataItem.UserId, dataId);
               });
-              if (data.length == 0) {
+              if (data.Data.length == 0) {
                 $scope.addDevelopers();
               } else {
-                $scope.developers = $scope.developers.concat(data);
+                $scope.developers = $scope.developers.concat(data.Data);
               }
+
+              $scope.isMoreDevs = ($scope.developers.length + $scope.chosenDevelopers.length) < data.CountOfEntities;
+
             }
           });
       };
@@ -624,14 +652,17 @@ angular.module('LodSite.controllers', [])
         pageCounter++;
         ApiService.getFullDevelopers(pageCounter)
           .then(function (data) {
-            if (!data || data.length === 0) {
+            if (!data.Data || data.Data.length === 0) {
               $scope.isMoreDevs = false;
               return;
             } else if ($scope.chosenDevelopers.length == 0) {
-              $scope.developers = $scope.developers.concat(data);
+              $scope.developers = $scope.developers.concat(data.Data);
+
+              $scope.isMoreDevs = ($scope.developers.length + $scope.chosenDevelopers.length) < data.CountOfEntities;
+
               return;
             } else {
-              var dataId = data.map(function (dataItem) {
+              var dataId = data.Data.map(function (dataItem) {
                 return dataItem.UserId;
               });
               var chosenDevelopersId = $scope.chosenDevelopers.map(function (developerItem) {
@@ -642,59 +673,24 @@ angular.module('LodSite.controllers', [])
                 return !inArray(id, chosenDevelopersId);
               });
 
-              data = data.filter(function (dataItem) {
+              data.Data = data.Data.filter(function (dataItem) {
                 return inArray(dataItem.UserId, dataId);
               });
 
-              if (data.length == 0) {
+              if (data.Data.length == 0) {
                 $scope.addDevelopers();
               } else {
-                $scope.developers = $scope.developers.concat(data);
+                $scope.developers = $scope.developers.concat(data.Data);
               }
+
+              $scope.isMoreDevs = ($scope.developers.length + $scope.chosenDevelopers.length) < data.CountOfEntities;
             }
           });
       };
-
-      /*  $scope.search = function(text) {
-       if (text == '') {
-       $scope.isMoreDevs = true;
-
-       $scope.resetPageCounter();
-
-       $scope.showFirstPage();
-
-       } else if (text != ''){
-       ApiService.getFullDevelopersBySearch(text)
-       .then(function (data) {
-       $scope.isMoreDevs = false;
-
-       var dataId = data.map(function (dataItem) {
-       return dataItem.UserId;
-       });
-       var chosenDevelopersId = $scope.chosenDevelopers.map(function (developerItem) {
-       return developerItem.UserId;
-       });
-
-       dataId = dataId.filter(function (id) {
-       return !inArray(id, chosenDevelopersId);
-       });
-
-       data = data.filter(function (dataItem) {
-       return inArray(dataItem.UserId, dataId);
-       });
-
-       $scope.developers = data;
-
-       });
-       }
-       };*/
-
-      /*$scope.$watch("searchText", function (newValue, oldValue) {
+      $scope.$watch("searchText", function (newValue, oldValue) {
         if (newValue === '') {
           $scope.resetPageCounter();
-
           $scope.showFirstPage();
-
         } else if (newValue !== oldValue) {
           ApiService.getFullDevelopersBySearch($scope.searchText)
             .then(function (data) {
@@ -703,7 +699,7 @@ angular.module('LodSite.controllers', [])
               var dataId = data.map(function (dataItem) {
                 return dataItem.UserId;
               });
-              var chosenDevelopersId = $scope.editedProject.ProjectMemberships.map(function (developerItem) {
+              var chosenDevelopersId = $scope.chosenDevelopers.map(function (developerItem) {
                 return developerItem.UserId || developerItem.Developerd;
               });
 
@@ -715,36 +711,34 @@ angular.module('LodSite.controllers', [])
                 return inArray(dataItem.UserId, dataId);
               });
 
-              $scope.developers = $scope.developers.concat(data);
-
+              $scope.developers = data;
             });
         }
-      });*/
-
-      $scope.$on('searchT', function (event, data) {
-        $scope.searchText = data;
       });
 
+      $scope.selectDeveloper = function (index) {
+        $scope.developers.forEach(function (developerItem, i) {
+          developerItem.isSelect = (index == i);
+          developerItem.DeveloperRole = ''
+        });
+      };
 
       $scope.chooseDeveloper = function (index) {
-        $scope.chosenDevelopers.push($scope.developers[index]);
-        $scope.developers = [];
-        $scope.resetPageCounter();
-      }
+        if ($scope.developers[index].DeveloperRole) {
+          $scope.chosenDevelopers.push({
+            UserId: $scope.developers[index].UserId,
+            FirstName: $scope.developers[index].FirstName,
+            LastName: $scope.developers[index].LastName,
+            Role: $scope.developers[index].DeveloperRole
+          });
+
+          $scope.developers = [];
+          $scope.toggleOpened();
+        }
+      };
 
       $scope.deleteDeveloper = function (index) {
         $scope.chosenDevelopers.splice(index, 1);
-      }
-
-      $scope.openDevelopersDialog = function () {
-        $scope.$dialog = ngDialog.open({
-          template: 'developersTemplate',
-          showClose: true,
-          closeByNavigation: true,
-          scope: $scope,
-        });
-
-        $scope.showFirstPage();
       };
 
       //   FOR SMALL IMAGES
@@ -848,7 +842,7 @@ angular.module('LodSite.controllers', [])
             $scope.currentState = 'success';
 
             $scope.chosenDevelopers.forEach(function (developer) {
-              ApiService.joinToProject(response.projectId, developer.UserId, JSON.stringify(developer.Role));
+              ApiService.joinToProject(response.projectId, developer.UserId, JSON.stringify(developer.DeveloperRole));
             });
 
             pageCounter = 0;
@@ -971,14 +965,14 @@ angular.module('LodSite.controllers', [])
       $scope.showFirstPage = function () {
         ApiService.getFullDevelopers(pageCounter)
           .then(function (data) {
-            if ($scope.editedProject.ProjectMemberships.length == 0) {
+            if ($scope.projectMemberships.length == 0) {
               $scope.developers = $scope.developers.concat(data);
               return;
             } else {
               var dataId = data.map(function (dataItem) {
                 return dataItem.UserId;
               });
-              var chosenDevelopersId = $scope.editedProject.ProjectMemberships.map(function (developerItem) {
+              var chosenDevelopersId = $scope.projectMemberships.map(function (developerItem) {
                 return developerItem.UserId;
               });
 
@@ -1005,14 +999,14 @@ angular.module('LodSite.controllers', [])
             if (!data || data.length === 0) {
               $scope.isMoreDevs = false;
               return;
-            } else if ($scope.editedProject.ProjectMemberships.length == 0) {
+            } else if ($scope.projectMemberships.length == 0) {
               $scope.developers = $scope.developers.concat(data);
               return;
             } else {
               var dataId = data.map(function (dataItem) {
                 return dataItem.UserId;
               });
-              var chosenDevelopersId = $scope.editedProject.ProjectMemberships.map(function (developerItem) {
+              var chosenDevelopersId = $scope.projectMemberships.map(function (developerItem) {
                 return developerItem.UserId;
               });
 
@@ -1034,48 +1028,48 @@ angular.module('LodSite.controllers', [])
       };
 
       /*$scope.$watch("searchText", function (newValue, oldValue) {
-        if (newValue === '') {
-          $scope.resetPageCounter();
+       if (newValue === '') {
+       $scope.resetPageCounter();
 
-          $scope.showFirstPage();
+       $scope.showFirstPage();
 
-        } else if (newValue !== oldValue) {
-          ApiService.getFullDevelopersBySearch($scope.searchText)
-            .then(function (data) {
-              $scope.isMoreDevs = false;
+       } else if (newValue !== oldValue) {
+       ApiService.getFullDevelopersBySearch($scope.searchText)
+       .then(function (data) {
+       $scope.isMoreDevs = false;
 
-              var dataId = data.map(function (dataItem) {
-                return dataItem.UserId;
-              });
-              var chosenDevelopersId = $scope.editedProject.ProjectMemberships.map(function (developerItem) {
-                return developerItem.UserId || developerItem.Developerd;
-              });
+       var dataId = data.map(function (dataItem) {
+       return dataItem.UserId;
+       });
+       var chosenDevelopersId = $scope.projectMemberships.map(function (developerItem) {
+       return developerItem.UserId || developerItem.Developerd;
+       });
 
-              dataId = dataId.filter(function (id) {
-                return !inArray(id, chosenDevelopersId);
-              });
+       dataId = dataId.filter(function (id) {
+       return !inArray(id, chosenDevelopersId);
+       });
 
-              data = data.filter(function (dataItem) {
-                return inArray(dataItem.UserId, dataId);
-              });
+       data = data.filter(function (dataItem) {
+       return inArray(dataItem.UserId, dataId);
+       });
 
-              $scope.developers = $scope.developers.concat(data);
+       $scope.developers = $scope.developers.concat(data);
 
-            });
-        }
-      });*/
+       });
+       }
+       });*/
 
       $scope.chooseDeveloper = function (index) {
-        $scope.editedProject.ProjectMemberships.push($scope.developers[index]);
-        ApiService.joinToProject($scope.editedProject.ProjectId, $scope.developers[index].UserId, JSON.stringify($scope.developers[index].Role));
+        $scope.projectMemberships.push($scope.developers[index]);
+        ApiService.joinToProject($scope.projectId, $scope.developers[index].UserId, JSON.stringify($scope.developers[index].Role));
         $scope.developers = [];
         $scope.resetPageCounter();
       }
 
       $scope.deleteDeveloper = function (index) {
-        ApiService.escapeFromProject($scope.editedProject.ProjectId, $scope.editedProject.ProjectMemberships[index].UserId || $scope.editedProject.ProjectMemberships[index].DeveloperId);
+        ApiService.escapeFromProject($scope.projectId, $scope.projectMemberships[index].UserId || $scope.projectMemberships[index].DeveloperId);
 
-        $scope.editedProject.ProjectMemberships.splice(index, 1);
+        $scope.projectMemberships.splice(index, 1);
       }
 
       $scope.openDevelopersDialog = function () {
@@ -1085,7 +1079,7 @@ angular.module('LodSite.controllers', [])
           closeByNavigation: true,
           scope: $scope
         });
-          $scope.showFirstPage();
+        $scope.showFirstPage();
       };
 
       //   FOR SMALL IMAGES
@@ -1172,10 +1166,18 @@ angular.module('LodSite.controllers', [])
       //   GET REQUEST
       ApiService.getProject(projectId)
         .then(function (data) {
-          $scope.editedProject = data;
+          $scope.projectId - data.ProjectId;
+          $scope.projectMemberships = data.ProjectMemberships;
+          $scope.editedProject.Name = data.Name;
+          $scope.editedProject.ProjectTypes = data.ProjectType;
+          $scope.editedProject.Info = data.Info;
+          $scope.editedProject.AccessLevel = data.AccessLevel;
+          $scope.editedProject.ProjectStatus = data.ProjectStatus;
+          $scope.editedProject.LandingImage = data.LandingImageUri;
+          $scope.editedProject.Screenshots = data.Screenshots;
 
-          for (var i = 0; i < $scope.editedProject.ProjectType.length; i++) {
-            $scope.categories[$scope.editedProject.ProjectType[i]].status = true;
+          for (var i = 0; i < $scope.editedProject.ProjectTypes.length; i++) {
+            $scope.categories[$scope.editedProject.ProjectTypes[i]].status = true;
           }
 
           $scope.$emit('change_title', {
@@ -1189,7 +1191,7 @@ angular.module('LodSite.controllers', [])
 
         for (var i = 0; i < $scope.categories.length; i++) {
           if ($scope.categories[i].status) {
-            $scope.editedProject.ProjectType[j] = i;
+            $scope.editedProject.ProjectTypes[j] = i;
             j++;
           }
         }
@@ -1452,9 +1454,9 @@ angular.module('LodSite.controllers', [])
       var date = new Date();
       var hour = date.getHours();
       $scope.timeOfDay = (hour > 4 && hour < 12) ? 'morning' :
-                         (hour >= 12 && hour <= 18) ? 'afternoon' :
-                         (hour > 18 && hour < 24) ? 'evening' :
-                         'night';
+        (hour >= 12 && hour <= 18) ? 'afternoon' :
+          (hour > 18 && hour < 24) ? 'evening' :
+            'night';
       $scope.isNoDeveloper = false;
       $scope.userLogin = {};
 

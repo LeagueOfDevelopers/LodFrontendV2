@@ -10,11 +10,11 @@
       <div class="profile-settings__avatar-wrapper">
 
         <div class="adding-project__avatar-img"
-             ng-attr-style='background-image: url("{{editedProject.LandingImageUri.SmallPhotoUri || DEFAULT_PROJECT_LANDSCAPE}}")'
+             ng-attr-style='background-image: url("{{editedProject.LandingImage.SmallPhotoUri || DEFAULT_PROJECT_LANDSCAPE}}")'
              dropzone-big-image>
 
           <div class="adding-project__file-close adding-project__big-image__file-close"
-               ng-if="editedProject.LandingImageUri.SmallPhotoUri"
+               ng-if="editedProject.LandingImage.SmallPhotoUri"
                ng-click="deleteBigImage()"></div>
 
           <div class="adding-project__uploading__bar-wrap">
@@ -61,8 +61,8 @@
         <div class="profile-settings__input-heading adding-project__input-heading">Разработчики:</div>
 
         <div class="adding-developer__button-wrapper">
-          <div class="adding-project__developers" ng-if="editedProject.ProjectMemberships.length != 0">
-            <div class="adding-project__developer-wrap" ng-repeat="developer in editedProject.ProjectMemberships">
+          <div class="adding-project__developers" ng-if="projectMemberships.length != 0">
+            <div class="adding-project__developer-wrap" ng-repeat="developer in projectMemberships">
               <a class="adding-project__developer" ng-href="{{'/developers/' + (developer.UserId||developer.DeveloperId)}}">
                 <div class="adding-project__developer-info">
                   <div ng-bind="developer.FirstName + ' ' + developer.LastName"></div>

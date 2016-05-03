@@ -32,26 +32,20 @@ angular.module('LodSite.controllers', [])
   }])
 
   .controller('IndexCtrl', ['$scope', function ($scope) {
-    $scope.$watch("searchText", function (newValue, oldValue) {
-      if (newValue === '') {
-        alert('Пусто!)');
-      } else if (newValue !== oldValue) {
-        alert('Не пусто!)');
-      }
-    });
-
     $scope.$emit('change_title', {title: 'Лига Разработчиков НИТУ МИСиС'});
     $scope.$emit('toggle_black');
   }])
 
 
   //header and footer
-  .controller('HeaderCtrl', ['$scope', 'ngDialog', 'TokenService', '$state', 'NotificationsService',
-    function ($scope, ngDialog, TokenService, $state, NotificationsService) {
+  .controller('HeaderCtrl', ['$scope', 'ngDialog', 'TokenService', '$state', 'NotificationsService', '$rootScope',
+    function ($scope, ngDialog, TokenService, $state, NotificationsService, $rootScope) {
       $scope.isOpened = false;
 
-      if (TokenService.getToken()) {
-        $scope.userId = TokenService.getToken().UserId;
+      var token = TokenService.getToken();
+
+      if (token) {
+        $scope.userId = token.UserId;
       }
 
       $scope.activeToggle = function () {
@@ -76,6 +70,14 @@ angular.module('LodSite.controllers', [])
 
       $scope.$on('$locationChangeSuccess', function () {
         $scope.isOpened = false;
+      });
+
+      console.log($rootScope.$$listeners);
+      $rootScope.$on('userRole_changed', function (e, args) {
+        token = TokenService.getToken();
+        if (token) {
+          $scope.userId = token.UserId;
+        }
       });
     }])
 

@@ -7,7 +7,7 @@ angular.module('LodSite.directives', [])
        //header and footer
        .directive('pageHeader', function () {
          return {
-           restrict: 'E',
+           restrict: 'EA',
            scope: true,
            templateUrl: templateUrl('directives', 'page-header'),
            controller: 'HeaderCtrl'

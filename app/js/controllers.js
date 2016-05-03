@@ -386,7 +386,7 @@ angular.module('LodSite.controllers', [])
             $scope.isMoreProjects = false;
           } else {
             $scope.fullProjects = $scope.fullProjects.concat(data.Data);
-            $scope.isMoreProjects = $scope.fullProjects.Length < data.CountOfEntities;
+            $scope.isMoreProjects = $scope.fullProjects.length < data.CountOfEntities;
           }
         })
     };
@@ -850,7 +850,7 @@ angular.module('LodSite.controllers', [])
             $scope.currentState = 'success';
 
             $scope.chosenDevelopers.forEach(function (developer) {
-              ApiService.joinToProject(response.projectId, developer.UserId, JSON.stringify(developer.DeveloperRole));
+              ApiService.joinToProject(response.projectId, developer.UserId, JSON.stringify(developer.Role));
             });
 
             pageCounter = 0;

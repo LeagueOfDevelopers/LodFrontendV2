@@ -1205,7 +1205,7 @@ angular.module('LodSite.controllers', [])
           $scope.editedProject.Info = data.Info;
           $scope.editedProject.AccessLevel = data.AccessLevel;
           $scope.editedProject.ProjectStatus = data.ProjectStatus;
-          $scope.editedProject.LandingImage = data.LandingImageUri;
+          $scope.editedProject.LandingImage = data.LandingImage;
           $scope.editedProject.Screenshots = data.Screenshots;
 
           for (var i = 0; i < $scope.editedProject.ProjectTypes.length; i++) {

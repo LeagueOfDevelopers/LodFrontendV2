@@ -218,7 +218,7 @@ angular.module('LodSite.services', [])
            this.developerConfirmation = function (token) {
              var url = '/developers/confirmation/' + token;
 
-             return sendAuthorizationSaveRequest(POST, url, null, null).then(function (response) {
+             return sendAuthorizationSaveRequest(POST, url, null).then(function (response) {
                return response.status === 200;
              });
            };

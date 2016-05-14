@@ -1196,7 +1196,7 @@ angular.module('LodSite.controllers', [])
             return {
               UserId: developer.DeveloperId,
               FirstName: developer.FirstName,
-              LastName: developer.FirstName,
+              LastName: developer.LastName,
               Role: developer.Role
             }
           });

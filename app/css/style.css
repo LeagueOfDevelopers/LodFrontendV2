@@ -3270,7 +3270,7 @@ footer {
     top: 20px;
   }
 
-  .contact-form .submit:hover {
+  .order-form .submit:hover, .contact-form .submit:hover {
     background-color: #ffd200;
     cursor: pointer;
     -moz-transition: all 0.5s ease;

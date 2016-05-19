@@ -147,7 +147,10 @@ angular.module('LodSite.services', [])
              var url = '/developers?page=' + pageCounter;
 
              return sendAuthorizationSaveRequest(GET, url).then(function (response) {
-               return DateService.getFormattedTimeDevsList(response.data);
+               return {
+				Data: DateService.getFormattedTimeDevsList(response.data.Data),
+				CountOfEntities: response.data.CountOfEntities
+			   };
              });
            };
 
@@ -175,11 +178,7 @@ angular.module('LodSite.services', [])
            this.getDeveloperForProfileSttings = function (developerId) {
              var url = '/developers/' + developerId;
 
-             return sendAuthorizationSaveRequest(GET, url).then(function setImageCap(response) {
-               if (response.data.BigPhotoUri == null) {
-                 response.data.BigPhotoUri = '/app/imgs/developer-default-photo.png';
-               }
-
+             return sendAuthorizationSaveRequest(GET, url).then(function (response) {
                return response.data;
              })
            };
@@ -195,7 +194,7 @@ angular.module('LodSite.services', [])
            this.getNotificationsForProfileSttings = function (developerId) {
              var url = '/developers/notificationsettings/' + developerId;
 
-             return sendAuthorizationSaveRequest(GET, url).then(function setImageCap(response) {
+             return sendAuthorizationSaveRequest(GET, url).then(function (response) {
                return response.data;
              })
            };
@@ -219,7 +218,7 @@ angular.module('LodSite.services', [])
            this.developerConfirmation = function (token) {
              var url = '/developers/confirmation/' + token;
 
-             return sendAuthorizationSaveRequest(POST, url, null, null).then(function (response) {
+             return sendAuthorizationSaveRequest(POST, url, null).then(function (response) {
                return response.status === 200;
              });
            };
@@ -253,7 +252,10 @@ angular.module('LodSite.services', [])
              var url = '/projects';
 
              return sendAuthorizationSaveRequest(POST, url, null, requestData).then(function (response) {
-               return response.status === 200;
+               return {
+                 isSuccess: response.status === 200,
+                 projectId: response.data
+               }
              });
            };
 

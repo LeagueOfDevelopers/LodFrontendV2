@@ -10,10 +10,11 @@
       <div class="profile-settings__avatar-wrapper">
 
         <div class="adding-project__avatar-img"
-             ng-attr-style='background-image: url("{{editedProject.LandingImageUri || DEFAULT_PROJECT_LANDSCAPE}}")' dropzone-big-image>
+             ng-attr-style='background-image: url("{{editedProject.LandingImage.SmallPhotoUri || DEFAULT_PROJECT_LANDSCAPE}}")'
+             dropzone-big-image>
 
           <div class="adding-project__file-close adding-project__big-image__file-close"
-               ng-if="editedProject.LandingImageUri"
+               ng-if="editedProject.LandingImage.SmallPhotoUri"
                ng-click="deleteBigImage()"></div>
 
           <div class="adding-project__uploading__bar-wrap">
@@ -46,6 +47,7 @@
           <option value='0' selected>Запланирован</option>
           <option value='1'>В процессе</option>
           <option value='2'>Заморожен</option>
+          <option value='3'>Завершен</option>
         </select></label>
         <br/>
 
@@ -54,6 +56,27 @@
           <option value="0" selected>Публичный</option>
           <option value="1">Приватный</option>
         </select></label>
+        <br/>
+
+        <div class="profile-settings__input-heading adding-project__input-heading">Разработчики:</div>
+
+        <div class="adding-developer__button-wrapper">
+          <div class="adding-project__developers" ng-if="projectMemberships.length != 0">
+            <div class="adding-project__developer-wrap" ng-repeat="developer in projectMemberships">
+              <a class="adding-project__developer" ng-href="{{'/developers/' + (developer.UserId)}}">
+                <div class="adding-project__developer-info">
+                  <div ng-bind="developer.FirstName + ' ' + developer.LastName"></div>
+                  <div ng-bind=" '(' + developer.Role + ')' "></div>
+                </div>
+              </a>
+              <div class="adding-project__developer__delete" ng-click="deleteDeveloper($index)"></div>
+            </div>
+          </div>
+
+          <div class="profile-settings__button adding-developer__button" ng-click="toggleOpened()">
+            Добавить
+          </div>
+        </div>
         <br/>
 
         <div class="profile-settings__input-heading adding-project__input-heading">Описание проекта:</div>
@@ -66,9 +89,10 @@
 
         <div class="adding-project__upload-box-wrap adding-project__upload-wrap">
 
-          <div class="adding-project__upload-box adding-project__uploaded-file" ng-repeat="screenshot in editedProject.Screenshots">
+          <div class="adding-project__upload-box adding-project__uploaded-file"
+               ng-repeat="screenshot in editedProject.Screenshots">
             <div class="adding-project__uploaded-file__image-wrap"
-                 ng-attr-style="background-image: url('{{screenshot}}')">
+                 ng-attr-style="background-image: url('{{screenshot.SmallPhotoUri}}')">
               <div class="adding-project__file-close" ng-click="deleteImage(screenshot, $index)"></div>
             </div>
           </div>
@@ -115,4 +139,33 @@
     </div>
 
   </form>
+</div>
+
+<div class="modal-window__wrap" ng-show="isOpen">
+  <div class="modal-window">
+    <div class="modal-window__developers">
+      <div class="modal-window__close-button" ng-click="toggleOpened()"></div>
+
+      <div class="modal-window__search">
+        <input placeholder="Поиск" ng-model="searchText"/>
+
+        <div class="search__icon"></div>
+      </div>
+
+      <label class="modal-window__developer" ng-repeat="developer in developers"
+             ng-click="selectDeveloper($index)"
+             ng-class="{'modal-window__developer--active': developer.isSelect}">
+        <div ng-if="!developer.isSelect" ng-href="{{'/developers/' + developer.UserId}}"
+             ng-bind="developer.FirstName + ' ' + developer.LastName"></div>
+
+        <input class="modal-window_role" ng-if="developer.isSelect" ng-model="developer.Role"
+               ng-keypress="$event.which === 13 && chooseDeveloper($index)" placeholder="Введите роль" autofocus/>
+
+        <button class="modal-window__submit" ng-if="developer.isSelect" ng-disabled="!developer.Role" ng-click="chooseDeveloper($index)">+</button>
+      </label>
+
+      <a class="modal-window__see-more-button button-style" ng-if="isMoreDevs" ng-click="addDevelopers()">Показать больше</a>
+
+    </div>
+  </div>
 </div>

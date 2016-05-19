@@ -1,5 +1,3 @@
-<a ui-sref="adminpanel.projectAdd">Добавить проект</a>
-
 <section class="all-projects__section">
   <h1 class="projects-page__headline headline">Проекты</h1>
 
@@ -7,7 +5,8 @@
 
   <div class="all-projects-page">
 
-    <div ng-repeat="fullProject in fullProjects" class="projects__all-project" ng-class="{'projects__last':(fullProjects.length % 2)}">
+    <div ng-repeat="fullProject in fullProjects" class="projects__all-project"
+         ng-class="{'projects__last':(fullProjects.length % 2)}">
       <a ui-sref="adminpanel.projectEdit({id: fullProject.ProjectId})">
 
         <img class="all-project__photo" ng-src="{{fullProject.PhotoUri || DEFAULT_PROJECT_LANDSCAPE}}"/>
@@ -37,7 +36,6 @@
       </a>
     </div>
   </div>
-  <a class="projects-section__see-more-button button-style" ng-if="isMoreProjects" ng-click="addProjects()">Показать
-                                                                                                            больше</a>
+  <a class="projects-section__see-more-button button-style" ng-if="isMoreProjects" ng-click="addProjects()">Показать больше</a>
 
 </section>

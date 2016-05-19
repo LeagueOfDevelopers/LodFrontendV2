@@ -9,11 +9,11 @@
 
       <div class="profile-settings__avatar-wrapper">
         <div class="profile-settings__avatar-img"
-             ng-attr-style="background-image: url({{profile.BigPhotoUri || DEFAULT_DEVELOPER_PHOTO}})"
+             ng-attr-style="background-image: url({{profile.Image.BigPhotoUri || DEFAULT_DEVELOPER_PHOTO}})"
              dropzone-big-image>
 
           <div class="adding-project__file-close adding-project__big-image__file-close"
-               ng-if="profile.BigPhotoUri"
+               ng-if="profile.Image.BigPhotoUri"
                ng-click="deleteBigPhoto()"></div>
 
           <div class="adding-project__uploading__bar-wrap">

@@ -12,6 +12,7 @@ time, mark, audio, video {
   border: 0;
   font-size: 1em;
   vertical-align: baseline;
+
 }
 
 /* LOADER - STYLES */
@@ -598,14 +599,15 @@ header {
   transform: translateY(-50%);
   right: 5px;
   background: white url(/app/imgs/search-icon.svg) no-repeat center;
+  cursor: pointer;
 }
 
 .developers__full-developer {
   text-align: center;
   background: white;
   max-width: 400px;
-  margin: 0 auto 30px auto;
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, .15);
+  margin: 0 auto 20px auto;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   cursor: pointer;
 }
 
@@ -781,7 +783,7 @@ footer {
 .full-project-wrapper {
   width: 100%;
   margin: 0 auto;
-  box-shadow: 2px 2px rgba(0, 0, 0, .15);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   border-radius: 5px;
 }
 
@@ -906,7 +908,7 @@ footer {
   display: inline-block;
   padding: 10px;
   background: #fff;
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, .15);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   margin: 5px;
 }
 
@@ -930,6 +932,7 @@ footer {
   width: 240px;
   height: 240px;
   cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
 .viewer__img {
@@ -1009,6 +1012,7 @@ footer {
   padding: 60px 5% 5%;
   background-color: white;
   text-align: left;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
 .about-text .heading {
@@ -1726,6 +1730,55 @@ footer {
   padding: 10px;
 }
 
+.adding-project__search {
+  position: relative;
+  padding: 0;
+}
+
+.adding-project__developers > div {
+  display: inline-block;
+  position: relative;
+}
+
+.adding-project__developer-wrap:last-child {
+  margin-bottom: 10px;
+}
+
+.adding-project__developer {
+  display: inline-block;
+  padding: 10px 35px 10px 10px;
+  border: 1px solid #ffffff;
+  background-color: #717171;
+  color: #ffffff;
+  -webkit-transition: background-color .2s ease-out;
+  -moz-transition: background-color .2s ease-out;
+  -o-transition: background-color .2s ease-out;
+  transition: background-color .2s ease-out;
+  cursor: pointer;
+}
+
+.adding-project__developer:hover {
+  background-color: #2980b9;
+}
+
+.adding-project__developer__delete {
+  background: url("../imgs/close-button-white.svg") no-repeat center;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 25px;
+  height: 25px;
+  transition: all .2s ease-out;
+  cursor: pointer;
+}
+
+.adding-project__developer__delete:hover {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
 .adding-project__avatar-img {
   background-size: cover;
   background-color: #000000;
@@ -1861,6 +1914,193 @@ footer {
   cursor: pointer;
 }
 
+.adding-developer__button-wrapper {
+  width: 90%;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.adding-developer__button {
+  margin: 0;
+}
+
+.modal-window__wrap {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-sizing: border-box;
+  overflow: auto;
+  background: rgba(0,0,0,.4);
+  z-index: 1000;
+}
+
+.modal-window {
+  max-width: 500px;
+  width: 100%;
+  padding: 8% 0 0;
+  margin: auto;
+  text-align: center;
+}
+
+.modal-window__close-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 25px;
+  height: 25px;
+  background: url(../imgs/close-button.svg) no-repeat center;
+  background-size: contain;
+  cursor: pointer;
+  transition: all .2s ease-out;
+}
+
+.modal-window__close-button:hover {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.modal-window__search {
+  display: inline-block;
+  width: 100%;
+  margin-top: 10px;
+  position: relative;
+}
+
+.modal-window__search input{
+  display: block;
+  width: 60%;
+  min-width: 200px;
+  height: 40px;
+  float: right;
+  box-sizing: border-box;
+  padding: 0 40px 0 10px;
+  border: none;
+  font-size: 1em;
+  font-family: 'PT Sans', sans-serif;
+  outline: none;
+}
+
+.modal-window__developers {
+  display: inline-block;
+  position: relative;
+  background: #f1f1f1;
+  font-size: 1.1em;
+  width: 80%;
+  max-width: 500px;
+  margin: 0 auto 100px;
+  padding: 25px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.modal-window_role {
+  width: 100%;
+  font-family: 'PT Sans', sans-serif;
+  font-size: 1em;
+  outline: none;
+  border: none;
+}
+
+.modal-window__submit {
+  position: absolute;
+  height: 100%;
+  width: 40px;
+  top: 0;
+  right: 0;
+  display: inline-block;
+  background-color: #ffffff;
+  color: #2980b9;
+  text-transform: uppercase;
+  font-size: 2em;
+  border: none;
+  border-left: 1px solid #2980b9;
+  /* border-radius: 5px; */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all .20s ease;
+  -moz-transition: all .20s ease;
+  -o-transition: all .20s ease;
+  transition: all .20s ease;
+}
+
+.modal-window__submit:disabled {
+  cursor: default;
+  border-left-color: #ffffff;
+  color: #ffffff;
+}
+
+.modal-window__submit:hover:not(:disabled) {
+  cursor: pointer;
+  background-color: #2980b9;
+  color: #ffffff;
+}
+
+.modal-window__developer--active {
+  border-color: #2980b9 !important;
+}
+
+.modal-window__developer:hover {
+  border-color: #2980b9;
+  color: #2980b9;
+}
+
+.modal-window__developer {
+  display: block;
+  position: relative;
+  width: 100%;
+  margin: 5px auto;
+  background-color: #ffffff;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, .15);
+  box-sizing: border-box;
+  cursor: pointer;
+  text-align: left;
+  padding: 10px 45px 10px 10px;
+  border: 1px solid white;
+  -webkit-transition: all .20s ease;
+  -moz-transition: all .20s ease;
+  -o-transition: all .20s ease;
+  transition: all .20s ease;
+}
+
+.modal-window__see-more-button {
+  display: inline-block;
+  margin: 20px auto 0;
+  width: auto;
+}
+
+/************************
+       ADMINPANEL
+*************************/
+.adminpanel {
+  margin-bottom: 20px;
+}
+
+.adminpanel__points {
+  text-align: center;
+}
+
+.adminpanel__point {
+  display: block;
+  width: 80%;
+  margin: 5px auto;
+  text-align: center;
+  height: 70px;
+  line-height: 70px;
+  background-color: #717171;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  font-size: 1.2em;
+}
+
+.adminpanel__point:hover {
+  background-color: #2980b9;
+}
+
 /************************
      ADMIN PROJECTS-PAGE
 *************************/
@@ -1991,7 +2231,6 @@ footer {
   display: block;
   margin: 20px auto;
 }
-
 @media only screen and (min-width: 480px) {
   .projects-section-container {
     max-width: 400px;
@@ -2260,8 +2499,17 @@ footer {
   }
 
   .profile-settings__heading {
-    text-align: left;
+    text-align: center;
     padding-left: 0;
+  }
+
+  .profile-settings__input-heading {
+    margin-top: 10px;
+  }
+
+  .profile-settings__input-heading:first-of-type {
+    margin-top: 0;
+    margin-top: 0;
   }
 
   .profile-settings__help-message {
@@ -2292,7 +2540,7 @@ footer {
 
   .profile-settings__middle-part .profile-settings__input-heading {
     text-align: left;
-    margin: 0 auto;
+    margin: 0 auto 5px;
   }
 
   .profile-settings__avatar-wrapper {
@@ -2344,6 +2592,17 @@ footer {
     margin: 4px;
   }
 
+/************************
+       ADMINPANEL
+*************************/
+  .adminpanel__point {
+    display: inline-block;
+    max-width: 400px;
+    height: 90px;
+    line-height: 90px;
+  }
+
+
   /*************************
      ADMIN PROJECTS-PAGE
   *************************/
@@ -2367,6 +2626,12 @@ footer {
 
   .all-project__name {
     text-align: left;
+  }
+
+  .adding-developer__button-wrapper {
+    width: 90%;
+    max-width: 450px;
+    margin: 0 auto;
   }
 
   /************************
@@ -2671,6 +2936,7 @@ footer {
     top: 0;
     right: 40px;
   }
+
   .developer-info__item-text {
     min-height: 43px;
   }
@@ -2774,10 +3040,6 @@ footer {
 
   .full-project-issues {
     text-align: left;
-  }
-
-  .project-issues__issue {
-    margin: 15px 15px 15px 0;
   }
 
   /* project - gallery */
@@ -3008,7 +3270,7 @@ footer {
     top: 20px;
   }
 
-  .contact-form .submit:hover {
+  .order-form .submit:hover, .contact-form .submit:hover {
     background-color: #ffd200;
     cursor: pointer;
     -moz-transition: all 0.5s ease;
@@ -3207,7 +3469,7 @@ footer {
     width: 180px;
   }
 
-  .profile-settings__input, .adding-project__select, .adding-project__textarea, .adding-project__type {
+  .profile-settings__input, .adding-project__select, .adding-project__textarea, .adding-project__type, .adding-developer__button-wrapper, .adding-project__developers {
     display: inline-block;
     max-width: none;
     width: 390px;
@@ -3264,6 +3526,10 @@ footer {
     vertical-align: top;
   }
 
+  .adding-project__developers {
+    margin: 0 !important;
+  }
+
   .adding-project__upload-box-wrap {
     display: inline-block;
     display: inline-flex;
@@ -3292,6 +3558,16 @@ footer {
   .adding-project__categories__item {
     padding: 10px;
     margin: 5px;
+  }
+
+/************************
+       ADMINPANEL
+*************************/
+  .adminpanel__point {
+    margin: 0 10px;
+    height: 100px;
+    line-height: 100px;
+    font-size: 1.3em;
   }
 
   /*************************
@@ -3350,7 +3626,7 @@ footer {
     width: 830px
   }
 
-  .profile-settings__input, .adding-project__select, .adding-project__textarea, .adding-project__type {
+  .profile-settings__input, .adding-project__select, .adding-project__textarea, .adding-project__type, .adding-developer__button-wrapper, .adding-project__developers {
     width: 580px;
     margin-bottom: 30px;
   }
@@ -3430,9 +3706,9 @@ footer {
   }
 
   /*****************************
-    PROFILE SETTINGS
+        PROFILE SETTINGS
   *****************************/
-  .profile-settings__input, .adding-project__select, .adding-project__textarea, .adding-project__type {
+  .profile-settings__input, .adding-project__select, .adding-project__textarea, .adding-project__type, .adding-developer__button-wrapper, .adding-project__developers {
     width: 740px;
   }
 
@@ -3456,6 +3732,23 @@ footer {
     width: 650px;
   }
 
+  /*************************
+       ADDING PROJECT
+  *************************/
+
+  .modal-window__close-button {
+    width: 35px;
+    height: 35px;
+  }
+
+  .modal-window__developers {
+    padding: 35px;
+  }
+
+  .modal-window__search input{
+    height: 45px;
+  }
+  
   /************************
      NOTIFICATIONS - PAGE
   ************************/

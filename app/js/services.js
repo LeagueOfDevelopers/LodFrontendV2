@@ -313,6 +313,17 @@ angular.module('LodSite.services', [])
              });
            };
 
+           //orders
+
+           this.getOrders = function () {
+             var url = '/orders/';
+
+             return sendAuthorizationSaveRequest(GET, url).then(function (response) {
+               return response.data;
+             });
+           };
+
+
            // other
            this.signUp = function (requestData) {
              var url = '/developers';

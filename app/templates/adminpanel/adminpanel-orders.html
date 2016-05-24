@@ -1,0 +1,21 @@
+<section class="all-projects__section">
+    <h1 class="projects-page__headline headline">Заказы</h1>
+
+    <div class="dividing-line"></div>
+
+    <div class="all-projects-page">
+
+        <div ng-repeat="order in orders" class="projects__all-project">
+            <a ui-sref="adminpanel.projectAdd({header: order.Header, description: order.Description, type: order.ProjectType})">
+
+            <div class="all-project__info">
+                <div class="all-project__name" ng-bind="order.Header"></div>
+                <div class="all-project__name" ng-bind="order.Description"></div>
+
+
+            </div>
+            </a>
+        </div>
+    </div>
+
+</section>

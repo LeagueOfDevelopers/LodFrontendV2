@@ -542,11 +542,11 @@ angular.module('LodSite.controllers', [])
       $scope.currentState = 'filling';
 
       var sampleProject = function () {
-        this.Name = '';
+        this.Name = $state.params.header;
         this.ProjectTypes = [];
-        this.Info = '';
+        this.Info = $state.params.description;
         this.AccessLevel = '0';
-        this.ProjectStatus = '0';
+        this.ProjectStatus = 0;
         this.LandingImage = {};
         this.Screenshots = [];
       };
@@ -574,6 +574,10 @@ angular.module('LodSite.controllers', [])
         status: false,
         index: 4
       }];
+
+      //костыль
+      $scope.categories[$state.params.type].status = true;
+
 
       //   FOR TYPE OF PROJECT
 
@@ -1250,6 +1254,35 @@ angular.module('LodSite.controllers', [])
 
       $scope.$emit('toggle_black', {isBlack: true});
     }])
+
+  .controller('AllOrdersCtrl', ['$scope', 'ApiService','TokenService', function($scope, ApiService, TokenService) {
+    var token = TokenService.getToken();
+    var role = TokenService.getRole();
+    if (!token || role != 1) {
+      return $state.go('index');
+    }
+    $scope.orders = [];
+
+    $scope.updateOrders = function () {
+      ApiService.getOrders().then(function (data){
+        $scope.orders = data;
+      });
+    };
+
+    $scope.updateOrders();
+
+    $scope.$on('userRole_changed', function (e, args) {
+      role = TokenService.getRole();
+      if (role != 1) {
+        return $state.go('index');
+      }
+    });
+
+    $scope.$emit('toggle_black', {isBlack: true});
+    $scope.$emit('change_title', {
+      title: 'Заказы - Лига Разработчиков НИТУ МИСиС'
+    })
+  }])
 
 
   //other

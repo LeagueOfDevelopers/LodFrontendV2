@@ -72,7 +72,6 @@ angular.module('LodSite.controllers', [])
         $scope.isOpened = false;
       });
 
-      console.log($rootScope.$$listeners);
       $rootScope.$on('userRole_changed', function (e, args) {
         token = TokenService.getToken();
         if (token) {
@@ -1486,9 +1485,9 @@ angular.module('LodSite.controllers', [])
       var date = new Date();
       var hour = date.getHours();
       $scope.timeOfDay = (hour > 4 && hour < 12) ? 'morning' :
-        (hour >= 12 && hour <= 18) ? 'afternoon' :
-          (hour > 18 && hour < 24) ? 'evening' :
-            'night';
+                         (hour >= 12 && hour <= 18) ? 'afternoon' :
+                         (hour > 18 && hour < 24) ? 'evening' :
+                         'night';
       $scope.isNoDeveloper = false;
       $scope.userLogin = {};
 
@@ -1530,9 +1529,162 @@ angular.module('LodSite.controllers', [])
       if (!token) {
         return $state.go('index');
       }
-      $scope.notifications = [];
-      ApiService.getNotifications(0).then(function (data) {
-        $scope.notifications = data;
+
+      var pageCounter = 0;
+      $scope.notifications = {
+        Read: [],
+        Unread: []
+      };
+
+      var inArray = function (value, array, strict) {
+        var found = false, key, strict = !!strict;
+
+        for (key in array) {
+          if ((strict && array[key] === value) || (!strict && array[key] == value)) {
+            found = true;
+            break;
+          }
+        }
+        return found;
+      };
+
+      var sortNotifications = function (notifications) {
+
+        var read = notifications.filter(function (item) {
+          return item.WasRead;
+        });
+
+        var unread = notifications.filter(function (item) {
+          return !item.WasRead;
+        });
+
+        read.sort(function compareNumeric(a, b) {
+          return a.OccuredOn - b.OccuredOn;
+        });
+
+        return {
+          Read: read,
+          Unread: unread
+        }
+      };
+
+      var concatNotifications = function (sortedNotif) {
+        var readNewNotifId = sortedNotif.Read.map(function (notification) {
+          return notification.Id;
+        });
+        var unreadNewNotifId = sortedNotif.Unread.map(function (notification) {
+          return notification.Id;
+        });
+
+        var readOldNotifId = $scope.notifications.Read.map(function (notification) {
+          return notification.Id;
+        });
+        var unreadOldNotifId = $scope.notifications.Unread.map(function (notification) {
+          return notification.Id;
+        });
+
+        readNewNotifId = readNewNotifId.filter(function (id) {
+          return !inArray(id, readOldNotifId);
+        });
+        unreadNewNotifId = unreadNewNotifId.filter(function (id) {
+          return !inArray(id, unreadOldNotifId);
+        });
+
+        sortedNotif.Read = sortedNotif.Read.filter(function (notification) {
+          return inArray(notification.Id, readNewNotifId);
+        });
+        sortedNotif.Unread = sortedNotif.Unread.filter(function (notification) {
+          return inArray(notification.Id, unreadNewNotifId);
+        });
+
+        $scope.notifications.Read = $scope.notifications.Read.concat(sortedNotif.Read);
+        $scope.notifications.Unread = $scope.notifications.Unread.concat(sortedNotif.Unread);
+      };
+
+      var supplementInfo = function (notifications) {
+        notifications = notifications.map(function (notification) {
+          switch (notification.EventType) {
+            case 'NewEmailConfirmedDeveloper':
+              ApiService.getDeveloper(notification.EventInfo.UserId).then(function (data) {
+                notification.EventInfo.FirstName = data.FirstName;
+                notification.EventInfo.LastName = data.LastName;
+              });
+              break;
+            case 'NewFullConfirmedDeveloper':
+              ApiService.getDeveloper(notification.EventInfo.NewDeveloperId).then(function (data) {
+                notification.EventInfo.FirstName = data.FirstName;
+                notification.EventInfo.LastName = data.LastName;
+              });
+              break;
+
+            case 'NewContactMessage':
+              notification.EventInfo.ClientEmailAddress = notification.EventInfo.ClientEmalAddress.Address;
+              break;
+
+            case 'NewDeveloperOnProject':
+              ApiService.getDeveloper(notification.EventInfo.UserId).then(function (data) {
+                notification.EventInfo.FirstName = data.FirstName;
+                notification.EventInfo.LastName = data.LastName;
+              });
+
+              ApiService.getProject(notification.EventInfo.ProjectId).then(function (data) {
+                notification.EventInfo.ProjectName = data.Name;
+              });
+              break;
+
+            case 'OrderPlaced':
+              ApiService.getOrder(notification.EventInfo.OrderId).then(function (data) {
+                notification.EventInfo.OrderName = data.OrderName;
+              });
+          }
+        });
+
+        return notifications;
+      };
+
+      $scope.addNotifications = function (page) {
+        if (page == 0) {
+          pageCounter = page;
+        } else {
+          pageCounter++;
+        }
+
+        ApiService.getNotifications(pageCounter).then(function (data) {
+          var newNotifications = sortNotifications(data.Data);
+
+          concatNotifications(newNotifications);
+
+          supplementInfo($scope.notifications.Read);
+          supplementInfo($scope.notifications.Unread);
+
+          $scope.isMoreNotif = ($scope.notifications.Unread.length + $scope.notifications.Read.length) < data.CountOfEntities;
+        });
+      };
+
+      $scope.readNotifications = function () {
+        var notifIds = $scope.notifications.Unread.map(function (notification) {
+          return notification.Id;
+        });
+
+        ApiService.readNotifications(notifIds).then(function () {
+          $scope.notifications.Unread.forEach(function (item) {
+            if (inArray(item.Id, notifIds)) {
+              item.WasRead = true;
+            }
+          });
+
+          concatNotifications(sortNotifications($scope.notifications.Unread));
+          $scope.notifications.Unread = [];
+        });
+      };
+
+      $scope.addNotifications(0);
+
+      $scope.$on('userRole_changed', function (e, args) {
+        token = TokenService.getToken();
+        if (!token || !token.UserId) {
+          return $state.go('index');
+        }
       });
 
       $scope.$emit('change_title', {

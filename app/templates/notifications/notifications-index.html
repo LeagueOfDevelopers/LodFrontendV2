@@ -1,31 +1,233 @@
 <div class="notifications-page">
   <h1 class="projects-section__headline headline">Оповещения</h1>
   <div class="dividing-line"></div>
-  <div class="notifications__header">Новые</div>
-  <div class="notifications__notification" ng-repeat="notification in notifications">
-    <div class="notification__date-and-type">
-      <div class="notification__date" ng-bind="notification.OccuredOn"></div>
-      <div class="notification__type-icon"
-           style=" background: url('app/imgs/event-icon.png') no-repeat center;
-           background-size: contain;">
+
+  <div class="notifications__header" ng-if="notifications.Unread.length">
+    <span>Новые</span>
+
+    <div class="profile-settings__submit read-button" ng-click="readNotifications()">Прочитать все</div>
+
+  </div>
+
+  <div class="notifications__notification" ng-repeat="notification in notifications.Unread">
+    <div class="notification__date-and-type unread">
+      <div class="notification__date" ng-bind="notification.Date"></div>
+      <div class="notification__type-icon" ng-class="notification.EventType"
+           style="background-image: url('app/imgs/{{notification.EventType}}.svg')">
       </div>
     </div>
-    <div class="notification__information">В лиге объявился бла бла бла бла, бла бла блааа бла бла серьезно будет идти
-                                           намного быстрее!
-    </div>
-  </div>
-  <div class="notifications__header">Прочитанные</div>
-  <div class="notifications__notification">
-    <div class="notification__date-and-type">
-      <div class="notification__date" >20.03.15</div>
-      <div class="notification__type-icon"
-           style=" background: url('app/imgs/event-icon.png') no-repeat center;
-           background-size: contain;">
+
+    <div class="notification__information" ng-switch="notification.EventType">
+      <div ng-switch-when="NewFullConfirmedDeveloper">
+
+        <span ng-bind="'Новый человек был принят в Лигу! Встречайте, '"></span>
+
+        <a class="information__link" ng-href="{{'/developers/' + notification.EventInfo.NewDeveloperId}}">
+           <span ng-bind="' ' + notification.EventInfo.FirstName + ' ' + notification.EventInfo.LastName">
+          </span>
+        </a>
+        !
       </div>
-    </div>
-    <div class="notification__information">В лиге объявился бла бла бла бла, бла бла блааа бла бла серьезно будет идти
-                                           намного быстрее!
+
+      <div ng-switch-when="NewEmailConfirmedDeveloper">
+
+        <a class="information__link" ng-href="{{'/developers/' + notification.EventInfo.UserId}}">
+          <span ng-bind="' ' + notification.EventInfo.FirstName + ' ' + notification.EventInfo.LastName">
+          </span>
+        </a>
+        <span ng-bind="' подтвердил адрес электронной почты.'"></span>
+
+      </div>
+
+      <div ng-switch-when="NewProjectCreated">
+
+        <span ng-bind="'Лига начала работу над новым проектом: '"></span>
+
+        <a class="information__link" ng-href="/projects/{{notification.EventInfo.ProjectId}}">
+          <span ng-bind=" notification.EventInfo.ProjectName">
+          </span>
+        </a>
+        .
+      </div>
+
+      <div ng-switch-when="NewDeveloperOnProject">
+
+        <a class="information__link" ng-href="{{'/developers/' + notification.EventInfo.UserId}}">
+          <span ng-bind="notification.EventInfo.FirstName + ' ' + notification.EventInfo.LastName">
+          </span>
+        </a>
+
+        <span ng-bind="'присоединился к проекту '"></span>
+
+        <a class="information__link" ng-href="/projects/{{notification.EventInfo.ProjectId}}">
+          <span ng-bind=" notification.EventInfo.ProjectName">
+          </span>
+        </a>
+        .
+      </div>
+
+      <div ng-switch-when="DeveloperHasLeftProject">
+
+        <a class="information__link" ng-href="{{'/developers/' + notification.EventInfo.UserId}}">
+          <span ng-bind="notification.EventInfo.FirstName + ' ' + notification.EventInfo.LastName">
+          </span>
+        </a>
+
+        <span ng-bind="'покинул проект '"></span>
+
+        <a class="information__link" ng-href="/projects/{{notification.EventInfo.ProjectId}}">
+          <span ng-bind=" notification.EventInfo.ProjectName">
+          </span>
+        </a>
+        .
+      </div>
+
+      <div ng-switch-when="OrderPlaced">
+
+        <span ng-bind="notification.EventInfo.ClientName + ' оставил заказ на разработку '"></span>
+
+        <a class="information__link" ng-href="/projects/{{notification.EventInfo.OrderId}}">
+          <span ng-bind=" notification.EventInfo.OrderName">
+          </span>
+        </a>
+        .
+      </div>
+
+      <div ng-switch-when="AdminNotificationInfo">
+          <span ng-bind="'Новое сообщение от администрации: ' + notification.EventInfo.InfoText">
+          </span>
+        </p>
+      </div>
+
+      <div ng-switch-when="NewContactMessage">
+
+        <a class="information__link" href="mailto:{{notification.EventInfo.ClientEmailAddress}}">
+          <span ng-bind="notification.EventInfo.ClientName">
+          </span>
+        </a>
+
+        <span
+          ng-bind="' оставил сообщение на тему ' + notification.EventInfo.MessageTopic + ' в форме связи: ' + notification.EventInfo.MessageBody"></span>
+
+      </div>
+
+      <div class="notification__time" ng-bind="notification.Time"></div>
+
     </div>
   </div>
-  <a class="notifications__see-more-button button-style"  ng-click="addEvents()">Показать больше</a>
+
+  <div class="notifications__header" ng-if="notifications.Read.length">Прочитанные</div>
+
+  <div class="notifications__notification" ng-repeat="notification in notifications.Read">
+    <div class="notification__date-and-type read">
+      <div class="notification__date" ng-bind="notification.Date"></div>
+
+      <div class="notification__type-icon" ng-class="notification.EventType"
+           style="background-image: url('app/imgs/{{notification.EventType}}.svg')">
+      </div>
+
+    </div>
+
+    <div class="notification__information" ng-switch="notification.EventType">
+      <div ng-switch-when="NewFullConfirmedDeveloper">
+
+        <span ng-bind="'Новый человек был принят в Лигу! Встречайте, '"></span>
+
+        <a class="information__link" ng-href="{{'/developers/' + notification.EventInfo.NewDeveloperId}}">
+           <span ng-bind="' ' + notification.EventInfo.FirstName + ' ' + notification.EventInfo.LastName">
+          </span>
+        </a>
+        !
+      </div>
+
+      <div ng-switch-when="NewEmailConfirmedDeveloper">
+
+        <a class="information__link" ng-href="{{'/developers/' + notification.EventInfo.UserId}}">
+          <span ng-bind="' ' + notification.EventInfo.FirstName + ' ' + notification.EventInfo.LastName">
+          </span>
+        </a>
+        <span ng-bind="' подтвердил адрес электронной почты.'"></span>
+
+      </div>
+
+      <div ng-switch-when="NewProjectCreated">
+
+        <span ng-bind="'Лига начала работу над новым проектом: '"></span>
+
+        <a class="information__link" ng-href="/projects/{{notification.EventInfo.ProjectId}}">
+          <span ng-bind=" notification.EventInfo.ProjectName">
+          </span>
+        </a>
+        .
+      </div>
+
+      <div ng-switch-when="NewDeveloperOnProject">
+
+        <a class="information__link" ng-href="{{'/developers/' + notification.EventInfo.UserId}}">
+          <span ng-bind="notification.EventInfo.FirstName + ' ' + notification.EventInfo.LastName">
+          </span>
+        </a>
+
+        <span ng-bind="'присоединился к проекту '"></span>
+
+        <a class="information__link" ng-href="/projects/{{notification.EventInfo.ProjectId}}">
+          <span ng-bind=" notification.EventInfo.ProjectName">
+          </span>
+        </a>
+        .
+      </div>
+
+      <div ng-switch-when="DeveloperHasLeftProject">
+
+        <a class="information__link" ng-href="{{'/developers/' + notification.EventInfo.UserId}}">
+          <span ng-bind="notification.EventInfo.FirstName + ' ' + notification.EventInfo.LastName">
+          </span>
+        </a>
+
+        <span ng-bind="'покинул проект '"></span>
+
+        <a class="information__link" ng-href="/projects/{{notification.EventInfo.ProjectId}}">
+          <span ng-bind=" notification.EventInfo.ProjectName">
+          </span>
+        </a>
+        .
+      </div>
+
+      <div ng-switch-when="OrderPlaced">
+
+        <span ng-bind="notification.EventInfo.ClientName + ' оставил заказ на разработку '"></span>
+
+        <a class="information__link" ng-href="/projects/{{notification.EventInfo.OrderId}}">
+          <span ng-bind=" notification.EventInfo.OrderName">
+          </span>
+        </a>
+        .
+      </div>
+
+      <div ng-switch-when="AdminNotificationInfo">
+          <span ng-bind="'Новое сообщение от администрации: «' + notification.EventInfo.InfoText + '»'">
+          </span>
+        </p>
+      </div>
+
+      <div ng-switch-when="NewContactMessage">
+
+        <a class="information__link" href="mailto:{{notification.EventInfo.ClientEmailAddress}}">
+          <span ng-bind="notification.EventInfo.ClientName">
+          </span>
+        </a>
+
+        <span
+          ng-bind="' оставил сообщение на тему «' + notification.EventInfo.MessageTopic + '» в форме связи: «' + notification.EventInfo.MessageBody + '»'"></span>
+
+      </div>
+
+      <div class="notification__time" ng-bind="notification.Time"></div>
+
+    </div>
+
+  </div>
+
+  <a class="notifications__see-more-button button-style" ng-if="isMoreNotif" ng-click="addNotifications()">Показать
+                                                                                                           больше</a>
 </div>

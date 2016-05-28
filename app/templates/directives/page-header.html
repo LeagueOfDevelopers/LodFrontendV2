@@ -36,7 +36,7 @@
   </nav>
 </header>
 <nav class="nav-mobile" ng-show="isOpened">
-  <a class="nav-mobile__item" ui-sref="notifications" ng-if="userRole === 0 || userRole === 1">Оповещений: 0</a>
+  <a class="nav-mobile__item" ui-sref="notifications" ng-bind="'Оповещений: '+ notificationsAmount || 0" ng-if="userRole === 0 || userRole === 1"></a>
   <a class="nav-mobile__item" ng-href="{{'/developers/' + userId}}" ng-if="userRole === 0 || userRole === 1">Портфолио</a>
   <a class="nav-mobile__item" ui-sref="developers.edit" ng-if="userRole === 0 || userRole === 1">Профиль</a>
   <a class="nav-mobile__item" ui-sref="adminpanel.index" ng-if="userRole === 1">Администрирование</a>

@@ -1627,6 +1627,10 @@ footer {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  -webkit-transition: all .15s ease-out;
+  -moz-transition: all .15s ease-out;
+  -o-transition: all .15s ease-out;
+  transition: all .15s ease-out;
 }
 
 .profile-settings__button {
@@ -2172,6 +2176,15 @@ footer {
   padding-bottom: 5px;
   text-align: center;
   color: #aaa;
+  border-bottom: 1px solid #ccc;
+}
+
+.profile-settings__submit.read-button {
+  float: right;
+  width: auto;
+  font-size: 1em;
+  padding: 8px;
+  margin: 0;
 }
 
 .notifications__notification{
@@ -2180,6 +2193,10 @@ footer {
   margin: 0 auto 40px auto;
   padding: 1px 0;
   text-align: center;
+  -webkit-transition: all .1s ease;
+  -moz-transition: all .1s ease;
+  -o-transition: all .1s ease;
+  transition: all .1s ease;
 }
 
 .notification__date-and-type {
@@ -2187,13 +2204,29 @@ footer {
   box-sizing: border-box;
   position: relative;
   margin: 0 auto 20px auto;
-  background-color: #2d81b9;
   border-radius: 5px;
+  -webkit-transition: all .1s ease;
+  -moz-transition: all .1s ease;
+  -o-transition: all .1s ease;
+  transition: all .1s ease;
+}
+
+.notification__date-and-type.unread {
+  background-color: #2d81b9;
+}
+
+.notification__date-and-type.read {
+  background-color: #717171;
 }
 
 .notification__date {
   padding: 10px 45px 10px 10px;
   color: #fff;
+}
+
+.notification__time {
+  color: #aaa;
+  text-align: right;
 }
 
 .notification__type-icon{
@@ -2204,6 +2237,9 @@ footer {
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
 .notification__information{
@@ -2225,6 +2261,14 @@ footer {
   transform: translate(-50%,-100%);
   border: 15px solid transparent;
   border-bottom: 15px solid #fff;
+}
+
+.notification__information .information__link {
+  color: #2980B9;
+}
+
+.notification__information .information__link:hover {
+  text-decoration: underline;
 }
 
 .notifications__see-more-button{
@@ -2642,10 +2686,9 @@ footer {
   }
 
   .notifications__header{
-    width: 600px;
+    max-width: 600px;
     margin: 20px auto 20px auto;
     text-align: left;
-    border-bottom: 1px solid #ccc;
   }
 
   .notifications__notification {
@@ -2665,7 +2708,7 @@ footer {
   .notification__information {
     width: calc(100% - 150px);
     display: inline-block;
-    margin-left: 150px;
+    margin-left: 170px;
   }
 
   .notification__information::before {
@@ -3585,6 +3628,7 @@ footer {
      NOTIFICATIONS - PAGE
   ************************/
   .notifications__header{
+    max-width: none;
     width: 800px;
   }
 
@@ -3762,6 +3806,6 @@ footer {
 
   .notification__information {
     width: calc(100% - 160px);
-    margin-left: 160px;
+    margin-left: 185px;
   }
 }

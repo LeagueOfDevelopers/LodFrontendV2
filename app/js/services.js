@@ -285,22 +285,26 @@ angular.module('LodSite.services', [])
 
              function convertNotificationsDates(notifications) {
                for (var i = 0; i < notifications.length; i++) {
-                 notifications[i].OccuredOn = DateService.getDDMMYYFromISODate(notifications[i].OccuredOn);
+                 notifications[i].OccuredOn = Date.parse(notifications[i].OccuredOn);
+                 notifications[i].Time = DateService.getHHmmFromISODate(notifications[i].OccuredOn);
+                 notifications[i].Date = DateService.getDDMMYYFromISODate(notifications[i].OccuredOn);
+
+                 notifications[i].EventInfo = JSON.parse(notifications[i].EventInfo);
                }
              }
 
              return sendAuthorizationSaveRequest(GET, url).then(function (response) {
                var notifications = response.data;
-               convertNotificationsDates(notifications);
+               convertNotificationsDates(notifications.Data);
 
                return notifications;
              });
            };
 
-           this.readNotifications = function () {
-             var url = 'event/read';
+           this.readNotifications = function (notifIds) {
+             var url = '/event/read';
 
-             sendAuthorizationSaveRequest(PUT, url);
+             return sendAuthorizationSaveRequest(PUT, url, null, notifIds);
            };
 
            this.getNotificationsAmount = function () {
@@ -346,6 +350,14 @@ angular.module('LodSite.services', [])
              });
            };
 
+           this.getOrder = function (orderId) {
+             var url = '/orders/' + orderId;
+
+             return sendAuthorizationSaveRequest(GET, url).then(function (data) {
+               return data;
+             });
+           };
+
            this.order = function (requestData) {
              var url = '/orders';
 
@@ -367,8 +379,18 @@ angular.module('LodSite.services', [])
        .service('DateService', [function () {
          var self = this;
 
-         this.getDDMMYYFromISODate = function (ISODate) {
-           var ms = Date.parse(ISODate);
+         this.getHHmmFromISODate = function (ms) {
+           var date = new Date(ms);
+           var hh = date.getHours();
+           var mm = date.getMinutes()
+
+           if (hh < 10) hh = '0' + hh;
+           if (mm < 10) mm = '0' + mm;
+
+           return hh + ':' + mm;
+         } ;
+
+         this.getDDMMYYFromISODate = function (ms) {
            var date = new Date(ms);
            var dd = date.getDate();
            var mm = date.getMonth() + 1;

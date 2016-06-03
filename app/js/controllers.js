@@ -165,7 +165,17 @@ angular.module('LodSite.controllers', [])
       $scope.profile = {};
 
 
-      $scope.changeCurrentState = function () {
+      var nullifyEntities = function () {
+        $scope.state = [];
+
+        $scope.profileSettingsForm.$setPristine();
+
+        $timeout(function () {
+          $scope.currentState = null;
+        }, 5000);
+      };
+
+      var changeCurrentState = function () {
         for (var i = 0; i < 3; i++) {
           if (!$scope.state[i]) {
             return;
@@ -176,21 +186,17 @@ angular.module('LodSite.controllers', [])
           if ($scope.state[i] == 'failed') {
             $scope.currentState = 'failed';
 
-            $scope.state = [];
+            $scope.repeatedPassword = undefined;
+            $scope.newPassword = undefined;
 
-            $timeout(function () {
-              $scope.currentState = null;
-            }, 5000);
+            nullifyEntities();
+
             return;
           }
         }
         $scope.currentState = 'success';
 
-        $scope.state = [];
-
-        $timeout(function () {
-          $scope.currentState = null;
-        }, 3000);
+        nullifyEntities();
       };
 
 
@@ -269,7 +275,7 @@ angular.module('LodSite.controllers', [])
           } else {
             $scope.state[0] = 'failed';
           }
-          $scope.changeCurrentState();
+          changeCurrentState();
         });
 
         for (var i = 0; i < $scope.notificationSettings.length; i++) {
@@ -282,20 +288,22 @@ angular.module('LodSite.controllers', [])
           } else {
             $scope.state[1] = 'failed';
           }
-          $scope.changeCurrentState();
+          changeCurrentState();
         });
 
         if ($scope.newPassword && $scope.repeatedPassword) {
-          ApiService.sendNewPassword(developerId, JSON.stringify($scope.newPassword)).then(function (isSuccess) {
+          ApiService.sendNewPassword(developerId, { NewPassword: $scope.newPassword, Token: token.Token }).then(function (isSuccess) {
             if (isSuccess) {
               $scope.state[2] = 'success';
             } else {
               $scope.state[2] = 'failed';
             }
-            $scope.changeCurrentState();
+            changeCurrentState();
           });
         } else {
           $scope.state[2] = 'success';
+
+          changeCurrentState();
         }
       };
 
@@ -1592,7 +1600,7 @@ angular.module('LodSite.controllers', [])
         });
 
         read.sort(function compareNumeric(a, b) {
-          return a.OccuredOn - b.OccuredOn;
+          return b.OccuredOn - a.OccuredOn;
         });
 
         return {

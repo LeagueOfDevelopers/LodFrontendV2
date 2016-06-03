@@ -53,7 +53,7 @@ angular.module('LodSite.directives', [])
            }],
            link: function (scope, element) {
              var script = document.createElement('script');
-             script.src = 'https://api-maps.yandex.ru/services/constructor/1.0/js/?sid=4Yg6W87x5Mr-mGZLObfvYf8IoDh7KTsm&width=100%&height=450&lang=ru_RU&sourceType=constructor';
+             script.src = 'app/lib/yandex.map/ya-map-script.js';
              script.async = true;
              element[0].querySelector('#map').appendChild(script);
            }

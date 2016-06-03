@@ -1036,6 +1036,7 @@ footer {
 
 .about-yandex-map {
   width: 95%;
+  height: 450px;
   margin: 8% auto 0;
 }
 
@@ -1643,11 +1644,9 @@ footer {
 .profile-settings__submit {
   border: none;
   outline: none;
-  border-radius: 8px;
-  padding: 5px 30px;
-  font-size: 1.7em;
-  margin-top: 20px;
-  margin-bottom: 50px;
+  border-radius: 5px;
+  padding: 5px 20px;
+  font-size: 1.2em;
 }
 
 .profile-settings__submit:disabled {
@@ -1662,7 +1661,7 @@ footer {
 }
 
 .profile-settings__submit-wrapper {
-  margin: 40px auto;
+  margin: 10px auto 30px;
 }
 
 .profile-settings__button:hover, .profile-settings__submit:hover {
@@ -2592,7 +2591,7 @@ footer {
   }
 
   .profile-settings__submit-wrapper {
-    margin: 0;
+    margin: 20px auto 30px;
   }
 
   .profile-settings__bottom-part {
@@ -3671,7 +3670,7 @@ footer {
   }
 
   .profile-settings__input, .adding-project__select, .adding-project__textarea, .adding-project__type, .adding-developer__button-wrapper, .adding-project__developers {
-    width: 580px;
+    width: 575px;
     margin-bottom: 30px;
   }
 
@@ -3679,7 +3678,7 @@ footer {
     height: 40px;
   }
 
-  .profile-settings__button {
+  .profile-settings__button, .profile-settings__submit {
     font-size: 1.3em;
   }
 

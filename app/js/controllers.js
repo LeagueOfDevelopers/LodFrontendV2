@@ -292,7 +292,7 @@ angular.module('LodSite.controllers', [])
         });
 
         if ($scope.newPassword && $scope.repeatedPassword) {
-          ApiService.sendNewPassword(developerId, { NewPassword: $scope.newPassword, Token: token.Token }).then(function (isSuccess) {
+          ApiService.sendNewPassword({ NewPassword: $scope.newPassword, Token: token.Token }).then(function (isSuccess) {
             if (isSuccess) {
               $scope.state[2] = 'success';
             } else {

@@ -1824,7 +1824,9 @@ angular.module('LodSite.controllers', [])
 
             case 'OrderPlaced':
               ApiService.getOrder(notification.EventInfo.OrderId).then(function (data) {
-                notification.EventInfo.OrderName = data.OrderName;
+                notification.EventInfo.OrderName = data.Header;
+                notification.EventInfo.ClientName = data.CustomerName;
+
               });
           }
         });

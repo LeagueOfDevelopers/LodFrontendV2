@@ -353,8 +353,8 @@ angular.module('LodSite.services', [])
            this.getOrder = function (orderId) {
              var url = '/orders/' + orderId;
 
-             return sendAuthorizationSaveRequest(GET, url).then(function (data) {
-               return data;
+             return sendAuthorizationSaveRequest(GET, url).then(function (response) {
+               return response.data;
              });
            };
 

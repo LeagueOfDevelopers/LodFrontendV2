@@ -350,6 +350,24 @@ angular.module('LodSite.services', [])
              });
            };
 
+           this.getLinkForPasswordRecovery = function (email) {
+             var url = '/password/recovery';
+
+             return sendAuthorizationSaveRequest(POST, url, null, JSON.stringify(email))
+               .then(function (response) {
+                 return response.status === 200;
+               });
+           };
+
+           this.recoverPassword = function (data) {
+             var url = '/password';
+
+             return sendAuthorizationSaveRequest(PUT, url, null, data)
+               .then(function (response) {
+                 return response.status === 200;
+               });
+           };
+
            this.getOrder = function (orderId) {
              var url = '/orders/' + orderId;
 

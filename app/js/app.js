@@ -151,6 +151,12 @@ angular.module('LodSite', [
                templateUrl: templateUrl('notifications', 'notifications-index'),
                controller: 'NotificationsCtrl'
              })
+
+             .state('password-recovery', {
+               url: '/password/recovery/:token',
+               templateUrl: templateUrl('passwordRecovery', 'passwordRecovery-index'),
+               controller: 'PasswordRecoveryCtrl'
+             })
          }
        ])
 

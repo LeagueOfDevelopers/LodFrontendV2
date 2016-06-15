@@ -1346,7 +1346,7 @@ footer {
   transition: all .2s ease-out;
 }
 
-.form__container input {
+.form__container input, .password-recovery__container input {
   font-family: 'PT Sans', sans-serif;
   outline: 0;
   background: #fff;
@@ -1358,7 +1358,7 @@ footer {
   font-size: 1em;
 }
 
-.form__container button {
+.form__container button, .password-recovery__container button {
   font-family: 'PT Sans', sans-serif;
   text-transform: uppercase;
   background: #f1f1f1;
@@ -1375,19 +1375,19 @@ footer {
   cursor: pointer;
 }
 
-.form__container button:disabled {
+.form__container button:disabled, .password-recovery__container button:disabled {
   cursor: default;
   border: 1px solid #808080;
   color: #808080;
 }
 
-.form__container button:hover {
+.form__container button:hover, .password-recovery__container button:hover {
   background: #2980b9;
   border: 1px solid #2980b9;
   color: #fff;
 }
 
-.form__container button:disabled:hover {
+.form__container button:disabled:hover, .password-recovery__container button:disabled:hover {
   background: none;
   border: 1px solid #808080;
   color: #808080;
@@ -1413,6 +1413,10 @@ footer {
   color: #202d3a;
   display: block;
   font-size: 1.1em;
+}
+
+.form__link:hover {
+  cursor: pointer;
 }
 
 /*************************
@@ -2274,6 +2278,23 @@ footer {
   display: block;
   margin: 20px auto;
 }
+
+/*******************************
+        PASSWORD RECOVERY
+*******************************/
+.password-recovery__wrapper {
+  padding: 0 15px;
+}
+
+.password-recovery__container {
+  max-width: 350px;
+  margin: 20px auto 20px;
+}
+
+.password-recovery__container .help-message-input {
+  margin: 10px;
+}
+
 @media only screen and (min-width: 480px) {
   .projects-section-container {
     max-width: 400px;
@@ -3635,6 +3656,21 @@ footer {
     max-width: 800px;
   }
 
+  /*******************************
+        PASSWORD RECOVERY
+*******************************/
+  .password-recovery__wrapper {
+    padding: 0 40px;
+  }
+
+  .password-recovery__container {
+    max-width: 500px;
+    text-align: center;
+  }
+
+  .password-recovery__container button {
+    max-width: 350px;
+  }
 }
 
 @media only screen and (min-width: 1300px) {

@@ -1670,8 +1670,9 @@ angular.module('LodSite.controllers', [])
   .controller('LoginFormCtrl', ['$scope',
     'ApiService',
     '$state',
+    '$timeout',
     'NotificationsService',
-    function ($scope, ApiService, $state, NotificationsService) {
+    function ($scope, ApiService, $state, $timeout, NotificationsService) {
       var date = new Date();
       var hour = date.getHours();
       $scope.timeOfDay = (hour > 4 && hour < 12) ? 'morning' :
@@ -1680,6 +1681,9 @@ angular.module('LodSite.controllers', [])
                          'night';
       $scope.isNoDeveloper = false;
       $scope.userLogin = {};
+      $scope.status = 'loginForm';
+
+      $scope.cons = function() {console.log($scope.userLogin.emailForRecovery);}
 
       $scope.signIn = function () {
         ApiService.signIn($scope.userLogin).then(function (isSuccess) {
@@ -1694,17 +1698,28 @@ angular.module('LodSite.controllers', [])
           }
         });
       };
+
+      $scope.toggleStatus = function() {
+        $scope.status = ($scope.status == 'loginForm') ? 'passwordRecovery' : 'loginForm';
+      };
+
+      $scope.recoverPassword = function () {
+        ApiService.getLinkForPasswordRecovery($scope.userLogin.emailForRecovery).then(function (isSuccess) {
+          if (isSuccess) {
+            $scope.isSuccess = true;
+            $scope.userLogin.emailForRecovery = '';
+            $timeout(function () {isSuccess = '';}, 4000);
+          }
+        })
+      };
+
     }])
 
   .controller('EmailConfirmationCtrl', ['$scope', 'ApiService', '$state', function ($scope, ApiService, $state) {
     var token = $state.params.token;
 
     ApiService.developerConfirmation(token).then(function (isSuccess) {
-      if (isSuccess) {
         $scope.isSuccess = isSuccess;
-      } else {
-        $scope.isSuccess = isSuccess;
-      }
     });
 
     $scope.$emit('toggle_black', {isBlack: true});
@@ -1884,4 +1899,28 @@ angular.module('LodSite.controllers', [])
       });
       $scope.$emit('toggle_black', {isBlack: true});
     }])
+
+  .controller('PasswordRecoveryCtrl', ['$scope', 'ApiService', '$state', function ($scope, ApiService, $state) {
+    $scope.data = {
+      Token: $state.params.token,
+      NewPassword: ''
+      };
+
+    $scope.recoverPassword = function () {
+      ApiService.recoverPassword($scope.data).then(function (isSuccess) {
+        $scope.isSuccess = isSuccess;
+
+        $scope.data = {
+          Token: '',
+          NewPassword: ''
+        };
+        $scope.repeatedPassword = '';
+      });
+    };
+
+    $scope.$emit('change_title', {
+      title: 'Восстановление пароля - Лига Разработчиков НИТУ МИСиС'
+    });
+    $scope.$emit('toggle_black', {isBlack: true});
+  }])
 ;

@@ -2177,17 +2177,22 @@ footer {
 .notifications__header{
   margin: 20px auto 10px auto;
   padding-bottom: 5px;
-  text-align: center;
   color: #aaa;
   border-bottom: 1px solid #ccc;
 }
 
-.profile-settings__submit.read-button {
+.notification__read-button {
   float: right;
-  width: auto;
-  font-size: 1em;
-  padding: 8px;
-  margin: 0;
+  color: #202d3a;
+  -webkit-transition: all .2s ease;
+  -moz-transition: all .2s ease;
+  -o-transition: all .2s ease;
+  transition: all .2s ease;
+}
+
+.notification__read-button:hover {
+  cursor: pointer;
+  color: #2d81b9;
 }
 
 .notifications__notification{
@@ -2726,7 +2731,7 @@ footer {
   }
 
   .notification__information {
-    width: calc(100% - 150px);
+    width: calc(100% - 170px);
     display: inline-block;
     margin-left: 170px;
   }
@@ -3840,7 +3845,7 @@ footer {
   }
 
   .notification__information {
-    width: calc(100% - 160px);
+    width: calc(100% - 185px);
     margin-left: 185px;
   }
 }

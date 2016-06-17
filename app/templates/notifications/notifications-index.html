@@ -86,7 +86,7 @@
 
         <span ng-bind="notification.EventInfo.ClientName + ' оставил заказ на разработку '"></span>
 
-        <a class="information__link" ng-href="/projects/{{notification.EventInfo.OrderId}}">
+        <a class="information__link" ui-sref="adminpanel.orders">
           <span ng-bind=" notification.EventInfo.OrderName">
           </span>
         </a>
@@ -197,7 +197,7 @@
 
         <span ng-bind="notification.EventInfo.ClientName + ' оставил заказ на разработку '"></span>
 
-        <a class="information__link" ng-href="/projects/{{notification.EventInfo.OrderId}}">
+        <a class="information__link" ui-sref="adminpanel.orders">
           <span ng-bind=" notification.EventInfo.OrderName">
           </span>
         </a>

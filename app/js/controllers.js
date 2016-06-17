@@ -292,7 +292,10 @@ angular.module('LodSite.controllers', [])
         });
 
         if ($scope.newPassword && $scope.repeatedPassword) {
-          ApiService.sendNewPassword({ NewPassword: $scope.newPassword, Token: token.Token }).then(function (isSuccess) {
+          ApiService.sendNewPassword(developerId, {
+            NewPassword: $scope.newPassword,
+            Token: token.Token
+          }).then(function (isSuccess) {
             if (isSuccess) {
               $scope.state[2] = 'success';
             } else {
@@ -1262,7 +1265,7 @@ angular.module('LodSite.controllers', [])
       $scope.$emit('toggle_black', {isBlack: true});
     }])
 
-  .controller('AllOrdersCtrl', ['$scope', 'ApiService','TokenService', function($scope, ApiService, TokenService) {
+  .controller('AllOrdersCtrl', ['$scope', 'ApiService', 'TokenService', function ($scope, ApiService, TokenService) {
     var token = TokenService.getToken();
     var role = TokenService.getRole();
     if (!token || role != 1) {
@@ -1271,7 +1274,7 @@ angular.module('LodSite.controllers', [])
     $scope.orders = [];
 
     $scope.updateOrders = function () {
-      ApiService.getOrders().then(function (data){
+      ApiService.getOrders().then(function (data) {
         $scope.orders = data;
       });
     };
@@ -1332,6 +1335,152 @@ angular.module('LodSite.controllers', [])
   }])
 
   .controller('AboutCtrl', ['$scope', function ($scope) {
+    ymaps.ready(init);
+    var map, collection, polylines;
+
+    function init() {
+      map = new ymaps.Map("map", {
+          center: [55.72667388793981, 37.60625375300586],
+          zoom: 17,
+          size: [null, 450],
+          lang: "",
+          type: "yandex#map",
+          traffic: {"shown": false}
+        },
+        {
+          suppressMapOpenBlock: true
+        });
+
+      collection = new ymaps.GeoObjectCollection();
+      polylines = [
+        new ymaps.Placemark(
+          [55.726393150886125, 37.606740556111525],
+          {
+            hintContent: 'Лига Разработчиков (5й этаж, Г-588)',
+            balloonContent: 'Лига Разработчиков (5й этаж, Г-588)',
+          },
+          {
+            preset: "islands#orangeDotIcon"
+          }
+        ),
+        new ymaps.GeoObject({
+            geometry: {
+              type: "LineString",
+              coordinates: [[
+                55.72696229923229,
+                37.607824168555936
+              ],
+                [
+                  55.726529384354315,
+                  37.606568894736974
+                ]]
+            },
+            properties: {
+              hintContent: "Путь из корпуса \"А\"",
+              balloonContent: "Путь из корпуса \"А\"",
+            }
+          },
+          {
+            strokeColor: "#177bc9",
+            strokeWidth: 5
+          }
+        ),
+        new ymaps.GeoObject({
+            geometry: {
+              type: "LineString",
+              coordinates: [[
+                55.72851118975991,
+                37.60874775027792
+              ],
+                [
+                  55.728526325960175,
+                  37.60895696258108
+                ],
+                [
+                  55.72796628285632,
+                  37.60994401549855
+                ],
+                [
+                  55.72665544769674,
+                  37.60768559550788
+                ],
+                [
+                  55.72690066502515,
+                  37.607229619975406
+                ],
+                [
+                  55.726534352164826,
+                  37.606559067721726
+                ]]
+            },
+            properties: {
+              hintContent: "Путь от главного входа НИТУ МИСиС",
+              balloonContent: "Путь от главного входа НИТУ МИСиС",
+            }
+          },
+          {
+            strokeColor: "#1e98ff",
+            strokeWidth: 5
+          }),
+        new ymaps.GeoObject({
+            geometry: {
+              type: "LineString",
+              coordinates: [[
+                55.72652303781649,
+                37.60654812898927
+              ],
+                [
+                  55.7264594624862,
+                  37.60643011179261
+                ]]
+            }
+          },
+          {
+            strokeColor: "#b3b3b3",
+            strokeWidth: 3
+          }),
+        new ymaps.GeoObject({
+            geometry: {
+              type: "LineString",
+              coordinates: [[
+                55.72690563942714,
+                37.60720795240702
+              ],
+                [
+                  55.72713874578818,
+                  37.60679489221874
+                ],
+                [
+                  55.72670280548235,
+                  37.60600632276835
+                ],
+                [
+                  55.726336490751585,
+                  37.60665541734995
+                ],
+                [
+                  55.72639401146243,
+                  37.6067519768745
+                ]]
+            },
+            properties: {
+              hintContent: "Проход через главный корпус Горного института (корпуса соединены проходом на втором и третьем этажах)",
+              balloonContent: "Проход через главный корпус Горного института (корпуса соединены проходом на втором и третьем этажах)",
+            }
+          },
+          {
+            strokeColor: "#b3b3b3",
+            strokeWidth: 3
+          })
+      ];
+
+      for (var i = 0; i < polylines.length; i++) {
+        collection.add(polylines[i]);
+      }
+
+      map.geoObjects.add(collection);
+    }
+
     $scope.$emit('toggle_black', {isBlack: true});
     $scope.$emit('change_title', {
       title: 'О нас - Лига Разработчиков НИТУ МИСиС'
@@ -1521,8 +1670,9 @@ angular.module('LodSite.controllers', [])
   .controller('LoginFormCtrl', ['$scope',
     'ApiService',
     '$state',
+    '$timeout',
     'NotificationsService',
-    function ($scope, ApiService, $state, NotificationsService) {
+    function ($scope, ApiService, $state, $timeout, NotificationsService) {
       var date = new Date();
       var hour = date.getHours();
       $scope.timeOfDay = (hour > 4 && hour < 12) ? 'morning' :
@@ -1531,6 +1681,9 @@ angular.module('LodSite.controllers', [])
                          'night';
       $scope.isNoDeveloper = false;
       $scope.userLogin = {};
+      $scope.status = 'loginForm';
+
+      $scope.cons = function() {console.log($scope.userLogin.emailForRecovery);}
 
       $scope.signIn = function () {
         ApiService.signIn($scope.userLogin).then(function (isSuccess) {
@@ -1545,17 +1698,28 @@ angular.module('LodSite.controllers', [])
           }
         });
       };
+
+      $scope.toggleStatus = function() {
+        $scope.status = ($scope.status == 'loginForm') ? 'passwordRecovery' : 'loginForm';
+      };
+
+      $scope.recoverPassword = function () {
+        ApiService.getLinkForPasswordRecovery($scope.userLogin.emailForRecovery).then(function (isSuccess) {
+          if (isSuccess) {
+            $scope.isSuccess = true;
+            $scope.userLogin.emailForRecovery = '';
+            $timeout(function () {isSuccess = '';}, 4000);
+          }
+        })
+      };
+
     }])
 
   .controller('EmailConfirmationCtrl', ['$scope', 'ApiService', '$state', function ($scope, ApiService, $state) {
     var token = $state.params.token;
 
     ApiService.developerConfirmation(token).then(function (isSuccess) {
-      if (isSuccess) {
         $scope.isSuccess = isSuccess;
-      } else {
-        $scope.isSuccess = isSuccess;
-      }
     });
 
     $scope.$emit('toggle_black', {isBlack: true});
@@ -1675,7 +1839,9 @@ angular.module('LodSite.controllers', [])
 
             case 'OrderPlaced':
               ApiService.getOrder(notification.EventInfo.OrderId).then(function (data) {
-                notification.EventInfo.OrderName = data.OrderName;
+                notification.EventInfo.OrderName = data.Header;
+                notification.EventInfo.ClientName = data.CustomerName;
+
               });
           }
         });
@@ -1733,4 +1899,28 @@ angular.module('LodSite.controllers', [])
       });
       $scope.$emit('toggle_black', {isBlack: true});
     }])
+
+  .controller('PasswordRecoveryCtrl', ['$scope', 'ApiService', '$state', function ($scope, ApiService, $state) {
+    $scope.data = {
+      Token: $state.params.token,
+      NewPassword: ''
+      };
+
+    $scope.recoverPassword = function () {
+      ApiService.recoverPassword($scope.data).then(function (isSuccess) {
+        $scope.isSuccess = isSuccess;
+
+        $scope.data = {
+          Token: '',
+          NewPassword: ''
+        };
+        $scope.repeatedPassword = '';
+      });
+    };
+
+    $scope.$emit('change_title', {
+      title: 'Восстановление пароля - Лига Разработчиков НИТУ МИСиС'
+    });
+    $scope.$emit('toggle_black', {isBlack: true});
+  }])
 ;

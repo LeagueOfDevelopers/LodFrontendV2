@@ -44,22 +44,6 @@ angular.module('LodSite.directives', [])
        })
 
        //other
-       .directive('yandexMap', function () {
-         return {
-           restrict: 'EA',
-           scope: true,
-           templateUrl: templateUrl('directives', 'yandex-map'),
-           controller: ['$scope', function ($scope) {
-           }],
-           link: function (scope, element) {
-             var script = document.createElement('script');
-             script.src = 'app/lib/yandex.map/ya-map-script.js';
-             script.async = true;
-             element[0].querySelector('#map').appendChild(script);
-           }
-         };
-       })
-
        .directive('uploadFile', ['$rootScope', 'TokenService', function ($rootScope, TokenService) {
          return {
            resctrict: 'A',

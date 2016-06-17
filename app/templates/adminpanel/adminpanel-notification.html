@@ -1,0 +1,31 @@
+<div class="profile-settings__wrap">
+
+  <h1 class="profile-settings__heading headline">Создание уведомления</h1>
+
+  <div class="dividing-line"></div>
+
+  <form>
+
+    <div class="admin-notification__heading">Текст уведомления:</div>
+
+    <textarea class="admin-notification__textarea" name="notification" ng-model="notification" maxlength="500"
+            ng-minlength="1" required></textarea>
+
+    <div class="admin-notification__message" ng-switch="currentState">
+      <p class="help-message-input" ng-switch-when="success">
+        Уведомление успешно создано.
+      </p>
+
+      <p class="help-message-input" ng-switch-when="failed">
+        Ошибка!
+      </p>
+    </div>
+
+    <button class="profile-settings__submit admin-notification__submit" ng-disabled="!notification"
+            ng-click="createNotification()">
+      Создать
+    </button>
+
+  </form>
+
+</div>

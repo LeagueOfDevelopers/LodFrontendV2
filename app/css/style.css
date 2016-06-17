@@ -1579,7 +1579,7 @@ footer {
   font-size: 1.1em;
 }
 
-.profile-settings__input, .adding-project__select, .adding-project__textarea, .adding-project__type {
+.profile-settings__input, .adding-project__select, .adding-project__textarea, .adding-project__type, .admin-notification__textarea {
   display: block;
   box-sizing: border-box;
   outline: none;
@@ -2166,6 +2166,30 @@ footer {
   font-weight: normal;
 }
 
+/*******************************
+     ADMIN NOTIFICATION-PAGE
+*******************************/
+.admin-notification__submit {
+  display: block;
+  margin: 20px auto;
+}
+
+.admin-notification__heading {
+  width: 90%;
+  max-width: 450px;
+  margin: 0 auto 10px;
+}
+
+.admin-notification__textarea {
+  height: 185px;
+  resize: none;
+}
+
+.admin-notification__message {
+  margin-top: 5px;
+  text-align: center;
+}
+
 /************************
   NOTIFICATIONS - PAGE
 ************************/
@@ -2703,9 +2727,17 @@ footer {
     margin: 0 auto;
   }
 
+  /*******************************
+       ADMIN NOTIFICATION-PAGE
+  *******************************/
+  .admin-notification__heading, .admin-notification__textarea {
+    max-width: 550px;
+  }
+
+
   /************************
-  NOTIFICATIONS - PAGE
-************************/
+     NOTIFICATIONS - PAGE
+  ************************/
   .notifications-page{
     padding: 1px 40px 20px;
   }
@@ -3632,7 +3664,7 @@ footer {
        ADMINPANEL
 *************************/
   .adminpanel__point {
-    margin: 0 10px;
+    margin: 0 10px 10px;
     height: 100px;
     line-height: 100px;
     font-size: 1.3em;
@@ -3774,6 +3806,18 @@ footer {
     margin: 15px;
     width: 580px;
   }
+
+  /*******************************
+       ADMIN NOTIFICATION-PAGE
+  *******************************/
+  .admin-notification__heading, .admin-notification__textarea {
+    max-width: 750px;
+  }
+
+  .admin-notification__textarea {
+    height: 200px;
+  }
+
 }
 
 @media only screen and (min-width: 1700px) {
@@ -3814,6 +3858,17 @@ footer {
   .projects__all-project {
     margin: 25px;
     width: 650px;
+  }
+
+  /*******************************
+       ADMIN NOTIFICATION-PAGE
+  *******************************/
+  .admin-notification__heading, .admin-notification__textarea {
+    max-width: 850px;
+  }
+
+  .admin-notification__textarea {
+    height: 250px;
   }
 
   /*************************

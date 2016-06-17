@@ -317,6 +317,12 @@ angular.module('LodSite.services', [])
              });
            };
 
+           this.createNotification = function (notification) {
+             var url = '/admin/notification';
+
+             return sendAuthorizationSaveRequest(POST, url, null, notification);
+           };
+
            //orders
 
            this.getOrders = function () {

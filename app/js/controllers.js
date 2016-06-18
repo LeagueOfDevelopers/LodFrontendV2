@@ -1297,37 +1297,41 @@ angular.module('LodSite.controllers', [])
     })
   }])
 
-  .controller('AdminNotificationCtrl', ['$scope', '$timeout', 'ApiService', 'TokenService', function ($scope, $timeout, ApiService, TokenService) {
-    var token = TokenService.getToken();
-    var role = TokenService.getRole();
-    if (!token || role != 1) {
-      return $state.go('index');
-    }
-
-    $scope.createNotification = function() {
-      ApiService.createNotification(JSON.stringify($scope.notification)).then(function (isSuccess) {
-        $scope.currentState = isSuccess ? 'success' : 'failed';
-
-        $scope.notification = '';
-
-        $timeout(function () {
-          $scope.currentState = '';
-        }, 4000);
-      });
-    };
-
-    $scope.$on('userRole_changed', function (e, args) {
-      role = TokenService.getRole();
-      if (role != 1) {
+  .controller('AdminNotificationCtrl', ['$scope',
+    '$timeout',
+    'ApiService',
+    'TokenService',
+    function ($scope, $timeout, ApiService, TokenService) {
+      var token = TokenService.getToken();
+      var role = TokenService.getRole();
+      if (!token || role != 1) {
         return $state.go('index');
       }
-    });
 
-    $scope.$emit('toggle_black', {isBlack: true});
-    $scope.$emit('change_title', {
-      title: 'Создание уведомления - Лига Разработчиков НИТУ МИСиС'
-    })
-  }])
+      $scope.createNotification = function () {
+        ApiService.createNotification(JSON.stringify($scope.notification)).then(function (isSuccess) {
+          $scope.currentState = isSuccess ? 'success' : 'failed';
+
+          $scope.notification = '';
+
+          $timeout(function () {
+            $scope.currentState = '';
+          }, 4000);
+        });
+      };
+
+      $scope.$on('userRole_changed', function (e, args) {
+        role = TokenService.getRole();
+        if (role != 1) {
+          return $state.go('index');
+        }
+      });
+
+      $scope.$emit('toggle_black', {isBlack: true});
+      $scope.$emit('change_title', {
+        title: 'Создание уведомления - Лига Разработчиков НИТУ МИСиС'
+      })
+    }])
 
 
   //other
@@ -1718,7 +1722,7 @@ angular.module('LodSite.controllers', [])
       $scope.userLogin = {};
       $scope.status = 'loginForm';
 
-      $scope.cons = function() {console.log($scope.userLogin.emailForRecovery);}
+      $scope.cons = function () {console.log($scope.userLogin.emailForRecovery);}
 
       $scope.signIn = function () {
         ApiService.signIn($scope.userLogin).then(function (isSuccess) {
@@ -1734,7 +1738,7 @@ angular.module('LodSite.controllers', [])
         });
       };
 
-      $scope.toggleStatus = function() {
+      $scope.toggleStatus = function () {
         $scope.status = ($scope.status == 'loginForm') ? 'passwordRecovery' : 'loginForm';
       };
 
@@ -1754,7 +1758,7 @@ angular.module('LodSite.controllers', [])
     var token = $state.params.token;
 
     ApiService.developerConfirmation(token).then(function (isSuccess) {
-        $scope.isSuccess = isSuccess;
+      $scope.isSuccess = isSuccess;
     });
 
     $scope.$emit('toggle_black', {isBlack: true});
@@ -1788,7 +1792,22 @@ angular.module('LodSite.controllers', [])
         return found;
       };
 
-      var sortNotifications = function (notifications) {
+      var sortByOrder = function (notifications) {
+        notifications.Read.sort(function compareNumeric(a, b) {
+          return b.OccuredOn - a.OccuredOn;
+        });
+
+        notifications.Unread.sort(function compareNumeric(a, b) {
+          return b.OccuredOn - a.OccuredOn;
+        });
+
+        return {
+          Read: notifications.Read,
+          Unread: notifications.Unread
+        }
+      };
+
+      var sortByType = function (notifications) {
 
         var read = notifications.filter(function (item) {
           return item.WasRead;
@@ -1798,21 +1817,17 @@ angular.module('LodSite.controllers', [])
           return !item.WasRead;
         });
 
-        read.sort(function compareNumeric(a, b) {
-          return b.OccuredOn - a.OccuredOn;
-        });
-
         return {
           Read: read,
           Unread: unread
         }
       };
 
-      var concatNotifications = function (sortedNotif) {
-        var readNewNotifId = sortedNotif.Read.map(function (notification) {
+      var concatNotifications = function (notifications) {
+        var readNewNotifId = notifications.Read.map(function (notification) {
           return notification.Id;
         });
-        var unreadNewNotifId = sortedNotif.Unread.map(function (notification) {
+        var unreadNewNotifId = notifications.Unread.map(function (notification) {
           return notification.Id;
         });
 
@@ -1830,15 +1845,17 @@ angular.module('LodSite.controllers', [])
           return !inArray(id, unreadOldNotifId);
         });
 
-        sortedNotif.Read = sortedNotif.Read.filter(function (notification) {
+        notifications.Read = notifications.Read.filter(function (notification) {
           return inArray(notification.Id, readNewNotifId);
         });
-        sortedNotif.Unread = sortedNotif.Unread.filter(function (notification) {
+        notifications.Unread = notifications.Unread.filter(function (notification) {
           return inArray(notification.Id, unreadNewNotifId);
         });
 
-        $scope.notifications.Read = $scope.notifications.Read.concat(sortedNotif.Read);
-        $scope.notifications.Unread = $scope.notifications.Unread.concat(sortedNotif.Unread);
+        return {
+          Read: $scope.notifications.Read.concat(notifications.Read),
+          Unread: $scope.notifications.Unread.concat(notifications.Unread)
+        };
       };
 
       var supplementInfo = function (notifications) {
@@ -1892,9 +1909,7 @@ angular.module('LodSite.controllers', [])
         }
 
         ApiService.getNotifications(pageCounter).then(function (data) {
-          var newNotifications = sortNotifications(data.Data);
-
-          concatNotifications(newNotifications);
+          $scope.notifications = sortByOrder(concatNotifications(sortByType(data.Data)));
 
           supplementInfo($scope.notifications.Read);
           supplementInfo($scope.notifications.Unread);
@@ -1915,7 +1930,7 @@ angular.module('LodSite.controllers', [])
             }
           });
 
-          concatNotifications(sortNotifications($scope.notifications.Unread));
+          $scope.notifications = sortByOrder(concatNotifications(sortByType($scope.notifications.Unread)));
           $scope.notifications.Unread = [];
         });
       };
@@ -1939,7 +1954,7 @@ angular.module('LodSite.controllers', [])
     $scope.data = {
       Token: $state.params.token,
       NewPassword: ''
-      };
+    };
 
     $scope.recoverPassword = function () {
       ApiService.recoverPassword($scope.data).then(function (isSuccess) {

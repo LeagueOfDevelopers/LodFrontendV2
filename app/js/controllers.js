@@ -167,7 +167,8 @@ angular.module('LodSite.controllers', [])
 
       var nullifyEntities = function () {
         $scope.state = [];
-
+        $scope.repeatedPassword = null;
+        $scope.newPassword = null;
         $scope.profileSettingsForm.$setPristine();
 
         $timeout(function () {
@@ -185,9 +186,6 @@ angular.module('LodSite.controllers', [])
         for (i = 0; i < 3; i++) {
           if ($scope.state[i] == 'failed') {
             $scope.currentState = 'failed';
-
-            $scope.repeatedPassword = undefined;
-            $scope.newPassword = undefined;
 
             nullifyEntities();
 

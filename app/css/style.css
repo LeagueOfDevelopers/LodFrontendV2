@@ -2969,6 +2969,10 @@ footer {
     width: 25%;
   }
 
+  .adminpanel__developers .table__data .data__name:hover {
+    color: #2980b9;
+  }
+
   .adminpanel__developers .table__data .data__date {
     width: 18%;
   }

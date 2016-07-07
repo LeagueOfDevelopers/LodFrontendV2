@@ -223,6 +223,31 @@ angular.module('LodSite.services', [])
              });
            };
 
+           this.confirmDeveloper = function (developerId) {
+             var url = '/admin/developers/confirm/' + developerId ;
+
+             return sendAuthorizationSaveRequest(POST, url, null).then(function (response) {
+               return response.status === 200;
+             });
+           };
+
+           this.changeAccountRole = function (developerId) {
+             var url = '/admin/' + developerId ;
+
+             return sendAuthorizationSaveRequest(POST, url, null).then(function (response) {
+               return response.status === 200;
+             });
+           };
+
+           this.changeHidingStatus = function (developerId, condition) {
+             var url = '/admin/developers/' + developerId + '/hide/' + condition;
+
+             return sendAuthorizationSaveRequest(POST, url, null).then(function (response) {
+               return response.status === 200;
+             });
+           };
+
+
            // projects
            this.getRandomProjects = function (numberOfProjects) {
              var url = '/projects/random/' + numberOfProjects;

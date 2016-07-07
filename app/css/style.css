@@ -607,7 +607,7 @@ header {
   background: white;
   max-width: 400px;
   margin: 0 auto 20px auto;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   cursor: pointer;
 }
 
@@ -783,7 +783,7 @@ footer {
 .full-project-wrapper {
   width: 100%;
   margin: 0 auto;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   border-radius: 5px;
 }
 
@@ -908,7 +908,7 @@ footer {
   display: inline-block;
   padding: 10px;
   background: #fff;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   margin: 5px;
 }
 
@@ -932,7 +932,7 @@ footer {
   width: 240px;
   height: 240px;
   cursor: pointer;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
 .viewer__img {
@@ -1012,7 +1012,7 @@ footer {
   padding: 60px 5% 5%;
   background-color: white;
   text-align: left;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
 .about-text .heading {
@@ -1939,7 +1939,7 @@ footer {
   left: 0;
   box-sizing: border-box;
   overflow: auto;
-  background: rgba(0,0,0,.4);
+  background: rgba(0, 0, 0, .4);
   z-index: 1000;
 }
 
@@ -1977,7 +1977,7 @@ footer {
   position: relative;
 }
 
-.modal-window__search input{
+.modal-window__search input {
   display: block;
   width: 60%;
   min-width: 200px;
@@ -2193,12 +2193,12 @@ footer {
 /************************
   NOTIFICATIONS - PAGE
 ************************/
-.notifications-page{
+.notifications-page {
   box-sizing: border-box;
   padding: 1px 15px 20px;
 }
 
-.notifications__header{
+.notifications__header {
   margin: 20px auto 10px auto;
   padding-bottom: 5px;
   color: #aaa;
@@ -2219,7 +2219,7 @@ footer {
   color: #2d81b9;
 }
 
-.notifications__notification{
+.notifications__notification {
   width: 100%;
   max-width: 600px;
   margin: 0 auto 40px auto;
@@ -2261,7 +2261,7 @@ footer {
   text-align: right;
 }
 
-.notification__type-icon{
+.notification__type-icon {
   position: absolute;
   box-sizing: border-box;
   height: 25px;
@@ -2274,7 +2274,7 @@ footer {
   background-size: contain;
 }
 
-.notification__information{
+.notification__information {
   position: relative;
   box-sizing: border-box;
   width: 100%;
@@ -2290,7 +2290,7 @@ footer {
   position: absolute;
   left: 50%;
   top: 0;
-  transform: translate(-50%,-100%);
+  transform: translate(-50%, -100%);
   border: 15px solid transparent;
   border-bottom: 15px solid #fff;
 }
@@ -2303,7 +2303,7 @@ footer {
   text-decoration: underline;
 }
 
-.notifications__see-more-button{
+.notifications__see-more-button {
   display: block;
   margin: 20px auto;
 }
@@ -2322,6 +2322,135 @@ footer {
 
 .password-recovery__container .help-message-input {
   margin: 10px;
+}
+
+/****************************
+     ADMINPANEL DEVELOPERS
+****************************/
+.adminpanel__developers {
+  margin-bottom: 30px;
+}
+
+.adminpanel__developers .table-mobile {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.adminpanel__developers .table {
+  display: none;
+}
+
+.adminpanel__developers .table__item {
+  background: white;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, .15);
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.adminpanel__developers .table__cell__heading {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.adminpanel__developers .table__cell {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.adminpanel__developers .table__cell__name {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  font-size: 1.1em;
+  border: none;
+}
+
+.adminpanel__developers .table__cell__name:hover {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.adminpanel__developers .table__cell__data {
+  display: inline-block;
+  border: 1px solid #f1f1f1;
+}
+
+.adminpanel__developers .table__toggle {
+  display: inline-block;
+  width: 120px;
+  border: 1px solid #2980b9;
+  padding: 0 5px;
+  background-color: #ffffff;
+  color: #2980b9;
+  cursor: pointer;
+}
+
+.adminpanel__developers .table__toggle--active {
+  background-color: #2980b9;
+  color: #ffffff;
+}
+
+.adminpanel__developers .table__cell__on {
+  margin-right: -5px;
+  border-radius: 2px 0 0 2px;
+}
+
+.adminpanel__developers .table__cell__off {
+  border-radius: 0 2px 2px 0;
+}
+
+.adminpanel__developers .modal-window__name {
+  display: inline;
+  color: #2980b9;
+}
+
+.adminpanel__developers .modal-window__name:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.adminpanel__developers .modal-window__message {
+  display: inline;
+}
+
+.adminpanel__developers .modal-window__button {
+  display: inline-block;
+  width: 105px;
+  box-sizing: border-box;
+  margin-top: 15px;
+  border-radius: 5px;
+  border: 1px solid #202d3a;
+  padding: 5px 20px;
+  text-transform: uppercase;
+  font-family: 'Cuprum', sans-serif;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all .15s ease-out;
+  -moz-transition: all .15s ease-out;
+  -o-transition: all .15s ease-out;
+  transition: all .15s ease-out;
+}
+
+.adminpanel__developers .modal-window__button:hover {
+  cursor: pointer;
+}
+
+.adminpanel__developers .button__yes {
+  background-color: #202d3a;
+  color: #ffffff;
+  margin-right: 5%;
+}
+
+.adminpanel__developers .button__yes:hover {
+  background-color: #2980b9;
+  border-color: #2980b9;
+}
+
+.adminpanel__developers .button__no:hover {
+  border-color: #2980b9;
+  color: #2980b9;
 }
 
 @media only screen and (min-width: 480px) {
@@ -2685,16 +2814,15 @@ footer {
     margin: 4px;
   }
 
-/************************
-       ADMINPANEL
-*************************/
+  /************************
+         ADMINPANEL
+  *************************/
   .adminpanel__point {
     display: inline-block;
     max-width: 400px;
     height: 90px;
     line-height: 90px;
   }
-
 
   /*************************
      ADMIN PROJECTS-PAGE
@@ -2734,15 +2862,14 @@ footer {
     max-width: 550px;
   }
 
-
   /************************
      NOTIFICATIONS - PAGE
   ************************/
-  .notifications-page{
+  .notifications-page {
     padding: 1px 40px 20px;
   }
 
-  .notifications__header{
+  .notifications__header {
     max-width: 600px;
     margin: 20px auto 20px auto;
     text-align: left;
@@ -2752,7 +2879,7 @@ footer {
     position: relative;
     max-width: 600px;
     padding: 0;
-    text-align:left;
+    text-align: left;
   }
 
   .notification__date-and-type {
@@ -2776,6 +2903,109 @@ footer {
     border-right: 15px solid #fff;
   }
 
+  /****************************
+      ADMINPANEL DEVELOPERS
+  ****************************/
+  .adminpanel__developers .table-mobile {
+    display: none;
+  }
+
+  .adminpanel__developers .table {
+    display: block;
+  }
+
+  .adminpanel__developers .table__heading, .adminpanel__developers .table__data {
+    white-space: nowrap;
+  }
+
+  .adminpanel__developers .table__heading .heading__item, .adminpanel__developers .table__data .data__item {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 45px;
+    padding: 0 5px;
+    white-space: normal;
+    vertical-align: middle;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .adminpanel__developers .table__heading .heading__name {
+    width: 25%;
+  }
+
+  .adminpanel__developers .table__heading .heading__date {
+    width: 18%;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+  }
+
+  .adminpanel__developers .table__heading .heading__confirm {
+    width: 20%;
+    border-right: 1px solid black;
+  }
+
+  .adminpanel__developers .table__heading .heading__role {
+    width: 17%;
+    border-right: 1px solid black;
+  }
+
+  .adminpanel__developers .table__heading .heading__hiddden {
+    width: 17%;
+  }
+
+  .adminpanel__developers .table__data {
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  }
+
+  .adminpanel__developers .table__data .data__item {
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .adminpanel__developers .table__data .data__name {
+    width: 25%;
+  }
+
+  .adminpanel__developers .table__data .data__date {
+    width: 18%;
+  }
+
+  .adminpanel__developers .table__data .data__confirm {
+    width: 20%;
+  }
+
+  .adminpanel__developers .table__data .data__role {
+    width: 17%;
+  }
+
+  .adminpanel__developers .table__data .data__hiddden {
+    width: 17%;
+  }
+
+  .adminpanel__developers .table__data .data__toggle {
+    display: inline-block;
+    width: 40%;
+    max-width: 100px;
+    border: 1px solid #2980b9;
+    color: #2980b9;
+    cursor: pointer;
+  }
+
+  .adminpanel__developers .table__data .data__toggle__on {
+    border-radius: 3px 0 0 3px;
+  }
+
+  .adminpanel__developers .table__data .data__toggle__off {
+    border-radius: 0 3px 3px 0;
+  }
+
+  .data__toggle--active {
+    color: #ffffff !important;
+    background-color: #2980b9;
+  }
 }
 
 @media only screen and (min-width: 1000px) {
@@ -3660,9 +3890,9 @@ footer {
     margin: 5px;
   }
 
-/************************
-       ADMINPANEL
-*************************/
+  /************************
+         ADMINPANEL
+  *************************/
   .adminpanel__point {
     margin: 0 10px 10px;
     height: 100px;
@@ -3684,7 +3914,7 @@ footer {
   /************************
      NOTIFICATIONS - PAGE
   ************************/
-  .notifications__header{
+  .notifications__header {
     max-width: none;
     width: 800px;
   }
@@ -3707,6 +3937,17 @@ footer {
 
   .password-recovery__container button {
     max-width: 350px;
+  }
+
+  /****************************
+      ADMINPANEL DEVELOPERS
+  ****************************/
+  .adminpanel__developers .modal-window {
+    max-width: 600px;
+  }
+
+  .adminpanel__developers .modal-window__developers {
+    max-width: 600px;
   }
 }
 
@@ -3874,7 +4115,6 @@ footer {
   /*************************
        ADDING PROJECT
   *************************/
-
   .modal-window__close-button {
     width: 35px;
     height: 35px;
@@ -3884,10 +4124,10 @@ footer {
     padding: 35px;
   }
 
-  .modal-window__search input{
+  .modal-window__search input {
     height: 45px;
   }
-  
+
   /************************
      NOTIFICATIONS - PAGE
   ************************/
@@ -3902,5 +4142,16 @@ footer {
   .notification__information {
     width: calc(100% - 185px);
     margin-left: 185px;
+  }
+
+  /****************************
+      ADMINPANEL DEVELOPERS
+  ****************************/
+  .adminpanel__developers .modal-window {
+    max-width: 700px;
+  }
+
+  .adminpanel__developers .modal-window__developers {
+    max-width: 700px;
   }
 }

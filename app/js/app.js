@@ -127,6 +127,12 @@ angular.module('LodSite', [
                controller: 'AdminNotificationCtrl'
              })
 
+             .state('adminpanel.developers', {
+               url: '/developers',
+               templateUrl: templateUrl('adminpanel', 'adminpanel-developers'),
+               controller: 'AdminDevelopersCtrl'
+             })
+
              //other
              .state('signup', {
                url: '/signup',

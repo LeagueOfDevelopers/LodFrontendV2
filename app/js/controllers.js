@@ -1225,10 +1225,6 @@ angular.module('LodSite.controllers', [])
           for (var i = 0; i < $scope.editedProject.ProjectTypes.length; i++) {
             $scope.categories[$scope.editedProject.ProjectTypes[i]].status = true;
           }
-
-          $scope.$emit('change_title', {
-            title: $scope.editedProject.Name + ' - Лига Разработчиков НИТУ МИСиС'
-          });
         });
 
       //   PUT REQUEST
@@ -1263,9 +1259,7 @@ angular.module('LodSite.controllers', [])
       });
 
       $scope.$emit('toggle_black', {isBlack: true});
-      $scope.$emit('change_title', {
-        title: 'Редактирование проекта - Лига Разработчиков НИТУ МИСиС'
-      });
+      $scope.$emit('change_title', {title: $scope.editedProject.Name + ' - Лига Разработчиков НИТУ МИСиС'});
     }])
 
   .controller('AllOrdersCtrl', ['$scope', 'ApiService', 'TokenService', function ($scope, ApiService, TokenService) {
@@ -1297,44 +1291,156 @@ angular.module('LodSite.controllers', [])
     })
   }])
 
-  .controller('AdminNotificationCtrl', ['$scope',
-    '$timeout',
+  .controller('AdminDevelopersCtrl', ['$scope',
     'ApiService',
-    'TokenService',
-    function ($scope, $timeout, ApiService, TokenService) {
-      var token = TokenService.getToken();
-      var role = TokenService.getRole();
-      if (!token || role != 1) {
-        return $state.go('index');
-      }
+    'DateService',
+    function ($scope, ApiService, DateService) {
+      $scope.developers = [];
+      $scope.searchText = '';
+      $scope.isMoreDevs = true;
+      $scope.isOpen = false;
+      var pageCounter = 0;
 
-      $scope.createNotification = function () {
-        ApiService.createNotification(JSON.stringify($scope.notification)).then(function (isSuccess) {
-          $scope.currentState = isSuccess ? 'success' : 'failed';
-
-          $scope.notification = '';
-
-          $timeout(function () {
-            $scope.currentState = '';
-          }, 4000);
-        });
+      $scope.resetPageCounter = function () {
+        pageCounter = 0;
       };
 
-      $scope.$on('userRole_changed', function (e, args) {
-        role = TokenService.getRole();
-        if (role != 1) {
-          return $state.go('index');
+      $scope.addDevelopers = function () {
+        pageCounter++;
+        ApiService.getFullDevelopers(pageCounter)
+          .then(function (data) {
+            if (!data || data.Data.length === 0) {
+              $scope.isMoreDevs = false;
+            } else {
+              data.Data.forEach(function (developer) {
+                $scope.developers.push({
+                  Name: developer.LastName + ' ' + developer.FirstName,
+                  UserId: developer.UserId,
+                  RegistrationDate: DateService.getDDMMYYFromISODate(Date.parse(developer.RegistrationDate)),
+                  ConfirmationStatus: developer.ConfirmationStatus,
+                  IsHidden: developer.IsHidden,
+                  AccountRole: developer.AccountRole
+                });
+              });
+
+              $scope.isMoreDevs = $scope.developers.length < data.CountOfEntities;
+            }
+          });
+      };
+
+      $scope.callConfirmationWindow = function (developer, eventType, index) {
+        $scope.developerForConfirmation = {
+          id: developer.UserId,
+          name: developer.Name,
+          eventType: eventType,
+          index: index
+        };
+
+        if (eventType == 0 && $scope.developers[index].ConfirmationStatus == 1) {
+          $scope.message = ' будет подтверждён. Вы точно в этом уверены?';
+        } else if (eventType == 1 && !$scope.developers[index].AccountRole) {
+          $scope.message = ' получит права администратора. Вы точно в этом уверены?';
+        } else if (eventType == 2) {
+          if ($scope.developers[index].IsHidden) {
+            $scope.message = ' станет виден. Вы точно в этом уверены?';
+          } else {
+            $scope.message = ' будет скрыт. Вы точно в этом уверены?';
+          }
+        } else {
+          return;
+        }
+
+        $scope.isOpen = true;
+      };
+
+      $scope.closeWindow = function () {
+        $scope.isOpen = false;
+        $scope.developerForConfirmation = {};
+      };
+
+      $scope.sendRequest = function () {
+        switch ($scope.developerForConfirmation.eventType) {
+          case 0:
+            ApiService.confirmDeveloper($scope.developerForConfirmation.id).then(function (isSuccess) {
+              if (isSuccess) {
+                $scope.developers[$scope.developerForConfirmation.index].ConfirmationStatus = 2;
+
+                $scope.developerForConfirmation = {};
+              }
+            });
+            break;
+          case 1:
+            ApiService.changeAccountRole($scope.developerForConfirmation.id).then(function (isSuccess) {
+              if (isSuccess) {
+                $scope.developers[$scope.developerForConfirmation.index].AccountRole = 1;
+
+                $scope.developerForConfirmation = {};
+              }
+            });
+            break;
+          case 2:
+            ApiService.changeHidingStatus($scope.developerForConfirmation.id, !$scope.developers[$scope.developerForConfirmation.index].IsHidden)
+              .then(function (isSuccess) {
+                if (isSuccess) {
+                  $scope.developers[$scope.developerForConfirmation.index].IsHidden = !$scope.developers[$scope.developerForConfirmation.index].IsHidden;
+
+                  $scope.closeWindow();
+                }
+              });
+            break;
+        }
+      };
+
+
+      $scope.$watch("searchText", function (newValue, oldValue) {
+        if (newValue === '') {
+          $scope.resetPageCounter();
+
+          $scope.developers = [];
+
+          ApiService.getFullDevelopers(pageCounter)
+            .then(function (data) {
+              data.Data.forEach(function (developer) {
+                $scope.developers.push({
+                  Name: developer.LastName + ' ' + developer.FirstName,
+                  UserId: developer.UserId,
+                  RegistrationDate: DateService.getDDMMYYFromISODate(Date.parse(developer.RegistrationDate)),
+                  ConfirmationStatus: developer.ConfirmationStatus,
+                  IsHidden: developer.IsHidden,
+                  AccountRole: developer.AccountRole
+                });
+              });
+
+              $scope.isMoreDevs = $scope.developers.length < data.CountOfEntities;
+
+            });
+        } else if (newValue !== oldValue) {
+          ApiService.getFullDevelopersBySearch($scope.searchText)
+            .then(function (data) {
+              $scope.isMoreDevs = false;
+
+              $scope.developers = [];
+
+              data.forEach(function (developer) {
+                $scope.developers.push({
+                  Name: developer.LastName + ' ' + developer.FirstName,
+                  UserId: developer.UserId,
+                  RegistrationDate: DateService.getDDMMYYFromISODate(Date.parse(developer.RegistrationDate)),
+                  ConfirmationStatus: developer.ConfirmationStatus,
+                  IsHidden: developer.IsHidden,
+                  AccountRole: developer.AccountRole
+                });
+              });
+            });
         }
       });
 
       $scope.$emit('toggle_black', {isBlack: true});
-      $scope.$emit('change_title', {
-        title: 'Создание уведомления - Лига Разработчиков НИТУ МИСиС'
-      })
+      $scope.$emit('change_title', {title: 'Редактирование разработчиков - Лига Разработчиков НИТУ МИСиС'});
     }])
 
 
-  //other
+//other
   .controller('SignupCtrl', ['$scope', 'ApiService', '$timeout', function ($scope, ApiService, $timeout) {
     $scope.currentStates = {};
     $scope.newDeveloper = {};
@@ -1792,22 +1898,7 @@ angular.module('LodSite.controllers', [])
         return found;
       };
 
-      var sortByOrder = function (notifications) {
-        notifications.Read.sort(function compareNumeric(a, b) {
-          return b.OccuredOn - a.OccuredOn;
-        });
-
-        notifications.Unread.sort(function compareNumeric(a, b) {
-          return b.OccuredOn - a.OccuredOn;
-        });
-
-        return {
-          Read: notifications.Read,
-          Unread: notifications.Unread
-        }
-      };
-
-      var sortByType = function (notifications) {
+      var sortNotifications = function (notifications) {
 
         var read = notifications.filter(function (item) {
           return item.WasRead;
@@ -1817,17 +1908,21 @@ angular.module('LodSite.controllers', [])
           return !item.WasRead;
         });
 
+        read.sort(function compareNumeric(a, b) {
+          return b.OccuredOn - a.OccuredOn;
+        });
+
         return {
           Read: read,
           Unread: unread
         }
       };
 
-      var concatNotifications = function (notifications) {
-        var readNewNotifId = notifications.Read.map(function (notification) {
+      var concatNotifications = function (sortedNotif) {
+        var readNewNotifId = sortedNotif.Read.map(function (notification) {
           return notification.Id;
         });
-        var unreadNewNotifId = notifications.Unread.map(function (notification) {
+        var unreadNewNotifId = sortedNotif.Unread.map(function (notification) {
           return notification.Id;
         });
 
@@ -1845,17 +1940,15 @@ angular.module('LodSite.controllers', [])
           return !inArray(id, unreadOldNotifId);
         });
 
-        notifications.Read = notifications.Read.filter(function (notification) {
+        sortedNotif.Read = sortedNotif.Read.filter(function (notification) {
           return inArray(notification.Id, readNewNotifId);
         });
-        notifications.Unread = notifications.Unread.filter(function (notification) {
+        sortedNotif.Unread = sortedNotif.Unread.filter(function (notification) {
           return inArray(notification.Id, unreadNewNotifId);
         });
 
-        return {
-          Read: $scope.notifications.Read.concat(notifications.Read),
-          Unread: $scope.notifications.Unread.concat(notifications.Unread)
-        };
+        $scope.notifications.Read = $scope.notifications.Read.concat(sortedNotif.Read);
+        $scope.notifications.Unread = $scope.notifications.Unread.concat(sortedNotif.Unread);
       };
 
       var supplementInfo = function (notifications) {
@@ -1909,7 +2002,9 @@ angular.module('LodSite.controllers', [])
         }
 
         ApiService.getNotifications(pageCounter).then(function (data) {
-          $scope.notifications = sortByOrder(concatNotifications(sortByType(data.Data)));
+          var newNotifications = sortNotifications(data.Data);
+
+          concatNotifications(newNotifications);
 
           supplementInfo($scope.notifications.Read);
           supplementInfo($scope.notifications.Unread);
@@ -1930,7 +2025,7 @@ angular.module('LodSite.controllers', [])
             }
           });
 
-          $scope.notifications = sortByOrder(concatNotifications(sortByType($scope.notifications.Unread)));
+          concatNotifications(sortNotifications($scope.notifications.Unread));
           $scope.notifications.Unread = [];
         });
       };

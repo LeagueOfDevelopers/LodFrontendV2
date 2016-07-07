@@ -1,0 +1,113 @@
+<div class="developers-page adminpanel__developers" xmlns="http://www.w3.org/1999/html">
+  <h1 class="headline">Редактирование разработчиков</h1>
+
+  <div class="dividing-line"></div>
+
+  <div class="developers-page__search">
+    <input placeholder="Поиск" ng-model="searchText"/>
+
+    <div class="search__icon"></div>
+  </div>
+
+  <div class="table-mobile">
+    <div class="table__item" ng-repeat="developer in developers">
+      <a class="table__cell__name" ng-bind="developer.Name"
+         ng-href="{{'/developers/' + developer.UserId}}" target="_blank"></a>
+
+      <div class="dividing-line"></div>
+
+      <div class="table__cell">
+        <div class="table__cell__heading">Дата регистрации:</div>
+        <div class="table__cell__data" ng-bind="developer.RegistrationDate"></div>
+      </div>
+
+
+      <div class="table__cell" ng-click="callConfirmationWindow(developer, 0, $index)">
+        <div class="table__toggle table__cell__on"
+             ng-class="{'table__toggle--active': developer.ConfirmationStatus === 2}">Подтвержден
+        </div>
+        <div class="table__toggle table__cell__off"
+             ng-class="{'table__toggle--active': developer.ConfirmationStatus === 1}">Не подтвержден
+        </div>
+      </div>
+
+      <div class="table__cell" ng-click="callConfirmationWindow(developer, 1, $index)">
+        <div class="table__toggle table__cell__on" ng-class="{'table__toggle--active': developer.AccountRole}">Админ
+        </div>
+        <div class="table__toggle table__cell__off" ng-class="{'table__toggle--active': !developer.AccountRole}">Не
+                                                                                                                 админ
+        </div>
+      </div>
+
+      <div class="table__cell" ng-click="callConfirmationWindow(developer, 2, $index)">
+        <div class="table__toggle table__cell__on" ng-class="{'table__toggle--active': developer.IsHidden}">Скрыт</div>
+        <div class="table__toggle table__cell__off" ng-class="{'table__toggle--active': !developer.IsHidden}">Не скрыт
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="table">
+    <div class="table__heading">
+      <div class="heading__item heading__name"><span>Фамилия Имя</span></div>
+      <div class="heading__item heading__date"><span>Дата регистрации</span></div>
+      <div class="heading__item heading__confirm"><span>Подтверждён?</span></div>
+      <div class="heading__item heading__role"><span>Админ?</span></div>
+      <div class="heading__item heading__hiddden"><span>Скрыт?</span></div>
+    </div>
+
+    <div class="dividing-line"></div>
+
+    <div class="table__data" ng-repeat="developer in developers">
+      <a class="data__item data__name" ng-href="{{'/developers/' + developer.UserId}}" target="_blank"><span
+        ng-bind="developer.Name"></span></a>
+
+      <div class="data__item data__date"><span ng-bind="developer.RegistrationDate"></span></div>
+
+      <div class="data__item data__confirm" ng-click="callConfirmationWindow(developer, 0, $index)">
+        <div class="data__toggle data__toggle__on"
+             ng-class="{'data__toggle--active': developer.ConfirmationStatus === 2}">Да
+        </div>
+        <div class="data__toggle data__toggle__off"
+             ng-class="{'data__toggle--active': developer.ConfirmationStatus === 1}">Нет
+        </div>
+      </div>
+
+      <div class="data__item data__role" ng-click="callConfirmationWindow(developer, 1, $index)">
+        <div class="data__toggle data__toggle__on" ng-class="{'data__toggle--active': developer.AccountRole}">Да</div>
+        <div class="data__toggle data__toggle__off" ng-class="{'data__toggle--active': !developer.AccountRole}">Нет
+        </div>
+      </div>
+
+      <div class="data__item data__hiddden" ng-click="callConfirmationWindow(developer, 2, $index)">
+        <div class="data__toggle data__toggle__on" ng-class="{'data__toggle--active': developer.IsHidden}">Да</div>
+        <div class="data__toggle data__toggle__off" ng-class="{'data__toggle--active': !developer.IsHidden}">Нет</div>
+      </div>
+    </div>
+  </div>
+
+  <a class="developers-section__see-more-button button-style" ng-if="isMoreDevs" ng-click="addDevelopers()">Показать
+                                                                                                            больше</a>
+  <div class="modal-window__wrap" ng-if="isOpen">
+    <div class="modal-window">
+      <div class="modal-window__developers">
+        <div class="modal-window__close-button" ng-click="closeWindow()"></div>
+
+        <a class="modal-window__name" ng-href="{{'/developers/' + developerForConfirmation.id}}" target="_blank"
+           ng-bind="developerForConfirmation.name"></a>
+
+        <div class="modal-window__message" ng-bind="message"></div>
+
+        <br/>
+
+        <div class="modal-window__button button__yes" ng-click="sendRequest()">Да</div>
+        <div class="modal-window__button button__no" ng-click="closeWindow()">Нет</div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+

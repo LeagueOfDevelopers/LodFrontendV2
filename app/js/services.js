@@ -208,7 +208,7 @@ angular.module('LodSite.services', [])
            };
 
            this.sendNewPassword = function (requestData) {
-             var url = '/developers/password';
+             var url = '/password';
 
              return sendAuthorizationSaveRequest(PUT, url, null, requestData).then(function (response) {
                return response.status === 200;

@@ -3,17 +3,49 @@
 
     <div class="dividing-line"></div>
 
-    <div class="all-projects-page">
+    <div class="all-orders-page">
 
-        <div ng-repeat="order in orders" class="projects__all-project">
-            <a ui-sref="adminpanel.projectAdd({header: order.Header, description: order.Description, type: order.ProjectType})">
+        <div ng-repeat="order in orders" class="all-orders__order">
+            <div class="all-orders__order-block">
 
-            <div class="all-project__info">
-                <div class="all-project__name" ng-bind="order.Header"></div>
-                <div class="all-project__name" ng-bind="order.Description"></div>
+                  <div class="all-orders__info-block">
+                      <p class="all-orders__project-name" ng-bind="order.Header"></p>
+                      <div>
+                          <span class="all-orders__subheading">Заказчик:</span>
+                          <span class="all-orders__customer-name" ng-bind="order.CustomerName"></span>
+                      </div>
+                      <div>
+                          <span class="all-orders__subheading">Email:</span>
+                          <span class="all-orders__customer-name" ng-bind="order.Email"></span>
+                      </div>
+                      <div>
+                          <span class="all-orders__subheading">Дедлайн:</span>
+                          <span class="all-orders__customer-name" ng-bind="order.DeadLine"></span>
+                      </div>
+                      <div>
+                          <span class="all-orders__subheading">Тип проекта:</span>
+                          <span class="all-orders__customer-name" ng-bind="order.ProjectCategory"></span>
+                      </div>
+                      <div ng-hide="order.Attachments.length==0" class="all-orders__subheading-attachments">
+                          <span class="all-orders__subheading">Прикрепленные файлы:</span>
+                          <div ng-repeat="file in order.Attachments" ng-click="fileClick(file)" class="all-orders__attachments">
+                              <span  ng-bind="file.Name" ></span>
+                          </div>
+                      </div>
 
+                  </div>
 
+                  <div class="all-orders__order-description" >
+                    <span class="all-orders__subheading">Описание:</span>
+                      <div ng-bind="order.Description" class="all-orders__description-text"></div>
+                  </div>
             </div>
+            <a ui-sref="adminpanel.projectAdd({})">
+                <div class="all-orders__add-button" ng-click="orderClick(order)">
+                    <div class="all-orders__button-text">
+
+                    </div>
+                </div>
             </a>
         </div>
     </div>

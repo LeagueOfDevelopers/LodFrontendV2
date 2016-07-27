@@ -326,10 +326,10 @@ angular.module('LodSite.services', [])
            //orders
 
            this.getOrders = function () {
-             var url = '/orders/';
+             var url = '/orders';
 
              return sendAuthorizationSaveRequest(GET, url).then(function (response) {
-               return response.data;
+               return DateService.getFormattedTimeOrdersList(response.data);
              });
            };
 
@@ -378,6 +378,36 @@ angular.module('LodSite.services', [])
              var url = '/orders/' + orderId;
 
              return sendAuthorizationSaveRequest(GET, url).then(function (response) {
+               return response.data;
+             });
+           };
+
+           this.getFile = function (fileName) {
+             var url = '/file/'+fileName;
+             var fileExtension = fileName.match(/[^\.]*$/)[0];
+             var MimeType = "application/octet-stream";
+
+             // if (fileExtension == 'pdf'){
+             //   MimeType = 'application/pdf';
+             // }else if(fileExtension == 'doc'){
+             //   MimeType = 'application/msword';
+             // }else if(fileExtension == 'docx'){
+             //   MimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+             // }else if(fileExtension == 'ttf'){
+             //   MimeType = 'font/ttf';
+             // }else if(fileExtension == 'txt'){
+             //   MimeType = 'text/plain';
+             // }
+
+             return sendAuthorizationSaveRequest(GET, url).then(function (response) {
+               var a = document.createElement("a");
+
+               var blob = new Blob([response.data], {type: MimeType});
+               // var blob = new Blob([response.data], {type: MimeType+';charset=utf-8'});
+               a.href = URL.createObjectURL(blob);
+               a.download = fileName;
+               a.click();
+
                return response.data;
              });
            };
@@ -499,6 +529,20 @@ angular.module('LodSite.services', [])
 
            return residenceTime;
          };
+
+         this.getFormattedTimeOrder = function (order) {
+           order.DeadLine = self.getDDMMYYFromISODate(new Date(order.DeadLine));
+
+           return order;
+         };
+
+         this.getFormattedTimeOrdersList = function (orders) {
+           for (var i = 0; i < orders.length; i++) {
+             orders[i].DeadLine = self.getDDMMYYFromISODate(new Date(orders[i].DeadLine));
+           }
+
+           return orders;
+         };
        }])
 
        .service('NotificationsService', ['$rootScope', 'ApiService', function ($rootScope, ApiService) {
@@ -522,4 +566,15 @@ angular.module('LodSite.services', [])
 
        }])
 
-;
+  .service('OrderService', ['$rootScope', 'ApiService', function ($rootScope, ApiService) {
+
+    this.isFromOrderPage = false;
+
+    this.setOrder = function(order){
+      this.order = order;
+    };
+
+    this.getOrder = function(){
+      return this.order;
+    };
+  }]);

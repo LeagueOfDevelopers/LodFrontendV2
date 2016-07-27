@@ -12,7 +12,6 @@ time, mark, audio, video {
   border: 0;
   font-size: 1em;
   vertical-align: baseline;
-
 }
 
 /* LOADER - STYLES */
@@ -2114,7 +2113,7 @@ footer {
 .all-projects__section {
   box-sizing: border-box;
   width: 100%;
-  padding: 0 15px;
+  /*! padding: 0 15px; */
 }
 
 .projects__all-project {
@@ -2188,6 +2187,106 @@ footer {
 .admin-notification__message {
   margin-top: 5px;
   text-align: center;
+}
+
+/*************************
+     ADMIN ORDERS-PAGE
+  *************************/
+.all-orders-page {
+}
+
+.all-orders__order {
+  text-align: center;
+  margin: 0 auto 20px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.32);
+  background: white;
+  width: 90%;
+  position: relative;
+  padding: 0px 0px 70px 0px;
+}
+
+.all-orders__add-button{
+  background: #2980b9;
+  height: 40px;
+  margin: 0 auto 0px;
+  border-radius: 5px;
+  width: 200px;
+  position: absolute;
+  bottom: 15px;
+  right: 0px;
+  left: 0;
+}
+
+.all-orders__add-button:hover
+{background: rgba(41, 128, 185, 0.5);}
+
+.all-orders__button-text{
+  font-family: 'Cuprum', sans-serif;
+  font-size: 1.5em;
+  padding-top: 6.5px;
+  color: white;
+}
+
+.all-orders__button-text::before{
+  content: "ДОБАВИТЬ";
+}
+
+.all-orders__attachments{
+  border-radius: 5px;
+  background: rgb(182, 182, 182);
+  margin: 5px auto;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 80%;
+  max-width: 350px;
+}
+
+.all-orders__order-description{
+  padding: 0px 10px;
+}
+
+.all-orders__description-text{
+
+}
+
+.all-orders__attached-file{
+
+}
+
+.all-orders__order-block {
+  font-size: 1.2em;
+  position: relative;
+  padding: 10px 10px 0px;
+}
+
+.all-orders__text-block{
+
+}
+
+.all-orders__customer-name{
+  overflow: hidden;
+  margin: 10px;
+  margin-left: 5px;
+}
+
+.all-orders__project-name{
+  font-family: 'Cuprum', sans-serif;
+  font-size: 1.8em;
+  border-bottom: thin solid #e5e5e5;
+  text-transform: uppercase;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
+
+.all-orders__info-block{
+  overflow-x: hidden;
+}
+
+.all-orders__subheading{
+  font-weight: 900;
+}
+
+.all-orders__subheading-attachments{
 }
 
 /************************
@@ -2685,9 +2784,9 @@ footer {
     margin: 4px;
   }
 
-/************************
-       ADMINPANEL
-*************************/
+  /************************
+         ADMINPANEL
+  *************************/
   .adminpanel__point {
     display: inline-block;
     max-width: 400px;
@@ -2735,6 +2834,118 @@ footer {
   }
 
 
+  /*************************
+     ADMIN ORDERS-PAGE
+  *************************/
+  .all-orders-page {
+
+  }
+
+  .all-orders__order {
+    max-width: 1000px;
+    min-height: 200px;
+    text-align: left;
+    osition: relative;
+    margin: 0 auto 30px;
+    padding: 10px;
+  }
+
+  .all-orders__add-button{
+    width: 40px;
+    position: absolute;
+    height: 40px;
+    top: 0;
+    right: 0;
+    margin: 10px;
+    cursor: pointer;
+    left: auto;
+  }
+
+  .all-orders__button-text{
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    font-size: 30px;
+    color: rgb(255, 255, 255);
+    height: 100%;
+    padding: 0;
+    font-family: inherit;
+  }
+
+  .all-orders__button-text::before{
+    content: "+";
+  }
+
+  .all-orders__attachments{
+    margin: 5px 5px 5px 0px;
+    cursor: pointer;
+  }
+
+
+
+  .all-orders__order-description{
+    float: left;
+    height: 100%;
+    border-left: 1px solid #e5e5e5;
+    left: 52%;
+    position: absolute;
+    top: 0;
+    display: inline-block;
+    right: 40px;
+  }
+
+  .all-orders__description-text{
+    overflow-y: auto;
+    position: absolute;
+    bottom: 0;
+    top: 30px;
+  }
+
+  .all-orders__attached-file{
+
+  }
+
+  .all-orders__order-block {
+    width: 100%;
+    display: inline-block;
+    width: 100%;
+    overflow: hidden;
+    min-height: 200px;
+    padding: initial;
+  }
+
+  .all-orders__text-block{
+
+  }
+
+  .all-orders__customer-name{
+    overflow: scroll;
+    margin: 0;
+  }
+
+  .all-orders__project-name{
+    overflow: hidden;
+    white-space: nowrap;
+    border: 0px;
+    padding: 0;margin: 0;
+  }
+
+  .all-orders__info-block{
+    text-align: left;
+    padding-left: 1%;
+    width: 50%;
+  }
+
+  .all-orders__subheading{
+    font-size: 1.1em;
+    margin-right: 8px;
+  }
+
+  .all-orders__subheading-attachments{
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
   /************************
      NOTIFICATIONS - PAGE
   ************************/
@@ -2775,8 +2986,8 @@ footer {
     border-bottom: 15px solid transparent;
     border-right: 15px solid #fff;
   }
-
 }
+
 
 @media only screen and (min-width: 1000px) {
   .projects-section-container {
@@ -3304,7 +3515,7 @@ footer {
   }
 
   .line-1-2.block-2, .line-3-4.block-2 {
-    border-right: 10px solid white;
+    b-right: 10px solid white;
   }
 
   .line-2-3.block-1, .line-4-5.block-1 {
@@ -3660,9 +3871,9 @@ footer {
     margin: 5px;
   }
 
-/************************
-       ADMINPANEL
-*************************/
+  /************************
+         ADMINPANEL
+  *************************/
   .adminpanel__point {
     margin: 0 10px 10px;
     height: 100px;
@@ -3710,7 +3921,7 @@ footer {
   }
 }
 
-@media only screen and (min-width: 1300px) {
+@media only screen and (min-width: 1700px) {
   .projects-section-container {
     max-width: 1200px;
   }
@@ -3818,6 +4029,12 @@ footer {
     height: 200px;
   }
 
+  /*************************
+     ADMIN ORDERS-PAGE
+  *************************/
+  .all-orders-page {
+    display: inline-block;
+  }
 }
 
 @media only screen and (min-width: 1700px) {
@@ -3887,7 +4104,15 @@ footer {
   .modal-window__search input{
     height: 45px;
   }
-  
+
+  /*************************
+     ADMIN ORDERS-PAGE
+  *************************/
+  .all-orders__order {
+    margin: 25px;
+    display: inline-block;
+  }
+
   /************************
      NOTIFICATIONS - PAGE
   ************************/

@@ -468,11 +468,12 @@ angular.module('LodSite.controllers', [])
 
 
   //admin
-  .controller('AdminPanelCtrl', ['$scope', '$state', 'TokenService', function ($scope, $state, TokenService) {
+  .controller('AdminPanelCtrl', ['$scope', '$state', 'TokenService', 'OrderService',
+    function ($scope, $state, TokenService, OrderService) {
     var role = TokenService.getRole();
     if (role != 1) {
       return $state.go('index');
-    }
+    };
 
     $scope.$on('userRole_changed', function (e, args) {
       role = TokenService.getRole();
@@ -480,6 +481,11 @@ angular.module('LodSite.controllers', [])
         return $state.go('index');
       }
     });
+
+      $scope.FromAdminPanel = function(){
+        OrderService.isFromOrderPage = false;
+      };
+
 
     $scope.$emit('toggle_black', {isBlack: true});
     $scope.$emit('change_title', {
@@ -530,8 +536,8 @@ angular.module('LodSite.controllers', [])
       });
     }])
 
-  .controller('AddProjectCtrl', ['$scope', '$state', 'ngDialog', 'ApiService', 'TokenService', '$timeout',
-    function ($scope, $state, ngDialog, ApiService, TokenService, $timeout) {
+  .controller('AddProjectCtrl', ['$scope', '$state', 'ngDialog', 'ApiService', 'TokenService', '$timeout', 'OrderService',
+    function ($scope, $state, ngDialog, ApiService, TokenService, $timeout, OrderService) {
       var role = TokenService.getRole();
       if (role != 1) {
         return $state.go('index');
@@ -545,18 +551,6 @@ angular.module('LodSite.controllers', [])
       $scope.chosenDevelopers = [];
       $scope.isMoreDevs = true;
       $scope.currentState = 'filling';
-
-      var sampleProject = function () {
-        this.Name = $state.params.header;
-        this.ProjectTypes = [];
-        this.Info = $state.params.description;
-        this.AccessLevel = '0';
-        this.ProjectStatus = 0;
-        this.LandingImage = {};
-        this.Screenshots = [];
-      };
-
-      $scope.newProject = new sampleProject();
 
       $scope.categories = [{
         category: 'Веб',
@@ -580,8 +574,25 @@ angular.module('LodSite.controllers', [])
         index: 4
       }];
 
-      //костыль
-      $scope.categories[$state.params.type].status = true;
+      var sampleProject = function () {
+        this.Name = '';
+        this.ProjectTypes = [];
+        this.Info = '';
+        this.AccessLevel = '0';
+        this.ProjectStatus = 0;
+        this.LandingImage = {};
+        this.Screenshots = [];
+
+        if (OrderService.isFromOrderPage) {
+          var order = OrderService.getOrder();
+          this.Name = order.Header;
+          this.Info = order.Description;
+          $scope.categories[order.ProjectType].status = true;
+        }
+      };
+
+      $scope.newProject = new sampleProject();
+
 
 
       //   FOR TYPE OF PROJECT
@@ -1257,7 +1268,8 @@ angular.module('LodSite.controllers', [])
       $scope.$emit('change_title', {title: $scope.editedProject.Name + ' - Лига Разработчиков НИТУ МИСиС'});
     }])
 
-  .controller('AllOrdersCtrl', ['$scope', 'ApiService', 'TokenService', function ($scope, ApiService, TokenService) {
+  .controller('AllOrdersCtrl', ['$scope', 'ApiService', 'TokenService', 'OrderService', 'DateService',
+    function ($scope, ApiService, TokenService, OrderService, DateService) {
     var token = TokenService.getToken();
     var role = TokenService.getRole();
     if (!token || role != 1) {
@@ -1265,10 +1277,36 @@ angular.module('LodSite.controllers', [])
     }
     $scope.orders = [];
 
+    var getFileNames = function (urls) {
+      var attachments = [];
+      for (var key in urls)
+        attachments.push({
+          Url: urls[key],
+          Name: urls[key].match(/[^\/]*$/)[0]
+        });
+      return attachments;
+    };
+
+      var categories = ['Веб','Мобильное','Десктопное','Игра','Прочее'];
+
+
     $scope.updateOrders = function () {
       ApiService.getOrders().then(function (data) {
+        for (var key in data){
+          data[key].Attachments = getFileNames(data[key].Attachments);
+          data[key].ProjectCategory = categories[data[key].ProjectType];
+        }
         $scope.orders = data;
       });
+    };
+
+    $scope.orderClick = function(order){
+      OrderService.isFromOrderPage = true;
+      OrderService.setOrder(order);
+    };
+
+    $scope.fileClick = function(file){
+      ApiService.getFile(file.Name);
     };
 
     $scope.updateOrders();

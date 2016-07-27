@@ -104,7 +104,7 @@ angular.module('LodSite', [
              })
 
              .state('adminpanel.projectAdd', {
-               url: '/projects/add/:header?:description?:type',
+               url: '/projects/add',
                templateUrl: templateUrl('adminpanel', 'adminpanel-projectAdd'),
                controller: 'AddProjectCtrl'
              })

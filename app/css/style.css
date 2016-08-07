@@ -2149,7 +2149,7 @@ footer {
 .all-projects__section {
   box-sizing: border-box;
   width: 100%;
-  /*! padding: 0 15px; */
+  padding: 0 15px;
 }
 
 .projects__all-project {
@@ -3016,7 +3016,6 @@ footer {
     max-width: 1000px;
     min-height: 200px;
     text-align: left;
-    osition: relative;
     margin: 0 auto 30px;
     padding: 10px;
   }
@@ -3387,10 +3386,11 @@ footer {
 
   .header__nav-full {
     display: inline-block;
-    position: absolute;
-    bottom: 15px;
-    right: 25px;
+    position: relative;
+    right: 5px;
     font-size: 1.3em;
+    top: 59px;
+    float: right;
   }
 
   .nav-full__item {
@@ -3803,7 +3803,7 @@ footer {
   }
 
   .line-1-2.block-2, .line-3-4.block-2 {
-    b-right: 10px solid white;
+    border-right: 10px solid white;
   }
 
   .line-2-3.block-1, .line-4-5.block-1 {
@@ -4225,7 +4225,7 @@ footer {
   }
 }
 
-@media only screen and (min-width: 1700px) {
+@media only screen and (min-width: 1300px) {
   .projects-section-container {
     max-width: 1200px;
   }
@@ -4337,7 +4337,6 @@ footer {
      ADMIN ORDERS-PAGE
   *************************/
   .all-orders-page {
-    display: inline-block;
   }
 }
 
@@ -4412,8 +4411,8 @@ footer {
      ADMIN ORDERS-PAGE
   *************************/
   .all-orders__order {
-    margin: 25px;
-    display: inline-block;
+    margin: 0 auto 25px;
+    max-width: 1200px;
   }
 
   /************************

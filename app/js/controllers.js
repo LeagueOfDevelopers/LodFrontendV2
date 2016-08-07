@@ -1324,6 +1324,42 @@ angular.module('LodSite.controllers', [])
     })
   }])
 
+  .controller('AdminNotificationCtrl', ['$scope',
+    '$timeout',
+    'ApiService',
+    'TokenService',
+    function ($scope, $timeout, ApiService, TokenService) {
+      var token = TokenService.getToken();
+      var role = TokenService.getRole();
+      if (!token || role != 1) {
+        return $state.go('index');
+      }
+
+      $scope.createNotification = function () {
+        ApiService.createNotification(JSON.stringify($scope.notification)).then(function (isSuccess) {
+          $scope.currentState = isSuccess ? 'success' : 'failed';
+
+          $scope.notification = '';
+
+          $timeout(function () {
+            $scope.currentState = '';
+          }, 4000);
+        });
+      };
+
+      $scope.$on('userRole_changed', function (e, args) {
+        role = TokenService.getRole();
+        if (role != 1) {
+          return $state.go('index');
+        }
+      });
+
+      $scope.$emit('toggle_black', {isBlack: true});
+      $scope.$emit('change_title', {
+        title: 'Создание уведомления - Лига Разработчиков НИТУ МИСиС'
+      })
+    }])
+
   .controller('AdminDevelopersCtrl', ['$scope',
     'ApiService',
     'DateService',

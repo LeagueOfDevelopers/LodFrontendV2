@@ -419,9 +419,14 @@ angular.module('LodSite.controllers', [])
           ]
         });
       };
+      
+      $scope.inProgress = false;
+      
       $scope.joinToProject = function () {
+        $scope.inProgress = true;
         ApiService.joinToProject(projectId, userId, JSON.stringify($scope.projectDeveloperRole))
           .then(function () {
+            $scope.inProgress = false;
             $state.reload();
           });
       };
@@ -865,6 +870,8 @@ angular.module('LodSite.controllers', [])
           }
         }
 
+        $scope.inProgress = true;
+
         ApiService.addProject($scope.newProject).then(function (response) {
           if (response.isSuccess) {
             $scope.currentState = 'success';
@@ -909,6 +916,7 @@ angular.module('LodSite.controllers', [])
           } else {
             $scope.currentState = 'failed';
           }
+          $scope.inProgress = false;
         });
       };
 
@@ -1244,6 +1252,8 @@ angular.module('LodSite.controllers', [])
           }
         }
 
+        $scope.inProgress = true;
+
         ApiService.editProject(projectId, $scope.editedProject).then(function (isSuccess) {
           if (isSuccess) {
             $scope.currentState = 'success';
@@ -1254,6 +1264,7 @@ angular.module('LodSite.controllers', [])
           } else {
             $scope.currentState = 'failed';
           }
+          $scope.inProgress = false;
         });
       };
 
@@ -1336,10 +1347,15 @@ angular.module('LodSite.controllers', [])
       }
 
       $scope.createNotification = function () {
+
+        $scope.inProgress = true;
+
         ApiService.createNotification(JSON.stringify($scope.notification)).then(function (isSuccess) {
           $scope.currentState = isSuccess ? 'success' : 'failed';
 
           $scope.notification = '';
+
+          $scope.inProgress = false;
 
           $timeout(function () {
             $scope.currentState = '';
@@ -1513,8 +1529,12 @@ angular.module('LodSite.controllers', [])
   .controller('SignupCtrl', ['$scope', 'ApiService', '$timeout', function ($scope, ApiService, $timeout) {
     $scope.currentStates = {};
     $scope.newDeveloper = {};
+    
+    $scope.inProgress = false;
 
     $scope.signUp = function () {
+      $scope.inProgress = true;
+
       ApiService.signUp($scope.newDeveloper).then(function (responseObject) {
         $scope.currentStates = {};
 
@@ -1530,6 +1550,8 @@ angular.module('LodSite.controllers', [])
         } else {
           $scope.currentStates.isFailed = true;
         }
+
+        $scope.inProgress = false;
 
         if ($scope.currentStates.isSuccess) {
           $scope.newDeveloper = {};

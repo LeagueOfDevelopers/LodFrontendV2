@@ -134,7 +134,7 @@
                 </p>
             </div>
 
-            <button class="profile-settings__submit adding-project__submit" ng-disabled="addProjectForm.$invalid"
+            <button class="profile-settings__submit adding-project__submit" ng-disabled="addProjectForm.$invalid||inProgress"
                     ng-click="registerProject()">
                 Добавить
             </button>

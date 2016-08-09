@@ -21,7 +21,7 @@
       </p>
     </div>
 
-    <button class="profile-settings__submit admin-notification__submit" ng-disabled="!notification"
+    <button class="profile-settings__submit admin-notification__submit" ng-disabled="!notification||inProgress"
             ng-click="createNotification()">
       Создать
     </button>

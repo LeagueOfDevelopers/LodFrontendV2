@@ -345,7 +345,9 @@ angular.module('LodSite.services', [])
            this.createNotification = function (notification) {
              var url = '/admin/notification';
 
-             return sendAuthorizationSaveRequest(POST, url, null, notification);
+             return sendAuthorizationSaveRequest(POST, url, null, notification).then(function (response) {
+               return response.status === 200;
+             });
            };
 
            //orders

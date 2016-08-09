@@ -66,6 +66,6 @@
       Ошибка регистрации! Проверьте введенные данные.
     </p>
   </div>
-  <button class="sign-up__button" ng-disabled="signForm.$invalid" ng-click="signUp()">Отправить заявку</button>
+  <button class="sign-up__button" ng-disabled="signForm.$invalid||inProgress" ng-click="signUp()">Отправить заявку</button>
 
 </div>

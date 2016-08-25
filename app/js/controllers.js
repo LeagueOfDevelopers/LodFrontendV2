@@ -142,13 +142,22 @@ angular.module('LodSite.controllers', [])
     var developerId = $state.params.id;
 
     ApiService.getDeveloper(developerId)
-      .then(function (data) {
-        $scope.developer = data;
-        $scope.$emit('change_title', {
-          title: $scope.developer.FirstName + ' ' + $scope.developer.LastName +
-          ' - Лига Разработчиков НИТУ МИСиС'
-        });
+      .then(function (response) {
+        $scope.status = response.status;
+
+        if (response.status) {
+          $scope.developer = response.data;
+          $scope.$emit('change_title', {
+            title: $scope.developer.FirstName + ' ' + $scope.developer.LastName +
+            ' - Лига Разработчиков НИТУ МИСиС'
+          });
+        } else {
+          $scope.$emit('change_title', {
+            title: '404 Not found - Лига Разработчиков НИТУ МИСиС'
+          });
+        }
       });
+
     $scope.$emit('toggle_black', {isBlack: true});
   }])
 

@@ -171,7 +171,10 @@ angular.module('LodSite.services', [])
                  var developer = response.data;
                  developer.studyingYear = date.getFullYear() - response.data.StudentAccessionYear || 1;
 
-                 return DateService.getFormattedTimeDev(developer);
+                 return {
+                   data: DateService.getFormattedTimeDev(developer),
+                   status: (response.status === 200)
+               }
                });
            };
 

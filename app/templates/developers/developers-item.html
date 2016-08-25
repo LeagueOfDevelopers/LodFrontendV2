@@ -1,4 +1,4 @@
-<div class="developer-page">
+<div class="developer-page" ng-if="status">
   <div class="developer-confirmation-status" ng-if="userRole === 1" ng-switch="developer.ConfirmationStatus">
     <span style="color: #ccc;" ng-switch-when="1">Подтверждена почта</span>
     <span style="color: #ccc;" ng-switch-when="2">Подтверждён администратором</span>
@@ -71,4 +71,10 @@
       </a>
     </div>
   </div>
+</div>
+
+<div class="developer-page__error" ng-if="!status">
+  <h1 class="headline error__heading">404 Not found</h1>
+  <div class="dividing-line"></div>
+  <div>К сожалению, разработчик не найден или его профиль скрыт.</div>
 </div>

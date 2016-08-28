@@ -1,4 +1,4 @@
-<div class="full-project-container">
+<div class="full-project-container" ng-if="status">
   <h1 class="full-project__name" ng-bind="project.Name"></h1>
 
   <div class="full-project-wrapper">
@@ -75,4 +75,10 @@
       <div class="viewer__close-button" ng-click="closeThisDialog('.viewer__button')"></div>
     </div>
   </script>
+</div>
+
+<div class="error-page" ng-if="!status">
+  <h1 class="headline error-page__heading">404 Not found</h1>
+  <div class="dividing-line"></div>
+  <div>К сожалению, проект не найден или его страница скрыта администрацией.</div>
 </div>

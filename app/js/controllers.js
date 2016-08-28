@@ -445,31 +445,39 @@ angular.module('LodSite.controllers', [])
       }
 
       ApiService.getProject(projectId)
-        .then(function (data) {
-          $scope.project = data;
-          $scope.projectTypes = $scope.project.ProjectType;
-          $scope.projectIssues = $scope.project.Issues;
-          if ($scope.project.ProjectMemberships.length === 0) {
-            $scope.replacementText = "В данный момент на проекте нет разработчиков.";
-          }
-          $scope.checkMembership = function () {
-            var isProjectMember = false;
-            var userId = TokenService.getToken().UserId;
-            for (var i = 0; i < $scope.project.ProjectMemberships.length; i++) {
-              if ($scope.project.ProjectMemberships[i].DeveloperId === userId) {
-                isProjectMember = true;
-              }
-            }
-            return isProjectMember;
-          };
-          $scope.openViewerDialog = function (imgIndex) {
-            $rootScope.openedScreenshot = $scope.project.Screenshots[imgIndex];
-            $scope.openViewer();
-          };
+        .then(function (response) {
+          $scope.status = false;
 
-          $scope.$emit('change_title', {
-            title: $scope.project.Name + ' - Лига Разработчиков НИТУ МИСиС'
-          });
+          if($scope.status) {
+            $scope.project = response.data;
+            $scope.projectTypes = $scope.project.ProjectType;
+            $scope.projectIssues = $scope.project.Issues;
+            if ($scope.project.ProjectMemberships.length === 0) {
+              $scope.replacementText = "В данный момент на проекте нет разработчиков.";
+            }
+            $scope.checkMembership = function () {
+              var isProjectMember = false;
+              var userId = TokenService.getToken().UserId;
+              for (var i = 0; i < $scope.project.ProjectMemberships.length; i++) {
+                if ($scope.project.ProjectMemberships[i].DeveloperId === userId) {
+                  isProjectMember = true;
+                }
+              }
+              return isProjectMember;
+            };
+            $scope.openViewerDialog = function (imgIndex) {
+              $rootScope.openedScreenshot = $scope.project.Screenshots[imgIndex];
+              $scope.openViewer();
+            };
+
+            $scope.$emit('change_title', {
+              title: $scope.project.Name + ' - Лига Разработчиков НИТУ МИСиС'
+            });
+          } else {
+            $scope.$emit('change_title', {
+              title: '404 Not found - Лига Разработчиков НИТУ МИСиС'
+            });
+          }
         });
 
       $scope.$emit('toggle_black', {isBlack: true});

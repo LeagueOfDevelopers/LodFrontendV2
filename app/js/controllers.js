@@ -446,7 +446,7 @@ angular.module('LodSite.controllers', [])
 
       ApiService.getProject(projectId)
         .then(function (response) {
-          $scope.status = false;
+          $scope.status = response.status;
 
           if($scope.status) {
             $scope.project = response.data;

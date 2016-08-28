@@ -272,7 +272,10 @@ angular.module('LodSite.services', [])
              var url = '/projects/' + projectId;
 
              return sendAuthorizationSaveRequest(GET, url).then(function (response) {
-               return response.data;
+               return {
+                 data: response.data,
+                 status: response.status === 200
+               }
              });
            };
 

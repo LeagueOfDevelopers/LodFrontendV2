@@ -167,14 +167,20 @@ angular.module('LodSite.services', [])
 
              return sendAuthorizationSaveRequest(GET, url)
                .then(function (response) {
-                 var date = new Date();
-                 var developer = response.data;
-                 developer.studyingYear = date.getFullYear() - response.data.StudentAccessionYear || 1;
+                 if(response.status === 200) {
+                   var date = new Date();
+                   var developer = response.data;
+                   developer.studyingYear = date.getFullYear() - response.data.StudentAccessionYear || 1;
 
-                 return {
-                   data: DateService.getFormattedTimeDev(developer),
-                   status: (response.status === 200)
-               }
+                   return {
+                     data: DateService.getFormattedTimeDev(developer),
+                     status: (response.status === 200)
+                   }
+                 } else {
+                   return {
+                     status: (response.status === 200)
+                   }
+                 }
                });
            };
 

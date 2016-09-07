@@ -1709,7 +1709,7 @@ footer {
   text-align: center;
 }
 
-.profile-settings__submit-wrapper {
+.profile-settings__submit-wrapper, .adding-project__submit-wrapper {
   margin: 10px auto 30px;
 }
 
@@ -2925,7 +2925,7 @@ footer {
     width: 50%;
   }
 
-  .profile-settings__submit-wrapper {
+  .profile-settings__submit-wrapper, .adding-project__submit-wrapper {
     margin: 20px auto 30px;
   }
 

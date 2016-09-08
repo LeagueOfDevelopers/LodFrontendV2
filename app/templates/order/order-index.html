@@ -1,17 +1,16 @@
 <div class="order-content">
   <div class="order-wrap-form">
     <div class="order-heading">Заказать работу</div>
-    <form method="post" class="order-form" name="OrderForm" ng-controller="FormValidationCtrl"
-          ng-submit="Request(OrderForm)">
-      <label><input type="text" ng-model="data.CustomerName" name="name" autocomplete="on" placeholder="Ваши ФИО"
+    <form method="post" class="order-form" name="OrderForm" ng-submit="Request()">
+      <label><input type="text" class="validate-field" ng-model="data.CustomerName" name="name" autocomplete="on" placeholder="Ваши ФИО"
                     required></label>
-      <label><input type="email" ng-model="data.Email" name="email"
+      <label><input type="email" class="validate-field" ng-model="data.Email" name="email"
                     pattern="^([a-zA-Z0-9_-]+\.)*[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)*\.[a-z]{2,6}$"
                     autocomplete="on"
                     placeholder="Ваш e-mail" required></label>
-      <label><input type="text" ng-model="data.Header" name="projectName" placeholder="Название проекта"
+      <label><input type="text" class="validate-field" ng-model="data.Header" name="projectName" placeholder="Название проекта"
                     required></label>
-      <label><select name="ProjectType" ng-model="data.ProjectType" required>
+      <label><select class="validate-field" name="ProjectType" ng-model="data.ProjectType" required>
         <option value='' disabled selected>Выбрать тип проекта</option>
         <option value='0'>Веб-приложение</option>
         <option value='1'>Мобильное приложение</option>
@@ -19,9 +18,9 @@
         <option value='3'>Игра</option>
         <option value='4'>Другое</option>
       </select></label>
-      <label><input type="text" ng-model="data.DeadLine" name="deadline" placeholder="Срок выполнения"
+      <label><input class="validate-field" type="text" ng-model="data.DeadLine" name="deadline" placeholder="Срок выполнения"
                     required></label>
-      <label><textarea name="description" ng-model="data.Description" placeholder="Описание проекта"
+      <label><textarea class="validate-field" name="description" ng-model="data.Description" placeholder="Описание проекта"
                        required></textarea></label>
 
       <div class="order-upload__heading">Прикрепить файлы (макс. 3):</div>
@@ -61,25 +60,25 @@
 
         <div class="dividing-line"></div>
 
-        <div class="span-wrap"><span>Курсовые работы</span></div>
-        <p>Лига Разработчиков не занимается выполнением курсовых и дипломных работ. Причиной этому является отсутствие в
+        <div class="span-wrap" data-slide-toggle="#firstMobilePoint"><span>Курсовые работы</span></div>
+        <p id="firstMobilePoint">Лига Разработчиков не занимается выполнением курсовых и дипломных работ. Причиной этому является отсутствие в
           подобной деятельности командной составляющей и образовательной ценности. Тем не менее, вы можете просмотреть
           портфолио наших разработчиков и лично обратиться за помощью к кому-либо из них.</p>
 
-        <div class="span-wrap"><span>Рассмотрение заказа</span></div>
-        <p>После нажатия кнопки "Отправить" заказ отправляется на рассмотрение менеджеру организации. Менеджер
+        <div class="span-wrap" data-slide-toggle="#secondMobilePoint"><span>Рассмотрение заказа</span></div>
+        <p id="secondMobilePoint" style="display: none">После нажатия кнопки "Отправить" заказ отправляется на рассмотрение менеджеру организации. Менеджер
           постарается
           подобрать для заказа разработчиков и его успех в этом деле напрямую зависит от условий, которые вы ставите. Вы
           будете оповещены, когда работа над вашим заказом начнётся.</p>
 
-        <div class="span-wrap"><span>Оплата</span></div>
-        <p>Вопросы оплаты обсуждаются индивидуально с менеджером. Заказ может быть выполнен бесплатно, если он имеет
+        <div class="span-wrap" data-slide-toggle="#thirdMobilePoint"><span>Оплата</span></div>
+        <p id="thirdMobilePoint" style="display: none">Вопросы оплаты обсуждаются индивидуально с менеджером. Заказ может быть выполнен бесплатно, если он имеет
           какую-либо академическую ценность, не требует очень быстрого выполнения и не затрагивает специфических
           предметных
           областей.</p>
 
-        <div class="span-wrap"><span>Гарантии</span></div>
-        <p>Члены нашей организации присутствуют в ней добровольно в образовательных целях, они не связаны никакими
+        <div class="span-wrap" data-slide-toggle="#fourthMobilePoint"><span>Гарантии</span></div>
+        <p id="fourthMobilePoint" style="display: none">Члены нашей организации присутствуют в ней добровольно в образовательных целях, они не связаны никакими
           трудовыми
           договорами, поэтому выполнение работы не гарантируется. В случае невыполнения заказа в срок, вам будут
           предложены
@@ -87,9 +86,10 @@
       </div>
 
 
-      <label class="submit"><input type="submit" value="">
+      <label class="submit" ng-class="{'submit--success': isSuccess}">
+        <input type="submit" ng-if="!isSuccess" value="">
 
-        <div class="tick"></div>
+        <div class="success" ng-if="isSuccess"></div>
       </label>
     </form>
 
@@ -100,25 +100,29 @@
 
     <div class="dividing-line"></div>
 
-    <div class="span-wrap"><span>Курсовые работы</span></div>
-    <p>Лига Разработчиков не занимается выполнением курсовых и дипломных работ. Причиной этому является отсутствие в
+    <div class="span-wrap" data-slide-toggle="#firstPoint"><span>Курсовые работы</span></div>
+    <p id="firstPoint">Лига Разработчиков не занимается выполнением курсовых и дипломных работ. Причиной этому является отсутствие в
       подобной деятельности командной составляющей и образовательной ценности. Тем не менее, вы можете просмотреть
       портфолио наших разработчиков и лично обратиться за помощью к кому-либо из них.</p>
 
-    <div class="span-wrap"><span>Рассмотрение заказа</span></div>
-    <p>После нажатия кнопки "Отправить" заказ отправляется на рассмотрение менеджеру организации. Менеджер постарается
+    <div class="span-wrap" data-slide-toggle="#secondPoint"><span>Рассмотрение заказа</span></div>
+    <p id="secondPoint" style="display: none">После нажатия кнопки "Отправить" заказ отправляется на рассмотрение менеджеру организации. Менеджер
+      постарается
       подобрать для заказа разработчиков и его успех в этом деле напрямую зависит от условий, которые вы ставите. Вы
       будете оповещены, когда работа над вашим заказом начнётся.</p>
 
-    <div class="span-wrap"><span>Оплата</span></div>
-    <p>Вопросы оплаты обсуждаются индивидуально с менеджером. Заказ может быть выполнен бесплатно, если он имеет
-      какую-либо академическую ценность, не требует очень быстрого выполнения и не затрагивает специфических предметных
+    <div class="span-wrap" data-slide-toggle="#thirdPoint"><span>Оплата</span></div>
+    <p id="thirdPoint" style="display: none">Вопросы оплаты обсуждаются индивидуально с менеджером. Заказ может быть выполнен бесплатно, если он имеет
+      какую-либо академическую ценность, не требует очень быстрого выполнения и не затрагивает специфических
+      предметных
       областей.</p>
 
-    <div class="span-wrap"><span>Гарантии</span></div>
-    <p>Члены нашей организации присутствуют в ней добровольно в образовательных целях, они не связаны никакими трудовыми
-      договорами, поэтому выполнение работы не гарантируется. В случае невыполнения заказа в срок, вам будут предложены
+    <div class="span-wrap" data-slide-toggle="#fourthPoint"><span>Гарантии</span></div>
+    <p id="fourthPoint" style="display: none">Члены нашей организации присутствуют в ней добровольно в образовательных целях, они не связаны никакими
+      трудовыми
+      договорами, поэтому выполнение работы не гарантируется. В случае невыполнения заказа в срок, вам будут
+      предложены
       альтернативы, но руководство Лиги стремится снизить число таких ситуаций.</p>
-  </div>
 
+  </div>
 </div>

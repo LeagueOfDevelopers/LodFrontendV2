@@ -1163,19 +1163,30 @@ footer {
   background-color: #f1f1f1;
 }
 
-.success, .order-form [type="submit"], .contact-form [type="submit"] {
+.order-form .submit--success, .contact-form .submit--success {
+  background-color: #2fd08e;
+}
+
+.order-form .success, .contact-form .success, .order-form [type="submit"], .contact-form [type="submit"] {
   display: inline-block;
   position: relative;
-  top: 7px;
   height: 40px;
   width: 40px;
+}
+
+.order-form [type="submit"], .contact-form [type="submit"] {
+  top: 7px;
+}
+
+.order-form .success, .contact-form .success {
+  top: 15px;
 }
 
 .order-form [type="submit"], .contact-form [type="submit"] {
   background: url("../imgs/envelope.svg") no-repeat center;
 }
 
-.success {
+.order-form .success, .contact-form .success {
   background: url("../imgs/white_tick.svg") no-repeat center;
   background-size: cover;
 }
@@ -2775,16 +2786,19 @@ footer {
     margin-bottom: -41px;
     height: 80px;
     width: 80px;
-
   }
 
-  .success, .order-form [type="submit"], .contact-form [type="submit"] {
+  .order-form .submit--success, .contact-form .submit--success {
+    background-color: #2fd08e;
+  }
+
+  .order-form .success, .contact-form .success, .order-form [type="submit"], .contact-form [type="submit"] {
     height: 45px;
     width: 45px;
     top: 9px;
   }
 
-  .success {
+  .order-form .success, .contact-form .success {
     top: 18px;
   }
 
@@ -3870,7 +3884,15 @@ footer {
     margin: 20px auto -50px;
     height: 90px;
     width: 90px;
-    cursor: pointer;
+  }
+
+  .order-form .submit--success, .contact-form .submit--success {
+    background-color: #2fd08e;
+  }
+
+  .order-form .submit--success:hover, .contact-form .submit--success:hover {
+    background-color: #2fd08e !important;
+    cursor: default;
   }
 
   .success, .order-form [type="submit"], .contact-form [type="submit"] {
@@ -3883,9 +3905,10 @@ footer {
     top: -9px;
   }
 
-  .success {
+  .order-form .success, .contact-form .success {
     top: 20px;
   }
+
 
   .order-form .submit:hover, .contact-form .submit:hover {
     background-color: #ffd200;
@@ -3896,9 +3919,7 @@ footer {
     transition: all 0.5s ease;
   }
 
-  .contact-form [type="submit"]:hover {
-    cursor: pointer;
-  }
+
 
   /*************************
          ORDER
@@ -3918,7 +3939,7 @@ footer {
     width: 100%;
   }
 
-  .order-form select:hover, .order-form [name="deadline"]:hover {
+  .order-form select:hover {
     cursor: pointer;
   }
 

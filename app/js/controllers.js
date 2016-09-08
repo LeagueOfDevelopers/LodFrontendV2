@@ -1720,34 +1720,6 @@ angular.module('LodSite.controllers', [])
   }])
 
   .controller('OrderCtrl', ['$scope', 'ApiService', '$timeout', function ($scope, ApiService, $timeout) {
-
-    // FOR INPUT TYPE=DATE
-
-    Array.from($("[name='deadline']"))
-      .forEach(function (element) {
-        element.addEventListener('focus', function () {
-          this.setAttribute('type', 'date');
-        });
-        element.addEventListener('blur', function () {
-          if (this.value.length == 0) {
-            this.setAttribute('type', 'text');
-          }
-        });
-      });
-
-    // ACCORDION
-
-    $(".order-accordion p:not(:first)").hide();
-    $(".order-content > .order-accordion p:first").show();
-
-
-    $(".span-wrap").click(function () {
-      $(this).next("p").slideToggle("slow")
-        .siblings("p:visible").slideUp("slow");
-    });
-
-    // FILE SENDING
-
     // FORM SENDING
 
     $scope.data = {};
@@ -1760,25 +1732,17 @@ angular.module('LodSite.controllers', [])
 
       ApiService.order($scope.data).then(function (isSuccess) {
         if (isSuccess) {
-          var envelope = $("[type='submit']");
-          var tick = $('.tick');
-          var wrap_tick = $('.submit');
+          $scope.isSuccess = isSuccess;
 
-          $("input, select, textarea").removeClass('isValid');
-          $('.order-form').trigger('reset');
+          $scope.OrderForm.$setPristine();
+          $scope.data = {};
 
-          envelope.css('display', 'none');
-          wrap_tick.css('background-color', '#2fd08e');
-          tick.addClass('success');
-
-          $timeout(function () {
-            envelope.css('display', 'inline-block');
-            wrap_tick.css('background-color', '#f1f1f1');
-            tick.removeClass('success');
-          }, 4000);
-
+          setTimeout(function () {
+                $scope.isSuccess = '';
+              }
+              , 4000);
         } else {
-          alert("Произошла ошибка.");
+          alert('Произошла ошибка. Проверьте введённые данные.');
         }
       });
     };
@@ -1846,57 +1810,28 @@ angular.module('LodSite.controllers', [])
 
     $scope.Request = function () {
       ApiService.contact($scope.data).then(function (isSuccess) {
-        if (isSuccess) {
-          var envelope = $("[type='submit']");
-          var tick = $('.tick');
-          var wrap_tick = $('.submit');
+            if (isSuccess) {
+              $scope.isSuccess = isSuccess;
 
-          $("input, textarea").removeClass('isValid');
-          $('.contact-form').trigger('reset');
+              $scope.ContactForm.$setPristine();
+              $scope.data = {};
 
-          envelope.css('display', 'none');
-          wrap_tick.css('background-color', '#2fd08e');
-          tick.addClass('success');
-
-          setTimeout(function () {
-              envelope.css('display', 'inline-block');
-              wrap_tick.css('background-color', '#f1f1f1');
-              tick.removeClass('success');
+              setTimeout(function () {
+                    $scope.isSuccess = '';
+                  }
+                  , 4000);
+            } else {
+              alert('Что-то пошло не так.');
             }
-            , 1000);
-        } else {
-          alert("Произошла ошибка.")
-        }
-      });
-    };
+          }
+      );
+    }
 
     $scope.$emit('toggle_black', {isBlack: true});
 
     $scope.$emit('change_title', {
       title: 'Cвязаться - Лига Разработчиков НИТУ МИСиС'
     });
-  }])
-
-  .controller('FormValidationCtrl', [function () {
-    Array.from($("input, textarea"))
-      .forEach(function (element) {
-        element.addEventListener('focus', function () {
-          if (this.value.length == 0) {
-            this.className = '';
-          }
-          else {
-            this.className = 'isValid';
-          }
-        });
-        element.addEventListener('blur', function () {
-          if (this.value.length == 0) {
-            this.className = '';
-          }
-          else {
-            this.className = 'isValid';
-          }
-        });
-      });
   }])
 
   .controller('LoginFormCtrl', ['$scope',

@@ -1723,8 +1723,13 @@ angular.module('LodSite.controllers', [])
     // FORM SENDING
 
     $scope.data = {};
+    $scope.deadlineType = 'text';
 
-    $scope.Request = function (form) {
+    $scope.toggleDeadlineType = function () {
+      $scope.deadlineType = (($scope.deadlineType == 'text' && !$scope.data.DeadLine) || ($scope.deadlineType == 'date' && $scope.data.DeadLine)) ? 'date' : 'text';
+    }
+
+    $scope.Request = function () {
 
       $scope.data.Attachments = $scope.files.map(function (file) {
         return file.url;
@@ -1740,7 +1745,7 @@ angular.module('LodSite.controllers', [])
           setTimeout(function () {
                 $scope.isSuccess = '';
               }
-              , 4000);
+              , 2000);
         } else {
           alert('Произошла ошибка. Проверьте введённые данные.');
         }
@@ -1819,7 +1824,7 @@ angular.module('LodSite.controllers', [])
               setTimeout(function () {
                     $scope.isSuccess = '';
                   }
-                  , 4000);
+                  , 2000);
             } else {
               alert('Что-то пошло не так.');
             }

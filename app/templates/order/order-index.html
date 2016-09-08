@@ -18,8 +18,8 @@
         <option value='3'>Игра</option>
         <option value='4'>Другое</option>
       </select></label>
-      <label><input class="validate-field" type="text" ng-model="data.DeadLine" name="deadline" placeholder="Срок выполнения"
-                    required></label>
+      <label><input class="validate-field" type="{{deadlineType}}" ng-model="data.DeadLine" name="deadline" placeholder="Срок выполнения"
+                    ng-focus="toggleDeadlineType()" ng-blur="toggleDeadlineType()" required></label>
       <label><textarea class="validate-field" name="description" ng-model="data.Description" placeholder="Описание проекта"
                        required></textarea></label>
 

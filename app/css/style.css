@@ -2788,10 +2788,6 @@ footer {
     width: 80px;
   }
 
-  .order-form .submit--success, .contact-form .submit--success {
-    background-color: #2fd08e;
-  }
-
   .order-form .success, .contact-form .success, .order-form [type="submit"], .contact-form [type="submit"] {
     height: 45px;
     width: 45px;
@@ -3884,10 +3880,6 @@ footer {
     margin: 20px auto -50px;
     height: 90px;
     width: 90px;
-  }
-
-  .order-form .submit--success, .contact-form .submit--success {
-    background-color: #2fd08e;
   }
 
   .order-form .submit--success:hover, .contact-form .submit--success:hover {

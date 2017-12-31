@@ -1086,14 +1086,14 @@ footer {
 }
 
 /*************************
-     CONTACT & ORDER
+     CONTACT
 *************************/
-.order-content, .contact-content {
+.contact-content {
   text-align: center;
   margin-bottom: 60px;
 }
 
-.order-heading, .contact-heading {
+.contact-heading {
   display: block;
   position: relative;
   width: 225px;
@@ -1107,18 +1107,18 @@ footer {
   background-color: #f1f1f1;
 }
 
-.order-form, .contact-form {
+.contact-form {
   border: 2px solid #202d3a;
   padding-top: 45px;
   max-width: 80%;
 }
 
-.order-accordion, .order-form, .contact-form {
+.contact-form {
   min-width: 270px;
   margin: 0 auto;
 }
 
-.order-form input, .order-form textarea, .order-form select, .contact-form input, .contact-form textarea {
+.contact-form input, .contact-form textarea {
   display: inline-block;
   resize: none;
   margin: 7px auto;
@@ -1130,29 +1130,29 @@ footer {
   font-size: 1em;
 }
 
-.order-form:first-child, .contact-form:first-child {
+.contact-form:first-child {
   margin-top: 30px;
 }
 
-.order-accordion .span-wrap, .order-form input, .order-form select, .contact-form input {
+.contact-form input {
   min-height: 45px;
 }
 
-.order-form input:required:valid, .order-form textarea:valid, .contact-form input:required:valid, .contact-form textarea:valid {
+.contact-form input:required:valid, .contact-form textarea:valid {
   border: 1px solid #4CAF50;
 }
 
-.order-form .isValid:invalid, .contact-form .isValid:invalid {
+.isValid:invalid, .contact-form .isValid:invalid {
   border: 1px solid #F44336;
 }
 
-.order-form textarea, .contact-form textarea {
+.contact-form textarea {
   padding-top: 10px;
   margin-bottom: 20px;
   height: 200px;
 }
 
-.order-form .submit, .contact-form .submit {
+.contact-form .submit {
   display: block;
   position: relative;
   margin: 0 auto -36px;
@@ -1163,63 +1163,32 @@ footer {
   background-color: #f1f1f1;
 }
 
-.order-form .submit--success, .contact-form .submit--success {
+.contact-form .submit--success {
   background-color: #2fd08e;
 }
 
-.order-form .success, .contact-form .success, .order-form [type="submit"], .contact-form [type="submit"] {
+.contact-form .success, .contact-form [type="submit"] {
   display: inline-block;
   position: relative;
   height: 40px;
   width: 40px;
 }
 
-.order-form [type="submit"], .contact-form [type="submit"] {
+.contact-form [type="submit"] {
   top: 7px;
 }
 
-.order-form .success, .contact-form .success {
+.contact-form .success {
   top: 15px;
 }
 
-.order-form [type="submit"], .contact-form [type="submit"] {
+.contact-form [type="submit"] {
   background: url("../imgs/envelope.svg") no-repeat center;
 }
 
-.order-form .success, .contact-form .success {
+.contact-form .success {
   background: url("../imgs/white_tick.svg") no-repeat center;
   background-size: cover;
-}
-
-/*************************
-         ORDER
-*************************/
-
-.order-content > .order-accordion {
-  display: none;
-}
-
-.order-form select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  -ms-appearance: none;
-  appearance: none;
-  box-sizing: content-box;
-}
-
-.order-form select {
-  padding: 0 20px 0 10px;
-}
-
-.order-upload__heading {
-  width: 80%;
-  margin: 0 auto 10px;
-  text-align: left;
-}
-
-.order-upload-wrap {
-  margin: 0 auto 20px;
-  width: 80%;
 }
 
 .upload-box-wrap {
@@ -1234,19 +1203,6 @@ footer {
   align-content: flex-start;
 }
 
-.order-upload-file__adding {
-  color: #aaaaaa;
-  font-size: 51.5px;
-  font-weight: 900;
-  cursor: default;
-}
-
-.order-upload-file__wrap {
-  display: inline-block;
-  text-align: center;
-  margin-right: 10px;
-  border: 2px dashed #9a9a9a !important;
-}
 
 .upload-box {
   position: relative;
@@ -1258,115 +1214,6 @@ footer {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-.order-uploaded-file__name-wrap {
-  display: inline-block;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-
-  -webkit-box-align: center;
-  -moz-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
-  align-items: center;
-
-  height: 100%;
-  width: 100%;
-  padding-right: 5px;
-}
-
-.order-uploaded-file__name {
-  display: inline-block;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: #0072bc;
-}
-
-.order-file-close {
-  position: absolute;
-  background-image: url("../imgs/close-button.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  width: 13px;
-  height: 13px;
-  top: 3px;
-  right: 3px;
-}
-
-.order-uploading-wrap {
-  display: table;
-  height: 100%;
-  width: 100%;
-}
-
-.order-uploading-percent {
-  display: table-cell;
-  vertical-align: middle;
-  width: 100%;
-  height: 66px;
-}
-
-.order-uploading__bar-wrap {
-  position: absolute;
-  margin-top: -5px;
-  width: 100%;
-  top: 100%;
-  left: 0;
-}
-
-.order-uploading__bar {
-  height: 5px;
-  background-color: #0072bc;
-}
-
-.order-accordion-heading {
-  font-family: 'Noto Serif', serif;
-  font-size: 1.5em;
-  padding: 0 10%;
-  margin: 20px 0 0;
-  font-weight: 900;
-}
-
-.order-accordion .dividing-line {
-  width: 90%;
-  margin: 10px auto 20px;
-}
-
-.order-accordion {
-  padding-top: 15px;
-  padding-bottom: 20px;
-}
-
-.order-accordion .span-wrap, .order-accordion p {
-  margin: 0 auto 4px;
-  width: 80%;
-  background-color: white;
-}
-
-.order-accordion .span-wrap {
-  display: table;
-  padding: 0 15px;
-}
-
-.order-accordion span {
-  display: table-cell;
-  vertical-align: middle;
-  text-align: left;
-  font-family: 'PT Sans', sans-serif;
-  font-size: 1.2em;
-  background-color: white;
-}
-
-.order-accordion p {
-  padding: 15px;
-  text-align: left;
 }
 
 /*************************
@@ -2657,100 +2504,45 @@ footer {
   /*************************
        CONTACT & ORDER
   *************************/
-  .order-content, .contact-content {
+  .contact-content {
     margin-bottom: 70px;
   }
 
-  .order-heading, .contact-heading {
+  .contact-heading {
     width: 360px;
     font-size: 1.8em;
   }
 
-  .order-form, .contact-form {
+  .contact-form {
     width: 70%;
   }
 
-  .order-accordion, .order-form, .contact-form {
+  .contact-form {
     max-width: 500px;
   }
 
-  .order-form input, .order-form textarea, .order-form select, .contact-form input, .contact-form textarea {
+  .contact-form input, .contact-form textarea {
     width: 360px;
   }
 
-  .order-accordion .span-wrap, .order-form input, .order-form select, .contact-form input {
+  .contact-form input {
     min-height: 50px;
   }
 
-  .order-form .submit, .contact-form .submit {
+  .contact-form .submit {
     margin-bottom: -41px;
     height: 80px;
     width: 80px;
   }
 
-  .order-form .success, .contact-form .success, .order-form [type="submit"], .contact-form [type="submit"] {
+  .contact-form .success, .contact-form [type="submit"] {
     height: 45px;
     width: 45px;
     top: 9px;
   }
 
-  .order-form .success, .contact-form .success {
+  .contact-form .success {
     top: 18px;
-  }
-
-  /*************************
-           ORDER
-  *************************/
-  .order-upload__heading, .order-upload-wrap {
-    width: 390px;
-  }
-
-  .order-upload-file__adding {
-    font-size: 89px;
-    font-weight: normal;
-  }
-
-  .upload-box {
-    width: 116px;
-    height: 116px;
-  }
-
-  .order-uploaded-file__name-wrap {
-    padding-right: 0;
-    -webkit-justify-content: center;
-    justify-content: center;
-  }
-
-  .order-uploaded-file__name {
-    margin: 0 5px;
-  }
-
-  .order-file-close {
-    width: 20px;
-    height: 20px;
-    top: 5px;
-    right: 5px;
-  }
-
-  .order-uploading-percent {
-    height: 116px;
-  }
-
-  .order-accordion-heading {
-    font-size: 1.7em;
-  }
-
-  .order-accordion .dividing-line {
-    margin-bottom: 30px;
-  }
-
-  .order-accordion span {
-    font-size: 1.3em;
-  }
-
-  .order-accordion p {
-    padding: 15px;
-    text-align: left;
   }
 
   /*************************
@@ -3643,13 +3435,13 @@ footer {
   }
 
   /*************************
-       CONTACT & ORDER
+       CONTACT
   *************************/
-  .order-content, .contact-content {
+  .contact-content {
     margin-bottom: 80px;
   }
 
-  .order-heading, .contact-heading {
+  .contact-heading {
     font-size: 1.8em;
     width: 400px;
     top: 35px;
@@ -3660,125 +3452,44 @@ footer {
     min-width: 550px;
   }
 
-  .order-form input, .order-form textarea, .order-form select, .contact-form input, .contact-form textarea {
+  .contact-form input, .contact-form textarea {
     width: 400px;
     margin: 30px auto 0;
   }
 
-  .order-form .submit, .contact-form .submit {
+  .contact-form .submit {
     margin: 20px auto -50px;
     height: 90px;
     width: 90px;
   }
 
-  .order-form .submit--success:hover, .contact-form .submit--success:hover {
+  .contact-form .submit--success:hover {
     background-color: #2fd08e !important;
     cursor: default;
   }
 
-  .success, .order-form [type="submit"], .contact-form [type="submit"] {
+  .success, .contact-form [type="submit"] {
     height: 50px;
     width: 50px;
     cursor: pointer;
   }
 
-  .order-form [type="submit"], .contact-form [type="submit"] {
+  .contact-form [type="submit"] {
     top: -9px;
   }
 
-  .order-form .success, .contact-form .success {
+  .contact-form .success {
     top: 20px;
   }
 
 
-  .order-form .submit:hover, .contact-form .submit:hover {
+  .contact-form .submit:hover {
     background-color: #ffd200;
     cursor: pointer;
     -moz-transition: all 0.5s ease;
     -webkit-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
-  }
-
-
-
-  /*************************
-         ORDER
-  *************************/
-  .order-content {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .order-wrap-form {
-    display: inline-block;
-    min-width: 550px;
-    margin: 0;
-  }
-
-  .order-form {
-    width: 100%;
-  }
-
-  .order-form select:hover {
-    cursor: pointer;
-  }
-
-  .order-wrap-form, .order-form {
-    min-width: 550px;
-  }
-
-  .order-upload__heading, .order-upload-wrap {
-    width: 430px;
-    margin-top: 30px;
-  }
-
-  .order-upload-file__adding {
-    cursor: pointer;
-    font-size: 99px;
-  }
-
-  .upload-box {
-    width: 129px;
-    height: 129px;
-  }
-
-  .order-file-close {
-    cursor: pointer;
-  }
-
-  .order-uploading-percent {
-    height: 129px;
-  }
-
-  .order-wrap-form .order-accordion {
-    display: none;
-  }
-
-  .order-content > .order-accordion {
-    display: inline-block;
-    width: 450px;
-    margin: 65px 0 0;
-    vertical-align: top;
-    border: 0;
-  }
-
-  .order-accordion-heading {
-    font-size: 1.5em;
-    text-align: left;
-    padding: 0 30px;
-  }
-
-  .order-accordion .dividing-line {
-    width: 100%;
-  }
-
-  .order-accordion .span-wrap {
-    cursor: pointer;
-  }
-
-  .order-accordion .span-wrap, .order-accordion p {
-    width: 85%;
   }
 
   /*************************
@@ -4153,13 +3864,6 @@ footer {
     height: 200px;
   }
 
-  /*************************
-     ADMIN ORDERS-PAGE
-  *************************/
-  .all-orders-page {
-  }
-}
-
 @media only screen and (min-width: 1700px) {
   body {
     font-size: 1.3em;
@@ -4225,14 +3929,6 @@ footer {
 
   .modal-window__search input {
     height: 45px;
-  }
-
-  /*************************
-     ADMIN ORDERS-PAGE
-  *************************/
-  .all-orders__order {
-    margin: 0 auto 25px;
-    max-width: 1200px;
   }
 
   /************************

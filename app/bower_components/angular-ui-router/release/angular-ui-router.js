@@ -44,7 +44,8 @@ function merge(dst) {
  *
  * @param {Object} first The first state.
  * @param {Object} second The second state.
- * @return {Array} Returns an array of state names in descending order, not including the root.
+ * @return {Array} Returns an array of state names in descending
+    , not including the root.
  */
 function ancestors(first, second) {
   var path = [];

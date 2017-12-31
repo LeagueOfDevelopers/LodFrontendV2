@@ -82,17 +82,6 @@
         .
       </div>
 
-      <div ng-switch-when="OrderPlaced">
-
-        <span ng-bind="notification.EventInfo.ClientName + ' оставил заказ на разработку '"></span>
-
-        <a class="information__link" ui-sref="adminpanel.orders">
-          <span ng-bind=" notification.EventInfo.OrderName">
-          </span>
-        </a>
-        .
-      </div>
-
       <div ng-switch-when="AdminNotificationInfo">
           <span ng-bind="'Новое сообщение от администрации: «' + notification.EventInfo.InfoText + '»'">
           </span>
@@ -188,17 +177,6 @@
 
         <a class="information__link" ng-href="/projects/{{notification.EventInfo.ProjectId}}">
           <span ng-bind=" notification.EventInfo.ProjectName">
-          </span>
-        </a>
-        .
-      </div>
-
-      <div ng-switch-when="OrderPlaced">
-
-        <span ng-bind="notification.EventInfo.ClientName + ' оставил заказ на разработку '"></span>
-
-        <a class="information__link" ui-sref="adminpanel.orders">
-          <span ng-bind=" notification.EventInfo.OrderName">
           </span>
         </a>
         .

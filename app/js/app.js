@@ -115,12 +115,6 @@ angular.module('LodSite', [
                controller: 'EditProjectCtrl'
              })
 
-             .state('adminpanel.orders', {
-               url: '/orders',
-               templateUrl: templateUrl('adminpanel', 'adminpanel-orders'),
-               controller: 'AllOrdersCtrl'
-             })
-
              .state('adminpanel.notification', {
                url: '/notification',
                templateUrl: templateUrl('adminpanel', 'adminpanel-notification'),
@@ -138,12 +132,6 @@ angular.module('LodSite', [
                url: '/signup',
                templateUrl: templateUrl('signup', 'signup-index'),
                controller: 'SignupCtrl'
-             })
-
-             .state('order', {
-               url: '/order',
-               templateUrl: templateUrl('order', 'order-index'),
-               controller: 'OrderCtrl'
              })
 
              .state('about', {

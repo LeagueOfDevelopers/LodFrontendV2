@@ -485,8 +485,8 @@ angular.module('LodSite.controllers', [])
 
 
   //admin
-  .controller('AdminPanelCtrl', ['$scope', '$state', 'TokenService', 'OrderService',
-    function ($scope, $state, TokenService, OrderService) {
+  .controller('AdminPanelCtrl', ['$scope', '$state', 'TokenService',
+    function ($scope, $state, TokenService) {
     var role = TokenService.getRole();
     if (role != 1) {
       return $state.go('index');
@@ -498,10 +498,6 @@ angular.module('LodSite.controllers', [])
         return $state.go('index');
       }
     });
-
-      $scope.FromAdminPanel = function(){
-        OrderService.isFromOrderPage = false;
-      };
 
 
     $scope.$emit('toggle_black', {isBlack: true});
@@ -553,8 +549,8 @@ angular.module('LodSite.controllers', [])
       });
     }])
 
-  .controller('AddProjectCtrl', ['$scope', '$state', 'ngDialog', 'ApiService', 'TokenService', '$timeout', 'OrderService',
-    function ($scope, $state, ngDialog, ApiService, TokenService, $timeout, OrderService) {
+  .controller('AddProjectCtrl', ['$scope', '$state', 'ngDialog', 'ApiService', 'TokenService', '$timeout',
+    function ($scope, $state, ngDialog, ApiService, TokenService, $timeout) {
       var role = TokenService.getRole();
       if (role != 1) {
         return $state.go('index');
@@ -599,13 +595,6 @@ angular.module('LodSite.controllers', [])
         this.ProjectStatus = 0;
         this.LandingImage = {};
         this.Screenshots = [];
-
-        if (OrderService.isFromOrderPage) {
-          var order = OrderService.getOrder();
-          this.Name = order.Header;
-          this.Info = order.Description;
-          $scope.categories[order.ProjectType].status = true;
-        }
       };
 
       $scope.newProject = new sampleProject();
@@ -1286,62 +1275,6 @@ angular.module('LodSite.controllers', [])
       $scope.$emit('toggle_black', {isBlack: true});
     }])
 
-  .controller('AllOrdersCtrl', ['$scope', 'ApiService', 'TokenService', 'OrderService', 'DateService',
-    function ($scope, ApiService, TokenService, OrderService, DateService) {
-    var token = TokenService.getToken();
-    var role = TokenService.getRole();
-    if (!token || role != 1) {
-      return $state.go('index');
-    }
-    $scope.orders = [];
-
-    var getFileNames = function (urls) {
-      var attachments = [];
-      for (var key in urls)
-        attachments.push({
-          Url: urls[key],
-          Name: urls[key].match(/[^\/]*$/)[0]
-        });
-      return attachments;
-    };
-
-      var categories = ['Веб','Мобильное','Десктопное','Игра','Прочее'];
-
-
-    $scope.updateOrders = function () {
-      ApiService.getOrders().then(function (data) {
-        for (var key in data){
-          data[key].Attachments = getFileNames(data[key].Attachments);
-          data[key].ProjectCategory = categories[data[key].ProjectType];
-        }
-        $scope.orders = data;
-      });
-    };
-
-    $scope.orderClick = function(order){
-      OrderService.isFromOrderPage = true;
-      OrderService.setOrder(order);
-    };
-
-    $scope.fileClick = function(file){
-      ApiService.getFile(file.Name);
-    };
-
-    $scope.updateOrders();
-
-    $scope.$on('userRole_changed', function (e, args) {
-      role = TokenService.getRole();
-      if (role != 1) {
-        return $state.go('index');
-      }
-    });
-
-    $scope.$emit('toggle_black', {isBlack: true});
-    $scope.$emit('change_title', {
-      title: 'Заказы - Лига Разработчиков НИТУ МИСиС'
-    })
-  }])
-
   .controller('AdminNotificationCtrl', ['$scope',
     '$timeout',
     'ApiService',
@@ -1719,97 +1652,6 @@ angular.module('LodSite.controllers', [])
     });
   }])
 
-  .controller('OrderCtrl', ['$scope', 'ApiService', '$timeout', function ($scope, ApiService, $timeout) {
-    // FORM SENDING
-
-    $scope.data = {};
-    $scope.deadlineType = 'text';
-
-    $scope.toggleDeadlineType = function () {
-      $scope.deadlineType = (($scope.deadlineType == 'text' && !$scope.data.DeadLine) || ($scope.deadlineType == 'date' && $scope.data.DeadLine)) ? 'date' : 'text';
-    }
-
-    $scope.Request = function () {
-
-      $scope.data.Attachments = $scope.files.map(function (file) {
-        return file.url;
-      });
-
-      ApiService.order($scope.data).then(function (isSuccess) {
-        if (isSuccess) {
-          $scope.isSuccess = isSuccess;
-
-          $scope.OrderForm.$setPristine();
-          $scope.data = {};
-
-          setTimeout(function () {
-                $scope.isSuccess = '';
-              }
-              , 2000);
-        } else {
-          alert('Произошла ошибка. Проверьте введённые данные.');
-        }
-      });
-    };
-    $scope.$emit('toggle_black', {isBlack: true});
-
-    $scope.$emit('change_title', {
-      title: 'Заказать - Лига Разработчиков НИТУ МИСиС'
-    });
-
-    $scope.files = [];
-    $scope.currentUploadState = "waiting"; // waiting, uploading
-    $scope.currentPercent = 0;
-
-    $scope.$on('beforeSend', function (ev, args) {
-      $scope.currentUploadState = 'uploading';
-      $scope.currentPercent = 0;
-      $scope.$apply();
-    });
-
-    $scope.$on('errorUploading', function (ev, args) {
-      alert('Размер файла не должен превышать 10 Мб. Разрешённые форматы изображения: DOC, DOCX, PDF, TTF, TXT. ' +
-        'Или, возможно, вы не авторизовались.');
-      $scope.currentUploadState = 'waiting';
-      $scope.currentPercent = 0;
-      $scope.$apply();
-    });
-
-    $scope.$on('progress', function (ev, args) {
-      $scope.currentPercent = args.progress_value;
-      $scope.$apply();
-    });
-
-    $scope.$on('successUploading', function (ev, args) {
-
-      if (args.data) {
-        var dataSplit = args.data.split('.');
-
-        if (dataSplit[dataSplit.length - 2].length == 17) {
-          dataSplit[dataSplit.length - 2] = '';
-        }
-        else {
-          dataSplit[dataSplit.length - 2] = dataSplit[dataSplit.length - 2].slice(0, dataSplit[dataSplit.length - 2].length - 17);
-        }
-
-        var name = dataSplit.join('.');
-        $scope.files.push({
-          name: name,
-          url: 'http://api.lod-misis.ru/file/' + args.data
-        });
-
-        $scope.currentUploadState = 'waiting';
-
-        $scope.$apply();
-      }
-
-    });
-
-    $scope.deleteFile = function (fileItem, index) {
-      $scope.files.splice(index, 1);
-    };
-  }])
-
   .controller('ContactCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
     $scope.data = {};
 
@@ -2013,13 +1855,6 @@ angular.module('LodSite.controllers', [])
                 notification.EventInfo.ProjectName = data.data.Name;
               });
               break;
-
-            case 'OrderPlaced':
-              ApiService.getOrder(notification.EventInfo.OrderId).then(function (data) {
-                notification.EventInfo.OrderName = data.Header;
-                notification.EventInfo.ClientName = data.CustomerName;
-
-              });
           }
         });
 

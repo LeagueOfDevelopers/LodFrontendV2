@@ -360,16 +360,6 @@ angular.module('LodSite.services', [])
              return sendAuthorizationSaveRequest(POST, url, null, notification);
            };
 
-           //orders
-
-           this.getOrders = function () {
-             var url = '/orders';
-
-             return sendAuthorizationSaveRequest(GET, url).then(function (response) {
-               return DateService.getFormattedTimeOrdersList(response.data);
-             });
-           };
-
 
            // other
            this.signUp = function (requestData) {
@@ -411,14 +401,6 @@ angular.module('LodSite.services', [])
                });
            };
 
-           this.getOrder = function (orderId) {
-             var url = '/orders/' + orderId;
-
-             return sendAuthorizationSaveRequest(GET, url).then(function (response) {
-               return response.data;
-             });
-           };
-
            this.getFile = function (fileName) {
              var url = '/file/'+fileName;
              var fileExtension = fileName.match(/[^\.]*$/)[0];
@@ -446,14 +428,6 @@ angular.module('LodSite.services', [])
                a.click();
 
                return response.data;
-             });
-           };
-
-           this.order = function (requestData) {
-             var url = '/orders';
-
-             return sendAuthorizationSaveRequest(POST, url, null, requestData).then(function (response) {
-               return response.status === 200;
              });
            };
 
@@ -566,20 +540,6 @@ angular.module('LodSite.services', [])
 
            return residenceTime;
          };
-
-         this.getFormattedTimeOrder = function (order) {
-           order.DeadLine = self.getDDMMYYFromISODate(new Date(order.DeadLine));
-
-           return order;
-         };
-
-         this.getFormattedTimeOrdersList = function (orders) {
-           for (var i = 0; i < orders.length; i++) {
-             orders[i].DeadLine = self.getDDMMYYFromISODate(new Date(orders[i].DeadLine));
-           }
-
-           return orders;
-         };
        }])
 
        .service('NotificationsService', ['$rootScope', 'ApiService', function ($rootScope, ApiService) {
@@ -603,15 +563,3 @@ angular.module('LodSite.services', [])
 
        }])
 
-  .service('OrderService', ['$rootScope', 'ApiService', function ($rootScope, ApiService) {
-
-    this.isFromOrderPage = false;
-
-    this.setOrder = function(order){
-      this.order = order;
-    };
-
-    this.getOrder = function(){
-      return this.order;
-    };
-  }]);

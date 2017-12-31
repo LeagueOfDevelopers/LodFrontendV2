@@ -63,7 +63,7 @@ angular.module('LodSite.directives', [])
            }
            // Set promptzone
            $(element[0]).ajaxUploadPrompt({
-             url: 'http://api.lod-misis.ru/file',
+               url: 'http://api.lod-misis.ru/file',
              headers: headers,
 
              beforeSend: function () {
@@ -108,7 +108,7 @@ angular.module('LodSite.directives', [])
            }
            // Set promptzone
            $(element[0]).ajaxUploadDrop({
-             url: 'http://api.lod-misis.ru/file',
+               url: 'http://api.lod-misis.ru/file',
              headers: headers,
 
              beforeSend: function () {
@@ -153,7 +153,7 @@ angular.module('LodSite.directives', [])
            }
            // Set promptzone
            $(element[0]).ajaxUploadDrop({
-             url: 'http://api.lod-misis.ru/image',
+               url: 'http://api.lod-misis.ru/image',
              headers: headers,
 
              beforeSend: function () {
@@ -198,7 +198,7 @@ angular.module('LodSite.directives', [])
            }
            // Set promptzone
            $(element[0]).ajaxUploadPrompt({
-             url: 'http://api.lod-misis.ru/image',
+               url: 'http://api.lod-misis.ru/image',
              headers: headers,
 
              beforeSend: function () {
@@ -243,7 +243,7 @@ angular.module('LodSite.directives', [])
            }
            // Set promptzone
            $(element[0]).ajaxUploadDrop({
-             url: 'http://api.lod-misis.ru/image',
+               url: 'http://api.lod-misis.ru/image',
              headers: headers,
 
              beforeSend: function () {
@@ -288,7 +288,7 @@ angular.module('LodSite.directives', [])
            }
            // Set promptzone
            $(element[0]).ajaxUploadPrompt({
-             url: 'http://api.lod-misis.ru/image',
+               url: 'http://api.lod-misis.ru/image',
              headers: headers,
 
              beforeSend: function () {

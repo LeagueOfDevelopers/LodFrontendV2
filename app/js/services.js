@@ -386,7 +386,7 @@ angular.module('LodSite.services', [])
            this.getLinkForPasswordRecovery = function (email) {
              var url = '/password/recovery';
 
-             return sendAuthorizationSaveRequest(POST, url, null, JSON.stringify(email))
+             return sendAuthorizationSaveRequest(POST, url, null, JSON.stringify({ Email: email }))
                .then(function (response) {
                  return response.status === 200;
                });

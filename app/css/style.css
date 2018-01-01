@@ -2396,6 +2396,7 @@ footer {
   *************************/
   .welcome-section {
     background: url('../imgs/tablets-main-background.jpg') no-repeat center;
+    height: 100vh;
   }
 
   .welcome-section-container {
@@ -3038,6 +3039,7 @@ footer {
     padding: 140px 0 100px 0;
     background: url('../imgs/main-background-min1024px.jpg') no-repeat top;
     background-size: cover;
+    height: 100vh;
   }
 
   .welcome-section:after {

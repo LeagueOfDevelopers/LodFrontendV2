@@ -1537,7 +1537,7 @@ footer {
   border-radius: 5px;
   font-size: 1.2em;
   padding: 5px 10px;
-  margin: 15px auto 20px;
+  margin: 15px 20px;
 }
 
 .profile-settings__submit {
@@ -3804,11 +3804,9 @@ footer {
         margin-bottom: 30px;
     }
 
-    .github-profile__button {
-        margin: auto;
+    .github-profile__link {
         margin-left: 20px;
-        margin-bottom: 20px;
-        width: 290px;
+        margin-right: 20px;
     }
 
     /*****************************

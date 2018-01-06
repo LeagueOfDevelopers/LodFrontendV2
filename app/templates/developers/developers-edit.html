@@ -26,13 +26,6 @@
         <div class="profile-settings__button" upload-big-image>Загрузить фото</div>
       </div>
       <div class="profile-settings__top-part__inputs">
-        <div class="profile-settings__input-heading">Профиль на GitHub:</div>
-        <a ng-href="getLinkToGithubProfile()" ng-if="profile.LinkToGithubProfile!==undefined"
-           >https://github.com/username</a>
-        <div class="profile-settings__button github-profile__button" 
-                ng-click="getRedirectionToAuthenticationGithubForm()"
-                ng-show="profile.LinkToGithubProfile===undefined">Привязать профиль</div>
-        <br/>
 
         <div class="profile-settings__input-heading">Институт:</div>
         <input type="text" class="profile-settings__input validate-field" ng-model="profile.InstituteName"
@@ -59,6 +52,12 @@
              ng-show="profileSettingsForm.studentAccessionYear.$error.pattern">Вы не могли поступать в этот год.
         </div>
 
+        <div class="profile-settings__input-heading">Номер телефона:</div>
+        <input type="text" class="profile-settings__input validate-field"
+               pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$"
+               ng-model="profile.PhoneNumber" required />
+        <br />
+
         <div class="profile-settings__input-heading">Профиль ВКонтакте:</div>
         <input type="url" name="vkUri" class="profile-settings__input validate-field" ng-model="profile.VkProfileUri"
                required/>
@@ -67,14 +66,16 @@
              ng-show="profileSettingsForm.vkUri.$error.url">Введите адрес в формате
                                                             https://vk.com/[username].
         </div>
-
         <br/>
 
-        <div class="profile-settings__input-heading">Номер телефона:</div>
-        <input type="text" class="profile-settings__input validate-field"
-               pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$"
-               ng-model="profile.PhoneNumber" required/>
-        <br/>
+        <div class="profile-settings__input-heading">Профиль на GitHub:</div>
+        <a ng-href="getLinkToGithubProfile()" 
+           class="github-profile__link"
+           ng-if="profile.LinkToGithubProfile!==undefined">https://github.com/username</a>
+        <div class="profile-settings__button"
+             ng-click="getRedirectionToAuthenticationGithubForm()"
+             ng-show="profile.LinkToGithubProfile===undefined">Привязать профиль</div>
+        <br />
       </div>
     </div>
 

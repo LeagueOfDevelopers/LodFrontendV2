@@ -3804,6 +3804,13 @@ footer {
         margin-bottom: 30px;
     }
 
+    .github-profile__button {
+        margin: auto;
+        margin-left: 20px;
+        margin-bottom: 20px;
+        width: 290px;
+    }
+
     /*****************************
       ADDING PROJECT
   *****************************/

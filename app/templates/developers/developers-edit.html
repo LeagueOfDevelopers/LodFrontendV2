@@ -26,6 +26,14 @@
         <div class="profile-settings__button" upload-big-image>Загрузить фото</div>
       </div>
       <div class="profile-settings__top-part__inputs">
+        <div class="profile-settings__input-heading">Профиль на GitHub:</div>
+        <a ng-href="getLinkToGithubProfile()" ng-if="profile.LinkToGithubProfile!==undefined"
+           >https://github.com/username</a>
+        <div class="profile-settings__button github-profile__button" 
+                ng-click="getRedirectionToAuthenticationGithubForm()"
+                ng-show="profile.LinkToGithubProfile===undefined">Привязать профиль</div>
+        <br/>
+
         <div class="profile-settings__input-heading">Институт:</div>
         <input type="text" class="profile-settings__input validate-field" ng-model="profile.InstituteName"
                pattern="^[А-Яа-яЁё\s]+$" required/>

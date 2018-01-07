@@ -184,8 +184,12 @@ angular.module('LodSite.services', [])
                });
            };
 
-           this.getLinkToGithubProfile = function (githubAccessToken) {
-               var url = '/developers'
+           this.getRedirectionToAuthenticationGithubForm = function () {
+               var url = '/auth/github';
+
+               return sendAuthorizationSaveRequest(GET, url).then(function (response) {
+                   
+               })
            };
 
            this.getDeveloperForProfileSttings = function (developerId) {

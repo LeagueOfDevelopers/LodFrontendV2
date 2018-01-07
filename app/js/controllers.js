@@ -262,6 +262,7 @@ angular.module('LodSite.controllers', [])
         $scope.profile.StudyingDirection = data.StudyingDirection;
         $scope.profile.Specialization = data.Specialization;
         $scope.profile.StudentAccessionYear = data.StudentAccessionYear;
+        $scope.profile.LinkToGithubProfile = data.LinkToGithubProfile;
         $scope.profile.VkProfileUri = data.VkProfileUri;
         $scope.profile.PhoneNumber = data.PhoneNumber;
       });
@@ -271,6 +272,17 @@ angular.module('LodSite.controllers', [])
           return (notification.NotificationSettingValue == 2);
         });
       });
+
+      $scope.getRedirectionToAuthenticationGithubForm = function () {
+          ApiService.getRedirectionToAuthenticationGithubForm().then(function (isSuccess) {
+              if (isSuccess) {
+                  $scope.state[0] = 'success';
+              } else {
+                  $scope.state[0] = 'failed';
+              }
+              changeCurrentState();
+          });
+      }
 
       /*POST - REQUESTS*/
 

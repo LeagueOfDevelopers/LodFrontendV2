@@ -63,6 +63,7 @@ angular.module('LodSite.services', [])
          'DateService',
          '$rootScope',
          '$timeout',
+         '$window',
          function ($http, TokenService, DateService, $rootScope, $timeout) {
            var GET = 'get';
            var POST = 'post';
@@ -188,7 +189,7 @@ angular.module('LodSite.services', [])
                var url = '/auth/github';
 
                return sendAuthorizationSaveRequest(GET, url).then(function (response) {
-                   
+                   window.location.href = response.data;
                })
            };
 

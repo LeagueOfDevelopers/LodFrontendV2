@@ -1867,6 +1867,18 @@ angular.module('LodSite.controllers', [])
                 notification.EventInfo.ProjectName = data.data.Name;
               });
               break;
+
+            case 'NewProjectCreated':
+              ApiService.getProject(notification.EventInfo.ProjectId).then(function (data) {
+                  notification.EventInfo.ProjectName = data.data.Name;
+              });
+              break;
+            case 'DeveloperHasLeftProject':
+              ApiService.getDeveloper(notification.EventInfo.NewDeveloperId).then(function (data) {
+                   notification.EventInfo.FirstName = data.data.FirstName;
+                   notification.EventInfo.LastName = data.data.LastName;
+              });
+              break;
           }
         });
 

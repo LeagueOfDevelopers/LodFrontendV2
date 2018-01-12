@@ -43,8 +43,8 @@
 
         <span ng-bind="'Лига начала работу над новым проектом: '"></span>
 
-        <a class="information__link" ng-href="/projects/{{notification.EventInfo.ProjectId}}">
-          <span ng-bind=" notification.EventInfo.ProjectName">
+        <a class="information__link" ng-href="{{'/projects/' + notification.EventInfo.ProjectId}}">
+          <span ng-bind="' ' + notification.EventInfo.ProjectName">
           </span>
         </a>
         .
@@ -143,8 +143,8 @@
 
         <span ng-bind="'Лига начала работу над новым проектом: '"></span>
 
-        <a class="information__link" ng-href="/projects/{{notification.EventInfo.ProjectId}}">
-          <span ng-bind=" notification.EventInfo.ProjectName">
+        <a class="information__link" ng-href="{{'/projects/' + notification.EventInfo.ProjectId}}">
+          <span ng-bind="' ' + notification.EventInfo.ProjectName">
           </span>
         </a>
         .

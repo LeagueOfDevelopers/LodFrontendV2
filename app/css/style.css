@@ -1517,7 +1517,7 @@ footer {
   float: left;
 }
 
-.profile-settings__button, .profile-settings__submit, .change-github-profile__button {
+.profile-settings__button, .profile-settings__submit {
   display: inline-block;
   background-color: #202d3a;
   color: #ffffff;
@@ -1533,7 +1533,7 @@ footer {
   transition: all .15s ease-out;
 }
 
-.profile-settings__button, .change-github-profile__button {
+.profile-settings__button {
   border-radius: 5px;
   font-size: 1.2em;
   padding: 5px 10px;
@@ -1563,7 +1563,7 @@ footer {
   margin: 10px auto 30px;
 }
 
-.profile-settings__button:hover, .profile-settings__submit:hover, .change-github-profile__button:hover {
+.profile-settings__button:hover, .profile-settings__submit:hover, .github-profile__link:hover {
   cursor: pointer;
   background-color: #1e88e5;
 }
@@ -3791,7 +3791,7 @@ footer {
         height: 40px;
     }
 
-    .profile-settings__button, .profile-settings__submit, .change-github-profile__button {
+    .profile-settings__button, .profile-settings__submit {
         font-size: 1.3em;
     }
 
@@ -3808,17 +3808,6 @@ footer {
         margin-top: -25px;
         margin-left: 26%;
         text-decoration: underline;
-    }
-
-    .github-profile__link:hover {
-        cursor: pointer;
-    }
-
-    .change-github-profile__button {
-        width: 10%;
-        display: inline-block;
-        margin-left: -10%;
-        font-size: 1em;
     }
 
     /*****************************

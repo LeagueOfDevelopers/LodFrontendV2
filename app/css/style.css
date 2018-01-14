@@ -1563,7 +1563,7 @@ footer {
   margin: 10px auto 30px;
 }
 
-.profile-settings__button:hover, .profile-settings__submit:hover, .github-profile__link:hover {
+.profile-settings__button:hover, .profile-settings__submit:hover {
   cursor: pointer;
   background-color: #1e88e5;
 }
@@ -3805,9 +3805,14 @@ footer {
     }
 
     .github-profile__link {
-        margin-top: -25px;
-        margin-left: 26%;
+        margin-top: -10px;
+        padding-left: 27%;
         text-decoration: underline;
+        color: #0072bc;
+    }
+    
+    .github-profile__link:hover {
+        cursor: pointer;
     }
 
     /*****************************

@@ -39,6 +39,11 @@
       <div class="developer-info__item-name">E-mail</div>
       <div class="developer-info__item-text" ng-bind="developer.Email"></div>
     </div>
+    <div class="developer-info__item" ng-if="developer.LinkToGithubProfile">
+      <div class="developer-info__item-name">Профиль на GitHub</div>
+      <div class="developer-info__item-text"><a style="text-decoration: underline;
+    color: #0072bc;" ng-href="{{developer.LinkToGithubProfile}}">{{developer.LinkToGithubProfile}}</a></div>
+    </div>
     <div class="developer-info__item" ng-if="developer.PhoneNumber">
       <div class="developer-info__item-name">Номер телефона</div>
       <div class="developer-info__item-text" ng-bind="developer.PhoneNumber"></div>

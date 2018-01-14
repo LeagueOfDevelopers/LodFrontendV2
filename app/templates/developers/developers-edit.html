@@ -70,12 +70,15 @@
 
         <div class="profile-settings__input-heading">Профиль на GitHub:</div>
 
-          <input class="profile-settings__input" ng-disabled="true" ng-model="profile.LinkToGithubProfile">
+          <input class="profile-settings__input" ng-disabled="true" 
+                 ng-show="profile.LinkToGithubProfile!==null&&
+                          profile.LinkToGithubProfile!==undefined" 
+                 ng-model="profile.LinkToGithubProfile">
 
-        <a class="github-profile__link"
+        <div class="github-profile__link"
              ng-click="getRedirectionToAuthenticationGithubForm()"
              ng-show="profile.LinkToGithubProfile!==null&&
-                      profile.LinkToGithubProfile!==undefined">Изменить профиль</a>
+                      profile.LinkToGithubProfile!==undefined">Изменить профиль</div>
         <div class="profile-settings__button"
              ng-click="getRedirectionToAuthenticationGithubForm()"
              ng-show="profile.LinkToGithubProfile===null||

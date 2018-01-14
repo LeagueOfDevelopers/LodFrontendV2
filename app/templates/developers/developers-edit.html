@@ -69,15 +69,17 @@
         <br/>
 
         <div class="profile-settings__input-heading">Профиль на GitHub:</div>
+
+          <input class="profile-settings__input" ng-disabled="true" ng-model="profile.LinkToGithubProfile">
+
         <a class="github-profile__link"
-           ng-href="{{profile.LinkToGithubProfile}}" 
-           >{{profile.LinkToGithubProfile}}</a>
-        <div class="profile-settings__button change-github-profile__button"
              ng-click="getRedirectionToAuthenticationGithubForm()"
-             ng-show="profile.LinkToGithubProfile!==null">Изменить профиль</div>
+             ng-show="profile.LinkToGithubProfile!==null&&
+                      profile.LinkToGithubProfile!==undefined">Изменить профиль</a>
         <div class="profile-settings__button"
              ng-click="getRedirectionToAuthenticationGithubForm()"
-             ng-show="profile.LinkToGithubProfile===null">Привязать профиль</div>
+             ng-show="profile.LinkToGithubProfile===null||
+                      profile.LinkToGithubProfile===undefined">Привязать профиль</div>
         <br />
       </div>
     </div>

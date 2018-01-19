@@ -56,7 +56,8 @@ angular.module('LodSite.controllers', [])
           template: 'loginTemplate',
           showClose: true,
           closeByNavigation: true
-        });
+          });
+        this.activeToggle();
       };
       $scope.signOut = function () {
         TokenService.resetToken();
@@ -1398,6 +1399,8 @@ angular.module('LodSite.controllers', [])
                 $scope.developers[$scope.developerForConfirmation.index].ConfirmationStatus = 2;
 
                 $scope.developerForConfirmation = {};
+
+                $scope.closeWindow();
               }
             });
             break;
@@ -1407,6 +1410,8 @@ angular.module('LodSite.controllers', [])
                 $scope.developers[$scope.developerForConfirmation.index].AccountRole = 1;
 
                 $scope.developerForConfirmation = {};
+
+                $scope.closeWindow();
               }
             });
             break;

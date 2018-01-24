@@ -540,7 +540,7 @@ header {
   -webkit-transition: all .2s ease;
   -moz-transition: all .2s ease;
   -o-transition: all .2s ease;
-  transition: all .2s ease;;
+  transition: all .2s ease;
 }
 
 .developer__photo {
@@ -556,7 +556,7 @@ header {
   -webkit-transition: all .2s ease;
   -moz-transition: all .2s ease;
   -o-transition: all .2s ease;
-  transition: all .2s ease;;
+  transition: all .2s ease;
 }
 
 .developer__full-name {

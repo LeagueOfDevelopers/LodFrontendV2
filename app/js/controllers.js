@@ -1733,6 +1733,10 @@ angular.module('LodSite.controllers', [])
         });
       };
 
+      $scope.signInWithGithub = function () {
+          ApiService.signInWithGithub();
+      }
+
       $scope.toggleStatus = function () {
         $scope.status = ($scope.status == 'loginForm') ? 'passwordRecovery' : 'loginForm';
       };

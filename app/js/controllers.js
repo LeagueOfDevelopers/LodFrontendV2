@@ -266,6 +266,7 @@ angular.module('LodSite.controllers', [])
         $scope.profile.LinkToGithubProfile = data.LinkToGithubProfile;
         $scope.profile.VkProfileUri = data.VkProfileUri;
         $scope.profile.PhoneNumber = data.PhoneNumber;
+        $scope.profile.IsGraduated = data.IsGraduated;
       });
       ApiService.getNotificationsForProfileSttings(developerId).then(function (data) {
         $scope.notificationSettings = data;
@@ -1483,7 +1484,9 @@ angular.module('LodSite.controllers', [])
     $scope.newDeveloper = {};
 
     $scope.signUp = function () {
-      ApiService.signUp($scope.newDeveloper).then(function (responseObject) {
+        $scope.loginType === 'github' ?
+            ApiService.signUpWithGithub($scope.newDeveloper) :
+            ApiService.signUp($scope.newDeveloper).then(function (responseObject) {
         $scope.currentStates = {};
 
         if (responseObject) {

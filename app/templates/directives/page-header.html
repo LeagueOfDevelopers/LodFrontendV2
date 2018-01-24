@@ -60,24 +60,30 @@
         <div class="form__greeting" ng-switch-default="night">Доброй ночи!</div>
       </div>
       <form name="loginForm" class="form__container" ng-switch="status">
-        <div ng-switch-when="loginForm">
-          <input type="email" placeholder="E-mail" ng-model="userLogin.Email"
-                 pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$" ng-maxlength="30"
-                 required/>
-          <input type="password" placeholder="Пароль" ng-model="userLogin.Password"
-                 pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
-                 ng-minlength="8" ng-maxlength="30" required/>
-          <button ng-disabled="loginForm.$invalid" ng-click="signIn()">Войти</button>
-          <p ng-if="isNoDeveloper" style="margin: 10px; color: #2980b9;">
-            Не удалось войти, проверьте введенные данные.
-          </p>
-          <div class="form__question">Не являетесь разработчиком?
-            <a class="form__become-dev" ui-sref="signup">Стать разработчиком</a>
+          <div ng-switch-when="loginForm">
+              <input type="email" placeholder="E-mail" ng-model="userLogin.Email"
+                     pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$" ng-maxlength="30"
+                     required />
+              <input type="password" placeholder="Пароль" ng-model="userLogin.Password"
+                     pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
+                     ng-minlength="8" ng-maxlength="30" required />
+              <button ng-disabled="loginForm.$invalid" ng-click="signIn()">Войти</button>
+              <p ng-if="isNoDeveloper" style="margin: 10px; color: #2980b9;">
+                  Не удалось войти, проверьте введенные данные.
+              </p>
+              <div class="form__question">
+                  Регистрировались через GitHub?
+                  <span class="form__become-dev form__link" ng-click="toggleStatus()">Войти через GitHub</span>
+              </div>
+              <div class="form__question">
+                  Не являетесь разработчиком?
+                  <a class="form__become-dev" ui-sref="signup">Стать разработчиком</a>
+              </div>
+              <div class="form__question">
+                  Забыли пароль?
+                  <span class="form__become-dev form__link" ng-click="toggleStatus()">Восстановить пароль</span>
+              </div>
           </div>
-          <div class="form__question">Забыли пароль?
-            <span class="form__become-dev form__link"  ng-click="toggleStatus()">Восстановить пароль</span>
-          </div>
-        </div>
 
         <div ng-switch-when="passwordRecovery">
           <input type="email" placeholder="Введите ваш e-mail" ng-model="userLogin.emailForRecovery" ng-change="cons()"

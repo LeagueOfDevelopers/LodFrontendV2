@@ -1342,6 +1342,7 @@ footer {
   padding: 5px 20px;
   border: 1px solid #202d3a;
   margin-bottom: 30px;
+  text-align: left;
 }
 
 .section__step-number {
@@ -1369,25 +1370,41 @@ footer {
   cursor: pointer;
 }
 
+.sign-up-form__switcher {
+  background-color: white;
+  padding: 15px;
+  margin: 15px 0;
+}
+
+.sign-up-form__switcher input, input.sign-up__checkbox {
+  display: inline-block;
+  width: 25px;
+  margin-right: 10px;
+  margin-top: 5px;
+  vertical-align: bottom;
+  margin-bottom: -10px;
+}
+
+input.sign-up__checkbox {
+    margin-top: -25px;
+}
+
 .sign-up__button {
-  max-width: 200px;
-  margin: 0 auto 40px auto;
-  padding: 15px 10px;
-
-  font-family: 'PT Sans', sans-serif;
-  font-size: 1em;
-  text-transform: uppercase;
-
-  background: #f1f1f1;
-  color: #202d3a;
-  border: 1px solid #202d3a;
-
-  -webkit-transition: all .15s ease-out;
-  -moz-transition: all .15s ease-out;
-  -o-transition: all .15s ease-out;
-  transition: all .15s ease-out;
-  outline: none;
-  cursor: pointer;
+    max-width: 200px;
+    margin: 0 auto 40px auto;
+    padding: 15px 10px;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 1em;
+    text-transform: uppercase;
+    background: #f1f1f1;
+    color: #202d3a;
+    border: 1px solid #202d3a;
+    -webkit-transition: all .15s ease-out;
+    -moz-transition: all .15s ease-out;
+    -o-transition: all .15s ease-out;
+    transition: all .15s ease-out;
+    outline: none;
+    cursor: pointer;
 }
 
 .sign-up__button:disabled {
@@ -3543,6 +3560,10 @@ footer {
 
   .sign-up-form input, select {
     min-height: 50px;
+  }
+  
+  .sign-up-form__switcher input, input.sign-up__checkbox {
+    margin-bottom: -15px;
   }
 
   .section__step-number {

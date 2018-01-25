@@ -27,63 +27,73 @@
       </div>
       <div class="profile-settings__top-part__inputs">
 
-        <div class="profile-settings__input-heading">Институт:</div>
-        <input type="text" class="profile-settings__input validate-field" ng-model="profile.InstituteName"
-               pattern="^[А-Яа-яЁё\s]+$" required/>
-        <br/>
+          <div class="profile-settings__input-heading">Институт:</div>
+          <input type="text" class="profile-settings__input validate-field" ng-model="profile.InstituteName"
+                 pattern="^[А-Яа-яЁё\s]+$" required />
+          <br />
 
-        <div class="profile-settings__input-heading">Кафедра:</div>
-        <input type="text" class="profile-settings__input validate-field" ng-model="profile.StudyingDirection"
-               pattern="^[а-яА-Я- _\.]{1,70}$" required/>
-        <br/>
+          <div class="profile-settings__input-heading">Кафедра:</div>
+          <input type="text" class="profile-settings__input validate-field" ng-model="profile.StudyingDirection"
+                 pattern="^[а-яА-Я- _\.]{1,70}$" required />
+          <br />
 
-        <div class="profile-settings__input-heading">Специальность:</div>
-        <input type="text" class="profile-settings__input validate-field" ng-model="profile.Specialization"
-               pattern="[а-яА-Я- _\.]{1,50}$" required/>
-        <br/>
+          <div class="profile-settings__input-heading">Специальность:</div>
+          <input type="text" class="profile-settings__input validate-field" ng-model="profile.Specialization"
+                 pattern="[а-яА-Я- _\.]{1,50}$" required />
+          <br />
 
-        <div class="profile-settings__input-heading">Год поступления:</div>
-        <input name="studentAccessionYear" type="text" class="profile-settings__input validate-field"
-               restrict="reject" ng-model="profile.StudentAccessionYear" pattern="20[0-9]{2}" minlength="4"
-               maxlength="4" required/>
-        <br/>
+          <div class="profile-settings__input-heading">Год поступления:</div>
+          <input name="studentAccessionYear" type="text" class="profile-settings__input validate-field"
+                 restrict="reject" ng-model="profile.StudentAccessionYear" pattern="20[0-9]{2}" minlength="4"
+                 maxlength="4" required />
+          <br />
 
-        <div class="help-message-input profile-settings__help-message"
-             ng-show="profileSettingsForm.studentAccessionYear.$error.pattern">Вы не могли поступать в этот год.
-        </div>
+          <div class="help-message-input profile-settings__help-message"
+               ng-show="profileSettingsForm.studentAccessionYear.$error.pattern">
+              Вы не могли поступать в этот год.
+          </div>
+          <div class="profile-settings__input-heading">Я студент:</div>
+          <div class="profile-settings__switcher profile-settings__input">
+              <input type="radio" id="isNotGraduated" ng-model="profile.IsGraduated" ng-value="false" class="profile-settings__switcher_input">
+              <label for="isNotGraduated" class="profile-settings__switcher_label">Да</label>
+              <input type="radio" id="isGraduated" ng-model="profile.IsGraduated" ng-value="true" class="profile-settings__switcher_input">
+              <label for="isGraduated" class="profile-settings__switcher_label">Нет</label>
+          </div>
+          <br />
 
-        <div class="profile-settings__input-heading">Номер телефона:</div>
-        <input type="text" class="profile-settings__input validate-field"
-               pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$"
-               ng-model="profile.PhoneNumber" required />
-        <br />
+          <div class="profile-settings__input-heading">Номер телефона:</div>
+          <input type="text" class="profile-settings__input validate-field"
+                 pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$"
+                 ng-model="profile.PhoneNumber" required />
+          <br />
 
-        <div class="profile-settings__input-heading">Профиль ВКонтакте:</div>
-        <input type="url" name="vkUri" class="profile-settings__input validate-field" ng-model="profile.VkProfileUri"
-               required/>
+          <div class="profile-settings__input-heading">Профиль ВКонтакте:</div>
+          <input type="url" name="vkUri" class="profile-settings__input validate-field" ng-model="profile.VkProfileUri"
+                 required />
 
-        <div class="help-message-input profile-settings__help-message__vk-uri"
-             ng-show="profileSettingsForm.vkUri.$error.url">Введите адрес в формате
-                                                            https://vk.com/[username].
-        </div>
-        <br/>
+          <div class="help-message-input profile-settings__help-message__vk-uri"
+               ng-show="profileSettingsForm.vkUri.$error.url">
+              Введите адрес в формате
+              https://vk.com/[username].
+          </div>
+          <br />
 
-        <div class="profile-settings__input-heading">Профиль на GitHub:</div>
+          <div class="profile-settings__input-heading">Профиль на GitHub:</div>
 
-        <input type="url" class="profile-settings__input" ng-disabled="true" 
+          <input type="url" class="profile-settings__input" ng-disabled="true"
                  ng-show="profile.LinkToGithubProfile!==null&&
-                          profile.LinkToGithubProfile!==undefined" 
+                          profile.LinkToGithubProfile!==undefined"
                  ng-model="profile.LinkToGithubProfile">
 
-        <div class="github-profile__link"
-             ng-click="getRedirectionToAuthenticationGithubForm()"
-             ng-show="profile.LinkToGithubProfile!==null&&
+          <div class="github-profile__link"
+               ng-click="getRedirectionToAuthenticationGithubForm()"
+               ng-show="profile.LinkToGithubProfile!==null&&
                       profile.LinkToGithubProfile!==undefined">Изменить профиль</div>
-        <div class="profile-settings__button"
-             ng-click="getRedirectionToAuthenticationGithubForm()"
-             ng-show="profile.LinkToGithubProfile===null||
+          <div class="profile-settings__button"
+               ng-click="getRedirectionToAuthenticationGithubForm()"
+               ng-show="profile.LinkToGithubProfile===null||
                       profile.LinkToGithubProfile===undefined">Привязать профиль</div>
-        <br />
+          <br />
       </div>
     </div>
 

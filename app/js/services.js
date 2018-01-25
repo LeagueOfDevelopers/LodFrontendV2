@@ -172,7 +172,7 @@ angular.module('LodSite.services', [])
                             var date = new Date();
                             var developer = response.data;
                             developer.studyingYear = date.getFullYear() - response.data.StudentAccessionYear || 1;
-                            if (developer.studyingYear > 4) {
+                            if (developer.IsGraduated) {
                                 developer.studyingYear = "Закончил(а) обучение"
                             }
                             return {

@@ -1519,6 +1519,19 @@ input.sign-up__checkbox {
   height: 35px;
 }
 
+.profile-settings__switcher {
+    vertical-align: -webkit-baseline-middle;
+}
+
+.profile-settings__switcher_label {
+    float: left;
+    width: 50%;
+}
+
+.profile-settings__switcher_input {
+    display: none;
+}
+
 .profile-settings__avatar-wrapper {
   width: 100%;
   text-align: center;
@@ -1567,6 +1580,33 @@ input.sign-up__checkbox {
   padding: 5px 10px;
   margin: 15px 20px;
 }
+
+.profile-settings__switcher {
+    background-color: white;
+    padding: 4px;
+    border-radius: 2px;
+}
+
+.profile-settings__switcher_label {
+    float: left;
+    width: 50%;
+    color: black;
+    text-align: center;
+    cursor: pointer;
+    height: 96%;
+}
+
+.profile-settings__switcher_input {
+    display: none;
+}
+
+    .profile-settings__switcher_input:checked + .profile-settings__switcher_label {
+        font-weight: 500;
+        color: white;
+        background: #202d3a;
+        text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+        border-radius: 2px;
+    }
 
 .profile-settings__submit {
   border: none;

@@ -410,6 +410,18 @@ angular.module('LodSite.services', [])
                 });
             };
 
+            this.setTokenAfterSigningInWithGithub = function (userId) {
+                var url = '/login/github/' + userId;
+
+                return sendAuthorizationSaveRequest(POST, url).then(function (responseObject) {
+                    if (responseObject.status === 200) {
+                        TokenService.setToken(responseObject.data);
+                    }
+
+                    return responseObject.status === 200;
+                })
+            }
+
             this.getLinkForPasswordRecovery = function (email) {
                 var url = '/password/recovery';
 

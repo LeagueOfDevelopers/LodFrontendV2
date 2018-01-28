@@ -31,6 +31,11 @@ angular.module('LodSite', [
                controller: 'IndexCtrl'
              })
 
+             .state('login-github', {
+               url: '/login/github/:userId',
+               template: '<ui-view>',
+               controller: 'GithubLoginCtrl'
+             })
 
              //projects
              .state('projects', {

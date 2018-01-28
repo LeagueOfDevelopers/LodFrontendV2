@@ -36,7 +36,6 @@ angular.module('LodSite.controllers', [])
     $scope.$emit('toggle_black');
   }])
 
-
   //header and footer
   .controller('HeaderCtrl', ['$scope', 'ngDialog', 'TokenService', '$state', 'NotificationsService', '$rootScope',
     function ($scope, ngDialog, TokenService, $state, NotificationsService, $rootScope) {
@@ -1752,6 +1751,20 @@ angular.module('LodSite.controllers', [])
       };
 
     }])
+
+  .controller('GithubLoginCtrl', ['$scope', '$state', 'ApiService', 'NotificationsService', 'TokenService',
+      function ($scope, $state, ApiService, NotificationsService, TokenService) {
+        $scope.isNoDeveloper = false;
+        $scope.userId = $state.params.userId;
+            ApiService.setTokenAfterSigningInWithGithub($scope.userId).then(function (isSuccess) {
+                if (isSuccess) {
+                    NotificationsService.startShowNotificationsAmount();
+                } else {
+                    $scope.isNoDeveloper = true;
+                }
+            });
+        $state.go('index');
+  }])
 
   .controller('EmailConfirmationCtrl', ['$scope', 'ApiService', '$state', function ($scope, ApiService, $state) {
     var token = $state.params.token;

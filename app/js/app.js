@@ -168,8 +168,8 @@ angular.module('LodSite', [
 ;
 
 var DOMAIN_NAME = 'lod-misis.ru';
-var DOMAIN_URL = 'http://'+ DOMAIN_NAME;
-var API_DOMAIN_URL = 'http://api.'+ DOMAIN_NAME;
+var DOMAIN_URL = 'https://'+ DOMAIN_NAME;
+var API_DOMAIN_URL = 'https://api.'+ DOMAIN_NAME;
 var numberOfProjects = null;
 
 // other functions

@@ -5,6 +5,7 @@ angular.module('LodSite', [
          'ngRoute',
          'ui.router',
          'ngDialog',
+         'base64',
 
          'LodSite.directives',
          'LodSite.controllers',
@@ -32,7 +33,7 @@ angular.module('LodSite', [
              })
 
              .state('login-github', {
-               url: '/login/github/:userId',
+               url: '/login/github/:encodedToken',
                template: '<ui-view>',
                controller: 'GithubLoginCtrl'
              })

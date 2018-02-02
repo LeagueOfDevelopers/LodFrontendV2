@@ -1481,6 +1481,7 @@ angular.module('LodSite.controllers', [])
   .controller('SignupCtrl', ['$scope', 'ApiService', '$timeout', function ($scope, ApiService, $timeout) {
     $scope.currentStates = {};
     $scope.newDeveloper = {};
+    $scope.currentDate = new Date();
 
     $scope.signUp = function () {
         $scope.loginType === 'github' ?

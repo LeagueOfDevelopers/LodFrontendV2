@@ -26,7 +26,7 @@
           <input type="text" class="validate-field" placeholder="Специальность" pattern="[а-яА-Я- _\.]{1,50}$"
                  ng-model="newDeveloper.StudyingProfile" ng-maxlength="50" required />
           <input type="number" class="validate-field" placeholder="Год поступления" 
-                 min="2000" ng-model="newDeveloper.AccessionYear"
+                 min="2000" max="{{currentDate | date:'yyyy'}}" ng-model="newDeveloper.AccessionYear"
                  pattern="[1-9]\d*" ng-minlength="4" ng-maxlength="4" required />
           <div class="sign-up-form__switcher"><label><input type="checkbox" class="sign-up__checkbox" 
                  ng-model="newDeveloper.IsGraduated"/>Я закончил(а) обучение</label>

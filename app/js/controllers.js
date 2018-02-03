@@ -1759,7 +1759,12 @@ angular.module('LodSite.controllers', [])
           $scope.decodedToken = $base64.decode($state.params.encodedToken);
           var decodedToken = JSON.parse($scope.decodedToken);
           TokenService.setToken(decodedToken);
-          $state.go('index');
+          $state.transitionTo('index', {
+              location: true,
+              inherit: true,
+              relative: $state.$current,
+              notify: false
+          });
   }])
 
   .controller('EmailConfirmationCtrl', ['$scope', 'ApiService', '$state', function ($scope, ApiService, $state) {

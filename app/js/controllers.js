@@ -1481,6 +1481,7 @@ angular.module('LodSite.controllers', [])
   .controller('SignupCtrl', ['$scope', 'ApiService', '$timeout', function ($scope, ApiService, $timeout) {
     $scope.currentStates = {};
     $scope.newDeveloper = {};
+    $scope.repeatedPassword = undefined;
     $scope.currentDate = new Date();
 
     $scope.signUp = function () {
@@ -1503,14 +1504,15 @@ angular.module('LodSite.controllers', [])
         }
 
         if ($scope.currentStates.isSuccess) {
-          $scope.newDeveloper = {};
-          $scope.repeatedPassword = null;
-          $scope.newDeveloper.Password = null;
-          $scope.signForm.$setPristine();
+            $scope.newDeveloper = {};
+            $scope.repeatedPassword = undefined;
+            $scope.newDeveloper.Password = undefined;
+            $scope.signForm.$setPristine();
+            $scope.loginType = undefined;
 
           $timeout(function () {
             $scope.currentStates.isSuccess = null;
-          }, 4000);
+          }, 14000);
         }
       });
     };

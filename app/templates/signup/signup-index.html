@@ -59,7 +59,7 @@
               </label>
           </div>
       </div>
-      <div class="sign-up-form__section flowing_transition" ng-show="loginType === 'lod'">
+      <div class="sign-up-form__section flowing_transition" ng-if="loginType === 'lod'">
           <input type="email" class="validate-field" placeholder="E-mail"
                  pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$"
                  ng-model="newDeveloper.Email" ng-maxlength="30" required />

@@ -1382,6 +1382,7 @@ footer {
   margin-right: 10px;
   margin-top: 5px;
   vertical-align: bottom;
+  vertical-align: text-bottom;
   margin-bottom: -10px;
 }
 
@@ -1521,6 +1522,7 @@ input.sign-up__checkbox {
 
 .profile-settings__switcher {
     vertical-align: -webkit-baseline-middle;
+    vertical-align: top;
 }
 
 .profile-settings__switcher_label {

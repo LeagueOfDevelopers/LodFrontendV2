@@ -38,6 +38,19 @@ angular.module('LodSite', [
                controller: 'GithubLoginCtrl'
              })
 
+             .state('error', {
+               url: '/error/:occuredOnActionType',
+               templateUrl: templateUrl('index', 'index'), 
+               controller: 'ErrorCtrl',
+               onEnter: ['ngDialog', function (ngDialog) {
+                   ngDialog.open({
+                       template: 'errorTemplate',
+                       showClose: true,
+                       closeByNavigation: true
+                   });
+               }]
+            })
+
              //projects
              .state('projects', {
                url: '/projects',

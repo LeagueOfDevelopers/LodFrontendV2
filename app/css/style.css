@@ -234,6 +234,12 @@ a {
   border: 2px solid #fff;
 }
 
+.error_message {
+    border: 1.5px ridge #e42515;
+    background-color: rgba(250, 235, 215, 0.5);
+    padding: 15px;
+}
+
 /************************
          HEADER
 *************************/

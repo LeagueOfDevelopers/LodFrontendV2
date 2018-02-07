@@ -195,6 +195,16 @@ angular.module('LodSite.services', [])
                 });
             };
 
+            this.unlinkGithubProfile = function () {
+                var url = '/unlink/github';
+
+                return sendAuthorizationSaveRequest(POST, url).then(function (response) {
+                    return {
+                        status: response.status === 200
+                    };
+                });
+            };
+
             this.getDeveloperForProfileSttings = function (developerId) {
                 var url = '/developers/' + developerId;
 

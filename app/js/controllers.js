@@ -266,6 +266,7 @@ angular.module('LodSite.controllers', [])
                 $scope.profile.VkProfileUri = data.VkProfileUri;
                 $scope.profile.PhoneNumber = data.PhoneNumber;
                 $scope.profile.IsGraduated = data.IsGraduated;
+                $scope.profile.HasPassword = !data.IsOauthRegistered;
             });
             ApiService.getNotificationsForProfileSttings(developerId).then(function (data) {
                 $scope.notificationSettings = data;
@@ -286,6 +287,17 @@ angular.module('LodSite.controllers', [])
             }
 
             /*POST - REQUESTS*/
+
+            $scope.unlinkGithubProfile = function () {
+                ApiService.unlinkGithubProfile().then(function (isSuccess) {
+                    if (isSuccess) {
+                        $scope.state[0] = 'success';
+                    } else {
+                        $scope.state[0] = 'failed';
+                    }
+                    changeCurrentState();
+                });
+            }
 
             $scope.changeProfileSettings = function () {
 

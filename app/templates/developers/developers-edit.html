@@ -86,9 +86,10 @@
                  ng-model="profile.LinkToGithubProfile">
 
           <div class="github-profile__link"
-               ng-click="getRedirectionToAuthenticationGithubForm()"
+               ng-click="unlinkGithubProfile()"
                ng-show="profile.LinkToGithubProfile!==null&&
-                      profile.LinkToGithubProfile!==undefined">Изменить профиль</div>
+                      profile.LinkToGithubProfile!==undefined&&
+                      profile.HasPassword===true">Отвязать профиль</div>
           <div class="profile-settings__button"
                ng-click="getRedirectionToAuthenticationGithubForm()"
                ng-show="profile.LinkToGithubProfile===null||
@@ -97,10 +98,11 @@
       </div>
     </div>
 
-    <h1 class="profile-settings__heading headline">Изменение пароля</h1>
+    
+    <h1 ng-if="profile.HasPassword===true" class="profile-settings__heading headline">Изменение пароля</h1>
 
-    <div class="dividing-line"></div>
-    <div class="profile-settings__middle-part__wrapper">
+    <div ng-if="profile.HasPassword===true" class="dividing-line"></div>
+    <div ng-if="profile.HasPassword===true" class="profile-settings__middle-part__wrapper">
       <div class="profile-settings__middle-part">
         <div class="profile-settings__input-heading">Новый пароль:</div>
         <input type="password" name="newPassword" class="profile-settings__input" ng-model="newPassword"

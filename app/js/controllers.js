@@ -292,6 +292,7 @@ angular.module('LodSite.controllers', [])
                 ApiService.unlinkGithubProfile().then(function (isSuccess) {
                     if (isSuccess) {
                         $scope.state[0] = 'success';
+                        $scope.profile.LinkToGithubProfile = null;
                     } else {
                         $scope.state[0] = 'failed';
                     }

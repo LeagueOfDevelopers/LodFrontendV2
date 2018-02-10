@@ -6,15 +6,27 @@ angular.module('LodSite', [
          'ui.router',
          'ngDialog',
          'base64',
+         'ngWebsocket',
 
          'LodSite.directives',
          'LodSite.controllers',
          'LodSite.services'
        ])
 
-       .run(function setFastMobileClick() {
+       .run(function setFastMobileClick($websocket) {
          FastClick.attach(document.body);
          $(window).resize(setPaddingBottom);
+         $websocket.$new({ url: WEBSOCKET_CLIENT_URL, reconnect: true, protocols: ['binary', 'base64'] })
+            .$on('$open', function () {
+             console.log('Oh my gosh, websocket is really open! Fukken awesome!');
+         })
+            .$on('$close', function () {
+             console.log('Closed');
+         })
+            .$on('$message', function (data) {
+             console.log('The websocket server has sent the following data:');
+             console.log(data);
+         })
        })
 
        .config(['$locationProvider', '$stateProvider', '$urlRouterProvider',
@@ -182,9 +194,11 @@ angular.module('LodSite', [
 ;
 
 var DOMAIN_NAME = 'lod-misis.ru';
-var DOMAIN_URL = 'https://'+ DOMAIN_NAME;
-var API_DOMAIN_URL = 'https://api.'+ DOMAIN_NAME;
+var DOMAIN_URL = 'https//'+ DOMAIN_NAME;
+var API_DOMAIN_URL = 'https//api.' + DOMAIN_NAME;
+var WEBSOCKET_CLIENT_URL = "wss:" + API_DOMAIN_URL;
 var numberOfProjects = null;
+
 
 // other functions
 function templateUrl(module, name) {

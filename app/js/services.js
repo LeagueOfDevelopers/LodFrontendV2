@@ -590,13 +590,16 @@ angular.module('LodSite.services', [])
             notificationsTimer;
 
         this.startShowNotificationsAmount = function () {
-            getNotificationsNumber();
-            notificationsTimer = setInterval(getNotificationsNumber, NOTIFICATIONS_REQUEST_INTERVAL);
+            //getNotificationsNumber();
+            //notificationsTimer = setInterval(getNotificationsNumber, NOTIFICATIONS_REQUEST_INTERVAL);
         };
 
         this.stopShowNotificationsAmount = function () {
             clearInterval(notificationsTimer);
         };
 
-    }]);
+    }])
+
+    
+    ;
 

@@ -121,3 +121,17 @@
           </div>
       </div>
   </script>
+  <script type="text/ng-template" id="successTemplate">
+      <div ng-controller="SuccessCtrl" class="login-window">
+          <div class="login-window__form">
+              <div class="form__close-button" ng-click="closeDialog()"></div>
+              <div class="form__container">
+                  <div class="form__greeting">Операция выполнена успешно!</div> <br />
+                  <div class="form__greeting success_message">
+                      Вы были зарегистрированы.<br />
+                      Ждите подтверждения администратора.
+                  </div>
+              </div>
+          </div>
+      </div>
+  </script>

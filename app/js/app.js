@@ -49,8 +49,21 @@ angular.module('LodSite', [
                        closeByNavigation: true
                    });
                }]
-            })
+             })
 
+             .state('success', {
+               url: '/success',
+               templateUrl: templateUrl('index', 'index'),
+               controller: 'successCtrl',
+               onEnter: ['ngDialog', function (ngDialog) {
+                   ngDialog.open({
+                       template: 'successTemplate',
+                       showClose: true,
+                       closeByNavigation: true
+                   });
+               }]
+             })
+            
              //projects
              .state('projects', {
                url: '/projects',

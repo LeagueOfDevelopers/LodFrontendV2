@@ -240,6 +240,12 @@ a {
     padding: 15px;
 }
 
+.success_message {
+    border: 1.5px ridge #29bf16;
+    background-color: rgba(201, 236, 196, 0.5);
+    padding: 15px;
+}
+
 /************************
          HEADER
 *************************/

@@ -2014,4 +2014,16 @@ angular.module('LodSite.controllers', [])
                 notify: false
             });
         }
-    }]);
+    }])
+
+    .controller('SuccessCtrl', ['$scope', '$state', function ($scope, $state) {
+        $scope.closeDialog = function () {
+            $state.transitionTo('index', {
+                location: true,
+                inherit: true,
+                relative: $state.$current,
+                notify: false
+            });
+        }
+    }])
+    ;

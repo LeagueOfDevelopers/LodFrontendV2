@@ -37,10 +37,6 @@
         <span ng-switch-when="1">Закрытый</span>
         <span ng-switch-default>Открытый</span>
       </div>
-      <div class="info__links" ng-if="userRole === 0 || userRole === 1">Проект в <a
-        href="{{project.ProjectManagementSystemUri}}">Redmine</a> и <a
-        href="{{project.VersionControlSystemUri}}">Gitlab</a>
-      </div>
       <div ng-if="userRole === 0 || userRole === 1">
         <form name="projectMembershipForm">
           <input class="info__developer-role-input" type="text" required placeholder="Роль в проекте"

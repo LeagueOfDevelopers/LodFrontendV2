@@ -481,16 +481,6 @@ angular.module('LodSite.controllers', [])
                         if ($scope.project.ProjectMemberships.length === 0) {
                             $scope.replacementText = "В данный момент на проекте нет разработчиков.";
                         }
-                        $scope.checkMembership = function () {
-                            var isProjectMember = false;
-                            var userId = TokenService.getToken().UserId;
-                            for (var i = 0; i < $scope.project.ProjectMemberships.length; i++) {
-                                if ($scope.project.ProjectMemberships[i].DeveloperId === userId) {
-                                    isProjectMember = true;
-                                }
-                            }
-                            return isProjectMember;
-                        };
                         $scope.openViewerDialog = function (imgIndex) {
                             $rootScope.openedScreenshot = $scope.project.Screenshots[imgIndex];
                             $scope.openViewer();

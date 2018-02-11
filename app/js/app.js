@@ -52,9 +52,9 @@ angular.module('LodSite', [
              })
 
              .state('success', {
-               url: '/success',
+               url: '/success/:occuredOnActionType',
                templateUrl: templateUrl('index', 'index'),
-               controller: 'successCtrl',
+               controller: 'SuccessCtrl',
                onEnter: ['ngDialog', function (ngDialog) {
                    ngDialog.open({
                        template: 'successTemplate',

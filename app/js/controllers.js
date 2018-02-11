@@ -1481,7 +1481,7 @@ angular.module('LodSite.controllers', [])
 
 
     //other
-    .controller('SignupCtrl', ['$scope', 'ApiService', '$timeout', function ($scope, ApiService, $timeout) {
+    .controller('SignupCtrl', ['$scope', '$state', 'ApiService', '$timeout', function ($scope, $state, ApiService, $timeout) {
         $scope.currentStates = {};
         $scope.newDeveloper = {};
         $scope.repeatedPassword = undefined;
@@ -1495,7 +1495,7 @@ angular.module('LodSite.controllers', [])
 
                     if (responseObject) {
                         if (responseObject.status === 200) {
-                            $scope.currentStates.isSuccess = true;
+                            $state.go('success');
                         } else if (responseObject.status === 409) {
                             $scope.currentStates.isRegisteredEmail = true;
                         } else {
@@ -1504,18 +1504,6 @@ angular.module('LodSite.controllers', [])
 
                     } else {
                         $scope.currentStates.isFailed = true;
-                    }
-
-                    if ($scope.currentStates.isSuccess) {
-                        $scope.newDeveloper = {};
-                        $scope.repeatedPassword = undefined;
-                        $scope.newDeveloper.Password = undefined;
-                        $scope.signForm.$setPristine();
-                        $scope.loginType = undefined;
-
-                        $timeout(function () {
-                            $scope.currentStates.isSuccess = null;
-                        }, 14000);
                     }
                 });
         };
@@ -2017,6 +2005,10 @@ angular.module('LodSite.controllers', [])
     }])
 
     .controller('SuccessCtrl', ['$scope', '$state', function ($scope, $state) {
+        $scope.successMessage = 'На ваш E-mail отправлено сообщение с ссылкой для подтверждения';
+        if ($state.params.occuredOnActionType === 'github') {
+            $scope.successMessage = 'Ждите потверждения администратора';
+        };
         $scope.closeDialog = function () {
             $state.transitionTo('index', {
                 location: true,

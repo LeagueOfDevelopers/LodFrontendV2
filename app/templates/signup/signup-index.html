@@ -28,7 +28,8 @@
           <input type="number" class="validate-field" placeholder="Год поступления" 
                  min="2000" max="{{currentDate | date:'yyyy'}}" ng-model="newDeveloper.AccessionYear"
                  pattern="[1-9]\d*" ng-minlength="4" ng-maxlength="4" required />
-          <div class="sign-up-form__switcher"><label><input type="checkbox" class="sign-up__checkbox" 
+          <div class="sign-up-form__switcher" style="padding-top: 0; padding-bottom: 0">
+              <label class="sign-up-form__label"><input type="checkbox" class="sign-up__checkbox" 
                  ng-model="newDeveloper.IsGraduated"/>Я закончил(а) обучение</label>
           </div>
       </div>
@@ -52,10 +53,10 @@
       <div class="sign-up-form__section">
           <div class="section__step-number">4</div>
           <div class="sign-up-form__switcher">
-              Для входа на сайт  использовать:<br />
-              <label><input type="radio" ng-model="loginType" value="lod">E-mail и пароль
+              <p style="margin-bottom: 4px">Для входа на сайт  использовать:</p>
+              <label class="sign-up-form__label"><input type="radio" ng-model="loginType" value="lod">E-mail и пароль
               </label><br />
-              <label><input type="radio" ng-model="loginType" value="github" required>GitHub аккаунт
+              <label class="sign-up-form__label"><input type="radio" ng-model="loginType" value="github" required>GitHub аккаунт
               </label>
           </div>
       </div>

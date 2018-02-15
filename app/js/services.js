@@ -2,7 +2,7 @@
 
 /* Services */
 
-angular.module('LodSite.services', [])
+angular.module('LodSite.services', ['ngWebsocket'])
 
     .service('TokenService', ['$rootScope', function ($rootScope) {
         var HOURS = 24;
@@ -600,6 +600,24 @@ angular.module('LodSite.services', [])
 
     }])
 
-    
+    .service('WebSocketService', ['$websocket', 'TokenService', function ($websocket, TokenService) {
+        var webSocket;
+        this.start = function () {
+            var currentUserId = TokenService.getToken().UserId;
+            webSocket = new WebSocket(WEBSOCKET_CLIENT_URL + '?id=' + currentUserId);
+            webSocket.onmessage = function (message) {
+                console.log(message);
+            };
+            webSocket.onopen = function () {
+                console.log("opened");
+            }
+            webSocket.onclose = function () {
+                console.log("closed");
+            }
+        }
+        this.stop = function () {
+            webSocket.close();
+        }
+    }])
     ;
 

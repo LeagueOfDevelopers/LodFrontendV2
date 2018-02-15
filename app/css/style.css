@@ -1225,7 +1225,7 @@ footer {
 }
 
 .login-window__form {
-  position: relative;
+  position: fixed;
   z-index: 100;
   background: #f1f1f1;
   max-width: 360px;

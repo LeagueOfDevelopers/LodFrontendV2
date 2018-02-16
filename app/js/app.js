@@ -15,7 +15,9 @@ angular.module('LodSite', [
        .run(function setFastMobileClick() {
          FastClick.attach(document.body);
          $(window).resize(setPaddingBottom);
+         
        })
+
 
        .config(['$locationProvider', '$stateProvider', '$urlRouterProvider',
          function ($locationProvider, $stateProvider, $urlRouterProvider) {
@@ -196,7 +198,8 @@ angular.module('LodSite', [
 
 var DOMAIN_NAME = 'lod-misis.ru';
 var DOMAIN_URL = 'https://'+ DOMAIN_NAME;
-var API_DOMAIN_URL = 'https://api.'+ DOMAIN_NAME;
+var API_DOMAIN_URL = 'https://api.' + DOMAIN_NAME;
+var WEBSOCKET_CLIENT_URL = 'wss://api.' + DOMAIN_NAME + '/socket';
 var numberOfProjects = null;
 
 // other functions

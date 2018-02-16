@@ -365,16 +365,6 @@ angular.module('LodSite.services', [])
                 return sendAuthorizationSaveRequest(PUT, url, null, notifIds);
             };
 
-            this.getNotificationsAmount = function () {
-                var url = '/event/count';
-
-                return sendAuthorizationSaveRequest(GET, url).then(function (response) {
-                    return response.data;
-                }, function () {
-                    return 0;
-                });
-            };
-
             this.createNotification = function (notification) {
                 var url = '/admin/notification';
 
@@ -579,24 +569,27 @@ angular.module('LodSite.services', [])
         };
     }])
 
-    .service('NotificationsService', ['$rootScope', 'ApiService', function ($rootScope, ApiService) {
-        function getNotificationsNumber() {
-            ApiService.getNotificationsAmount().then(function (notificationsAmount) {
-                $rootScope.notificationsAmount = notificationsAmount;
-            });
+    .service('WebSocketService', ['$rootScope', 'TokenService', function ($rootScope, TokenService) {
+        this.start = function () {
+            var currentUserId = TokenService.getToken().UserId;
+            $rootScope.webSocket = new WebSocket(WEBSOCKET_CLIENT_URL + '?id=' + currentUserId);
+            $rootScope.webSocket.onmessage = function (message) {
+                $rootScope.notificationsAmount = message.data;
+                $rootScope.$apply();
+            };
+            $rootScope.webSocket.onopen = function () {
+                console.log("Websocket connection is opened");
+            }
+            $rootScope.webSocket.onclose = function () {
+                console.log("Websocket connection is closed");
+            }
+            $rootScope.webSocket.onerror = function (error) {
+                console.log("Was closed because of" + error.message);
+            }
         }
-
-        var NOTIFICATIONS_REQUEST_INTERVAL = 5000,
-            notificationsTimer;
-
-        this.startShowNotificationsAmount = function () {
-            getNotificationsNumber();
-            notificationsTimer = setInterval(getNotificationsNumber, NOTIFICATIONS_REQUEST_INTERVAL);
-        };
-
-        this.stopShowNotificationsAmount = function () {
-            clearInterval(notificationsTimer);
-        };
-
-    }]);
+        this.stop = function () {
+            $rootScope.webSocket.close();
+        }
+    }])
+    ;
 

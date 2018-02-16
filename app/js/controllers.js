@@ -37,8 +37,8 @@ angular.module('LodSite.controllers', [])
     }])
 
     //header and footer
-    .controller('HeaderCtrl', ['$scope', 'ngDialog', 'TokenService', '$state', 'NotificationsService', '$rootScope', 'WebSocketService',
-        function ($scope, ngDialog, TokenService, $state, NotificationsService, $rootScope, WebSocketService) {
+    .controller('HeaderCtrl', ['$scope', 'ngDialog', 'TokenService', '$state', '$rootScope', 'WebSocketService',
+        function ($scope, ngDialog, TokenService, $state, $rootScope, WebSocketService) {
             $scope.isOpened = false;
 
             var token = TokenService.getToken();
@@ -61,13 +61,9 @@ angular.module('LodSite.controllers', [])
             $scope.signOut = function () {
                 TokenService.resetToken();
                 TokenService.getRole();
-                NotificationsService.stopShowNotificationsAmount();
                 WebSocketService.stop();
                 $state.reload();
             };
-            if (TokenService.getToken()) {
-                NotificationsService.startShowNotificationsAmount();
-            }
 
             $scope.$on('$locationChangeSuccess', function () {
                 $scope.isOpened = false;
@@ -1721,9 +1717,8 @@ angular.module('LodSite.controllers', [])
         'ApiService',
         '$state',
         '$timeout',
-        'NotificationsService',
         'WebSocketService',
-        function ($scope, ApiService, $state, $timeout, NotificationsService, WebSocketService) {
+        function ($scope, ApiService, $state, $timeout, WebSocketService) {
             var date = new Date();
             var hour = date.getHours();
             $scope.timeOfDay = (hour > 4 && hour < 12) ? 'morning' :
@@ -1742,7 +1737,6 @@ angular.module('LodSite.controllers', [])
                         $scope.userLogin = {};
                         $scope.loginForm.$setPristine();
                         $scope.closeThisDialog('.form__close-button');
-                        NotificationsService.startShowNotificationsAmount();
                         WebSocketService.Start();
                         $state.reload();
                     } else {
@@ -1771,8 +1765,8 @@ angular.module('LodSite.controllers', [])
 
         }])
 
-    .controller('GithubLoginCtrl', ['$scope', '$state', '$base64', 'ApiService', 'NotificationsService', 'TokenService', 'WebSocketService',
-        function ($scope, $state, $base64, ApiService, NotificationsService, TokenService, WebSocketService) {
+    .controller('GithubLoginCtrl', ['$scope', '$state', '$base64', 'ApiService', 'TokenService', 'WebSocketService',
+        function ($scope, $state, $base64, ApiService, TokenService, WebSocketService) {
             $scope.isNoDeveloper = false;
             $scope.decodedToken = $base64.decode($state.params.encodedToken);
             var decodedToken = JSON.parse($scope.decodedToken);

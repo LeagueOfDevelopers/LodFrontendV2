@@ -579,37 +579,13 @@ angular.module('LodSite.services')
         };
     }])
 
-    .service('NotificationsService', ['$rootScope', 'ApiService', function ($rootScope, ApiService) {
-        function getNotificationsNumber() {
-            ApiService.getNotificationsAmount().then(function (notificationsAmount) {
-                $rootScope.notificationsAmount = notificationsAmount;
-            });
-        }
-
-        $rootScope.numberOfNotifications = 0;
-
-        var NOTIFICATIONS_REQUEST_INTERVAL = 5000,
-            notificationsTimer;
-
-        this.startShowNotificationsAmount = function () {
-
-            //getNotificationsNumber();
-            //notificationsTimer = setInterval(getNotificationsNumber, NOTIFICATIONS_REQUEST_INTERVAL);
-        };
-
-        this.stopShowNotificationsAmount = function () {
-            clearInterval(notificationsTimer);
-        };
-
-    }])
-
     .service('WebSocketService', ['$rootScope', 'TokenService', function ($rootScope, TokenService) {
         var webSocket;
         this.start = function () {
             var currentUserId = TokenService.getToken().UserId;
             webSocket = new WebSocket(WEBSOCKET_CLIENT_URL + '?id=' + currentUserId);
             webSocket.onmessage = function (message) {
-                $rootScope.numberOfNotifications = message.data;
+                $rootScope.notificationsAmount = message.data;
                 console.log(message.data);
             };
             webSocket.onopen = function () {

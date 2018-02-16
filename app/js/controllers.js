@@ -1715,7 +1715,7 @@ angular.module('LodSite.controllers', [])
                         $scope.userLogin = {};
                         $scope.loginForm.$setPristine();
                         $scope.closeThisDialog('.form__close-button');
-                        WebSocketService.Start();
+                        WebSocketService.start();
                         $state.reload();
                     } else {
                         $scope.isNoDeveloper = true;

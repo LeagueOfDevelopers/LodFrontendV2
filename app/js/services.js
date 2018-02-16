@@ -2,7 +2,7 @@
 
 /* Services */
 
-angular.module('LodSite.services', ['ngWebsocket'])
+angular.module('LodSite.services')
 
     .service('TokenService', ['$rootScope', function ($rootScope) {
         var HOURS = 24;
@@ -586,10 +586,13 @@ angular.module('LodSite.services', ['ngWebsocket'])
             });
         }
 
+        $rootScope.numberOfNotifications = 0;
+
         var NOTIFICATIONS_REQUEST_INTERVAL = 5000,
             notificationsTimer;
 
         this.startShowNotificationsAmount = function () {
+
             //getNotificationsNumber();
             //notificationsTimer = setInterval(getNotificationsNumber, NOTIFICATIONS_REQUEST_INTERVAL);
         };
@@ -600,19 +603,23 @@ angular.module('LodSite.services', ['ngWebsocket'])
 
     }])
 
-    .service('WebSocketService', ['$websocket', 'TokenService', function ($websocket, TokenService) {
+    .service('WebSocketService', ['$rootScope', 'TokenService', function ($rootScope, TokenService) {
         var webSocket;
         this.start = function () {
             var currentUserId = TokenService.getToken().UserId;
             webSocket = new WebSocket(WEBSOCKET_CLIENT_URL + '?id=' + currentUserId);
             webSocket.onmessage = function (message) {
-                console.log(message);
+                $rootScope.numberOfNotifications = message.data;
+                console.log(message.data);
             };
             webSocket.onopen = function () {
                 console.log("opened");
             }
             webSocket.onclose = function () {
                 console.log("closed");
+            }
+            webSocket.onerror = function (error) {
+                console.log("Was closed because of" + error.message);
             }
         }
         this.stop = function () {

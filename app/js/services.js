@@ -2,7 +2,7 @@
 
 /* Services */
 
-angular.module('LodSite.services')
+angular.module('LodSite.services', [])
 
     .service('TokenService', ['$rootScope', function ($rootScope) {
         var HOURS = 24;
@@ -365,16 +365,6 @@ angular.module('LodSite.services')
                 return sendAuthorizationSaveRequest(PUT, url, null, notifIds);
             };
 
-            this.getNotificationsAmount = function () {
-                var url = '/event/count';
-
-                return sendAuthorizationSaveRequest(GET, url).then(function (response) {
-                    return response.data;
-                }, function () {
-                    return 0;
-                });
-            };
-
             this.createNotification = function (notification) {
                 var url = '/admin/notification';
 
@@ -580,26 +570,25 @@ angular.module('LodSite.services')
     }])
 
     .service('WebSocketService', ['$rootScope', 'TokenService', function ($rootScope, TokenService) {
-        var webSocket;
         this.start = function () {
             var currentUserId = TokenService.getToken().UserId;
-            webSocket = new WebSocket(WEBSOCKET_CLIENT_URL + '?id=' + currentUserId);
-            webSocket.onmessage = function (message) {
+            $rootScope.webSocket = new WebSocket(WEBSOCKET_CLIENT_URL + '?id=' + currentUserId);
+            $rootScope.webSocket.onmessage = function (message) {
                 $rootScope.notificationsAmount = message.data;
-                console.log(message.data);
+                $rootScope.$apply();
             };
-            webSocket.onopen = function () {
-                console.log("opened");
+            $rootScope.webSocket.onopen = function () {
+                console.log("Websocket connection is opened");
             }
-            webSocket.onclose = function () {
-                console.log("closed");
+            $rootScope.webSocket.onclose = function () {
+                console.log("Websocket connection is closed");
             }
-            webSocket.onerror = function (error) {
+            $rootScope.webSocket.onerror = function (error) {
                 console.log("Was closed because of" + error.message);
             }
         }
         this.stop = function () {
-            webSocket.close();
+            $rootScope.webSocket.close();
         }
     }])
     ;

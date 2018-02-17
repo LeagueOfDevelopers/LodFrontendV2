@@ -572,6 +572,7 @@ angular.module('LodSite.controllers', [])
             var pageCounter = 0;
             $scope.isInvalid = [];
             $scope.isOpen = false;
+            
             $scope.images = [];
             $scope.developers = [];
             $scope.chosenDevelopers = [];
@@ -608,6 +609,7 @@ angular.module('LodSite.controllers', [])
                 this.ProjectStatus = 0;
                 this.LandingImage = {};
                 this.Screenshots = [];
+                this.LinksToGithubRepositories = [];
             };
 
             $scope.newProject = new sampleProject();
@@ -824,7 +826,7 @@ angular.module('LodSite.controllers', [])
             }
             );
 
-            $scope.deleteImage = function (index) {
+                $scope.deleteImage = function (index) {
                 $scope.images.splice(index, 1);
             };
 
@@ -845,8 +847,6 @@ angular.module('LodSite.controllers', [])
                 $scope.currentUploadStateBigImage = 'waiting';
                 $scope.currentPercentBigImage = 0;
                 $scope.$apply();
-
-
             });
 
             $scope.$on('progressBigImage', function (ev, args) {

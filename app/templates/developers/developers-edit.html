@@ -67,16 +67,16 @@
                  ng-model="profile.PhoneNumber" required />
           <br />
 
-          <div class="profile-settings__input-heading">Профиль ВКонтакте:</div>
+          <div class="profile-settings__input-heading" ng-if="profile.VkProfileUri !== null">Профиль ВКонтакте:</div>
           <input type="url" name="vkUri" class="profile-settings__input validate-field" ng-model="profile.VkProfileUri"
-                 required />
+                 ng-if="profile.VkProfileUri !== null" required />
 
           <div class="help-message-input profile-settings__help-message__vk-uri"
                ng-show="profileSettingsForm.vkUri.$error.url">
               Введите адрес в формате
               https://vk.com/[username].
           </div>
-          <br />
+          <br ng-if="profile.VkProfileUri !== null" />
 
           <div class="profile-settings__input-heading">Профиль на GitHub:</div>
 

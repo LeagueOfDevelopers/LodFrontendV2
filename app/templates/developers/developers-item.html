@@ -30,7 +30,7 @@
       <div class="developer-info__item-name">В Лиге Разработчиков</div>
       <div class="developer-info__item-text" ng-bind="developer.residenceTime"></div>
     </div>
-    <div class="developer-info__item">
+    <div class="developer-info__item" ng-if="developer.VkProfileUri !== null">
       <div class="developer-info__item-name">Профиль Вконтакте</div>
       <div class="developer-info__item-text"><a style="text-decoration: underline;
     color: #0072bc;" ng-href="{{developer.VkProfileUri}}">{{developer.VkProfileUri}}</a></div>

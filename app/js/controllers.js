@@ -1738,6 +1738,9 @@ angular.module('LodSite.controllers', [])
                         $scope.userLogin.emailForRecovery = '';
                         $timeout(function () { isSuccess = ''; }, 4000);
                     }
+                    else {
+                        $state.go('error');
+                    }
                 })
             };
 

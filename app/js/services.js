@@ -466,6 +466,11 @@ angular.module('LodSite.services', [])
                 });
             };
 
+            this.getFirstMessage = function () {
+                var url = '/socket/message';
+
+                return sendAuthorizationSaveRequest(GET, url);
+            }
         }])
 
     .service('DateService', [function () {
@@ -569,7 +574,7 @@ angular.module('LodSite.services', [])
         };
     }])
 
-    .service('WebSocketService', ['$rootScope', 'TokenService', function ($rootScope, TokenService) {
+    .service('WebSocketService', ['$rootScope', 'TokenService', 'ApiService', function ($rootScope, TokenService, ApiService) {
         this.start = function () {
             var currentUserId = TokenService.getToken().UserId;
             $rootScope.webSocket = new WebSocket(WEBSOCKET_CLIENT_URL + '?id=' + currentUserId);
@@ -579,12 +584,13 @@ angular.module('LodSite.services', [])
             };
             $rootScope.webSocket.onopen = function () {
                 console.log("Websocket connection is opened");
+                ApiService.getFirstMessage();
             }
             $rootScope.webSocket.onclose = function () {
                 console.log("Websocket connection is closed");
             }
             $rootScope.webSocket.onerror = function (error) {
-                console.log("Was closed because of" + error.message);
+                console.log("Was closed because of " + error.message);
             }
         }
         this.stop = function () {

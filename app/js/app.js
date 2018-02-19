@@ -198,12 +198,9 @@ angular.module('LodSite', [
 
 var DOMAIN_NAME = 'lod-misis.ru';
 var DOMAIN_URL = 'https://'+ DOMAIN_NAME;
-//var API_DOMAIN_URL = 'https://api.' + DOMAIN_NAME;
-//var WEBSOCKET_CLIENT_URL = 'wss://api.' + DOMAIN_NAME + '/socket';
+var API_DOMAIN_URL = 'https://api.' + DOMAIN_NAME;
+var WEBSOCKET_CLIENT_URL = 'wss://api.' + DOMAIN_NAME + '/socket';
 var numberOfProjects = null;
-
-var API_DOMAIN_URL = 'http://localhost:50054';
-var WEBSOCKET_CLIENT_URL = 'ws://localhost:50054/socket';
 
 // other functions
 function templateUrl(module, name) {

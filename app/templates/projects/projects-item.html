@@ -12,37 +12,43 @@
     </span>
     </div>
     <div class="full-project__info">
-      <div class="info__subheading">Тип проекта:</div>
-      <div class="info__project-types">
-      <span class="project-types__type" ng-repeat="projectType in projectTypes" ng-switch="projectType">
-          <span ng-switch-when="0">Веб</span>
-          <span ng-switch-when="1">Мобильное</span>
-          <span ng-switch-when="2">Десктопное</span>
-          <span ng-switch-when="3">Игра</span>
-          <span ng-switch-default>Прочее</span>
-      </span>
-      </div>
-      <div class="info__subheading">Описание:</div>
-      <div class="info__description" ng-bind="project.Info"></div>
-      <div class="info__subheading">Разработчики:</div>
-      <div class="info__developers" ng-repeat="developer in project.ProjectMemberships">
-        <a ng-href="{{'/developers/'+developer.DeveloperId}}"
-           ng-bind="developer.FirstName + ' ' + developer.LastName"></a>
-        <span ng-bind=" '(' + developer.Role + ')' "></span>
-      </div>
+        <div class="info__subheading">Тип проекта:</div>
+        <div class="info__project-types">
+            <span class="project-types__type" ng-repeat="projectType in projectTypes" ng-switch="projectType">
+                <span ng-switch-when="0">Веб</span>
+                <span ng-switch-when="1">Мобильное</span>
+                <span ng-switch-when="2">Десктопное</span>
+                <span ng-switch-when="3">Игра</span>
+                <span ng-switch-default>Прочее</span>
+            </span>
+        </div>
+        <div class="info__subheading">Описание:</div>
+        <div class="info__description" ng-bind="project.Info"></div>
+        <div class="info__subheading">Разработчики:</div>
+        <div class="info__developers" ng-repeat="developer in project.ProjectMemberships">
+            <a ng-href="{{'/developers/'+developer.DeveloperId}}"
+               ng-bind="developer.FirstName + ' ' + developer.LastName"></a>
+            <span ng-bind=" '(' + developer.Role + ')' "></span>
+        </div>
+        <div class="info__if-no-developers" style="color:#a4a4a4" ng-bind="replacementText"></div>
 
-      <div class="info__if-no-developers" style="color:#a4a4a4" ng-bind="replacementText"></div>
-      <div class="info__subheading" ng-if="userRole === 0 || userRole === 1">Уровень доступа:</div>
-      <div class="info__access" ng-if="userRole === 0 || userRole === 1" ng-switch="project.AccessLevel">
-        <span ng-switch-when="1">Закрытый</span>
-        <span ng-switch-default>Открытый</span>
-      </div>
-      <div ng-if="userRole === 0 || userRole === 1">
-        <form name="projectMembershipForm">
-          <input class="info__developer-role-input" type="text" required placeholder="Роль в проекте"
-                 ng-model="$parent.$parent.projectDeveloperRole" ng-if="checkMembership() === false">
-        </form>
-      </div>
+        <div class="info__subheading">GitHub репозитории:</div>
+        <div class="info__developers" ng-repeat="link in project.LinksToGithubRepositories">
+            <a ng-href="{{link}}"
+               ng-bind="link"></a>
+        </div>
+
+        <div class="info__subheading" ng-if="userRole === 0 || userRole === 1">Уровень доступа:</div>
+        <div class="info__access" ng-if="userRole === 0 || userRole === 1" ng-switch="project.AccessLevel">
+            <span ng-switch-when="1">Закрытый</span>
+            <span ng-switch-default>Открытый</span>
+        </div>
+        <div ng-if="userRole === 0 || userRole === 1">
+            <form name="projectMembershipForm">
+                <input class="info__developer-role-input" type="text" required placeholder="Роль в проекте"
+                       ng-model="$parent.$parent.projectDeveloperRole" ng-if="checkMembership() === false">
+            </form>
+        </div>
     </div>
   </div>
   <h1 class="full-project__headline headline" ng-if="projectIssues.length">Задачи на проекте</h1>

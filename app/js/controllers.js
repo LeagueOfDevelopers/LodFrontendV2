@@ -230,8 +230,8 @@ angular.module('LodSite.controllers', [])
 
             $scope.$on('successUploadingBigImage', function (ev, args) {
                 $scope.profile.Image = {
-                    BigPhotoUri: 'https://api.lod-misis.ru/image/' + args.data.BigPhotoName,
-                    SmallPhotoUri: 'https://api.lod-misis.ru/image/' + args.data.SmallPhotoName
+                    BigPhotoUri: API_DOMAIN_URL + '/image/' + args.data.BigPhotoName,
+                    SmallPhotoUri: API_DOMAIN_URL + '/image/' + args.data.SmallPhotoName
                 };
 
                 $scope.currentUploadStateBigPhoto = 'waiting';
@@ -880,8 +880,8 @@ angular.module('LodSite.controllers', [])
 
             $scope.$on('successUploadingImage', function (ev, args) {
                 $scope.images.push({
-                    BigPhotoUri: 'https://api.lod-misis.ru/image/' + args.data.BigPhotoName,
-                    SmallPhotoUri: 'https://api.lod-misis.ru/image/' + args.data.SmallPhotoName
+                    BigPhotoUri: API_DOMAIN_URL + '/image/' + args.data.BigPhotoName,
+                    SmallPhotoUri: API_DOMAIN_URL + '/image/' + args.data.SmallPhotoName
                 });
 
                 $scope.currentUploadStateImage = 'waiting';
@@ -920,8 +920,8 @@ angular.module('LodSite.controllers', [])
 
             $scope.$on('successUploadingBigImage', function (ev, args) {
                 $scope.newProject.LandingImage = {
-                    BigPhotoUri: 'https://api.lod-misis.ru/image/' + args.data.BigPhotoName,
-                    SmallPhotoUri: 'https://api.lod-misis.ru/image/' + args.data.SmallPhotoName
+                    BigPhotoUri: API_DOMAIN_URL + '/image/' + args.data.BigPhotoName,
+                    SmallPhotoUri: API_DOMAIN_URL + '/image/' + args.data.SmallPhotoName
                 };
 
                 $scope.currentUploadStateBigImage = 'waiting';
@@ -1305,8 +1305,8 @@ angular.module('LodSite.controllers', [])
 
             $scope.$on('successUploadingImage', function (ev, args) {
                 $scope.editedProject.Screenshots.push({
-                    BigPhotoUri: 'https://api.lod-misis.ru/image/' + args.data.BigPhotoName,
-                    SmallPhotoUri: 'https://api.lod-misis.ru/image/' + args.data.SmallPhotoName
+                    BigPhotoUri: API_DOMAIN_URL + '/image/' + args.data.BigPhotoName,
+                    SmallPhotoUri: API_DOMAIN_URL + '/image/' + args.data.SmallPhotoName
                 });
 
                 $scope.currentUploadStateImage = 'waiting';
@@ -1347,8 +1347,8 @@ angular.module('LodSite.controllers', [])
 
             $scope.$on('successUploadingBigImage', function (ev, args) {
                 $scope.editedProject.LandingImage = {
-                    BigPhotoUri: 'https://api.lod-misis.ru/image/' + args.data.BigPhotoName,
-                    SmallPhotoUri: 'https://api.lod-misis.ru/image/' + args.data.SmallPhotoName
+                    BigPhotoUri: API_DOMAIN_URL + '/image/' + args.data.BigPhotoName,
+                    SmallPhotoUri: API_DOMAIN_URL + '/image/' + args.data.SmallPhotoName
                 };
 
                 $scope.currentUploadStateBigImage = 'waiting';

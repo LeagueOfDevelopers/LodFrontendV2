@@ -202,7 +202,6 @@ var API_DOMAIN_URL = 'https://api.' + DOMAIN_NAME;
 var WEBSOCKET_CLIENT_URL = 'wss://api.' + DOMAIN_NAME + '/socket';
 var numberOfProjects = null;
 
-
 // other functions
 function templateUrl(module, name) {
   return 'app/templates/' + module + '/' + name + '.html?' + Math.random();

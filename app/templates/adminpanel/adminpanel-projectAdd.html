@@ -30,33 +30,37 @@
             <div class="profile-settings__top-part__inputs">
                 <div class="profile-settings__input-heading">Имя проекта:</div>
                 <input type="text" class="profile-settings__input validate-field" ng-model="newProject.Name" autofocus
-                       required/>
-                <br/>
+                       required />
+                <br />
 
                 <div class="profile-settings__input-heading adding-project__input-heading">Тип проекта:</div>
                 <div class="adding-project__type">
-          <span ng-repeat="categoryItem in categories" ng-bind="categoryItem.category"
-                ng-click="toggleCategory(categoryItem)"
-                ng-class="{'adding-project__categories__item--activated': categoryItem.status}"
-                class="adding-project__categories__item"></span>
+                    <span ng-repeat="categoryItem in categories" ng-bind="categoryItem.category"
+                          ng-click="toggleCategory(categoryItem)"
+                          ng-class="{'adding-project__categories__item--activated': categoryItem.status}"
+                          class="adding-project__categories__item"></span>
                 </div>
-                <br/>
+                <br />
 
                 <div class="profile-settings__input-heading">Статус проекта:</div>
-                <label><select class="adding-project__select" ng-model="newProject.ProjectStatus" required>
-                    <option value='0' selected>Запланирован</option>
-                    <option value='1'>В процессе</option>
-                    <option value='2'>Заморожен</option>
-                    <option value='3'>Завершен</option>
-                </select></label>
-                <br/>
+                <label>
+                    <select class="adding-project__select" ng-model="newProject.ProjectStatus" required>
+                        <option value='0' selected>Запланирован</option>
+                        <option value='1'>В процессе</option>
+                        <option value='2'>Заморожен</option>
+                        <option value='3'>Завершен</option>
+                    </select>
+                </label>
+                <br />
 
                 <div class="profile-settings__input-heading">Уровень доступа:</div>
-                <label><select class="adding-project__select" ng-model="newProject.AccessLevel" required>
-                    <option value="0" selected>Публичный</option>
-                    <option value="1">Приватный</option>
-                </select></label>
-                <br/>
+                <label>
+                    <select class="adding-project__select" ng-model="newProject.AccessLevel" required>
+                        <option value="0" selected>Публичный</option>
+                        <option value="1">Приватный</option>
+                    </select>
+                </label>
+                <br />
 
                 <div class="profile-settings__input-heading adding-project__input-heading">Разработчики:</div>
 
@@ -78,12 +82,34 @@
                         Добавить
                     </div>
                 </div>
-                <br/>
+                <br />
+
+                <div class="profile-settings__input-heading adding-project__input-heading">GitHub репозитории:</div>
+
+                <div class="adding-developer__button-wrapper">
+                    <div class="adding-project__developers" ng-if="chosenRepositories.length != 0">
+                        <div class="adding-project__developer-wrap" ng-repeat="repo in chosenRepositories">
+                            <label class="adding-project__developer">
+                                <div class="adding-project__developer-info">
+                                    <div ng-bind="repo.Name"></div>
+                                    <div ng-bind=" '(' + repo.HtmlUrl + ')' "></div>
+                                </div>
+                            </label>
+
+                            <div class="adding-project__developer__delete" ng-click="deleteRepo($index)"></div>
+                        </div>
+                    </div>
+
+                    <div class="profile-settings__button adding-developer__button" ng-click="githubRepoToggleOpened()">
+                        Добавить
+                    </div>
+                </div>
+                <br />
 
                 <div class="profile-settings__input-heading adding-project__input-heading">Описание проекта:</div>
-        <textarea class="adding-project__textarea validate-field" ng-model="newProject.Info" maxlength="500"
-                  ng-minlength="1" required></textarea>
-                <br/>
+                <textarea class="adding-project__textarea validate-field" ng-model="newProject.Info" maxlength="500"
+                          ng-minlength="1" required></textarea>
+                <br />
 
 
                 <div class="profile-settings__input-heading adding-project__input-heading">Прикрепить фото:</div>
@@ -167,6 +193,26 @@
 
             <a class="modal-window__see-more-button button-style" ng-if="isMoreDevs" ng-click="addDevelopers()">Показать больше</a>
 
+        </div>
+    </div>
+</div>
+
+<div class="modal-window__wrap" ng-show="isGithubRepoDialogOpen">
+    <div class="modal-window">
+        <div class="modal-window__developers">
+            <div class="modal-window__close-button" ng-click="githubRepoToggleOpened()"></div>
+
+            <div class="modal-window__search">
+                <input placeholder="Поиск" ng-model="searchText" />
+
+                <div class="search__icon"></div>
+            </div>
+
+            <label class="modal-window__developer" ng-repeat="repo in repositories">
+                <div ng-bind="repo.Name"></div>
+
+                <button class="modal-window__submit" ng-click="chooseRepo($index)">+</button>
+            </label>
         </div>
     </div>
 </div>

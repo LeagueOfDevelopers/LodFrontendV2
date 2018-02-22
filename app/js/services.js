@@ -337,6 +337,16 @@ angular.module('LodSite.services', [])
                 return sendAuthorizationSaveRequest(DELETE, url);
             };
 
+            this.getAllGithubRepositoriesForTheOrganization = function () {
+                var url = '/github/repositories';
+
+                return sendAuthorizationSaveRequest(GET, url).then(function (response) {
+                    if (response.status === 200) {
+                        return response.data;
+                    }
+                });
+            }
+
             //notifications
             this.getNotifications = function (pageCounter) {
                 var url = '/event/' + pageCounter;

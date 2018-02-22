@@ -790,6 +790,70 @@ angular.module('LodSite.controllers', [])
                 $scope.chosenDevelopers.splice(index, 1);
             };
 
+            // FOR GITHUB REPOSITORIES
+
+            $scope.isGithubRepoDialogOpen = false;
+            $scope.chosenRepositories = [];
+            $scope.repositories = [];
+
+            $scope.githubRepoToggleOpened = function () {
+                $scope.isGithubRepoDialogOpen = !$scope.isGithubRepoDialogOpen;
+
+                if ($scope.isGithubRepoDialogOpen) {
+                    $scope.getGithubRepositories();
+                } else {
+                    $scope.resetRepositories();
+                }
+            };
+
+            $scope.getGithubRepositories = function () {
+                ApiService.getAllGithubRepositoriesForTheOrganization().then(function (data) {
+                    $scope.repositories = [];
+
+                    if ($scope.chosenRepositories.length == 0) {
+                        $scope.repositories = $scope.repositories.concat(data);
+                        return;
+                    } else {
+                        var repoUrls = data.map(function (repoItem) {
+                            return repoItem.HtmlUrl;
+                        });
+                        var chosenRepoUrls = $scope.chosenRepositories.map(function (repoItem) {
+                            return repoItem.HtmlUrl;
+                        });
+
+                        repoUrls = repoUrls.filter(function (url) {
+                            return !inArray(url, chosenRepoUrls);
+                        });
+
+                        data = data.filter(function (dataItem) {
+                            return inArray(dataItem.HtmlUrl, repoUrls);
+                        });
+                        if (data.length == 0) {
+                            $scope.getAllGithubRepositoriesForTheOrganization();
+                        } else {
+                            $scope.repositories = $scope.repositories.concat(data);
+                        }
+                    }
+                })
+            };
+
+            $scope.resetRepositories = function () {
+                $scope.repositories = [];
+            }
+
+            $scope.chooseRepo = function (index) {
+                $scope.chosenRepositories.push({
+                    Name: $scope.repositories[index].Name,
+                    HtmlUrl: $scope.repositories[index].HtmlUrl
+                });
+                $scope.repositories = [];
+                $scope.githubRepoToggleOpened();
+            };
+
+            $scope.deleteRepo = function (index) {
+                $scope.chosenRepositories.splice(index, 1);
+            };
+
             //   FOR SMALL IMAGES
             $scope.currentUploadStateImage = "waiting"; // waiting, uploading
             $scope.currentPercentImage = 0;
@@ -876,6 +940,10 @@ angular.module('LodSite.controllers', [])
                     return image;
                 });
 
+                $scope.newProject.LinksToGithubRepositories = $scope.chosenRepositories.map(function (repo) {
+                    return repo.HtmlUrl;
+                })
+
                 var j = 0;
                 for (var i = 0; i < $scope.categories.length; i++) {
                     if ($scope.categories[i].status) {
@@ -896,6 +964,8 @@ angular.module('LodSite.controllers', [])
                         $scope.images = [];
                         $scope.developers = [];
                         $scope.chosenDevelopers = [];
+                        $scope.repositories = [];
+                        $scope.chosenRepositories = [];
                         $scope.isMoreDevs = true;
                         $scope.newProject = new sampleProject();
                         $scope.categories = [{
@@ -1147,6 +1217,68 @@ angular.module('LodSite.controllers', [])
                 $scope.projectMemberships.splice(index, 1);
             };
 
+            // FOR GITHUB REPOSITORIES
+
+            $scope.isGithubRepoDialogOpen = false;
+            $scope.repositories = [];
+
+            $scope.githubRepoToggleOpened = function () {
+                $scope.isGithubRepoDialogOpen = !$scope.isGithubRepoDialogOpen;
+
+                if ($scope.isGithubRepoDialogOpen) {
+                    $scope.getGithubRepositories();
+                } else {
+                    $scope.resetRepositories();
+                }
+            };
+
+            $scope.getGithubRepositories = function () {
+                ApiService.getAllGithubRepositoriesForTheOrganization().then(function (data) {
+                    $scope.repositories = [];
+
+                    if ($scope.editedProject.LinksToGithubRepositories.length == 0) {
+                        $scope.repositories = $scope.repositories.concat(data);
+                        return;
+                    } else {
+                        var repoUrls = data.map(function (repoItem) {
+                            return repoItem.HtmlUrl;
+                        });
+                        var chosenRepoUrls = $scope.editedProject.LinksToGithubRepositories.map(function (repoItem) {
+                            return repoItem.HtmlUrl;
+                        });
+
+                        repoUrls = repoUrls.filter(function (url) {
+                            return !inArray(url, chosenRepoUrls);
+                        });
+
+                        data = data.filter(function (dataItem) {
+                            return inArray(dataItem.HtmlUrl, repoUrls);
+                        });
+                        if (data.length == 0) {
+                            $scope.getAllGithubRepositoriesForTheOrganization();
+                        } else {
+                            $scope.repositories = $scope.repositories.concat(data);
+                        }
+                    }
+                })
+            };
+
+            $scope.resetRepositories = function () {
+                $scope.repositories = [];
+            }
+
+            $scope.chooseRepo = function (index) {
+                $scope.editedProject.LinksToGithubRepositories.push({
+                    HtmlUrl: $scope.repositories[index].HtmlUrl
+                });
+                $scope.repositories = [];
+                $scope.githubRepoToggleOpened();
+            };
+
+            $scope.deleteRepo = function (index) {
+                $scope.editedProject.LinksToGithubRepositories.splice(index, 1);
+            };
+
             //   FOR SMALL IMAGES
             $scope.currentUploadStateImage = "waiting"; // waiting, uploading
             $scope.currentPercentImage = 0;
@@ -1246,6 +1378,11 @@ angular.module('LodSite.controllers', [])
                     $scope.editedProject.ProjectStatus = data.data.ProjectStatus;
                     $scope.editedProject.LandingImage = data.data.LandingImage;
                     $scope.editedProject.Screenshots = data.data.Screenshots;
+                    $scope.editedProject.LinksToGithubRepositories = data.data.LinksToGithubRepositories.map(function (link) {
+                        return {
+                            HtmlUrl: link
+                        }
+                    });
 
                     for (var i = 0; i < $scope.editedProject.ProjectTypes.length; i++) {
                         $scope.categories[$scope.editedProject.ProjectTypes[i]].status = true;
@@ -1265,10 +1402,18 @@ angular.module('LodSite.controllers', [])
                     }
                 }
 
+                $scope.editedProject.LinksToGithubRepositories = $scope.editedProject.LinksToGithubRepositories.map(function (link) {
+                    return link.HtmlUrl;
+                });
+
                 ApiService.editProject(projectId, $scope.editedProject).then(function (isSuccess) {
                     if (isSuccess) {
                         $scope.currentState = 'success';
-
+                        $scope.editedProject.LinksToGithubRepositories = $scope.editedProject.LinksToGithubRepositories.map(function (link) {
+                            return {
+                                HtmlUrl: link
+                            }
+                        });
                         $timeout(function () {
                             $scope.currentState = 'filling';
                         }, 3000);

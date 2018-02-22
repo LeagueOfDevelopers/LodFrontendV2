@@ -1440,12 +1440,14 @@ angular.module('LodSite.controllers', [])
         function ($scope, $timeout, ApiService, TokenService) {
             var token = TokenService.getToken();
             var role = TokenService.getRole();
+            $scope.notificationMessage = {};
             if (!token || role != 1) {
                 return $state.go('index');
             }
 
             $scope.createNotification = function () {
-                ApiService.createNotification(JSON.stringify($scope.notification)).then(function (isSuccess) {
+                $scope.notificationMessage = { InfoText: $scope.notification };
+                ApiService.createNotification(JSON.stringify($scope.notificationMessage)).then(function (isSuccess) {
                     $scope.currentState = isSuccess ? 'success' : 'failed';
 
                     $scope.notification = '';

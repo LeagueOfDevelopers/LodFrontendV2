@@ -453,13 +453,23 @@ angular.module('LodSite.controllers', [])
             };
             $scope.joinToProject = function () {
                 ApiService.joinToProject(projectId, userId, JSON.stringify($scope.projectDeveloperRole))
-                    .then(function () {
-                        $state.reload();
+                    .then(function (isSuccess) {
+                        if (isSuccess) {
+                            $state.reload();
+                        }
+                        else {
+                            $state.go('error');
+                        }
                     });
             };
             $scope.escapeFromProject = function () {
-                ApiService.escapeFromProject(projectId, userId).then(function () {
-                    $state.reload();
+                ApiService.escapeFromProject(projectId, userId).then(function (isSuccess) {
+                    if (isSuccess) {
+                        $state.reload();
+                    }
+                    else {
+                        $state.go('error');
+                    }
                 });
             };
 
@@ -572,7 +582,7 @@ angular.module('LodSite.controllers', [])
             var pageCounter = 0;
             $scope.isInvalid = [];
             $scope.isOpen = false;
-            
+
             $scope.images = [];
             $scope.developers = [];
             $scope.chosenDevelopers = [];
@@ -890,7 +900,7 @@ angular.module('LodSite.controllers', [])
             }
             );
 
-                $scope.deleteImage = function (index) {
+            $scope.deleteImage = function (index) {
                 $scope.images.splice(index, 1);
             };
 
@@ -1433,11 +1443,11 @@ angular.module('LodSite.controllers', [])
             $scope.$emit('toggle_black', { isBlack: true });
         }])
 
-    .controller('AdminNotificationCtrl', ['$scope',
+    .controller('AdminNotificationCtrl', ['$scope', '$state',
         '$timeout',
         'ApiService',
         'TokenService',
-        function ($scope, $timeout, ApiService, TokenService) {
+        function ($scope, $state, $timeout, ApiService, TokenService) {
             var token = TokenService.getToken();
             var role = TokenService.getRole();
             $scope.notificationMessage = {};
@@ -1449,12 +1459,16 @@ angular.module('LodSite.controllers', [])
                 $scope.notificationMessage = { InfoText: $scope.notification };
                 ApiService.createNotification(JSON.stringify($scope.notificationMessage)).then(function (isSuccess) {
                     $scope.currentState = isSuccess ? 'success' : 'failed';
+                    if (isSuccess) {
+                        $scope.notification = '';
 
-                    $scope.notification = '';
-
-                    $timeout(function () {
-                        $scope.currentState = '';
-                    }, 4000);
+                        $timeout(function () {
+                            $scope.currentState = '';
+                        }, 4000);
+                    }
+                    else {
+                        $state.go('error');
+                    }
                 });
             };
 
@@ -1471,10 +1485,10 @@ angular.module('LodSite.controllers', [])
             })
         }])
 
-    .controller('AdminDevelopersCtrl', ['$scope',
+    .controller('AdminDevelopersCtrl', ['$scope', '$state',
         'ApiService',
         'DateService',
-        function ($scope, ApiService, DateService) {
+        function ($scope, $state, ApiService, DateService) {
             $scope.developers = [];
             $scope.searchText = '';
             $scope.isMoreDevs = true;
@@ -1548,6 +1562,9 @@ angular.module('LodSite.controllers', [])
                                 $scope.developerForConfirmation = {};
 
                                 $scope.closeWindow();
+                            }
+                            else {
+                                $state.go('error');
                             }
                         });
                         break;
@@ -1809,7 +1826,7 @@ angular.module('LodSite.controllers', [])
         });
     }])
 
-    .controller('ContactCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
+    .controller('ContactCtrl', ['$scope', '$state', 'ApiService', function ($scope, $state, ApiService) {
         $scope.data = {};
 
         $scope.Request = function () {
@@ -1825,7 +1842,7 @@ angular.module('LodSite.controllers', [])
                     }
                         , 2000);
                 } else {
-                    alert('Что-то пошло не так.');
+                    $state.go('error');
                 }
             }
             );
@@ -2079,19 +2096,24 @@ angular.module('LodSite.controllers', [])
                     return notification.Id;
                 });
 
-                ApiService.readNotifications(notifIds).then(function () {
-                    $scope.notifications.Unread.forEach(function (item) {
-                        item.WasRead = true;
-                    });
+                ApiService.readNotifications(notifIds).then(function (isSuccess) {
+                    if (!isSuccess) {
+                        $state.go('error');
+                    }
+                    else {
+                        $scope.notifications.Unread.forEach(function (item) {
+                            item.WasRead = true;
+                        });
 
-                    var newNotifications = filterNotifications($scope.notifications.Unread);
+                        var newNotifications = filterNotifications($scope.notifications.Unread);
 
-                    var notifications = {
-                        Read: $scope.notifications.Read.concat(newNotifications.Read),
-                        Unread: []
-                    };
+                        var notifications = {
+                            Read: $scope.notifications.Read.concat(newNotifications.Read),
+                            Unread: []
+                        };
 
-                    $scope.notifications = sortNotifications(notifications);
+                        $scope.notifications = sortNotifications(notifications);
+                    }
                 });
             };
 

@@ -328,13 +328,17 @@ angular.module('LodSite.services', [])
             this.joinToProject = function (projectId, userId, projectDeveloperRole) {
                 var url = '/projects/' + projectId + '/developer/' + userId;
 
-                return sendAuthorizationSaveRequest(POST, url, null, projectDeveloperRole);
+                return sendAuthorizationSaveRequest(POST, url, null, projectDeveloperRole).then(function (response) {
+                    return response.status === 200;
+                });
             };
 
             this.escapeFromProject = function (projectId, userId) {
                 var url = '/projects/' + projectId + '/developer/' + userId;
 
-                return sendAuthorizationSaveRequest(DELETE, url);
+                return sendAuthorizationSaveRequest(DELETE, url).then(function (response) {
+                    return response.status === 200;
+                });
             };
 
             this.getAllGithubRepositoriesForTheOrganization = function () {
@@ -372,13 +376,17 @@ angular.module('LodSite.services', [])
             this.readNotifications = function (notifIds) {
                 var url = '/event/read';
 
-                return sendAuthorizationSaveRequest(PUT, url, null, notifIds);
+                return sendAuthorizationSaveRequest(PUT, url, null, notifIds).then(function (response) {
+                    return response.status === 200;
+                });
             };
 
             this.createNotification = function (notification) {
                 var url = '/admin/notification';
 
-                return sendAuthorizationSaveRequest(POST, url, null, notification);
+                return sendAuthorizationSaveRequest(POST, url, null, notification).then(function (response) {
+                    return response.status === 200;
+                });
             };
 
 
@@ -443,23 +451,10 @@ angular.module('LodSite.services', [])
                 var fileExtension = fileName.match(/[^\.]*$/)[0];
                 var MimeType = "application/octet-stream";
 
-                // if (fileExtension == 'pdf'){
-                //   MimeType = 'application/pdf';
-                // }else if(fileExtension == 'doc'){
-                //   MimeType = 'application/msword';
-                // }else if(fileExtension == 'docx'){
-                //   MimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-                // }else if(fileExtension == 'ttf'){
-                //   MimeType = 'font/ttf';
-                // }else if(fileExtension == 'txt'){
-                //   MimeType = 'text/plain';
-                // }
-
                 return sendAuthorizationSaveRequest(GET, url).then(function (response) {
                     var a = document.createElement("a");
 
                     var blob = new Blob([response.data], { type: MimeType });
-                    // var blob = new Blob([response.data], {type: MimeType+';charset=utf-8'});
                     a.href = URL.createObjectURL(blob);
                     a.download = fileName;
                     a.click();

@@ -21,7 +21,7 @@
           <div class="full-developer__projects-count" >
             Количество проектов: <span class="residence-time" ng-bind="fullDeveloper.ProjectCount"></span>
           </div>
-          <a class="full-developer__vk" ng-href="{{fullDeveloper.VkPageUri}}">Профиль Вконтакте</a>
+          <a class="full-developer__vk" ng-if="fullDeveloper.VkPageUri != null" ng-href="{{fullDeveloper.VkPageUri}}">Профиль Вконтакте</a>
         </div>
       </a>
     </div>

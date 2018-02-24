@@ -1388,6 +1388,21 @@ footer {
   margin: 15px 0;
 }
 
+.sign-up-form__label {
+    display: block;
+    height: 40px;
+}
+
+.sign-up-form__label span {
+    display: -webkit-inline-box;
+    height: 40px;
+    min-width: 140px;
+    line-height: 40px;
+    margin: 0;
+    vertical-align: -webkit-baseline-middle;
+    vertical-align: -moz-middle-with-baseline;
+}
+
 .sign-up-form__label, .sign-up-form__switcher input, input.sign-up__checkbox {
   cursor: pointer;
 }
@@ -1396,10 +1411,11 @@ footer {
   width: 22px;
   margin: auto;
   margin-right: 10px;
-  vertical-align: middle;
   display: -webkit-inline-box;
   -webkit-box-pack: center;
   -webkit-box-align: center;
+  vertical-align: -webkit-baseline-middle;
+  vertical-align: -moz-middle-with-baseline;
 }
 
 
@@ -1534,9 +1550,6 @@ footer {
   height: 35px;
 }
 
-.profile-settings__switcher {
-    vertical-align: -webkit-baseline-middle;
-}
 
 .profile-settings__switcher_label {
     float: left;
@@ -1600,6 +1613,8 @@ footer {
     background-color: white;
     padding: 4px;
     border-radius: 2px;
+    vertical-align: -moz-middle-with-baseline;
+    vertical-align: -webkit-baseline-middle;
 }
 
 .profile-settings__switcher_label {
@@ -3614,9 +3629,6 @@ footer {
     color: #808080;
   }
 
-  .sign-up-form input, select {
-    min-height: 50px;
-  }
 
   .section__step-number {
     display: block;

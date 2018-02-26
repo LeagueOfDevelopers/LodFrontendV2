@@ -2068,7 +2068,7 @@ angular.module('LodSite.controllers', [])
                             break;
 
                         case 'NewContactMessage':
-                            notification.EventInfo.ClientEmailAddress = notification.EventInfo.ClientEmailAddress.Address;
+                            notification.EventInfo.ClientEmailAddress = notification.EventInfo.ClientEmailAddress;
                             break;
 
                         case 'NewDeveloperOnProject':

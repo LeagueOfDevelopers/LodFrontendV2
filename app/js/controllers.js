@@ -805,6 +805,8 @@ angular.module('LodSite.controllers', [])
             $scope.isGithubRepoDialogOpen = false;
             $scope.chosenRepositories = [];
             $scope.repositories = [];
+            $scope.gottenRepositories = $scope.repositories;
+            $scope.previousSearchString = "";
 
             $scope.githubRepoToggleOpened = function () {
                 $scope.isGithubRepoDialogOpen = !$scope.isGithubRepoDialogOpen;
@@ -844,8 +846,21 @@ angular.module('LodSite.controllers', [])
                             $scope.repositories = $scope.repositories.concat(data);
                         }
                     }
+                    $scope.gottenRepositories = $scope.repositories;
                 })
             };
+
+            $scope.$watch("searchGithubRepository", function (searchString) {
+                if ($scope.previousSearchString !== undefined && searchString !== undefined) {
+                    if (searchString === '' || searchString.length < $scope.previousSearchString.length) {
+                        $scope.repositories = $scope.gottenRepositories;
+                    }
+                }
+                $scope.repositories = $scope.repositories.filter(function (repo) {
+                    return repo.Name.toLowerCase().includes(searchString.toLowerCase());
+                });
+                $scope.previousSearchString = searchString;
+            });
 
             $scope.resetRepositories = function () {
                 $scope.repositories = [];
@@ -1231,6 +1246,8 @@ angular.module('LodSite.controllers', [])
 
             $scope.isGithubRepoDialogOpen = false;
             $scope.repositories = [];
+            $scope.gottenRepositories = $scope.repositories;
+            $scope.previousSearchString = "";
 
             $scope.githubRepoToggleOpened = function () {
                 $scope.isGithubRepoDialogOpen = !$scope.isGithubRepoDialogOpen;
@@ -1270,8 +1287,21 @@ angular.module('LodSite.controllers', [])
                             $scope.repositories = $scope.repositories.concat(data);
                         }
                     }
+                    $scope.gottenRepositories = $scope.repositories;
                 })
             };
+
+            $scope.$watch("searchGithubRepository", function (searchString) {
+                if ($scope.previousSearchString !== undefined && searchString !== undefined) {
+                        if (searchString === '' || searchString.length < $scope.previousSearchString.length) {
+                            $scope.repositories = $scope.gottenRepositories;
+                        }
+                    } 
+                    $scope.repositories = $scope.repositories.filter(function (repo) {
+                            return repo.Name.toLowerCase().includes(searchString.toLowerCase());
+                        });
+                $scope.previousSearchString = searchString;
+            });
 
             $scope.resetRepositories = function () {
                 $scope.repositories = [];

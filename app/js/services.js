@@ -471,8 +471,8 @@ angular.module('LodSite.services', [])
                 });
             };
 
-            this.getFirstMessage = function () {
-                var url = '/socket/message';
+            this.getFirstMessage = function (currentUserId) {
+                var url = '/socket/message?id=' + currentUserId;
 
                 return sendAuthorizationSaveRequest(GET, url);
             }
@@ -589,7 +589,7 @@ angular.module('LodSite.services', [])
             };
             $rootScope.webSocket.onopen = function () {
                 console.log("Websocket connection is opened");
-                ApiService.getFirstMessage();
+                ApiService.getFirstMessage(currentUserId);
             }
             $rootScope.webSocket.onclose = function () {
                 console.log("Websocket connection is closed");

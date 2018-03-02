@@ -6,7 +6,7 @@ angular.module('LodSite.services', [])
 
     .service('TokenService', ['$rootScope', function ($rootScope) {
         var HOURS = 24;
-        var TOKEN_VALIDITY = 3600 * 1000 * HOURS;
+        var TOKEN_VALIDITY = 3600 * HOURS * 1000;
         var self = this;
 
 
@@ -44,7 +44,7 @@ angular.module('LodSite.services', [])
             var token = self.getToken();
             if (!token) return false;
 
-            var now = (new Date()).getMilliseconds();
+            var now = (new Date()).getTime();
             var tokenCreationTime = Date.parse(token.CreationTime);
             if (now - tokenCreationTime > TOKEN_VALIDITY) {
                 self.resetToken();

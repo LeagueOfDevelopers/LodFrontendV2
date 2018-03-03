@@ -824,7 +824,6 @@ angular.module('LodSite.controllers', [])
 
                     if ($scope.chosenRepositories.length == 0) {
                         $scope.repositories = $scope.repositories.concat(data);
-                        return;
                     } else {
                         var repoUrls = data.map(function (repoItem) {
                             return repoItem.HtmlUrl;

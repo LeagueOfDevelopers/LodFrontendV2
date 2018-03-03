@@ -583,7 +583,7 @@ angular.module('LodSite.services', [])
         $rootScope.timerID = 0;
         $rootScope.keepAlive = function () {
             var timeout = 20000;
-            if ($rootScope.webSocket.readyState == $rootScope.webSocket.OPEN) {
+            if ($rootScope.webSocket.readyState === $rootScope.webSocket.OPEN) {
                 $rootScope.webSocket.send('');
             }
             $rootScope.timerId = setTimeout($rootScope.keepAlive, timeout);

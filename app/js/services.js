@@ -593,12 +593,15 @@ angular.module('LodSite.services', [])
                 clearTimeout($rootScope.timerId);
             }
         }
+        $rootScope.getNotificationsAmount = function () {
+            return JSON.parse(localStorage.getItem('notifications_amount'));
+        }
 
         this.start = function () {
             var currentUserId = TokenService.getToken().UserId;
             $rootScope.webSocket = new WebSocket(WEBSOCKET_CLIENT_URL + '?id=' + currentUserId);
             $rootScope.webSocket.onmessage = function (message) {
-                $rootScope.notificationsAmount = message.data;
+                localStorage.setItem('notifications_amount', JSON.stringify(message.data));
                 $rootScope.$apply();
             };
             $rootScope.webSocket.onopen = function () {
@@ -608,6 +611,7 @@ angular.module('LodSite.services', [])
             }
             $rootScope.webSocket.onclose = function () {
                 $rootScope.cancelKeepAlive();
+                localStorage.removeItem('notifications_amount');
                 console.log("Websocket connection is closed");
             }
             $rootScope.webSocket.onerror = function (error) {

@@ -580,6 +580,20 @@ angular.module('LodSite.services', [])
     }])
 
     .service('WebSocketService', ['$rootScope', 'TokenService', 'ApiService', function ($rootScope, TokenService, ApiService) {
+        $rootScope.timerID = 0;
+        $rootScope.keepAlive = function () {
+            var timeout = 20000;
+            if ($rootScope.webSocket.readyState == $rootScope.webSocket.OPEN) {
+                $rootScope.webSocket.send('');
+            }
+            $rootScope.timerId = setTimeout($rootScope.keepAlive, timeout);
+        }
+        $rootScope.cancelKeepAlive = function () {
+            if ($rootScope.timerId) {
+                clearTimeout($rootScope.timerId);
+            }
+        }
+
         this.start = function () {
             var currentUserId = TokenService.getToken().UserId;
             $rootScope.webSocket = new WebSocket(WEBSOCKET_CLIENT_URL + '?id=' + currentUserId);
@@ -590,8 +604,10 @@ angular.module('LodSite.services', [])
             $rootScope.webSocket.onopen = function () {
                 console.log("Websocket connection is opened");
                 ApiService.getFirstMessage(currentUserId);
+                $rootScope.keepAlive();
             }
             $rootScope.webSocket.onclose = function () {
+                $rootScope.cancelKeepAlive();
                 console.log("Websocket connection is closed");
             }
             $rootScope.webSocket.onerror = function (error) {

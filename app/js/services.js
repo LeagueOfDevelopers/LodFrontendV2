@@ -580,24 +580,29 @@ angular.module('LodSite.services', [])
     }])
 
     .service('WebSocketService', ['$rootScope', 'TokenService', 'ApiService', function ($rootScope, TokenService, ApiService) {
-        $rootScope.timerID = 0;
-        $rootScope.keepAlive = function () {
-            var timeout = 20000;
+        var self = this;
+        self.timerId = 0;
+        self.keepAlive = function () {
+            var timeout = 40000;
             if ($rootScope.webSocket.readyState === $rootScope.webSocket.OPEN) {
                 $rootScope.webSocket.send('');
             }
-            $rootScope.timerId = setTimeout($rootScope.keepAlive, timeout);
+            self.timerId = setTimeout(self.keepAlive, timeout);
         }
-        $rootScope.cancelKeepAlive = function () {
-            if ($rootScope.timerId) {
-                clearTimeout($rootScope.timerId);
+        self.cancelKeepAlive = function () {
+            if (self.timerId) {
+                clearTimeout(self.timerId);
             }
         }
+
         $rootScope.getNotificationsAmount = function () {
+            if ($rootScope.webSocket == undefined) {
+                self.start();
+            }
             return JSON.parse(localStorage.getItem('notifications_amount'));
         }
 
-        this.start = function () {
+        self.start = function () {
             var currentUserId = TokenService.getToken().UserId;
             $rootScope.webSocket = new WebSocket(WEBSOCKET_CLIENT_URL + '?id=' + currentUserId);
             $rootScope.webSocket.onmessage = function (message) {
@@ -607,10 +612,10 @@ angular.module('LodSite.services', [])
             $rootScope.webSocket.onopen = function () {
                 console.log("Websocket connection is opened");
                 ApiService.getFirstMessage(currentUserId);
-                $rootScope.keepAlive();
+                self.keepAlive();
             }
             $rootScope.webSocket.onclose = function () {
-                $rootScope.cancelKeepAlive();
+                self.cancelKeepAlive();
                 localStorage.removeItem('notifications_amount');
                 console.log("Websocket connection is closed");
             }
@@ -618,8 +623,14 @@ angular.module('LodSite.services', [])
                 console.log("Was closed because of " + error.message);
             }
         }
-        this.stop = function () {
-            $rootScope.webSocket.close();
+        self.stop = function () {
+            if ($rootScope.webSocket) {
+                $rootScope.webSocket.close();
+            }
+            else {
+                localStorage.removeItem('notifications_amount');
+                console.log("Websocket connection is closed");
+            }
         }
     }])
     ;

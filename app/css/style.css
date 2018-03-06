@@ -2353,7 +2353,6 @@ footer {
 
 .adminpanel__developers .table__cell__heading {
   display: inline-block;
-  margin-right: 5px;
 }
 
 .adminpanel__developers .table__cell {
@@ -2376,7 +2375,12 @@ footer {
 
 .adminpanel__developers .table__cell__data {
   display: inline-block;
-  border: 1px solid #f1f1f1;
+  border: 1px solid #2980b9;
+  background: #2980b9;
+  border-radius: 3px;
+  color: white;
+  width: 130px;
+  cursor: pointer;
 }
 
 .adminpanel__developers .table__toggle {
@@ -2941,6 +2945,11 @@ footer {
 
   .adminpanel__developers .table__data .data__date {
     width: 18%;
+    min-height: 24.67px;
+    background: #2980b9;
+    color: white;
+    border-radius: 3px;
+    cursor: pointer;
   }
 
   .adminpanel__developers .table__data .data__confirm {

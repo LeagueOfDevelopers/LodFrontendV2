@@ -18,7 +18,7 @@
 
       <div class="table__cell">
         <div class="table__cell__heading">Дата регистрации:</div>
-        <div class="table__cell__data" ng-bind="developer.RegistrationDate"></div>
+        <div class="table__cell__data" ng-click="callConfirmationWindow(developer, 3, $index)" ng-bind="developer.RegistrationDate"></div>
       </div>
 
 
@@ -64,7 +64,8 @@
       <a class="data__item data__name" ng-href="{{'/developers/' + developer.UserId}}" target="_blank"><span
         ng-bind="developer.Name"></span></a>
 
-      <div class="data__item data__date"><span ng-bind="developer.RegistrationDate"></span></div>
+      <div class="data__item data__date" ng-click="callConfirmationWindow(developer, 3, $index)">
+        <span ng-bind="developer.RegistrationDate"></span></div>
 
       <div class="data__item data__confirm" ng-click="callConfirmationWindow(developer, 0, $index)">
         <div class="data__toggle data__toggle__on"

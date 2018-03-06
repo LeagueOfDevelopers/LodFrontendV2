@@ -6,6 +6,7 @@ angular.module('LodSite', [
          'ui.router',
          'ngDialog',
          'base64',
+         'ui.mask',
 
          'LodSite.directives',
          'LodSite.controllers',

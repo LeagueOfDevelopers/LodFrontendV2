@@ -1678,6 +1678,7 @@ angular.module('LodSite.controllers', [])
         $scope.currentDate = new Date();
 
         $scope.signUp = function () {
+            $scope.newDeveloper.PhoneNumber = '7' + $scope.newDeveloper.PhoneNumber;
             $scope.loginType === 'github' ?
                 ApiService.signUpWithGithub($scope.newDeveloper) :
                 ApiService.signUp($scope.newDeveloper).then(function (responseObject) {

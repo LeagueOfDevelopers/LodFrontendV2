@@ -1555,6 +1555,7 @@ angular.module('LodSite.controllers', [])
                 $scope.developerForConfirmation = {
                     id: developer.UserId,
                     name: developer.Name,
+                    registrationDate: developer.RegistrationDate,
                     eventType: eventType,
                     index: index
                 };
@@ -1569,7 +1570,10 @@ angular.module('LodSite.controllers', [])
                     } else {
                         $scope.message = ' будет скрыт. Вы точно в этом уверены?';
                     }
-                } else {
+                } else if (eventType == 3) {
+                    $scope.message = 'Изменить дату регистрации пользователя?';
+                }
+                else {
                     return;
                 }
 

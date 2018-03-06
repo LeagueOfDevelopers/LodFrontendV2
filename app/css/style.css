@@ -2421,6 +2421,17 @@ footer {
   display: inline;
 }
 
+.modal-window__message input {
+  width: 60%;
+  height: 24px;
+  padding: 6px;
+  align-self: center;
+  text-align: center;
+  align-self: -webkit-center;
+  text-align: -webkit-center;
+  text-align: -moz-center;
+}
+
 .adminpanel__developers .modal-window__button {
   display: inline-block;
   width: 105px;

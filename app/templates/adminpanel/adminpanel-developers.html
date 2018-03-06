@@ -96,10 +96,13 @@
       <div class="modal-window__developers">
         <div class="modal-window__close-button" ng-click="closeWindow()"></div>
 
-        <a class="modal-window__name" ng-href="{{'/developers/' + developerForConfirmation.id}}" target="_blank"
+        <a ng-if="developerForConfirmation.eventType != 3" class="modal-window__name" ng-href="{{'/developers/' + developerForConfirmation.id}}" target="_blank"
            ng-bind="developerForConfirmation.name"></a>
 
-        <div class="modal-window__message" ng-bind="message"></div>
+        <div class="modal-window__message">
+            <input ng-if="developerForConfirmation.eventType == 3" type="text" ng-model="newRegistrationDate" 
+                   placeholder="ДД/ММ/ГГГГ" ui-mask="99.99.9999"  ui-mask-placeholder-char=" " />
+        </div>
 
         <br/>
 

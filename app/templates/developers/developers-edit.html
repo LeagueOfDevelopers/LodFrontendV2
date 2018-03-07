@@ -28,8 +28,15 @@
       <div class="profile-settings__top-part__inputs">
 
           <div class="profile-settings__input-heading">Институт:</div>
-          <input type="text" class="profile-settings__input validate-field" ng-model="profile.InstituteName"
-                 pattern="^[А-Яа-яЁё\s]+$" required />
+          <select class="profile-settings__input" ng-model="profile.InstituteName" required>
+              <option value="ИТАСУ" ng-selected="profile.InstituteName=='ИТАСУ'">ИТАСУ</option>
+              <option value="ЭкоТех" ng-selected="profile.InstituteName=='ЭкоТех'">ЭкоТех</option>
+              <option value="ИНМиН" ng-selected="profile.InstituteName=='ИНМиН'">ИНМиН</option>
+              <option value="ЭУПП" ng-selected="profile.InstituteName=='ЭУПП'">ЭУПП</option>
+              <option value="ИБС" ng-selected="profile.InstituteName=='ИБС'">ИБС</option>
+              <option value="ИБО" ng-selected="profile.InstituteName=='ИБО'">ИБО</option>
+              <option value="Горный" ng-selected="profile.InstituteName=='Горный'">Горный</option>
+          </select>
           <br />
 
           <div class="profile-settings__input-heading">Кафедра:</div>
@@ -43,9 +50,9 @@
           <br />
 
           <div class="profile-settings__input-heading">Год поступления:</div>
-          <input name="studentAccessionYear" type="text" class="profile-settings__input validate-field"
-                 restrict="reject" ng-model="profile.StudentAccessionYear" pattern="20[0-9]{2}" minlength="4"
-                 maxlength="4" required />
+          <input type="number" class="profile-settings__input validate-field"
+                 min="2000" max="{{currentDate | date:'yyyy'}}" ng-model="profile.StudentAccessionYear"
+                 pattern="[1-9]\d*" ng-minlength="4" ng-maxlength="4" required />
           <br />
 
           <div class="help-message-input profile-settings__help-message"
@@ -62,13 +69,13 @@
           <br />
 
           <div class="profile-settings__input-heading">Номер телефона:</div>
-          <input type="text" class="profile-settings__input validate-field"
-                 pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$"
-                 ng-model="profile.PhoneNumber" required />
+          <input type="text" class="profile-settings__input validate-field" ng-model="profile.PhoneNumber"
+                 ui-mask="+7-(999)-999-99-99" ui-mask-placeholder-char=" " required />
           <br />
 
           <div class="profile-settings__input-heading" ng-if="profile.VkProfileUri !== null">Профиль ВКонтакте:</div>
-          <input type="url" name="vkUri" class="profile-settings__input validate-field" ng-model="profile.VkProfileUri"
+          <input type="url" name="vkUrl" class="profile-settings__input validate-field" pattern="^http://vk.com/"
+                 ng-model="profile.VkProfileUri" ng-maxlength="30"
                  ng-if="profile.VkProfileUri !== null" required />
 
           <div class="help-message-input profile-settings__help-message__vk-uri"

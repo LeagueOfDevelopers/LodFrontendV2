@@ -169,7 +169,7 @@ angular.module('LodSite.controllers', [])
             $scope.state = [];
             $scope.currentState = null;
             $scope.profile = {};
-
+            $scope.currentDate = new Date();
 
             var nullifyEntities = function () {
                 $scope.state = [];
@@ -261,7 +261,7 @@ angular.module('LodSite.controllers', [])
                 $scope.profile.StudentAccessionYear = data.StudentAccessionYear;
                 $scope.profile.LinkToGithubProfile = data.LinkToGithubProfile;
                 $scope.profile.VkProfileUri = data.VkProfileUri;
-                $scope.profile.PhoneNumber = data.PhoneNumber;
+                $scope.profile.PhoneNumber = data.PhoneNumber.slice(1);
                 $scope.profile.IsGraduated = data.IsGraduated;
                 $scope.profile.HasPassword = !data.IsOauthRegistered;
             });
@@ -298,13 +298,14 @@ angular.module('LodSite.controllers', [])
             }
 
             $scope.changeProfileSettings = function () {
-
+                $scope.profile.PhoneNumber = '7' + $scope.profile.PhoneNumber;
                 ApiService.sendProfileSttings(developerId, $scope.profile).then(function (isSuccess) {
                     if (isSuccess) {
                         $scope.state[0] = 'success';
                     } else {
                         $scope.state[0] = 'failed';
                     }
+                    $scope.profile.PhoneNumber = $scope.profile.PhoneNumber.slice(1);
                     changeCurrentState();
                 });
 

@@ -1556,6 +1556,7 @@ angular.module('LodSite.controllers', [])
                     id: developer.UserId,
                     name: developer.Name,
                     registrationDate: developer.RegistrationDate,
+                    newRegistrationDate: developer.RegistrationDate,
                     eventType: eventType,
                     index: index
                 };
@@ -1571,7 +1572,7 @@ angular.module('LodSite.controllers', [])
                         $scope.message = ' будет скрыт. Вы точно в этом уверены?';
                     }
                 } else if (eventType == 3) {
-                    $scope.message = 'Изменить дату регистрации пользователя?';
+                    $scope.message = 'Изменить дату регистрации пользователя ';
                 }
                 else {
                     return;
@@ -1610,6 +1611,9 @@ angular.module('LodSite.controllers', [])
 
                                 $scope.closeWindow();
                             }
+                            else {
+                                $state.go('error');
+                            }
                         });
                         break;
                     case 2:
@@ -1618,9 +1622,41 @@ angular.module('LodSite.controllers', [])
                                 if (isSuccess) {
                                     $scope.developers[$scope.developerForConfirmation.index].IsHidden = !$scope.developers[$scope.developerForConfirmation.index].IsHidden;
 
+                                    $scope.developerForConfirmation = {};
+
                                     $scope.closeWindow();
                                 }
+                                else {
+                                    $state.go('error');
+                                }
                             });
+                        break;
+                    case 3:
+                        if ($scope.developerForConfirmation.registrationDate != $scope.developerForConfirmation.newRegistrationDate) {
+                            var dateString = [$scope.developerForConfirmation.newRegistrationDate.slice(0, 2), '.',
+                                $scope.developerForConfirmation.newRegistrationDate.slice(2)].join('');
+                            dateString = [dateString.slice(0, 5), '.',
+                                dateString.slice(5)].join('');
+                            ApiService.changeDeveloperRegistrationDate($scope.developerForConfirmation.id, dateString)
+                                .then(function (isSuccess) {
+                                    if (isSuccess) {
+                                        $scope.developers[$scope.developerForConfirmation.index].RegistrationDate = [dateString.slice(0, 6), '',
+                                            dateString.slice(8)].join('');
+
+                                        $scope.developerForConfirmation = {};
+
+                                        $scope.closeWindow();
+                                    }
+                                    else {
+                                        $state.go('error');
+                                    }
+                                });
+                        }
+                        else {
+                            $scope.developerForConfirmation = {};
+
+                            $scope.closeWindow();
+                        }
                         break;
                 }
             };

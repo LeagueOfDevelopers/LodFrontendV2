@@ -277,6 +277,13 @@ angular.module('LodSite.services', [])
                 });
             };
 
+            this.changeDeveloperRegistrationDate = function (developerId, newRegistrationDate) {
+                var url = '/admin/developers/' + developerId + '/date/' + newRegistrationDate;
+
+                return sendAuthorizationSaveRequest(POST, url).then(function (response) {
+                    return response.status === 200;
+                });
+            };
 
             // projects
             this.getRandomProjects = function (numberOfProjects) {

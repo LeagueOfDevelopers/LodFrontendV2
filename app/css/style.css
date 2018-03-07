@@ -3654,6 +3654,8 @@ footer {
   .section__step-number {
     display: block;
     font-size: 2em;
+    text-align: center;
+    text-align: -webkit-center;
     color: #fff;
     width: 50px;
     height: 50px;

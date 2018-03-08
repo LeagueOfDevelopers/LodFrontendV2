@@ -2129,7 +2129,7 @@ angular.module('LodSite.controllers', [])
                             });
                             break;
                         case 'DeveloperHasLeftProject':
-                            ApiService.getDeveloper(notification.EventInfo.NewDeveloperId).then(function (data) {
+                            ApiService.getDeveloper(notification.EventInfo.UserId).then(function (data) {
                                 notification.EventInfo.FirstName = data.data.FirstName;
                                 notification.EventInfo.LastName = data.data.LastName;
                             });

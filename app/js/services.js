@@ -332,6 +332,14 @@ angular.module('LodSite.services', [])
                 });
             };
 
+            this.addCollaboratorToRepositories = function (projectId, developerId) {
+                var url = '/github/repositories/' + projectId + '/developer/' + developerId;
+
+                return sendAuthorizationSaveRequest(POST, url).then(function (response) {
+                    return response.status === 200;
+                });
+            }
+
             this.joinToProject = function (projectId, userId, projectDeveloperRole) {
                 var url = '/projects/' + projectId + '/developer/' + userId;
 

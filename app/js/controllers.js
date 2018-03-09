@@ -983,6 +983,11 @@ angular.module('LodSite.controllers', [])
 
                         $scope.chosenDevelopers.forEach(function (developer) {
                             ApiService.joinToProject(response.projectId, developer.UserId, JSON.stringify(developer.Role));
+                            ApiService.addCollaboratorToRepositories(response.projectId, developer.UserId).then(function (isSuccess) {
+                                if (!isSuccess) {
+                                    $scope.currentState = 'failedToAddCollaborators';
+                                };
+                            });
                         });
 
                         pageCounter = 0;
@@ -1449,6 +1454,13 @@ angular.module('LodSite.controllers', [])
                 ApiService.editProject(projectId, $scope.editedProject).then(function (isSuccess) {
                     if (isSuccess) {
                         $scope.currentState = 'success';
+                        $scope.projectMemberships.forEach(function (developer) {
+                            ApiService.addCollaboratorToRepositories(projectId, developer.UserId).then(function (isSuccess) {
+                                if (!isSuccess) {
+                                    $scope.currentState = 'failedToAddCollaborators';
+                                };
+                            });
+                        });
                         $scope.editedProject.LinksToGithubRepositories = $scope.editedProject.LinksToGithubRepositories.map(function (link) {
                             return {
                                 HtmlUrl: link

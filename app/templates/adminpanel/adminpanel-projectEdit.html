@@ -155,6 +155,12 @@
         <p class="help-message-input" ng-switch-when="failed">
           Ошибка!
         </p>
+
+        <p class="help-message-input" ng-switch-when="failedToAddCollaborators">
+          Изменения были сохранены,
+          но не удалось сделать коллабораторами одного или нескольких разработчиков!
+          Убедитесь, что все указанные разработчики привязали GitHub аккаунт.
+        </p>
       </div>
 
       <button class="profile-settings__submit adding-project__submit" ng-disabled="editProjectForm.$invalid"

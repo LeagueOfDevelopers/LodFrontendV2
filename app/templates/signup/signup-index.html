@@ -6,7 +6,7 @@
           <div class="section__step-number">1</div>
           <input type="text" class="validate-field" placeholder="Имя" pattern="[а-яА-ЯёЁ _\.]{1,30}$"
                  ng-model="newDeveloper.FirstName" ng-maxlength="30" required autofocus />
-          <input type="text" class="validate-field" placeholder="Фамилия" pattern="[а-яА-Я- _\.]{1,30}$"
+          <input type="text" class="validate-field" placeholder="Фамилия" pattern="[а-яА-ЯёЁ _\.]{1,30}$"
                  ng-model="newDeveloper.LastName" ng-maxlength="30" required />
       </div>
       <div class="sign-up-form__section">
@@ -21,9 +21,9 @@
               <option value="ИБО" ng-selected="newDeveloper.InstituteName=='ИБО'">ИБО</option>
               <option value="Горный" ng-selected="newDeveloper.InstituteName=='Горный'">Горный</option>
           </select>
-          <input type="text" class="validate-field" placeholder="Кафедра" pattern="[а-яА-Я- _\.]{1,70}$"
+          <input type="text" class="validate-field" placeholder="Кафедра" pattern="[а-яА-ЯёЁ _\.]{1,70}$"
                  ng-model="newDeveloper.Department" ng-maxlength="70" required />
-          <input type="text" class="validate-field" placeholder="Специальность" pattern="[а-яА-Я- _\.]{1,50}$"
+          <input type="text" class="validate-field" placeholder="Специальность" pattern="[а-яА-ЯёЁ _\.]{1,50}$"
                  ng-model="newDeveloper.StudyingProfile" ng-maxlength="50" required />
           <input type="number" class="validate-field" placeholder="Год поступления" 
                  min="2000" max="{{currentDate | date:'yyyy'}}" ng-model="newDeveloper.AccessionYear"
@@ -85,6 +85,6 @@
       Ошибка регистрации! Проверьте введенные данные.
     </p>
   </div>
-  <button class="sign-up__button" ng-disabled="signForm.$invalid" ng-click="signUp()">Отправить заявку</button>
+  <button class="sign-up__button" ng-disabled="signForm.$invalid || isDisabled" ng-click="signUp()">Отправить заявку</button>
 
 </div>

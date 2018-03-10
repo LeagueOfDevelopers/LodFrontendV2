@@ -41,12 +41,12 @@
 
           <div class="profile-settings__input-heading">Кафедра:</div>
           <input type="text" class="profile-settings__input validate-field" ng-model="profile.StudyingDirection"
-                 pattern="^[а-яА-Я- _\.]{1,70}$" required />
+                 pattern="^[а-яА-ЯёЁ _\.]{1,70}$" required />
           <br />
 
           <div class="profile-settings__input-heading">Специальность:</div>
           <input type="text" class="profile-settings__input validate-field" ng-model="profile.Specialization"
-                 pattern="[а-яА-Я- _\.]{1,50}$" required />
+                 pattern="[а-яА-ЯёЁ _\.]{1,50}$" required />
           <br />
 
           <div class="profile-settings__input-heading">Год поступления:</div>
@@ -214,7 +214,7 @@
         </p>
       </div>
 
-      <button class="profile-settings__submit" ng-disabled="profileSettingsForm.$invalid||(newPassword!=repeatedPassword)"
+      <button class="profile-settings__submit" ng-disabled="profileSettingsForm.$invalid||(newPassword!=repeatedPassword)||isDisabled"
               ng-click="changeProfileSettings()">
         Сохранить
       </button>

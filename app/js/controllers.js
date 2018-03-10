@@ -170,6 +170,11 @@ angular.module('LodSite.controllers', [])
             $scope.currentState = null;
             $scope.profile = {};
             $scope.currentDate = new Date();
+            $scope.isDisabled = false;
+
+            $scope.changeDisable = function () {
+                $scope.isDisabled = !$scope.isDisabled;
+            }
 
             var nullifyEntities = function () {
                 $scope.state = [];
@@ -298,6 +303,7 @@ angular.module('LodSite.controllers', [])
             }
 
             $scope.changeProfileSettings = function () {
+                $scope.changeDisable();
                 $scope.profile.PhoneNumber = '7' + $scope.profile.PhoneNumber;
                 ApiService.sendProfileSttings(developerId, $scope.profile).then(function (isSuccess) {
                     if (isSuccess) {
@@ -336,6 +342,7 @@ angular.module('LodSite.controllers', [])
 
                     changeCurrentState();
                 }
+                $scope.changeDisable();
             };
 
 
@@ -583,6 +590,11 @@ angular.module('LodSite.controllers', [])
             var pageCounter = 0;
             $scope.isInvalid = [];
             $scope.isOpen = false;
+            $scope.isDisabled = false;
+
+            $scope.changeDisable = function () {
+                $scope.isDisabled = !$scope.isDisabled;
+            }
 
             $scope.images = [];
             $scope.developers = [];
@@ -960,6 +972,7 @@ angular.module('LodSite.controllers', [])
 
             //   POST REQUESTS
             $scope.registerProject = function () {
+                $scope.changeDisable();
 
                 $scope.newProject.Screenshots = $scope.images.map(function (image) {
                     return image;
@@ -1029,6 +1042,7 @@ angular.module('LodSite.controllers', [])
                         $scope.currentState = 'failed';
                     }
                 });
+                $scope.changeDisable();
             };
 
             $scope.$on('userRole_changed', function (e, args) {
@@ -1054,6 +1068,11 @@ angular.module('LodSite.controllers', [])
 
             var projectId = $state.params.id;
             var pageCounter = 0;
+            $scope.isDisabled = false;
+
+            $scope.changeDisable = function () {
+                $scope.isDisabled = !$scope.isDisabled;
+            }
 
             $scope.developers = [];
             $scope.chosenDevelopers = [];
@@ -1438,6 +1457,8 @@ angular.module('LodSite.controllers', [])
 
             //   PUT REQUEST
             $scope.editProject = function () {
+                $scope.changeDisable();
+
                 var j = 0;
 
                 for (var i = 0; i < $scope.categories.length; i++) {
@@ -1473,6 +1494,7 @@ angular.module('LodSite.controllers', [])
                         $scope.currentState = 'failed';
                     }
                 });
+                $scope.changeDisable();
             };
 
             $scope.$on('userRole_changed', function (e, args) {
@@ -1496,8 +1518,14 @@ angular.module('LodSite.controllers', [])
             if (!token || role != 1) {
                 return $state.go('index');
             }
+            $scope.isDisabled = false;
+
+            $scope.changeDisable = function () {
+                $scope.isDisabled = !$scope.isDisabled;
+            }
 
             $scope.createNotification = function () {
+                $scope.changeDisable();
                 $scope.notificationMessage = { InfoText: $scope.notification };
                 ApiService.createNotification(JSON.stringify($scope.notificationMessage)).then(function (isSuccess) {
                     $scope.currentState = isSuccess ? 'success' : 'failed';
@@ -1512,6 +1540,7 @@ angular.module('LodSite.controllers', [])
                         $state.go('error');
                     }
                 });
+                $scope.changeDisable();
             };
 
             $scope.$on('userRole_changed', function (e, args) {
@@ -1729,8 +1758,10 @@ angular.module('LodSite.controllers', [])
         $scope.newDeveloper = {};
         $scope.repeatedPassword = undefined;
         $scope.currentDate = new Date();
+        $scope.isDisabled = false;
 
         $scope.signUp = function () {
+            $scope.changeDisable();
             $scope.newDeveloper.PhoneNumber = '7' + $scope.newDeveloper.PhoneNumber;
             $scope.loginType === 'github' ?
                 ApiService.signUpWithGithub($scope.newDeveloper) :
@@ -1750,7 +1781,12 @@ angular.module('LodSite.controllers', [])
                         $scope.currentStates.isFailed = true;
                     }
                 });
+            $scope.changeDisable();
         };
+
+        $scope.changeDisable = function () {
+            $scope.isDisabled = !$scope.isDisabled;
+        }
 
         $scope.$emit('toggle_black', { isBlack: true });
         $scope.$emit('change_title', { title: 'Стать разработчиком - Лига Разработчиков НИТУ МИСиС' });
@@ -1953,10 +1989,16 @@ angular.module('LodSite.controllers', [])
             $scope.isNoDeveloper = false;
             $scope.userLogin = {};
             $scope.status = 'loginForm';
+            $scope.isDisabled = false;
+
+            $scope.changeDisable = function () {
+                $scope.isDisabled = !$scope.isDisabled;
+            }
 
             $scope.cons = function () { console.log($scope.userLogin.emailForRecovery); }
 
             $scope.signIn = function () {
+                $scope.changeDisable();
                 ApiService.signIn($scope.userLogin).then(function (isSuccess) {
                     if (isSuccess) {
                         $scope.userLogin = {};
@@ -1968,6 +2010,7 @@ angular.module('LodSite.controllers', [])
                         $scope.isNoDeveloper = true;
                     }
                 });
+                $scope.changeDisable();
             };
 
             $scope.signInWithGithub = function () {
@@ -1979,6 +2022,7 @@ angular.module('LodSite.controllers', [])
             };
 
             $scope.recoverPassword = function () {
+                $scope.changeDisable();
                 ApiService.getLinkForPasswordRecovery($scope.userLogin.emailForRecovery).then(function (isSuccess) {
                     if (isSuccess) {
                         $scope.isSuccess = true;

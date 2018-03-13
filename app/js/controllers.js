@@ -84,7 +84,7 @@ angular.module('LodSite.controllers', [])
 
     //developers
     .controller('RandomDevelopersCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
-        var numberOfDevelopers = getDevsSectionAmount();
+        var numberOfDevelopers = 4;
 
         ApiService.getRandomDevelopers(numberOfDevelopers)
             .then(function (data) {
@@ -362,7 +362,7 @@ angular.module('LodSite.controllers', [])
 
     //projects
     .controller('RandomProjectsCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
-        var numberOfProjects = getProjsSectionAmount();
+        var numberOfProjects = 3;
 
         ApiService.getRandomProjects(numberOfProjects).then(function (data) {
             $scope.randomProjects = data;

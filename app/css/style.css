@@ -169,14 +169,33 @@ input {
   padding-bottom: 0 !important;
 }
 
-random-projects, random-developers {
+.random-wrapper {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     flex-wrap: wrap;
 }
 
+.projects-section__link-to-project {
+    width: 30vw;
+    height: 30vw;
+    min-width: 200px;
+    min-height: 200px;
+    margin: 1vw;
+}
+
+.developers-section__link-to-profile {
+    width: 20vw;
+    height: 20vw;
+    min-width: 200px;
+    min-height: 200px;
+    margin-bottom: 80px;
+    margin-left: 1vw;
+    margin-right: 1vw;
+}
+
+
 ol, ul {
-  list-style: none;
+    list-style: none;
 }
 
 a {
@@ -417,7 +436,8 @@ header {
 .projects-section {
   box-sizing: border-box;
   width: 100%;
-  padding: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
   text-align: center;
 }
 
@@ -466,8 +486,7 @@ header {
   text-align: left;
   position: relative;
   box-sizing: border-box;
-  min-width: 270px;
-  min-height: 270px;
+  height: 100%;
   cursor: pointer;
 
   -webkit-transition: all .2s ease-in;
@@ -550,12 +569,15 @@ header {
   width: 100%;
   padding-bottom: 15px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .developers-section__developer {
   margin: 0 auto 25px auto;
   text-align: center;
   cursor: pointer;
+  height: 100%;
   -webkit-transition: all .2s ease;
   -moz-transition: all .2s ease;
   -o-transition: all .2s ease;
@@ -565,8 +587,8 @@ header {
 .developer__photo {
   display: inline-block;
   box-sizing: border-box;
-  width: 240px;
-  height: 240px;
+  width: inherit;
+  height: inherit;
 
   background-size: cover;
   object-fit: cover;
@@ -593,7 +615,7 @@ header {
 
 .developers-section__see-all-button {
   display: block;
-  margin: 15px auto 30px auto;
+  margin: 40px auto;
 }
 
 .developers-section__see-more-button {
@@ -2478,11 +2500,6 @@ footer {
 }
 
 @media only screen and (min-width: 480px) {
-    .projects-section__project {
-        width: 400px;
-        height: 400px;
-        border: 10px solid #f1f1f1;
-    }
 
     .github-profile__link {
         text-align: end;
@@ -2998,6 +3015,7 @@ footer {
   *************************/
   .headline {
     text-align: left;
+    padding-left: 15px;
   }
 
   .dividing-line {
@@ -3198,10 +3216,6 @@ footer {
   /*************************
       DEVELOPERS-SECTION
   *************************/
-  .developers-section,
-  .projects-section {
-    padding: 0 40px 20px;
-  }
 
   .developer__photo:hover {
     border-color: #2980b9;

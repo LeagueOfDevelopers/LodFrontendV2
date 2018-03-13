@@ -74,7 +74,7 @@
           <br />
 
           <div class="profile-settings__input-heading" ng-if="profile.VkProfileUri !== null">Профиль ВКонтакте:</div>
-          <input type="url" name="vkUrl" class="profile-settings__input validate-field" pattern="^http://vk.com/"
+          <input type="url" name="vkUrl" class="profile-settings__input validate-field" pattern="^http://vk.com/[a-zA-Z]+"
                  ng-model="profile.VkProfileUri" ng-maxlength="30"
                  ng-if="profile.VkProfileUri !== null" required />
 

@@ -35,7 +35,7 @@
       </div>
       <div class="sign-up-form__section">
           <div class="section__step-number">3</div>
-          <input type="url" name="vkUrl" class="validate-field" placeholder="Профиль Вконтакте" pattern="^http://vk.com/"
+          <input type="url" name="vkUrl" class="validate-field" placeholder="Профиль Вконтакте" pattern="^http://vk.com/[a-zA-Z]+"
                  ng-model="newDeveloper.VkProfileUri" ng-maxlength="30" />
 
           <div class="help-message-input" ng-show="signForm.vkUrl.$error.pattern">

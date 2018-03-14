@@ -181,16 +181,16 @@ input {
     min-width: 200px;
     min-height: 200px;
     margin: 1vw;
+    flex: 1 0 auto;
 }
 
 .developers-section__link-to-profile {
-    width: 20vw;
-    height: 20vw;
-    min-width: 200px;
-    min-height: 200px;
-    margin-bottom: 80px;
-    margin-left: 1vw;
-    margin-right: 1vw;
+    width: 22vw;
+    height: 22vw;
+    min-width: 170px;
+    min-height: 170px;
+    margin: 1vw;
+    margin-bottom: 100px;
 }
 
 
@@ -445,7 +445,7 @@ header {
   font-size: 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 /* categories section */
@@ -617,6 +617,7 @@ header {
 .developers-section__see-all-button {
   display: block;
   margin: 40px auto;
+  margin-top: 20px;
 }
 
 .developers-section__see-more-button {

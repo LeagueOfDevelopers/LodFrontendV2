@@ -84,7 +84,7 @@ angular.module('LodSite.controllers', [])
 
     //developers
     .controller('RandomDevelopersCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
-        var numberOfDevelopers = 4;
+        var numberOfDevelopers = getDevsSectionAmount();
 
         ApiService.getRandomDevelopers(numberOfDevelopers)
             .then(function (data) {

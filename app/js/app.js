@@ -207,6 +207,15 @@ var numberOfProjects = null;
 function templateUrl(module, name) {
   return 'app/templates/' + module + '/' + name + '.html?' + Math.random();
 }
+function getDevsSectionAmount() {
+  var _devsAmount = 4;
+  var viewportWidth = $(window).width();
+
+  if (viewportWidth >= 656 && viewportWidth <= 887) {
+      _devsAmount = 3;
+  }
+  return _devsAmount;
+}
 
 function setPaddingBottom() {
   angular.element('.content').css('padding-bottom', $('footer').innerHeight());

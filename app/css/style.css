@@ -193,6 +193,87 @@ input {
     margin-bottom: 100px;
 }
 
+/*PROJECTS-SECTION AND DEVELOPERS-SECTION GRID*/
+
+@media only screen and (min-width: 400px) and (max-width: 560px) {
+    .projects-section__link-to-project {
+        width: 22vw;
+        height: 22vw;
+    }
+
+    .developers-section__link-to-profile {
+        width: 22vw;
+        height: 22vw;
+    }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 800px) {
+
+    .developers-section__link-to-profile {
+        width: 20vw;
+        height: 20vw;
+    }
+}
+
+@media only screen and (min-width: 1000px) and (max-width: 1500px) {
+    .projects-section__link-to-project {
+        width: 22vw;
+        height: 22vw;
+    }
+
+    .developers-section__link-to-profile {
+        width: 17vw;
+        height: 17vw;
+    }
+}
+
+@media only screen and (min-width: 1500px) and (max-width: 2000px) {
+    .projects-section__link-to-project {
+        width: 17vw;
+        height: 17vw;
+    }
+
+    .developers-section__link-to-profile {
+        width: 13vw;
+        height: 13vw;
+    }
+}
+
+@media only screen and (min-width: 2000px) and (max-width: 2500px) {
+    .projects-section__link-to-project {
+        width: 13vw;
+        height: 13vw;
+    }
+
+    .developers-section__link-to-profile {
+        width: 11vw;
+        height: 11vw;
+    }
+}
+
+@media only screen and (min-width: 2500px) and (max-width: 3000px) {
+    .projects-section__link-to-project {
+        width: 11vw;
+        height: 11vw;
+    }
+
+    .developers-section__link-to-profile {
+        width: 9vw;
+        height: 9vw;
+    }
+}
+
+@media only screen and (min-width: 3000px) {
+    .projects-section__link-to-project {
+        width: 9vw;
+        height: 9vw;
+    }
+
+    .developers-section__link-to-profile {
+        width: 7vw;
+        height: 7vw;
+    }
+}
 
 ol, ul {
     list-style: none;

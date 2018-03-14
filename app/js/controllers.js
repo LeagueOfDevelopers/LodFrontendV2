@@ -362,7 +362,7 @@ angular.module('LodSite.controllers', [])
 
     //projects
     .controller('RandomProjectsCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
-        var numberOfProjects = 3;
+        var numberOfProjects = getProjsSectionAmount();
 
         ApiService.getRandomProjects(numberOfProjects).then(function (data) {
             $scope.randomProjects = data;
@@ -996,11 +996,7 @@ angular.module('LodSite.controllers', [])
 
                         $scope.chosenDevelopers.forEach(function (developer) {
                             ApiService.joinToProject(response.projectId, developer.UserId, JSON.stringify(developer.Role));
-                            ApiService.addCollaboratorToRepositories(response.projectId, developer.UserId).then(function (isSuccess) {
-                                if (!isSuccess) {
-                                    $scope.currentState = 'failedToAddCollaborators';
-                                };
-                            });
+                            ApiService.addCollaboratorToRepositories(response.projectId, developer.UserId);
                         });
 
                         pageCounter = 0;
@@ -1476,11 +1472,7 @@ angular.module('LodSite.controllers', [])
                     if (isSuccess) {
                         $scope.currentState = 'success';
                         $scope.projectMemberships.forEach(function (developer) {
-                            ApiService.addCollaboratorToRepositories(projectId, developer.UserId).then(function (isSuccess) {
-                                if (!isSuccess) {
-                                    $scope.currentState = 'failedToAddCollaborators';
-                                };
-                            });
+                            ApiService.addCollaboratorToRepositories(projectId, developer.UserId);
                         });
                         $scope.editedProject.LinksToGithubRepositories = $scope.editedProject.LinksToGithubRepositories.map(function (link) {
                             return {
@@ -2306,6 +2298,9 @@ angular.module('LodSite.controllers', [])
         if ($state.params.occuredOnActionType === 'github') {
             $scope.successMessage = 'Ждите потверждения администратора';
         };
+        if ($state.params.occuredOnActionType === 'admin') {
+            $scope.successMessage = 'Изменения успешно сохранены';
+        }
         $scope.closeDialog = function () {
             $state.transitionTo('index', {
                 location: true,

@@ -211,10 +211,41 @@ function getDevsSectionAmount() {
   var _devsAmount = 4;
   var viewportWidth = $(window).width();
 
-  if (viewportWidth >= 656 && viewportWidth <= 887) {
-      _devsAmount = 3;
+  if (viewportWidth > 544 && viewportWidth < 740) {
+    _devsAmount = 3;
+  } else if (viewportWidth > 1000 && viewportWidth <= 1500) {
+    _devsAmount = 5;
+  } else if (viewportWidth > 1500 && viewportWidth <= 2000) {
+    _devsAmount = 6;
+  } else if (viewportWidth > 2000 && viewportWidth <= 2500) {
+    _devsAmount = 7;
+  } else if (viewportWidth > 2500 && viewportWidth <= 3000) {
+      _devsAmount = 8;
+  } else if (viewportWidth > 3000) {
+      _devsAmount = 9;
   }
+
   return _devsAmount;
+}
+function getProjsSectionAmount() {
+  var _projsAmount = 4;
+  var viewportWidth = $(window).width();
+
+  if (viewportWidth <= 433 || viewportWidth >= 639 && viewportWidth <= 1000) {
+    _projsAmount = 3;
+  } else if (viewportWidth > 1000 && viewportWidth <= 1500) {
+    _projsAmount = 4;
+  } else if (viewportWidth > 1500 && viewportWidth <= 2000) {
+    _projsAmount = 5;
+  } else if (viewportWidth > 2000 && viewportWidth <= 2500) {
+    _projsAmount = 6;
+  } else if (viewportWidth > 2500 && viewportWidth <= 3000) {
+      _projsAmount = 7;
+  } else if (viewportWidth > 3000) {
+      _projsAmount = 8;
+  }
+
+  return _projsAmount;
 }
 
 function setPaddingBottom() {

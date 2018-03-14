@@ -335,8 +335,8 @@ angular.module('LodSite.services', [])
             this.addCollaboratorToRepositories = function (projectId, developerId) {
                 var url = '/github/repositories/' + projectId + '/developer/' + developerId;
 
-                return sendAuthorizationSaveRequest(POST, url).then(function (response) {
-                    return response.status === 200;
+                return sendAuthorizationSaveRequest(GET, url).then(function (response) {
+                    window.location.href = response.data;
                 });
             }
 

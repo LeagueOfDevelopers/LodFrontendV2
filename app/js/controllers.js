@@ -2283,6 +2283,9 @@ angular.module('LodSite.controllers', [])
         if ($state.params.occuredOnActionType === 'registration') {
             $scope.errorMessage = 'зарегистрироваться';
         };
+        if ($state.params.occuredOnActionType === 'admin') {
+            $scope.errorMessage = 'выполнить действие. Убедитесь, что все указанные разработчики привязали GitHub аккаунт';
+        };
         $scope.closeDialog = function () {
             $state.transitionTo('index', {
                 location: true,
@@ -2294,9 +2297,9 @@ angular.module('LodSite.controllers', [])
     }])
 
     .controller('SuccessCtrl', ['$scope', '$state', function ($scope, $state) {
-        $scope.successMessage = 'На ваш E-mail отправлено сообщение с ссылкой для подтверждения';
+        $scope.successMessage = 'Вы были зарегистрированы. На ваш E-mail отправлено сообщение с ссылкой для подтверждения';
         if ($state.params.occuredOnActionType === 'github') {
-            $scope.successMessage = 'Ждите потверждения администратора';
+            $scope.successMessage = 'Вы были зарегистрированы. Ждите потверждения администратора';
         };
         if ($state.params.occuredOnActionType === 'admin') {
             $scope.successMessage = 'Изменения успешно сохранены';

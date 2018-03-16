@@ -135,6 +135,10 @@ body {
   color: #202d3a;
 }
 
+page-header, page-footer {
+  flex-grow: 0;
+}
+
 input {
   transition: all .5s ease-out;
 }
@@ -163,8 +167,8 @@ input {
 }
 
 .content {
+  flex-grow: 1;
   display: flex;
-  min-height: 70vh;
   flex-direction: column;
   padding-bottom: 0 !important;
 }
@@ -3098,12 +3102,17 @@ footer {
   *************************/
   .headline {
     text-align: left;
-    padding-left: 2.5vw;
+    padding-left: 15px;
   }
 
-  .dividing-line {
-    margin: 15px auto;
-  }
+    .developers-section__headline, .projects-section__headline {
+        padding-left: 2.5vw;
+    }
+    
+    
+    .dividing-line {
+        margin: 15px auto;
+    }
 
   .button-style:hover {
     color: #fff;

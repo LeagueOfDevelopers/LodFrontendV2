@@ -393,21 +393,16 @@ angular.module('LodSite.controllers', [])
         }];
         $scope.fullProjects = [];
         $scope.isMoreProjects = true;
-        var pageCounter = 0;
+        var projectsToReturn = getProjsSectionAmount();
 
-        $scope.resetPageCounter = function () {
-            pageCounter = 0;
-        };
         $scope.resetFullProjects = function () {
             $scope.fullProjects = [];
         };
         $scope.addProjects = function () {
-            pageCounter++;
             $scope.updateProjects();
         };
         $scope.toggleCategory = function (targetCategory) {
             targetCategory.status = !targetCategory.status;
-            $scope.resetPageCounter();
             $scope.resetFullProjects();
             $scope.updateProjects();
         };
@@ -425,7 +420,7 @@ angular.module('LodSite.controllers', [])
                 });
             }
 
-            ApiService.getFullProjects(requestParams, pageCounter)
+            ApiService.getFullProjects(requestParams, $scope.fullProjects.length, projectsToReturn)
                 .then(function (data) {
                     if (!data || data.Data.length === 0) {
                         $scope.isMoreProjects = false;
@@ -457,27 +452,6 @@ angular.module('LodSite.controllers', [])
                             $scope.openedScreenshotUrl = $rootScope.openedScreenshot.BigPhotoUri;
                         }
                     ]
-                });
-            };
-            $scope.joinToProject = function () {
-                ApiService.joinToProject(projectId, userId, JSON.stringify($scope.projectDeveloperRole))
-                    .then(function (isSuccess) {
-                        if (isSuccess) {
-                            $state.reload();
-                        }
-                        else {
-                            $state.go('error');
-                        }
-                    });
-            };
-            $scope.escapeFromProject = function () {
-                ApiService.escapeFromProject(projectId, userId).then(function (isSuccess) {
-                    if (isSuccess) {
-                        $state.reload();
-                    }
-                    else {
-                        $state.go('error');
-                    }
                 });
             };
 
@@ -546,15 +520,14 @@ angular.module('LodSite.controllers', [])
             }
             $scope.fullProjects = [];
             $scope.isMoreProjects = true;
-            var pageCounter = 0;
+            var projectsToReturn = getProjsSectionAmount();
 
             $scope.addProjects = function () {
-                pageCounter++;
                 $scope.updateProjects();
             };
 
             $scope.updateProjects = function () {
-                ApiService.getFullProjects(null, pageCounter)
+                ApiService.getFullProjects(null, $scope.fullProjects.length, projectsToReturn)
                     .then(function (data) {
                         if (!data || data.Data.length === 0) {
                             $scope.isMoreProjects = false;
@@ -1258,7 +1231,7 @@ angular.module('LodSite.controllers', [])
 
             $scope.deleteDeveloper = function (index) {
                 ApiService.escapeFromProject(projectId, $scope.projectMemberships[index].UserId);
-
+                ApiService.removeCollaboratorFromRepositories(projectId, $scope.projectMemberships[index].UserId);
                 $scope.projectMemberships.splice(index, 1);
             };
 

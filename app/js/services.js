@@ -294,9 +294,8 @@ angular.module('LodSite.services', [])
                 });
             };
 
-            this.getFullProjects = function (requestParams, pageCounter) {
-                var url = '/projects?page=' + pageCounter;
-
+            this.getFullProjects = function (requestParams, projectsToSkip, projectsToReturn) {
+                var url = '/projects/' + projectsToSkip + '/' + projectsToReturn + '?';
                 return sendAuthorizationSaveRequest(GET, url, requestParams).then(function (response) {
                     return response.data;
                 });
@@ -334,6 +333,14 @@ angular.module('LodSite.services', [])
 
             this.addCollaboratorToRepositories = function (projectId, developerId) {
                 var url = '/github/repositories/' + projectId + '/developer/' + developerId;
+
+                return sendAuthorizationSaveRequest(GET, url).then(function (response) {
+                    window.location.href = response.data;
+                });
+            }
+
+            this.removeCollaboratorFromRepositories = function (projectId, developerId) {
+                var url = '/github/repositories/' + projectId + '/developer/' + developerId + '/delete';
 
                 return sendAuthorizationSaveRequest(GET, url).then(function (response) {
                     window.location.href = response.data;

@@ -505,7 +505,7 @@ angular.module('LodSite.services', [])
 
         this.getHHmmFromISODate = function (ms) {
             var date = new Date(ms);
-            var hh = date.getHours();
+            var hh = date.getHours() + 3;
             var mm = date.getMinutes();
 
             if (hh < 10) hh = '0' + hh;

@@ -2860,7 +2860,6 @@ footer {
   .github-profile__link {
     text-align: left;
     margin-left: 20px;
-    margin-top: 20px;
   }
 
   /*************************
@@ -3978,6 +3977,26 @@ footer {
   }
 }
 
+@media only screen and (min-width: 1050px) {
+    /*****************************
+     ADMIN PROJECTS & DEVELOPERS
+  *****************************/
+    .all-projects-page, .developers-page__developers {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .projects__all-project, .developers__full-developer {
+        margin-left: 1vw;
+        margin-right: 1vw;
+        width: 44vw;
+        max-width: 44vw;
+        height: fit-content;
+    }
+}
+
 @media only screen and (min-width: 1300px) {
 
     /*****************************
@@ -4060,25 +4079,6 @@ footer {
         height: 141px;
     }
 
-    /*************************
-     ADMIN PROJECTS-PAGE
-  *************************/
-    .all-projects__section {
-        text-align: center;
-    }
-
-    .all-projects-page {
-        display: inline-block;
-        text-align: left;
-        width: 1220px;
-    }
-
-    .projects__all-project {
-        display: inline-block;
-        margin: 15px;
-        width: 580px;
-    }
-
     /*******************************
        ADMIN NOTIFICATION-PAGE
   *******************************/
@@ -4112,18 +4112,6 @@ footer {
 
         .profile-settings__top-part__inputs, .profile-settings__middle-part, .profile-settings__bottom-part {
             width: 1000px;
-        }
-
-        /*************************
-     ADMIN PROJECTS-PAGE
-  *************************/
-        .all-projects-page {
-            width: 1400px;
-        }
-
-        .projects__all-project {
-            margin: 25px;
-            width: 650px;
         }
 
         /*******************************

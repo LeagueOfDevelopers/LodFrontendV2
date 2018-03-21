@@ -1745,6 +1745,7 @@ angular.module('LodSite.controllers', [])
                     } else {
                         $scope.currentStates.isFailed = true;
                     }
+                    $scope.newDeveloper.PhoneNumber = $scope.newDeveloper.PhoneNumber.slice(1);
                 });
             $scope.changeDisable();
         };
@@ -2153,6 +2154,9 @@ angular.module('LodSite.controllers', [])
                             ApiService.getDeveloper(notification.EventInfo.UserId).then(function (data) {
                                 notification.EventInfo.FirstName = data.data.FirstName;
                                 notification.EventInfo.LastName = data.data.LastName;
+                            });
+                            ApiService.getProject(notification.EventInfo.ProjectId).then(function (data) {
+                                notification.EventInfo.ProjectName = data.data.Name;
                             });
                             break;
                     }

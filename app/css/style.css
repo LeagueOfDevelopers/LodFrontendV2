@@ -1641,6 +1641,8 @@ footer {
 
 .profile-settings__input-heading {
   width: 90%;
+  height: 30px;
+  line-height: 30px;
   max-width: 450px;
   margin: 0 auto 5px;
   font-size: 1.1em;
@@ -2809,7 +2811,7 @@ footer {
   }
 
   .profile-settings__input, .adding-project__select, .adding-project__textarea, .adding-project__type {
-    margin: 0 auto -20px;
+    margin: 0 auto;
     max-width: none;
   }
 

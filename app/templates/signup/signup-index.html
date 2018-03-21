@@ -5,9 +5,9 @@
       <div class="sign-up-form__section">
           <div class="section__step-number">1</div>
           <input type="text" class="validate-field" placeholder="Имя" pattern="[а-яА-ЯёЁ _\.]{1,30}$"
-                 ng-model="newDeveloper.FirstName" ng-maxlength="30" required autofocus />
+                 ng-model="newDeveloper.FirstName" ng-maxlength="50" required autofocus />
           <input type="text" class="validate-field" placeholder="Фамилия" pattern="[а-яА-ЯёЁ _\.]{1,30}$"
-                 ng-model="newDeveloper.LastName" ng-maxlength="30" required />
+                 ng-model="newDeveloper.LastName" ng-maxlength="50" required />
       </div>
       <div class="sign-up-form__section">
           <div class="section__step-number">2</div>
@@ -21,10 +21,10 @@
               <option value="ИБО" ng-selected="newDeveloper.InstituteName=='ИБО'">ИБО</option>
               <option value="Горный" ng-selected="newDeveloper.InstituteName=='Горный'">Горный</option>
           </select>
-          <input type="text" class="validate-field" placeholder="Кафедра" pattern="[а-яА-ЯёЁ _\.]{1,70}$"
-                 ng-model="newDeveloper.Department" ng-maxlength="70" required />
-          <input type="text" class="validate-field" placeholder="Специальность" pattern="[а-яА-ЯёЁ _\.]{1,50}$"
-                 ng-model="newDeveloper.StudyingProfile" ng-maxlength="50" required />
+          <input type="text" class="validate-field" placeholder="Кафедра" pattern="[а-яА-ЯёЁ _\.]{1,255}$"
+                 ng-model="newDeveloper.Department" ng-maxlength="255" required />
+          <input type="text" class="validate-field" placeholder="Специальность" pattern="[а-яА-ЯёЁ _\.]{1,255}$"
+                 ng-model="newDeveloper.StudyingProfile" ng-maxlength="255" required />
           <input type="number" class="validate-field" placeholder="Год поступления" 
                  min="2000" max="{{currentDate | date:'yyyy'}}" ng-model="newDeveloper.AccessionYear"
                  pattern="[1-9]\d*" ng-minlength="4" ng-maxlength="4" required />
@@ -36,7 +36,7 @@
       <div class="sign-up-form__section">
           <div class="section__step-number">3</div>
           <input type="url" name="vkUrl" class="validate-field" placeholder="Профиль Вконтакте" pattern="^http://vk.com/[a-zA-Z0-9]+$"
-                 ng-model="newDeveloper.VkProfileUri" ng-maxlength="30" />
+                 ng-model="newDeveloper.VkProfileUri" ng-maxlength="100" />
 
           <div class="help-message-input" ng-show="signForm.vkUrl.$error.pattern">
               Введите адрес в формате
@@ -57,9 +57,9 @@
       <div class="sign-up-form__section" ng-if="loginType === 'lod'">
           <input type="email" class="validate-field" placeholder="E-mail"
                  pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$"
-                 ng-model="newDeveloper.Email" ng-maxlength="30" required />
+                 ng-model="newDeveloper.Email" ng-maxlength="100" required />
           <input type="password" name="password" class="validate-field" placeholder="Пароль"
-                 pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$" ng-minlength="8" ng-maxlength="30" ng-model="newDeveloper.Password"
+                 pattern="^(?=^.{8,50}$)[a-zA-Z0-9]+$" ng-minlength="8" ng-maxlength="50" ng-model="newDeveloper.Password"
                  required />
 
           <div class="help-message-input" ng-show="signForm.password.$error.pattern">
@@ -68,8 +68,8 @@
               или цифры.
           </div>
           <input type="password" name="repeatedPassword" class="validate-field" placeholder="Повторите пароль" 
-                 pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
-                 ng-minlength="8" ng-maxlength="30" ng-model="repeatedPassword" required />
+                 pattern="^(?=^.{8,50}$)[a-zA-Z0-9]+$"
+                 ng-minlength="8" ng-maxlength="50" ng-model="repeatedPassword" required />
 
           <div class="help-message-input" ng-show="repeatedPassword != newDeveloper.Password">Пароли не совпадают.</div>
       </div>

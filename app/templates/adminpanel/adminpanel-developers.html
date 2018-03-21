@@ -100,6 +100,7 @@
           <br ng-if="developerForConfirmation.eventType == 3" />
         <a class="modal-window__name" ng-href="{{'/developers/' + developerForConfirmation.id}}" target="_blank"
            ng-bind="developerForConfirmation.name"></a>
+          <div class="modal-window__message" ng-if="developerForConfirmation.eventType != 3" ng-bind="message"></div>
           <br/>
           <div class="modal-window__message">
               <input name="date" class="validate-field" spellcheck="false" ng-if="developerForConfirmation.eventType == 3" type="text" ng-model="developerForConfirmation.newRegistrationDate"

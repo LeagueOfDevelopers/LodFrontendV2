@@ -179,9 +179,15 @@ input {
     flex-wrap: wrap;
 }
 
+.content-wrapper {
+    width: 90vw;
+    margin: auto;
+}
+
 .projects-section__link-to-project {
     width: 30vw;
     height: 30vw;
+    max-width: 30vw;
     min-width: 200px;
     min-height: 200px;
     margin: 1vw;
@@ -191,6 +197,7 @@ input {
 .developers-section__link-to-profile {
     width: 22vw;
     height: 22vw;
+    max-width: 22vw;
     min-width: 170px;
     min-height: 170px;
     margin: 1vw;
@@ -203,11 +210,13 @@ input {
     .projects-section__link-to-project {
         width: 22vw;
         height: 22vw;
+        max-width: 22vw;
     }
 
     .developers-section__link-to-profile {
         width: 22vw;
         height: 22vw;
+        max-width: 22vw;
     }
 }
 
@@ -216,6 +225,7 @@ input {
     .developers-section__link-to-profile {
         width: 20vw;
         height: 20vw;
+        max-width: 20vw;
     }
 }
 
@@ -223,11 +233,13 @@ input {
     .projects-section__link-to-project {
         width: 22vw;
         height: 22vw;
+        max-width: 22vw;
     }
 
     .developers-section__link-to-profile {
         width: 17vw;
         height: 17vw;
+        max-width: 17vw;
     }
 }
 
@@ -235,11 +247,13 @@ input {
     .projects-section__link-to-project {
         width: 17vw;
         height: 17vw;
+        max-width: 17vw;
     }
 
     .developers-section__link-to-profile {
         width: 13vw;
         height: 13vw;
+        max-width: 13vw;
     }
 }
 
@@ -247,11 +261,13 @@ input {
     .projects-section__link-to-project {
         width: 13vw;
         height: 13vw;
+        max-width: 13vw;
     }
 
     .developers-section__link-to-profile {
         width: 11vw;
         height: 11vw;
+        max-width: 11vw;
     }
 }
 
@@ -259,11 +275,13 @@ input {
     .projects-section__link-to-project {
         width: 11vw;
         height: 11vw;
+        max-width: 11vw;
     }
 
     .developers-section__link-to-profile {
         width: 9vw;
         height: 9vw;
+        max-width: 9vw;
     }
 }
 
@@ -271,11 +289,13 @@ input {
     .projects-section__link-to-project {
         width: 9vw;
         height: 9vw;
+        max-width: 9vw;
     }
 
     .developers-section__link-to-profile {
         width: 7vw;
         height: 7vw;
+        max-width: 7vw;
     }
 }
 
@@ -530,7 +550,8 @@ header {
   font-size: 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-left: 1.25vw;
 }
 
 /* categories section */
@@ -2899,6 +2920,7 @@ footer {
   .projects__all-project {
     margin-top: 20px;
     height: 210px;
+    min-width: 500px;
     max-width: 750px;
     width: 90%;
   }
@@ -3985,14 +4007,14 @@ footer {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: center;
+        justify-content: flex-start;
     }
 
     .projects__all-project, .developers__full-developer {
         margin-left: 1vw;
         margin-right: 1vw;
-        width: 44vw;
-        max-width: 44vw;
+        width: 43vw;
+        max-width: 43vw;
         height: fit-content;
     }
 }

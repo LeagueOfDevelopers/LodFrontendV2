@@ -2,39 +2,40 @@
   <h1 class="projects-page__headline headline">Проекты</h1>
 
   <div class="dividing-line"></div>
+  <div class="content-wrapper">
+      <div class="all-projects-page">
 
-  <div class="all-projects-page">
+          <div ng-repeat="fullProject in fullProjects" class="projects__all-project"
+               ng-class="{'projects__last':(fullProjects.length % 2)}">
+              <a ui-sref="adminpanel.projectEdit({id: fullProject.ProjectId})">
 
-    <div ng-repeat="fullProject in fullProjects" class="projects__all-project"
-         ng-class="{'projects__last':(fullProjects.length % 2)}">
-      <a ui-sref="adminpanel.projectEdit({id: fullProject.ProjectId})">
+                  <img class="all-project__photo" ng-src="{{fullProject.PhotoUri || DEFAULT_PROJECT_LANDSCAPE}}" />
 
-        <img class="all-project__photo" ng-src="{{fullProject.PhotoUri || DEFAULT_PROJECT_LANDSCAPE}}"/>
+                  <div class="all-project__info">
+                      <div class="all-project__name" ng-bind="fullProject.Name"></div>
+                      <div class="all-project__status-wrap">
+                          <span class="all-project__subheading">Статус проекта:</span>
 
-        <div class="all-project__info">
-          <div class="all-project__name" ng-bind="fullProject.Name"></div>
-          <div class="all-project__status-wrap">
-            <span class="all-project__subheading">Статус проекта:</span>
+                          <span class="all-project__status" ng-switch="fullProject.ProjectStatus">
+                              <span class="status__value" style="background: #795548;" ng-switch-when="0">Запланирован</span>
+                              <span class="status__value" style="background: #1e88e5;" ng-switch-when="1">В процессе</span>
+                              <span class="status__value" style="background: #607d8b;" ng-switch-when="2">Заморожен</span>
+                              <span class="status__value" style="background: #009688;" ng-switch-default>Завершен</span>
+                          </span>
+                      </div>
 
-          <span class="all-project__status" ng-switch="fullProject.ProjectStatus">
-              <span class="status__value" style="background: #795548;" ng-switch-when="0">Запланирован</span>
-              <span class="status__value" style="background: #1e88e5;" ng-switch-when="1">В процессе</span>
-              <span class="status__value" style="background: #607d8b;" ng-switch-when="2">Заморожен</span>
-              <span class="status__value" style="background: #009688;" ng-switch-default>Завершен</span>
-          </span>
+                      <div class="all-project__status-wrap">
+                          <span class="all-project__subheading">Уровень доступа:</span>
+
+                          <span class="all-project__access" ng-switch="fullProject.AccessLevel">
+                              <span class="access__value" ng-switch-when="0" style="background-color: #F44336;">Закрытый</span>
+                              <span class="access__value" ng-switch-default style="background-color: #4CAF50;">Открытый</span>
+                          </span>
+                      </div>
+                  </div>
+              </a>
           </div>
-
-          <div class="all-project__status-wrap">
-            <span class="all-project__subheading">Уровень доступа:</span>
-
-        <span class="all-project__access" ng-switch="fullProject.AccessLevel">
-          <span class="access__value" ng-switch-when="0" style="background-color: #F44336;">Закрытый</span>
-          <span class="access__value" ng-switch-default style="background-color: #4CAF50;">Открытый</span>
-        </span>
-          </div>
-        </div>
-      </a>
-    </div>
+      </div>
   </div>
   <a class="projects-section__see-more-button button-style" ng-if="isMoreProjects" ng-click="addProjects()">Показать больше</a>
 

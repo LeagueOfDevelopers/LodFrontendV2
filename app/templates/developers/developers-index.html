@@ -7,24 +7,26 @@
 
     <div class="search__icon"></div>
   </div>
-  <div class="developers-page__developers">
-    <div ng-repeat="fullDeveloper in fullDevelopers" class="developers__full-developer">
-      <a ui-sref="developers.item({id: fullDeveloper.UserId})">
-        <img class="full-developer__photo" ng-src="{{fullDeveloper.PhotoUri || DEFAULT_DEVELOPER_PHOTO}}">
+  <div class="content-wrapper">
+      <div class="developers-page__developers">
+          <div ng-repeat="fullDeveloper in fullDevelopers" class="developers__full-developer">
+              <a ui-sref="developers.item({id: fullDeveloper.UserId})">
+                  <img class="full-developer__photo" ng-src="{{fullDeveloper.PhotoUri || DEFAULT_DEVELOPER_PHOTO}}">
 
-        <div class="full-developer__info">
-          <div class="full-developer__name" ng-bind="fullDeveloper.FirstName + ' ' + fullDeveloper.LastName"></div>
-          <div class="full-developer__role" ng-bind="fullDeveloper.Role"></div>
-          <div class="full-developer__experience">
-            В Лиге Разработчиков: <span class="residence-time" ng-bind="fullDeveloper.residenceTime"></span>
+                  <div class="full-developer__info">
+                      <div class="full-developer__name" ng-bind="fullDeveloper.FirstName + ' ' + fullDeveloper.LastName"></div>
+                      <div class="full-developer__role" ng-bind="fullDeveloper.Role"></div>
+                      <div class="full-developer__experience">
+                          В Лиге Разработчиков: <span class="residence-time" ng-bind="fullDeveloper.residenceTime"></span>
+                      </div>
+                      <div class="full-developer__projects-count">
+                          Количество проектов: <span class="residence-time" ng-bind="fullDeveloper.ProjectCount"></span>
+                      </div>
+                      <a class="full-developer__vk" ng-if="fullDeveloper.VkPageUri != null" ng-href="{{fullDeveloper.VkPageUri}}">Профиль Вконтакте</a>
+                  </div>
+              </a>
           </div>
-          <div class="full-developer__projects-count" >
-            Количество проектов: <span class="residence-time" ng-bind="fullDeveloper.ProjectCount"></span>
-          </div>
-          <a class="full-developer__vk" ng-if="fullDeveloper.VkPageUri != null" ng-href="{{fullDeveloper.VkPageUri}}">Профиль Вконтакте</a>
-        </div>
-      </a>
-    </div>
+      </div>
   </div>
   <a class="developers-section__see-more-button button-style" ng-if="isMoreDevs" ng-click="addDevelopers()">Показать больше</a>
 </section>

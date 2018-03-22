@@ -99,9 +99,14 @@
                             <div class="adding-project__developer__delete" ng-click="deleteRepo($index)"></div>
                         </div>
                     </div>
-
-                    <div class="profile-settings__button adding-developer__button" ng-click="githubRepoToggleOpened()">
-                        Добавить
+                    <div style="display:flex; flex-wrap:wrap">
+                        <div class="profile-settings__button adding-developer__button" ng-click="githubRepoToggleOpened()">
+                            Добавить
+                        </div>
+                        <div style="width:40px; text-align: center; line-height: 30px">или</div>
+                        <div class="profile-settings__button adding-developer__button" ng-click="githubRepoToggleOpened()">
+                            Создать
+                        </div>
                     </div>
                 </div>
                 <br />

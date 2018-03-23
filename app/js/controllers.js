@@ -1312,6 +1312,18 @@ angular.module('LodSite.controllers', [])
                 $scope.editedProject.LinksToGithubRepositories.splice(index, 1);
             };
 
+            $scope.isGithubRepoNameInputDialogOpen = false;
+            $scope.newRepositoryName = "";
+
+            $scope.createRepository = function () {
+                ApiService.createGithubRepository($scope.newRepositoryName);
+                $scope.repoNameInputToggleOpened();
+            }
+
+            $scope.repoNameInputToggleOpened = function () {
+                $scope.isGithubRepoNameInputDialogOpen = !$scope.isGithubRepoNameInputDialogOpen;
+            }
+
             //   FOR SMALL IMAGES
             $scope.currentUploadStateImage = "waiting"; // waiting, uploading
             $scope.currentPercentImage = 0;

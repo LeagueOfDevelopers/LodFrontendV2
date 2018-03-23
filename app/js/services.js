@@ -285,6 +285,14 @@ angular.module('LodSite.services', [])
                 });
             };
 
+            this.createGithubRepository = function (repoName) {
+                var url = '/github/repositories/' + repoName;
+
+                return sendAuthorizationSaveRequest(GET, url).then(function (response) {
+                    window.open(response.data, "popup", "width=300,height=300,left=10,top=100");
+                });
+            }
+
             // projects
             this.getRandomProjects = function (numberOfProjects) {
                 var url = '/projects/random/' + numberOfProjects;

@@ -2298,6 +2298,15 @@ footer {
   font-weight: normal;
 }
 
+.repository-buttons__link {
+  width: 40px;
+  text-align: center;
+  line-height: 1.1em;
+  height: 1.1em;
+  margin: auto 0;
+  font-size: 1.1em;
+}
+
 /*******************************
      ADMIN NOTIFICATION-PAGE
 *******************************/
@@ -2553,7 +2562,7 @@ footer {
   text-decoration: underline;
 }
 
-.adminpanel__developers .modal-window__message {
+.modal-window__message {
   display: inline;
 }
 
@@ -2569,7 +2578,7 @@ footer {
   text-align: -moz-center;
 }
 
-.adminpanel__developers .modal-window__button {
+.modal-window__button {
   display: inline-block;
   width: 105px;
   box-sizing: border-box;
@@ -2589,22 +2598,22 @@ footer {
   transition: all .15s ease-out;
 }
 
-.adminpanel__developers .modal-window__button:hover {
+.modal-window__button:hover {
   cursor: pointer;
 }
 
-.adminpanel__developers .button__yes {
+.button__yes {
   background-color: #202d3a;
   color: #ffffff;
   margin-right: 5%;
 }
 
-.adminpanel__developers .button__yes:hover {
+.button__yes:hover {
   background-color: #2980b9;
   border-color: #2980b9;
 }
 
-.adminpanel__developers .button__no:hover {
+.button__no:hover {
   border-color: #2980b9;
   color: #2980b9;
 }
@@ -3994,12 +4003,12 @@ footer {
     max-width: 600px;
   }
 
-  .adminpanel__developers .modal-window__developers {
+.modal-window__developers {
     max-width: 600px;
   }
 }
 
-@media only screen and (min-width: 950px) {
+@media only screen and (min-width: 1050px) {
     /*****************************
      ADMIN PROJECTS & DEVELOPERS
   *****************************/
@@ -4215,11 +4224,11 @@ footer {
         /****************************
       ADMINPANEL DEVELOPERS
   ****************************/
-        .adminpanel__developers .modal-window {
+  .modal-window {
             max-width: 700px;
         }
 
-        .adminpanel__developers .modal-window__developers {
+s .modal-window__developers {
             max-width: 700px;
         }
     }

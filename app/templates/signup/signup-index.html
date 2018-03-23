@@ -35,12 +35,12 @@
       </div>
       <div class="sign-up-form__section">
           <div class="section__step-number">3</div>
-          <input type="url" name="vkUrl" class="validate-field" placeholder="Профиль Вконтакте" pattern="^http://vk.com/[a-zA-Z0-9]+$"
+          <input type="url" name="vkUrl" class="validate-field" placeholder="Профиль Вконтакте" pattern="^(http|https)?://vk.com/[a-zA-Z0-9]+$"
                  ng-model="newDeveloper.VkProfileUri" ng-maxlength="100" />
 
           <div class="help-message-input" ng-show="signForm.vkUrl.$error.pattern">
               Введите адрес в формате
-              http://vk.com/[username]
+              http(s)://vk.com/[username]
           </div>
           <input type="text" name="phone" class="validate-field" ng-model="newDeveloper.PhoneNumber" ui-mask="+7-(999)-999-99-99" ui-mask-placeholder-char=" " required/>
       </div>

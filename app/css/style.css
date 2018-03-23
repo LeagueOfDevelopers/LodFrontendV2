@@ -2278,7 +2278,7 @@ footer {
 
 .all-project__name {
   font-family: 'Cuprum', sans-serif;
-  font-size: 2em;
+  font-size: 4vh;
   border-bottom: 1px solid #202d3a;
   text-align: center;
   padding-bottom: 5px;
@@ -3999,7 +3999,7 @@ footer {
   }
 }
 
-@media only screen and (min-width: 1050px) {
+@media only screen and (min-width: 950px) {
     /*****************************
      ADMIN PROJECTS & DEVELOPERS
   *****************************/
@@ -4015,7 +4015,40 @@ footer {
         margin-right: 1vw;
         width: 43vw;
         max-width: 43vw;
-        height: fit-content;
+        height: 20vw;
+    }
+
+    .projects__all-project {
+        margin-top: 1.5vh;
+        margin-bottom: 1.5vh;
+    }
+
+    .project-card {
+        display: flex;
+        justify-content: space-between;
+        height: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 5px;
+    }
+
+    .all-project__photo {
+        height: 100%;
+        width: 39%;
+        max-width: 39%;
+        margin: 0;
+    }
+
+    .all-project__info {
+        height: 100%;
+        width: 59%;
+        padding: 0;
+    }
+
+    .all-project__name {
+        min-height: 4vh;
+        max-height: 8vh;
+        overflow: hidden;
     }
 }
 

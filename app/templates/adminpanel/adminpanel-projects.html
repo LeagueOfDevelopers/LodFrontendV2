@@ -7,7 +7,7 @@
 
           <div ng-repeat="fullProject in fullProjects" class="projects__all-project"
                ng-class="{'projects__last':(fullProjects.length % 2)}">
-              <a ui-sref="adminpanel.projectEdit({id: fullProject.ProjectId})">
+              <a class="project-card" ui-sref="adminpanel.projectEdit({id: fullProject.ProjectId})">
 
                   <img class="all-project__photo" ng-src="{{fullProject.PhotoUri || DEFAULT_PROJECT_LANDSCAPE}}" />
 

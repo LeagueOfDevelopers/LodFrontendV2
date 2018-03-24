@@ -2051,7 +2051,8 @@ angular.module('LodSite.controllers', [])
         '$state',
         'TokenService',
         'ApiService',
-        function ($scope, $state, TokenService, ApiService) {
+        '$timeout',
+        function ($scope, $state, TokenService, ApiService, $timeout) {
             var token = TokenService.getToken();
             if (!token) {
                 return $state.go('index');
@@ -2239,6 +2240,14 @@ angular.module('LodSite.controllers', [])
                 if (!token || !token.UserId) {
                     return $state.go('index');
                 }
+            });
+
+            $scope.$on('notificationsAmount_changed', function (e) {
+                $timeout(function () {
+                    pageCounter = 0;
+                    $scope.addNotifications();
+                    $scope.$apply();
+                }, 1000);
             });
 
             $scope.$emit('change_title', {

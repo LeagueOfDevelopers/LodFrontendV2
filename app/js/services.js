@@ -638,6 +638,7 @@ angular.module('LodSite.services', [])
             $rootScope.webSocket = new WebSocket(WEBSOCKET_CLIENT_URL + '?id=' + currentUserId);
             $rootScope.webSocket.onmessage = function (message) {
                 localStorage.setItem('notifications_amount', JSON.stringify(message.data));
+                $rootScope.$broadcast('notificationsAmount_changed');
                 $rootScope.$apply();
             };
             $rootScope.webSocket.onopen = function () {

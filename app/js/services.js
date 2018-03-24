@@ -198,10 +198,11 @@ angular.module('LodSite.services', [])
             this.unlinkGithubProfile = function () {
                 var url = '/unlink/github';
 
-                return sendAuthorizationSaveRequest(POST, url).then(function (response) {
-                    return {
-                        status: response.status === 200
-                    };
+                return sendAuthorizationSaveRequest(GET, url).then(function (response) {
+                    if (response.status === 409) {
+                        return response.status === 409;
+                    }
+                    window.location.href = response.data;
                 });
             };
 

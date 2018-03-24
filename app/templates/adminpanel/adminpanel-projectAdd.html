@@ -104,7 +104,7 @@
                             Добавить
                         </div>
                         <div class="repository-buttons__link">или</div>
-                        <div class="profile-settings__button adding-developer__button" ng-click="githubRepoToggleOpened()">
+                        <div class="profile-settings__button adding-developer__button" ng-click="repoNameInputToggleOpened()">
                             Создать
                         </div>
                     </div>
@@ -218,6 +218,24 @@
 
                 <button class="modal-window__submit" ng-click="chooseRepo($index)">+</button>
             </label>
+        </div>
+    </div>
+</div>
+
+<div class="modal-window__wrap" ng-show="isGithubRepoNameInputDialogOpen">
+    <div class="modal-window">
+        <div class="modal-window__developers">
+            <div class="modal-window__close-button" ng-click="repoNameInputToggleOpened()"></div>
+
+            <div class="modal-window__message" style="margin-bottom:10px">
+                Введите имя репозитория:
+            </div>
+            <div style="margin-top:15px">
+                <input style="height:35px" type="text" class="profile-settings__input validate-field" ng-model="newRepositoryName" autofocus
+                       pattern="^[\d\w\s][^<>/]+$" ng-maxlength="100" required />
+            </div>
+            <div class="modal-window__button button__yes" ng-click="createRepository()">Создать</div>
+            <div class="modal-window__button button__no" ng-click="repoNameInputToggleOpened()">Отмена</div>
         </div>
     </div>
 </div>

@@ -291,13 +291,8 @@ angular.module('LodSite.controllers', [])
             /*POST - REQUESTS*/
 
             $scope.unlinkGithubProfile = function () {
-                ApiService.unlinkGithubProfile().then(function (isSuccess) {
-                    if (isSuccess) {
-                        $scope.state[0] = 'success';
-                        $scope.profile.LinkToGithubProfile = null;
-                    } else {
+                ApiService.unlinkGithubProfile().then(function (isFailed) {
                         $scope.state[0] = 'failed';
-                    }
                     changeCurrentState();
                 });
             }
@@ -863,6 +858,18 @@ angular.module('LodSite.controllers', [])
             $scope.deleteRepo = function (index) {
                 $scope.chosenRepositories.splice(index, 1);
             };
+
+            $scope.isGithubRepoNameInputDialogOpen = false;
+            $scope.newRepositoryName = "";
+
+            $scope.createRepository = function () {
+                ApiService.createGithubRepository($scope.newRepositoryName);
+                $scope.repoNameInputToggleOpened();
+            }
+
+            $scope.repoNameInputToggleOpened = function () {
+                $scope.isGithubRepoNameInputDialogOpen = !$scope.isGithubRepoNameInputDialogOpen;
+            }
 
             //   FOR SMALL IMAGES
             $scope.currentUploadStateImage = "waiting"; // waiting, uploading

@@ -65,8 +65,8 @@
                            pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$" ng-maxlength="30"
                            required />
                     <input type="password" placeholder="Пароль" ng-model="userLogin.Password"
-                           pattern="^(?=^.{8,30}$)[a-zA-Z0-9]+$"
-                           ng-minlength="8" ng-maxlength="30" required />
+                           pattern="^(?=^.{8,50}$)[a-zA-Z0-9]+$"
+                           ng-minlength="8" ng-maxlength="50" required />
                     <button ng-disabled="loginForm.$invalid || isDisabled" ng-click="signIn()">Войти</button>
                     <p ng-if="isNoDeveloper" style="margin: 10px; color: #2980b9;">
                         Не удалось войти, проверьте введенные данные.

@@ -10,7 +10,7 @@
   <div class="content-wrapper">
       <div class="developers-page__developers">
           <div ng-repeat="fullDeveloper in fullDevelopers" class="developers__full-developer">
-              <a ui-sref="developers.item({id: fullDeveloper.UserId})">
+              <a class="project-card" ui-sref="developers.item({id: fullDeveloper.UserId})">
                   <img class="full-developer__photo" ng-src="{{fullDeveloper.PhotoUri || DEFAULT_DEVELOPER_PHOTO}}">
 
                   <div class="full-developer__info">

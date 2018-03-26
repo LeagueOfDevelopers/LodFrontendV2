@@ -4041,22 +4041,21 @@ footer {
         padding: 5px;
     }
 
-    .all-project__photo {
+    .all-project__photo, .full-developer__photo {
         height: 100%;
         width: 39%;
         max-width: 39%;
         margin: 0;
     }
 
-    .all-project__info {
+    .all-project__info, .full-developer__info {
         height: 100%;
         width: 59%;
         padding: 0;
     }
 
     .all-project__name {
-        min-height: 4vh;
-        max-height: 8vh;
+        height: 10vh;
         overflow: hidden;
     }
 }

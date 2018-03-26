@@ -67,10 +67,9 @@
           <input type="text" class="profile-settings__input validate-field" ng-model="profile.PhoneNumber"
                  ui-mask="+7-(999)-999-99-99" ui-mask-placeholder-char=" " required />
 
-          <div class="profile-settings__input-heading" ng-if="profile.VkProfileUri !== null">Профиль ВКонтакте:</div>
+          <div class="profile-settings__input-heading">Профиль ВКонтакте:</div>
           <input type="url" name="vkUrl" class="profile-settings__input validate-field" pattern="^(http|https)?://vk.com/[a-zA-Z0-9]+$"
-                 ng-model="profile.VkProfileUri" ng-maxlength="100"
-                 ng-if="profile.VkProfileUri !== null" required />
+                 ng-model="profile.VkProfileUri" ng-maxlength="100" />
 
           <div class="help-message-input profile-settings__help-message__vk-uri"
                ng-show="profileSettingsForm.vkUri.$error.url">

@@ -89,8 +89,8 @@
     </div>
   </div>
 
-  <a class="developers-section__see-more-button button-style" ng-if="isMoreDevs" ng-click="addDevelopers()">Показать
-                                                                                                            больше</a>
+  <button class="developers-section__see-more-button button-style" ng-if="isMoreDevs" ng-disabled="isDisabled" ng-click="addDevelopers()">Показать
+                                                                                                            больше</button>
   <div class="modal-window__wrap" ng-if="isOpen">
     <div class="modal-window">
       <div class="modal-window__developers">
@@ -110,7 +110,7 @@
 
         <br/>
 
-        <div class="modal-window__button button__yes" ng-click="sendRequest()">Да</div>
+        <div class="modal-window__button button__yes" ng-disabled="isDisabled" ng-click="sendRequest()">Да</div>
         <div class="modal-window__button button__no" ng-click="closeWindow()">Нет</div>
 
       </div>

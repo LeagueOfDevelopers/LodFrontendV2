@@ -97,11 +97,17 @@ angular.module('LodSite.controllers', [])
         $scope.fullDevelopers = [];
         $scope.isMoreDevs = true;
         var pageCounter = 0;
+        $scope.isDisabled = false;
+
+        $scope.changeDisable = function () {
+            $scope.isDisabled = !$scope.isDisabled;
+        }
 
         $scope.resetPageCounter = function () {
             pageCounter = 0;
         };
         $scope.addDevelopers = function () {
+            $scope.changeDisable();
             pageCounter++;
             ApiService.getFullDevelopers(pageCounter)
                 .then(function (data) {
@@ -111,6 +117,7 @@ angular.module('LodSite.controllers', [])
                         $scope.fullDevelopers = $scope.fullDevelopers.concat(data.Data);
                         $scope.isMoreDevs = $scope.fullDevelopers.length < data.CountOfEntities;
                     }
+                    $scope.changeDisable();
                 });
         };
 
@@ -278,6 +285,7 @@ angular.module('LodSite.controllers', [])
             });
 
             $scope.getRedirectionToAuthenticationGithubForm = function () {
+                $scope.changeDisable();
                 ApiService.getRedirectionToAuthenticationGithubForm().then(function (isSuccess) {
                     if (isSuccess) {
                         $scope.state[0] = 'success';
@@ -285,15 +293,18 @@ angular.module('LodSite.controllers', [])
                         $scope.state[0] = 'failed';
                     }
                     changeCurrentState();
+                    $scope.changeDisable();
                 });
             }
 
             /*POST - REQUESTS*/
 
             $scope.unlinkGithubProfile = function () {
+                $scope.changeDisable();
                 ApiService.unlinkGithubProfile().then(function (isFailed) {
                         $scope.state[0] = 'failed';
-                    changeCurrentState();
+                        changeCurrentState();
+                        $scope.changeDisable();
                 });
             }
 
@@ -331,13 +342,13 @@ angular.module('LodSite.controllers', [])
                             $scope.state[2] = 'failed';
                         }
                         changeCurrentState();
+                        $scope.changeDisable();
                     });
                 } else {
                     $scope.state[2] = 'success';
-
+                    $scope.changeDisable();
                     changeCurrentState();
                 }
-                $scope.changeDisable();
             };
 
 
@@ -365,6 +376,11 @@ angular.module('LodSite.controllers', [])
     }])
 
     .controller('FullProjectsCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
+        $scope.isDisabled = false;
+
+        $scope.changeDisable = function () {
+            $scope.isDisabled = !$scope.isDisabled;
+        }
         $scope.categories = [{
             category: 'Веб',
             status: false,
@@ -402,6 +418,7 @@ angular.module('LodSite.controllers', [])
             $scope.updateProjects();
         };
         $scope.updateProjects = function () {
+            $scope.changeDisable();
             var requestParams = {};
             var indexes = $scope.categories.filter(function (category) {
                 return category.status;
@@ -414,7 +431,6 @@ angular.module('LodSite.controllers', [])
                     categories: indexes.join(',')
                 });
             }
-
             ApiService.getFullProjects(requestParams, $scope.fullProjects.length, projectsToReturn)
                 .then(function (data) {
                     if (!data || data.Data.length === 0) {
@@ -423,7 +439,8 @@ angular.module('LodSite.controllers', [])
                         $scope.fullProjects = $scope.fullProjects.concat(data.Data);
                         $scope.isMoreProjects = $scope.fullProjects.length < data.CountOfEntities;
                     }
-                })
+                    $scope.changeDisable();
+                });
         };
 
         $scope.updateProjects();
@@ -517,11 +534,18 @@ angular.module('LodSite.controllers', [])
             $scope.isMoreProjects = true;
             var projectsToReturn = getProjsSectionAmount();
 
+            $scope.isDisabled = false;
+
+            $scope.changeDisable = function () {
+                $scope.isDisabled = !$scope.isDisabled;
+            }
+
             $scope.addProjects = function () {
                 $scope.updateProjects();
             };
 
             $scope.updateProjects = function () {
+                $scope.changeDisable();
                 ApiService.getFullProjects(null, $scope.fullProjects.length, projectsToReturn)
                     .then(function (data) {
                         if (!data || data.Data.length === 0) {
@@ -530,7 +554,8 @@ angular.module('LodSite.controllers', [])
                             $scope.fullProjects = $scope.fullProjects.concat(data.Data);
                             $scope.isMoreProjects = $scope.fullProjects.length < data.CountOfEntities;
                         }
-                    })
+                        $scope.changeDisable();
+                    });
             };
 
             $scope.updateProjects();
@@ -682,6 +707,7 @@ angular.module('LodSite.controllers', [])
             };
 
             $scope.addDevelopers = function () {
+                $scope.changeDisable();
                 pageCounter++;
                 ApiService.getFullDevelopers(pageCounter)
                     .then(function (data) {
@@ -718,6 +744,7 @@ angular.module('LodSite.controllers', [])
 
                             $scope.isMoreDevs = ($scope.developers.length + $scope.chosenDevelopers.length) < data.CountOfEntities;
                         }
+                        $scope.changeDisable();
                     });
             };
 
@@ -764,6 +791,7 @@ angular.module('LodSite.controllers', [])
             };
 
             $scope.chooseDeveloper = function (index) {
+                $scope.changeDisable();
                 if ($scope.developers[index].DeveloperRole) {
                     $scope.chosenDevelopers.push({
                         UserId: $scope.developers[index].UserId,
@@ -775,10 +803,13 @@ angular.module('LodSite.controllers', [])
                     $scope.developers = [];
                     $scope.toggleOpened();
                 }
+                $scope.changeDisable();
             };
 
             $scope.deleteDeveloper = function (index) {
+                $scope.changeDisable();
                 $scope.chosenDevelopers.splice(index, 1);
+                $scope.changeDisable();
             };
 
             // FOR GITHUB REPOSITORIES
@@ -856,14 +887,19 @@ angular.module('LodSite.controllers', [])
             };
 
             $scope.deleteRepo = function (index) {
+                $scope.changeDisable();
                 $scope.chosenRepositories.splice(index, 1);
+                $scope.changeDisable();
             };
 
             $scope.isGithubRepoNameInputDialogOpen = false;
             $scope.newRepositoryName = "";
 
             $scope.createRepository = function () {
-                ApiService.createGithubRepository($scope.newRepositoryName);
+                $scope.changeDisable();
+                ApiService.createGithubRepository($scope.newRepositoryName).then(function () {
+                    $scope.changeDisable();
+                });
                 $scope.repoNameInputToggleOpened();
             }
 
@@ -1017,8 +1053,8 @@ angular.module('LodSite.controllers', [])
                     } else {
                         $scope.currentState = 'failed';
                     }
+                    $scope.changeDisable();
                 });
-                $scope.changeDisable();
             };
 
             $scope.$on('userRole_changed', function (e, args) {
@@ -1149,6 +1185,7 @@ angular.module('LodSite.controllers', [])
             };
 
             $scope.addDevelopers = function () {
+                $scope.changeDisable();
                 pageCounter++;
                 ApiService.getFullDevelopers(pageCounter)
                     .then(function (data) {
@@ -1185,6 +1222,7 @@ angular.module('LodSite.controllers', [])
 
                             $scope.isMoreDevs = ($scope.developers.length + $scope.projectMemberships.length) < data.CountOfEntities;
                         }
+                        $scope.changeDisable();
                     });
             };
 
@@ -1227,9 +1265,12 @@ angular.module('LodSite.controllers', [])
 
             $scope.chooseDeveloper = function (index) {
                 if ($scope.developers[index].Role) {
+                    $scope.changeDisable();
                     $scope.projectMemberships.push($scope.developers[index]);
 
-                    ApiService.joinToProject(projectId, $scope.developers[index].UserId, JSON.stringify($scope.developers[index].Role));
+                    ApiService.joinToProject(projectId, $scope.developers[index].UserId, JSON.stringify($scope.developers[index].Role)).then(function () {
+                        $scope.changeDisable();
+                    });
 
                     $scope.developers = [];
                     $scope.toggleOpened();
@@ -1237,8 +1278,11 @@ angular.module('LodSite.controllers', [])
             };
 
             $scope.deleteDeveloper = function (index) {
+                $scope.changeDisable();
                 ApiService.escapeFromProject(projectId, $scope.projectMemberships[index].UserId);
-                ApiService.removeCollaboratorFromRepositories(projectId, $scope.projectMemberships[index].UserId);
+                ApiService.removeCollaboratorFromRepositories(projectId, $scope.projectMemberships[index].UserId).then(function () {
+                    $scope.changeDisable();
+                });
                 $scope.projectMemberships.splice(index, 1);
             };
 
@@ -1316,14 +1360,19 @@ angular.module('LodSite.controllers', [])
             };
 
             $scope.deleteRepo = function (index) {
+                $scope.changeDisable();
                 $scope.editedProject.LinksToGithubRepositories.splice(index, 1);
+                $scope.changeDisable();
             };
 
             $scope.isGithubRepoNameInputDialogOpen = false;
             $scope.newRepositoryName = "";
 
             $scope.createRepository = function () {
-                ApiService.createGithubRepository($scope.newRepositoryName);
+                $scope.changeDisable();
+                ApiService.createGithubRepository($scope.newRepositoryName).then(function () {
+                    $scope.changeDisable();
+                });
                 $scope.repoNameInputToggleOpened();
             }
 
@@ -1477,8 +1526,8 @@ angular.module('LodSite.controllers', [])
                     } else {
                         $scope.currentState = 'failed';
                     }
+                    $scope.changeDisable();
                 });
-                $scope.changeDisable();
             };
 
             $scope.$on('userRole_changed', function (e, args) {
@@ -1523,8 +1572,8 @@ angular.module('LodSite.controllers', [])
                     else {
                         $state.go('error');
                     }
+                    $scope.changeDisable();
                 });
-                $scope.changeDisable();
             };
 
             $scope.$on('userRole_changed', function (e, args) {
@@ -1553,8 +1602,14 @@ angular.module('LodSite.controllers', [])
             $scope.resetPageCounter = function () {
                 pageCounter = 0;
             };
+            $scope.isDisabled = false;
+
+            $scope.changeDisable = function () {
+                $scope.isDisabled = !$scope.isDisabled;
+            }
 
             $scope.addDevelopers = function () {
+                $scope.changeDisable();
                 pageCounter++;
                 ApiService.getFullDevelopers(pageCounter)
                     .then(function (data) {
@@ -1574,6 +1629,7 @@ angular.module('LodSite.controllers', [])
 
                             $scope.isMoreDevs = $scope.developers.length < data.CountOfEntities;
                         }
+                        $scope.changeDisable();
                     });
             };
 
@@ -1613,6 +1669,7 @@ angular.module('LodSite.controllers', [])
             };
 
             $scope.sendRequest = function () {
+                $scope.changeDisable();
                 switch ($scope.developerForConfirmation.eventType) {
                     case 0:
                         ApiService.confirmDeveloper($scope.developerForConfirmation.id).then(function (isSuccess) {
@@ -1626,6 +1683,7 @@ angular.module('LodSite.controllers', [])
                             else {
                                 $state.go('error');
                             }
+                            $scope.changeDisable();
                         });
                         break;
                     case 1:
@@ -1640,6 +1698,7 @@ angular.module('LodSite.controllers', [])
                             else {
                                 $state.go('error');
                             }
+                            $scope.changeDisable();
                         });
                         break;
                     case 2:
@@ -1655,6 +1714,7 @@ angular.module('LodSite.controllers', [])
                                 else {
                                     $state.go('error');
                                 }
+                                $scope.changeDisable();
                             });
                         break;
                     case 3:
@@ -1676,15 +1736,16 @@ angular.module('LodSite.controllers', [])
                                     else {
                                         $state.go('error');
                                     }
+                                    $scope.changeDisable();
                                 });
                         }
                         else {
                             $scope.developerForConfirmation = {};
-
+                            $scope.changeDisable();
                             $scope.closeWindow();
                         }
                         break;
-                }
+                };
             };
 
 
@@ -1748,7 +1809,7 @@ angular.module('LodSite.controllers', [])
             $scope.changeDisable();
             $scope.newDeveloper.PhoneNumber = '7' + $scope.newDeveloper.PhoneNumber;
             $scope.loginType === 'github' ?
-                ApiService.signUpWithGithub($scope.newDeveloper) :
+                ApiService.signUpWithGithub($scope.newDeveloper).then() :
                 ApiService.signUp($scope.newDeveloper).then(function (responseObject) {
                     $scope.currentStates = {};
 
@@ -1765,8 +1826,8 @@ angular.module('LodSite.controllers', [])
                         $scope.currentStates.isFailed = true;
                     }
                     $scope.newDeveloper.PhoneNumber = $scope.newDeveloper.PhoneNumber.slice(1);
+                    $scope.changeDisable();
                 });
-            $scope.changeDisable();
         };
 
         $scope.changeDisable = function () {
@@ -1933,7 +1994,14 @@ angular.module('LodSite.controllers', [])
     .controller('ContactCtrl', ['$scope', '$state', 'ApiService', function ($scope, $state, ApiService) {
         $scope.data = {};
 
+        $scope.isDisabled = false;
+
+        $scope.changeDisable = function () {
+            $scope.isDisabled = !$scope.isDisabled;
+        }
+
         $scope.Request = function () {
+            $scope.changeDisable();
             ApiService.contact($scope.data).then(function (isSuccess) {
                 if (isSuccess) {
                     $scope.isSuccess = isSuccess;
@@ -1948,8 +2016,8 @@ angular.module('LodSite.controllers', [])
                 } else {
                     $state.go('error');
                 }
-            }
-            );
+                $scope.changeDisable();
+            });
         }
 
         $scope.$emit('toggle_black', { isBlack: true });
@@ -1994,12 +2062,15 @@ angular.module('LodSite.controllers', [])
                     } else {
                         $scope.isNoDeveloper = true;
                     }
+                    $scope.changeDisable();
                 });
-                $scope.changeDisable();
             };
 
             $scope.signInWithGithub = function () {
-                ApiService.signInWithGithub();
+                $scope.changeDisable()
+                ApiService.signInWithGithub().then(function () {
+                    $scope.changeDisable();
+                });
             }
 
             $scope.toggleStatus = function () {
@@ -2017,7 +2088,8 @@ angular.module('LodSite.controllers', [])
                     else {
                         $state.go('error');
                     }
-                })
+                    $scope.changeDisable();
+                });
             };
 
         }])
@@ -2056,6 +2128,12 @@ angular.module('LodSite.controllers', [])
             var token = TokenService.getToken();
             if (!token) {
                 return $state.go('index');
+            }
+
+            $scope.isDisabled = false;
+
+            $scope.changeDisable = function () {
+                $scope.isDisabled = !$scope.isDisabled;
             }
 
             var pageCounter = 0;
@@ -2186,9 +2264,8 @@ angular.module('LodSite.controllers', [])
             };
 
             $scope.addNotifications = function () {
-
+                $scope.changeDisable();
                 ApiService.getNotifications(pageCounter).then(function (data) {
-
                     var newNotifications = filterNotifications(data.Data);
 
                     var notifications = {
@@ -2204,6 +2281,7 @@ angular.module('LodSite.controllers', [])
                     $scope.isMoreNotif = ($scope.notifications.Unread.length + $scope.notifications.Read.length) < data.CountOfEntities;
 
                     pageCounter++;
+                    $scope.changeDisable();
                 });
             };
 
@@ -2262,7 +2340,14 @@ angular.module('LodSite.controllers', [])
             NewPassword: ''
         };
 
+        $scope.isDisabled = false;
+
+        $scope.changeDisable = function () {
+            $scope.isDisabled = !$scope.isDisabled;
+        }
+
         $scope.recoverPassword = function () {
+            $scope.changeDisable();
             ApiService.recoverPassword($scope.data).then(function (isSuccess) {
                 $scope.isSuccess = isSuccess;
 
@@ -2271,6 +2356,7 @@ angular.module('LodSite.controllers', [])
                     NewPassword: ''
                 };
                 $scope.repeatedPassword = '';
+                $scope.changeDisable();
             });
         };
 

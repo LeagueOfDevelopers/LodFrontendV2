@@ -86,11 +86,13 @@
 
           <div class="github-profile__link"
                ng-click="unlinkGithubProfile()"
+               ng-disabled="isDisabled"
                ng-show="profile.LinkToGithubProfile!==null&&
                       profile.LinkToGithubProfile!==undefined&&
                       profile.HasPassword===true">Отвязать профиль</div>
           <div class="profile-settings__button"
                ng-click="getRedirectionToAuthenticationGithubForm()"
+               ng-disabled="isDisabled"
                ng-show="profile.LinkToGithubProfile===null||
                       profile.LinkToGithubProfile===undefined">Привязать профиль</div>
       </div>

@@ -73,7 +73,7 @@
                     </p>
                     <div class="form__question">
                         Регистрировались через GitHub?
-                        <span class="form__become-dev form__link" ng-click="signInWithGithub()">Войти через GitHub</span>
+                        <span class="form__become-dev form__link" ng-disabled="isDisabled" ng-click="signInWithGithub()">Войти через GitHub</span>
                     </div>
                     <div class="form__question">
                         Не являетесь разработчиком?
@@ -89,7 +89,7 @@
                     <input type="email" placeholder="Введите ваш e-mail" ng-model="userLogin.emailForRecovery" ng-change="cons()"
                            pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$" ng-maxlength="30"
                            required />
-                    <button ng-disabled="loginForm.$invalid" ng-click="recoverPassword()">Отправить</button>
+                    <button ng-disabled="loginForm.$invalid || isDisabled" ng-click="recoverPassword()">Отправить</button>
                     <p ng-if="isSuccess" style="margin: 10px; color: #2980b9;">
                         Ссылка на восстановление пароля отправлена вам на почту.
                     </p>

@@ -73,7 +73,7 @@
                               <div ng-bind=" '(' + developer.Role + ')' "></div>
                           </div>
                       </a>
-                      <div class="adding-project__developer__delete" ng-click="deleteDeveloper($index)"></div>
+                      <div class="adding-project__developer__delete" ng-disabled="isDisabled" ng-click="deleteDeveloper($index)"></div>
                   </div>
               </div>
 
@@ -94,7 +94,7 @@
                           </div>
                       </label>
 
-                      <div class="adding-project__developer__delete" ng-click="deleteRepo($index)"></div>
+                      <div class="adding-project__developer__delete" ng-disabled="isDisabled" ng-click="deleteRepo($index)"></div>
                   </div>
               </div>
 
@@ -192,10 +192,11 @@
         <input class="modal-window_role" ng-if="developer.isSelect" ng-model="developer.Role"
                ng-keypress="$event.which === 13 && chooseDeveloper($index)" placeholder="Введите роль" autofocus/>
 
-        <button class="modal-window__submit" ng-if="developer.isSelect" ng-disabled="!developer.Role" ng-click="chooseDeveloper($index)">+</button>
+        <button class="modal-window__submit" ng-if="developer.isSelect" ng-disabled="editProjectForm.$invalid || isDisabled" 
+                                                                        ng-click="chooseDeveloper($index)">+</button>
       </label>
 
-      <a class="modal-window__see-more-button button-style" ng-if="isMoreDevs" ng-click="addDevelopers()">Показать больше</a>
+      <button class="modal-window__see-more-button button-style" ng-if="isMoreDevs" ng-disabled="isDisabled" ng-click="addDevelopers()">Показать больше</button>
 
     </div>
   </div>
@@ -233,7 +234,7 @@
                 <input style="height:35px; margin: auto" type="text" class="profile-settings__input validate-field" ng-model="newRepositoryName" autofocus
                      pattern="^[\d\w\s][^<>/]+$" ng-maxlength="100" required />
             </div>
-            <div class="modal-window__button button__yes" ng-click="createRepository()">Создать</div>
+            <div class="modal-window__button button__yes" ng-disabled="isDisabled" ng-click="createRepository()">Создать</div>
             <div class="modal-window__button button__no" ng-click="repoNameInputToggleOpened()">Отмена</div>
         </div>
     </div>

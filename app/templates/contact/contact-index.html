@@ -19,7 +19,7 @@
                 required></textarea>
     </label>
     <label class="submit" ng-class="{'submit--success': isSuccess}">
-      <input type="submit" ng-if="!isSuccess" value="">
+      <input type="submit" ng-disabled="isDisabled" ng-if="!isSuccess" value="">
 
       <div class="success" ng-if="isSuccess"></div>
     </label>

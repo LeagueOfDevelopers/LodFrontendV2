@@ -346,6 +346,9 @@ a {
   -ms-user-select: none;
   user-select: none;
   color: #202d3a;
+
+  background: transparent;
+  box-sizing: initial;
 }
 
 .button-style:after {

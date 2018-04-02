@@ -36,8 +36,8 @@ angular.module('LodSite', [
              })
 
              .state('login-github', {
-               url: '/login/github/:encodedToken',
-               template: '<ui-view>',
+               url: '/login/github?encoded_token&success',
+               template: '<ui-view/>',
                controller: 'GithubLoginCtrl'
              })
 
@@ -113,7 +113,7 @@ angular.module('LodSite', [
              })
 
              .state('developers.edit', {
-               url: '/profile/:id',
+               url: '/profile/:id?status',
                templateUrl: templateUrl('developers', 'developers-edit'),
                controller: 'DeveloperEditCtrl'
              })
@@ -139,13 +139,13 @@ angular.module('LodSite', [
              })
 
              .state('adminpanel.projectAdd', {
-               url: '/projects/add',
+               url: '/projects/add?status',
                templateUrl: templateUrl('adminpanel', 'adminpanel-projectAdd'),
                controller: 'AddProjectCtrl'
              })
 
              .state('adminpanel.projectEdit', {
-               url: '/projects/edit/:id',
+               url: '/projects/edit/:id?status',
                templateUrl: templateUrl('adminpanel', 'adminpanel-projectEdit'),
                controller: 'EditProjectCtrl'
              })
@@ -164,7 +164,7 @@ angular.module('LodSite', [
 
              //other
              .state('signup', {
-               url: '/signup',
+               url: '/signup?status',
                templateUrl: templateUrl('signup', 'signup-index'),
                controller: 'SignupCtrl'
              })
@@ -202,6 +202,8 @@ var DOMAIN_URL = 'https://'+ DOMAIN_NAME;
 var API_DOMAIN_URL = 'https://api.' + DOMAIN_NAME;
 var WEBSOCKET_CLIENT_URL = 'wss://api.' + DOMAIN_NAME + '/socket';
 var numberOfProjects = null;
+
+var CALLBACK_URL_QUERY_STRING_PARAMETER = 'frontend_callback';
 
 // other functions
 function templateUrl(module, name) {

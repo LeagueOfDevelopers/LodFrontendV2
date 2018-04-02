@@ -134,6 +134,9 @@ angular.module('LodSite.services', [])
                     });
             };
 
+            var defineCallback = function (baseUrl, callbackUrl) {
+                return baseUrl + '?' + CALLBACK_URL_QUERY_STRING_PARAMETER + '=' + callbackUrl;
+            }
 
             // developers
             this.getRandomDevelopers = function (numberOfDevelopers) {
@@ -187,22 +190,26 @@ angular.module('LodSite.services', [])
                     });
             };
 
-            this.getRedirectionToAuthenticationGithubForm = function () {
-                var url = '/auth/github';
+            this.getRedirectionToAuthenticationGithubForm = function (id) {
+                var baseUrl = '/auth/github';
+                var frontendCallback = window.location.href;
+                var url = defineCallback(baseUrl, frontendCallback);
 
                 return sendAuthorizationSaveRequest(GET, url).then(function (response) {
-                    window.location.href = response.data;
+                    window.location.href = response.data; 
                 });
             };
 
             this.unlinkGithubProfile = function () {
-                var url = '/unlink/github';
+                var baseUrl = '/unlink/github';
+                var frontendCallback = window.location.href;
+                var url = defineCallback(baseUrl, frontendCallback);
 
                 return sendAuthorizationSaveRequest(GET, url).then(function (response) {
                     if (response.status === 409) {
                         return response.status === 409;
                     }
-                    window.location.href = response.data;
+                    window.location.href = response.data; 
                 });
             };
 
@@ -216,7 +223,7 @@ angular.module('LodSite.services', [])
 
             this.sendProfileSttings = function (developerId, requestData) {
                 var url = '/developers/' + developerId;
-
+                
                 return sendAuthorizationSaveRequest(PUT, url, null, requestData).then(function (response) {
                     return response.status === 200;
                 });
@@ -341,7 +348,9 @@ angular.module('LodSite.services', [])
             };
 
             this.addCollaboratorToRepositories = function (projectId, developerId) {
-                var url = '/github/repositories/' + projectId + '/developer/' + developerId;
+                var baseUrl = '/github/repositories/' + projectId + '/developer/' + developerId;
+                var frontendCallback = window.location.href;
+                var url = defineCallback(baseUrl, frontendCallback);
 
                 return sendAuthorizationSaveRequest(GET, url).then(function (response) {
                     window.location.href = response.data;
@@ -349,7 +358,9 @@ angular.module('LodSite.services', [])
             }
 
             this.removeCollaboratorFromRepositories = function (projectId, developerId) {
-                var url = '/github/repositories/' + projectId + '/developer/' + developerId + '/delete';
+                var baseUrl = '/github/repositories/' + projectId + '/developer/' + developerId + '/delete';
+                var frontendCallback = window.location.href;
+                var url = defineCallback(baseUrl, frontendCallback);
 
                 return sendAuthorizationSaveRequest(GET, url).then(function (response) {
                     window.location.href = response.data;
@@ -432,7 +443,9 @@ angular.module('LodSite.services', [])
             };
 
             this.signUpWithGithub = function (requestData) {
-                var url = '/signup/github';
+                var baseUrl = '/signup/github';
+                var frontendCallback = window.location.href;
+                var url = defineCallback(baseUrl, frontendCallback);
 
                 return sendAuthorizationSaveRequest(POST, url, null, JSON.stringify(requestData)).then(function (response) {
                     window.location.href = response.data;
@@ -452,8 +465,9 @@ angular.module('LodSite.services', [])
             };
 
             this.signInWithGithub = function () {
-                var url = '/login/github';
-
+                var baseUrl = '/login/github';
+                var frontendCallback = DOMAIN_URL + baseUrl;
+                var url = defineCallback(baseUrl, frontendCallback);
                 return sendAuthorizationSaveRequest(GET, url).then(function (response) {
                     window.location.href = response.data;
                 });

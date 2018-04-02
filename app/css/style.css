@@ -201,12 +201,13 @@ input {
     flex: 1 0 auto;
 }
 
+
 .developers-section__link-to-profile {
-    width: 22vw;
-    height: 22vw;
-    max-width: 22vw;
-    min-width: 170px;
-    min-height: 170px;
+    width: 30vw;
+    height: 30vw;
+    max-width: 30vw;
+    min-width: 200px;
+    min-height: 200px;
     margin: 1vw;
     margin-bottom: 100px;
 }
@@ -228,82 +229,82 @@ input {
 }
 
 @media only screen and (min-width: 700px) and (max-width: 800px) {
-
+    /*
     .developers-section__link-to-profile {
         width: 20vw;
         height: 20vw;
         max-width: 20vw;
-    }
+    }*/
 }
 
 @media only screen and (min-width: 1000px) and (max-width: 1500px) {
-    .projects-section__link-to-project, .filling-empty-space-childs {
+    .projects-section__link-to-project, .filling-empty-space-childs, .developers-section__link-to-profile {
         width: 22vw;
         height: 22vw;
         max-width: 22vw;
     }
-
+    /*
     .developers-section__link-to-profile {
         width: 17vw;
         height: 17vw;
         max-width: 17vw;
-    }
+    }*/
 }
 
 @media only screen and (min-width: 1500px) and (max-width: 2000px) {
-    .projects-section__link-to-project, .filling-empty-space-childs {
+    .projects-section__link-to-project, .filling-empty-space-childs, .developers-section__link-to-profile {
         width: 17vw;
         height: 17vw;
         max-width: 17vw;
     }
-
+    /*
     .developers-section__link-to-profile {
         width: 13vw;
         height: 13vw;
         max-width: 13vw;
-    }
+    }*/
 }
 
 @media only screen and (min-width: 2000px) and (max-width: 2500px) {
-    .projects-section__link-to-project, .filling-empty-space-childs {
+    .projects-section__link-to-project, .filling-empty-space-childs, .developers-section__link-to-profile {
         width: 13vw;
         height: 13vw;
         max-width: 13vw;
     }
-
+    /*
     .developers-section__link-to-profile {
         width: 11vw;
         height: 11vw;
         max-width: 11vw;
-    }
+    }*/
 }
 
 @media only screen and (min-width: 2500px) and (max-width: 3000px) {
-    .projects-section__link-to-project, .filling-empty-space-childs {
+    .projects-section__link-to-project, .filling-empty-space-childs, .developers-section__link-to-profile {
         width: 11vw;
         height: 11vw;
         max-width: 11vw;
     }
-
+    /*
     .developers-section__link-to-profile {
         width: 9vw;
         height: 9vw;
         max-width: 9vw;
-    }
+    }*/
 }
 
 @media only screen and (min-width: 3000px) {
-    .projects-section__link-to-project, .filling-empty-space-childs {
+    .projects-section__link-to-project, .filling-empty-space-childs, .developers-section__link-to-profile {
         width: 9vw;
         height: 9vw;
         max-width: 9vw;
     }
-
+    /*
     .developers-section__link-to-profile {
         width: 7vw;
         height: 7vw;
         max-width: 7vw;
-    }
+    }*/
 }
 
 ol, ul {
@@ -561,7 +562,6 @@ header {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding-left: 1.25vw;
 }
 
 /* categories section */
@@ -719,7 +719,7 @@ header {
 
 .developer__full-name {
   display: block;
-  margin: 10px 0 5px 0;
+  margin-top: 10px;
   font-size: 1.1em;
   font-weight: bold;
 }
@@ -727,7 +727,8 @@ header {
 .developer__specialization {
   display: block;
   margin-bottom: 10px;
-  font-size: 1.1em;
+  font-size: 1em;
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .developers-section__see-all-button {

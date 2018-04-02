@@ -84,7 +84,7 @@ angular.module('LodSite.controllers', [])
 
     //developers
     .controller('RandomDevelopersCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
-        var numberOfDevelopers = getDevsSectionAmount();
+        var numberOfDevelopers = getProjsSectionAmount();
 
         ApiService.getRandomDevelopers(numberOfDevelopers)
             .then(function (data) {
@@ -173,6 +173,10 @@ angular.module('LodSite.controllers', [])
             }
             var developerId = token.UserId;
 
+            if ($state.params.status == 'False') {
+                $state.go('error');
+            }
+            
             $scope.state = [];
             $scope.currentState = null;
             $scope.profile = {};
@@ -286,7 +290,7 @@ angular.module('LodSite.controllers', [])
 
             $scope.getRedirectionToAuthenticationGithubForm = function () {
                 $scope.changeDisable();
-                ApiService.getRedirectionToAuthenticationGithubForm().then(function (isSuccess) {
+                ApiService.getRedirectionToAuthenticationGithubForm(developerId).then(function (isSuccess) {
                     if (isSuccess) {
                         $scope.state[0] = 'success';
                     } else {
@@ -630,7 +634,10 @@ angular.module('LodSite.controllers', [])
 
             $scope.newProject = new sampleProject();
 
-
+            if ($state.params.status == 'False') {
+                $scope.newProject = localStorage.getItem('saved_project');
+                $scope.$apply();
+            }
 
             //   FOR TYPE OF PROJECT
 
@@ -1013,6 +1020,7 @@ angular.module('LodSite.controllers', [])
                         $scope.chosenDevelopers.forEach(function (developer) {
                             ApiService.joinToProject(response.projectId, developer.UserId, JSON.stringify(developer.Role));
                             ApiService.addCollaboratorToRepositories(response.projectId, developer.UserId);
+                            localStorage.setItem('saved_project', $scope.newProject);
                         });
 
                         pageCounter = 0;
@@ -1091,6 +1099,11 @@ angular.module('LodSite.controllers', [])
             $scope.isMoreDevs = true;
             $scope.currentState = 'filling';
             $scope.editedProject = {};
+
+            if ($state.params.status == 'False') {
+                $scope.editedProject = localStorage.getItem('saved_project');
+                $scope.$apply();
+            }
 
             //   FOR TYPE OF PROJECT
             $scope.categories = [{
@@ -1514,6 +1527,7 @@ angular.module('LodSite.controllers', [])
                         $scope.currentState = 'success';
                         $scope.projectMemberships.forEach(function (developer) {
                             ApiService.addCollaboratorToRepositories(projectId, developer.UserId);
+                            localStorage.setItem('saved_project', $state.params.editedProject);
                         });
                         $scope.editedProject.LinksToGithubRepositories = $scope.editedProject.LinksToGithubRepositories.map(function (link) {
                             return {
@@ -1809,7 +1823,16 @@ angular.module('LodSite.controllers', [])
             $scope.changeDisable();
             $scope.newDeveloper.PhoneNumber = '7' + $scope.newDeveloper.PhoneNumber;
             $scope.loginType === 'github' ?
-                ApiService.signUpWithGithub($scope.newDeveloper).then() :
+                ApiService.signUpWithGithub($scope.newDeveloper).then(function () {
+                    if ($state.params.status == 'False') {
+                        // здесь сохраненный в кэш пользователь после редиректа присваивается текущему состоянию
+                        $scope.newDeveloper = localStorage.getItem('saved_profile_info');
+                        $scope.$apply();
+                    }
+                    else {
+                        $state.go('success');
+                    }
+                }) :
                 ApiService.signUp($scope.newDeveloper).then(function (responseObject) {
                     $scope.currentStates = {};
 
@@ -2096,17 +2119,23 @@ angular.module('LodSite.controllers', [])
 
     .controller('GithubLoginCtrl', ['$scope', '$state', '$base64', 'ApiService', 'TokenService', 'WebSocketService',
         function ($scope, $state, $base64, ApiService, TokenService, WebSocketService) {
-            $scope.isNoDeveloper = false;
-            $scope.decodedToken = $base64.decode($state.params.encodedToken);
-            var decodedToken = JSON.parse($scope.decodedToken);
-            TokenService.setToken(decodedToken);
-            WebSocketService.start();
-            $state.transitionTo('index', {
-                location: true,
-                inherit: true,
-                relative: $state.$current,
-                notify: false
-            });
+            $scope.success = $state.params.success;
+            if ($scope.success == 'True') {
+                $scope.isNoDeveloper = false;
+                $scope.decodedToken = $base64.decode($state.params.encoded_token);
+                var decodedToken = JSON.parse($scope.decodedToken);
+                TokenService.setToken(decodedToken);
+                WebSocketService.start();
+                $state.transitionTo('index', {
+                    location: true,
+                    inherit: true,
+                    relative: $state.$current,
+                    notify: false
+                });
+            }
+            else {
+                $state.go('error');
+            }
         }])
 
     .controller('EmailConfirmationCtrl', ['$scope', 'ApiService', '$state', function ($scope, ApiService, $state) {
@@ -2212,57 +2241,6 @@ angular.module('LodSite.controllers', [])
                 return newNotifications;
             };
 
-            var supplementInfo = function (notifications) {
-                notifications = notifications.map(function (notification) {
-                    switch (notification.EventType) {
-                        case 'NewEmailConfirmedDeveloper':
-                            ApiService.getDeveloper(notification.EventInfo.UserId).then(function (data) {
-                                notification.EventInfo.FirstName = data.data.FirstName;
-                                notification.EventInfo.LastName = data.data.LastName;
-                            });
-                            break;
-                        case 'NewFullConfirmedDeveloper':
-                            ApiService.getDeveloper(notification.EventInfo.NewDeveloperId).then(function (data) {
-                                notification.EventInfo.FirstName = data.data.FirstName;
-                                notification.EventInfo.LastName = data.data.LastName;
-                            });
-                            break;
-
-                        case 'NewContactMessage':
-                            notification.EventInfo.ClientEmailAddress = notification.EventInfo.ClientEmailAddress;
-                            break;
-
-                        case 'NewDeveloperOnProject':
-                            ApiService.getDeveloper(notification.EventInfo.UserId).then(function (data) {
-                                notification.EventInfo.FirstName = data.data.FirstName;
-                                notification.EventInfo.LastName = data.data.LastName;
-                            });
-
-                            ApiService.getProject(notification.EventInfo.ProjectId).then(function (data) {
-                                notification.EventInfo.ProjectName = data.data.Name;
-                            });
-                            break;
-
-                        case 'NewProjectCreated':
-                            ApiService.getProject(notification.EventInfo.ProjectId).then(function (data) {
-                                notification.EventInfo.ProjectName = data.data.Name;
-                            });
-                            break;
-                        case 'DeveloperHasLeftProject':
-                            ApiService.getDeveloper(notification.EventInfo.UserId).then(function (data) {
-                                notification.EventInfo.FirstName = data.data.FirstName;
-                                notification.EventInfo.LastName = data.data.LastName;
-                            });
-                            ApiService.getProject(notification.EventInfo.ProjectId).then(function (data) {
-                                notification.EventInfo.ProjectName = data.data.Name;
-                            });
-                            break;
-                    }
-                });
-
-                return notifications;
-            };
-
             $scope.addNotifications = function () {
                 $scope.changeDisable();
                 ApiService.getNotifications(pageCounter).then(function (data) {
@@ -2274,9 +2252,6 @@ angular.module('LodSite.controllers', [])
                     };
 
                     $scope.notifications = sortNotifications(notifications);
-
-                    supplementInfo($scope.notifications.Read);
-                    supplementInfo($scope.notifications.Unread);
 
                     $scope.isMoreNotif = ($scope.notifications.Unread.length + $scope.notifications.Read.length) < data.CountOfEntities;
 

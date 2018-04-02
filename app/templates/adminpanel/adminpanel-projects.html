@@ -12,7 +12,11 @@
                   <img class="all-project__photo" ng-src="{{fullProject.PhotoUri || DEFAULT_PROJECT_LANDSCAPE}}" />
 
                   <div class="all-project__info">
-                      <div class="all-project__name" ng-bind="fullProject.Name"></div>
+                      <div class="all-project__name_content_wrapper">
+                        <div class="all-project__name">
+                            <div class="all-project__name_content" ng-bind="fullProject.Name"></div>
+                        </div>
+                      </div>
                       <div class="all-project__status-wrap">
                           <span class="all-project__subheading">Статус проекта:</span>
 

@@ -2407,6 +2407,9 @@ angular.module('LodSite.controllers', [])
 
                     $scope.notifications = sortNotifications(notifications);
 
+                    supplementInfo($scope.notifications.Read);
+                    supplementInfo($scope.notifications.Unread);
+
                     $scope.isMoreNotif = ($scope.notifications.Unread.length + $scope.notifications.Read.length) < data.CountOfEntities;
 
                     pageCounter++;

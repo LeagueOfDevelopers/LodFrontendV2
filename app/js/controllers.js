@@ -577,8 +577,8 @@ angular.module('LodSite.controllers', [])
             });
         }])
 
-    .controller('AddProjectCtrl', ['$scope', '$state', 'ngDialog', 'ApiService', 'TokenService', '$timeout',
-        function ($scope, $state, ngDialog, ApiService, TokenService, $timeout) {
+    .controller('AddProjectCtrl', ['$scope', '$state', '$location', 'ngDialog', 'ApiService', 'TokenService', '$timeout',
+        function ($scope, $state, $location, ngDialog, ApiService, TokenService, $timeout) {
             var role = TokenService.getRole();
             if (role != 1) {
                 return $state.go('index');
@@ -598,6 +598,7 @@ angular.module('LodSite.controllers', [])
             $scope.chosenDevelopers = [];
             $scope.isMoreDevs = true;
             $scope.currentState = 'filling';
+            $scope.chosenRepositories = [];
 
             $scope.categories = [{
                 category: 'Веб',
@@ -634,10 +635,48 @@ angular.module('LodSite.controllers', [])
 
             $scope.newProject = new sampleProject();
 
-            if ($state.params.status == 'False') {
-                $scope.newProject = localStorage.getItem('saved_project');
-                $scope.$apply();
+            if ($state.params.success == 'False') {
+                $scope.newProject = JSON.parse(localStorage.getItem('saved_project'));
+                $scope.chosenDevelopers = JSON.parse(localStorage.getItem('chosen_developers'));
+                $scope.chosenRepositories = JSON.parse(localStorage.getItem('chosen_repositories'));
+                $scope.images = JSON.parse(localStorage.getItem('screenshots'));
+                $scope.categories = JSON.parse(localStorage.getItem('categories'));
+                localStorage.removeItem('saved_project');
+                localStorage.removeItem('chosen_developers');
+                localStorage.removeItem('chosen_repositories');
+                localStorage.removeItem('screenshots');
+                localStorage.removeItem('categories');
+                $scope.action = $state.params.action;
+                if ($scope.action == 'add_collaborator') {
+                    $scope.currentState = 'failed_to_add_collaborator';
+                }
+                if ($scope.action == 'create_repository') {
+                    $scope.currentState = 'failed_to_create_repository';
+                }
             }
+            if ($state.params.success == 'True') {
+                $scope.newProject = JSON.parse(localStorage.getItem('saved_project'));
+                $scope.chosenDevelopers = JSON.parse(localStorage.getItem('chosen_developers'));
+                $scope.chosenRepositories = JSON.parse(localStorage.getItem('chosen_repositories'));
+                $scope.images = JSON.parse(localStorage.getItem('screenshots'));
+                $scope.categories = JSON.parse(localStorage.getItem('categories'));
+                localStorage.removeItem('saved_project');
+                localStorage.removeItem('chosen_developers');
+                localStorage.removeItem('chosen_repositories');
+                localStorage.removeItem('screenshots');
+                localStorage.removeItem('categories');
+                if ($state.params.action == 'create_repository') {
+                    var repo = $state.params.repository_link;
+                    $scope.chosenRepositories.push({
+                        Name: repo.split('/')[repo.split('/').length - 1],
+                        HtmlUrl: repo
+                    });
+                } else {
+                    $scope.currentState = 'success';
+                }
+            };
+
+            $location.url($location.path());
 
             //   FOR TYPE OF PROJECT
 
@@ -714,7 +753,6 @@ angular.module('LodSite.controllers', [])
             };
 
             $scope.addDevelopers = function () {
-                $scope.changeDisable();
                 pageCounter++;
                 ApiService.getFullDevelopers(pageCounter)
                     .then(function (data) {
@@ -751,7 +789,6 @@ angular.module('LodSite.controllers', [])
 
                             $scope.isMoreDevs = ($scope.developers.length + $scope.chosenDevelopers.length) < data.CountOfEntities;
                         }
-                        $scope.changeDisable();
                     });
             };
 
@@ -798,7 +835,6 @@ angular.module('LodSite.controllers', [])
             };
 
             $scope.chooseDeveloper = function (index) {
-                $scope.changeDisable();
                 if ($scope.developers[index].DeveloperRole) {
                     $scope.chosenDevelopers.push({
                         UserId: $scope.developers[index].UserId,
@@ -810,19 +846,15 @@ angular.module('LodSite.controllers', [])
                     $scope.developers = [];
                     $scope.toggleOpened();
                 }
-                $scope.changeDisable();
             };
 
             $scope.deleteDeveloper = function (index) {
-                $scope.changeDisable();
                 $scope.chosenDevelopers.splice(index, 1);
-                $scope.changeDisable();
             };
 
             // FOR GITHUB REPOSITORIES
 
             $scope.isGithubRepoDialogOpen = false;
-            $scope.chosenRepositories = [];
             $scope.repositories = [];
             $scope.gottenRepositories = $scope.repositories;
             $scope.previousSearchString = "";
@@ -894,9 +926,7 @@ angular.module('LodSite.controllers', [])
             };
 
             $scope.deleteRepo = function (index) {
-                $scope.changeDisable();
                 $scope.chosenRepositories.splice(index, 1);
-                $scope.changeDisable();
             };
 
             $scope.isGithubRepoNameInputDialogOpen = false;
@@ -904,6 +934,11 @@ angular.module('LodSite.controllers', [])
 
             $scope.createRepository = function () {
                 $scope.changeDisable();
+                localStorage.setItem('saved_project', JSON.stringify($scope.newProject));
+                localStorage.setItem('chosen_developers', JSON.stringify($scope.chosenDevelopers));
+                localStorage.setItem('chosen_repositories', JSON.stringify($scope.chosenRepositories));
+                localStorage.setItem('screenshots', JSON.stringify($scope.images));
+                localStorage.setItem('categories', JSON.stringify($scope.categories));
                 ApiService.createGithubRepository($scope.newRepositoryName).then(function () {
                     $scope.changeDisable();
                 });
@@ -1020,8 +1055,13 @@ angular.module('LodSite.controllers', [])
                         $scope.chosenDevelopers.forEach(function (developer) {
                             ApiService.joinToProject(response.projectId, developer.UserId, JSON.stringify(developer.Role));
                             ApiService.addCollaboratorToRepositories(response.projectId, developer.UserId);
-                            localStorage.setItem('saved_project', $scope.newProject);
                         });
+
+                        localStorage.setItem('saved_project', JSON.stringify($scope.newProject));
+                        localStorage.setItem('chosen_developers', JSON.stringify($scope.chosenDevelopers));
+                        localStorage.setItem('chosen_repositories', JSON.stringify($scope.chosenRepositories));
+                        localStorage.setItem('screenshots', JSON.stringify($scope.images));
+                        localStorage.setItem('categories', JSON.stringify($scope.categories));
 
                         pageCounter = 0;
                         $scope.images = [];
@@ -1079,8 +1119,8 @@ angular.module('LodSite.controllers', [])
         }
     ])
 
-    .controller('EditProjectCtrl', ['$scope', '$state', 'ApiService', 'TokenService', 'ngDialog', '$timeout',
-        function ($scope, $state, ApiService, TokenService, ngDialog, $timeout) {
+    .controller('EditProjectCtrl', ['$scope', '$state', '$location', 'ApiService', 'TokenService', 'ngDialog', '$timeout',
+        function ($scope, $state, $location, ApiService, TokenService, ngDialog, $timeout) {
             var role = TokenService.getRole();
             if (role != 1) {
                 return $state.go('index');
@@ -1099,11 +1139,7 @@ angular.module('LodSite.controllers', [])
             $scope.isMoreDevs = true;
             $scope.currentState = 'filling';
             $scope.editedProject = {};
-
-            if ($state.params.status == 'False') {
-                $scope.editedProject = localStorage.getItem('saved_project');
-                $scope.$apply();
-            }
+            $scope.projectMemberships = [];
 
             //   FOR TYPE OF PROJECT
             $scope.categories = [{
@@ -1198,7 +1234,6 @@ angular.module('LodSite.controllers', [])
             };
 
             $scope.addDevelopers = function () {
-                $scope.changeDisable();
                 pageCounter++;
                 ApiService.getFullDevelopers(pageCounter)
                     .then(function (data) {
@@ -1235,7 +1270,6 @@ angular.module('LodSite.controllers', [])
 
                             $scope.isMoreDevs = ($scope.developers.length + $scope.projectMemberships.length) < data.CountOfEntities;
                         }
-                        $scope.changeDisable();
                     });
             };
 
@@ -1278,11 +1312,9 @@ angular.module('LodSite.controllers', [])
 
             $scope.chooseDeveloper = function (index) {
                 if ($scope.developers[index].Role) {
-                    $scope.changeDisable();
                     $scope.projectMemberships.push($scope.developers[index]);
 
                     ApiService.joinToProject(projectId, $scope.developers[index].UserId, JSON.stringify($scope.developers[index].Role)).then(function () {
-                        $scope.changeDisable();
                     });
 
                     $scope.developers = [];
@@ -1291,12 +1323,13 @@ angular.module('LodSite.controllers', [])
             };
 
             $scope.deleteDeveloper = function (index) {
-                $scope.changeDisable();
                 ApiService.escapeFromProject(projectId, $scope.projectMemberships[index].UserId);
                 ApiService.removeCollaboratorFromRepositories(projectId, $scope.projectMemberships[index].UserId).then(function () {
-                    $scope.changeDisable();
                 });
                 $scope.projectMemberships.splice(index, 1);
+                localStorage.setItem('saved_project', JSON.stringify($scope.editedProject));
+                localStorage.setItem('chosen_developers', JSON.stringify($scope.projectMemberships));
+                localStorage.setItem('categories', JSON.stringify($scope.categories));
             };
 
             // FOR GITHUB REPOSITORIES
@@ -1386,6 +1419,9 @@ angular.module('LodSite.controllers', [])
                 ApiService.createGithubRepository($scope.newRepositoryName).then(function () {
                     $scope.changeDisable();
                 });
+                localStorage.setItem('saved_project', JSON.stringify($scope.editedProject));
+                localStorage.setItem('chosen_developers', JSON.stringify($scope.projectMemberships));
+                localStorage.setItem('categories', JSON.stringify($scope.categories));
                 $scope.repoNameInputToggleOpened();
             }
 
@@ -1475,42 +1511,79 @@ angular.module('LodSite.controllers', [])
             };
 
             //   GET REQUEST
-            ApiService.getProject(projectId)
-                .then(function (data) {
-                    $scope.projectMemberships = data.data.ProjectMemberships.map(function (developer) {
-                        return {
-                            UserId: developer.DeveloperId,
-                            FirstName: developer.FirstName,
-                            LastName: developer.LastName,
-                            Role: developer.Role
-                        }
-                    });
-                    $scope.editedProject.Name = data.data.Name;
-                    $scope.editedProject.ProjectTypes = data.data.ProjectType;
-                    $scope.editedProject.Info = data.data.Info;
-                    $scope.editedProject.AccessLevel = data.data.AccessLevel;
-                    $scope.editedProject.ProjectStatus = data.data.ProjectStatus;
-                    $scope.editedProject.LandingImage = data.data.LandingImage;
-                    $scope.editedProject.Screenshots = data.data.Screenshots;
-                    $scope.editedProject.LinksToGithubRepositories = data.data.LinksToGithubRepositories.map(function (link) {
-                        return {
-                            HtmlUrl: link
-                        }
-                    });
+            
 
-                    for (var i = 0; i < $scope.editedProject.ProjectTypes.length; i++) {
-                        $scope.categories[$scope.editedProject.ProjectTypes[i]].status = true;
-                    }
+            if ($state.params.success == 'False') {
+                $scope.editedProject = JSON.parse(localStorage.getItem('saved_project'));
+                $scope.projectMemberships = JSON.parse(localStorage.getItem('chosen_developers'));
+                $scope.categories = JSON.parse(localStorage.getItem('categories'));
+                localStorage.removeItem('saved_project');
+                localStorage.removeItem('chosen_developers');
+                localStorage.removeItem('categories');
+                $scope.action = $state.params.action;
+                if ($scope.action == 'add_collaborator') {
+                    $scope.currentState = 'failed_to_add_collaborator';
+                }
+                if ($scope.action == 'remove_collaborator') {
+                    $scope.currentState = 'failed_to_remove_collaborator';
+                }
+                if ($scope.action == 'create_repository') {
+                    $scope.currentState = 'failed_to_create_repository';
+                }
+            }
+            if ($state.params.success == 'True') {
+                $scope.editedProject = JSON.parse(localStorage.getItem('saved_project'));
+                $scope.projectMemberships = JSON.parse(localStorage.getItem('chosen_developers'));
+                $scope.categories = JSON.parse(localStorage.getItem('categories'));
+                localStorage.removeItem('saved_project');
+                localStorage.removeItem('chosen_developers');
+                localStorage.removeItem('categories');
+                if ($state.params.action == 'create_repository') {
+                    var repo = $state.params.repository_link;
+                    $scope.editedProject.LinksToGithubRepositories.push({ 'HtmlUrl': repo });
+                } else if ($state.params.action != 'remove_collaborator') {
+                    $scope.currentState = 'success';
+                }
+            } else {
+                ApiService.getProject(projectId)
+                    .then(function (data) {
+                        $scope.projectMemberships = data.data.ProjectMemberships.map(function (developer) {
+                            return {
+                                UserId: developer.DeveloperId,
+                                FirstName: developer.FirstName,
+                                LastName: developer.LastName,
+                                Role: developer.Role
+                            }
+                        });
+                        $scope.editedProject.Name = data.data.Name;
+                        $scope.editedProject.ProjectTypes = data.data.ProjectType;
+                        $scope.editedProject.Info = data.data.Info;
+                        $scope.editedProject.AccessLevel = data.data.AccessLevel;
+                        $scope.editedProject.ProjectStatus = data.data.ProjectStatus;
+                        $scope.editedProject.LandingImage = data.data.LandingImage;
+                        $scope.editedProject.Screenshots = data.data.Screenshots;
+                        $scope.editedProject.LinksToGithubRepositories = data.data.LinksToGithubRepositories.map(function (link) {
+                            return {
+                                HtmlUrl: link
+                            }
+                        });
 
-                    $scope.$emit('change_title', { title: $scope.editedProject.Name + ' - Лига Разработчиков НИТУ МИСиС' });
-                });
+                        for (var i = 0; i < $scope.editedProject.ProjectTypes.length; i++) {
+                            $scope.categories[$scope.editedProject.ProjectTypes[i]].status = true;
+                        }
+
+                        $scope.$emit('change_title', { title: $scope.editedProject.Name + ' - Лига Разработчиков НИТУ МИСиС' });
+                    });
+            };
+
+            $location.url($location.path());
 
             //   PUT REQUEST
             $scope.editProject = function () {
                 $scope.changeDisable();
 
                 var j = 0;
-
+                $scope.editedProject.ProjectTypes = [];
                 for (var i = 0; i < $scope.categories.length; i++) {
                     if ($scope.categories[i].status) {
                         $scope.editedProject.ProjectTypes[j] = i;
@@ -1527,8 +1600,10 @@ angular.module('LodSite.controllers', [])
                         $scope.currentState = 'success';
                         $scope.projectMemberships.forEach(function (developer) {
                             ApiService.addCollaboratorToRepositories(projectId, developer.UserId);
-                            localStorage.setItem('saved_project', $state.params.editedProject);
                         });
+                        localStorage.setItem('saved_project', JSON.stringify($scope.editedProject));
+                        localStorage.setItem('chosen_developers', JSON.stringify($scope.projectMemberships));
+                        localStorage.setItem('categories', JSON.stringify($scope.categories));
                         $scope.editedProject.LinksToGithubRepositories = $scope.editedProject.LinksToGithubRepositories.map(function (link) {
                             return {
                                 HtmlUrl: link
@@ -1819,19 +1894,24 @@ angular.module('LodSite.controllers', [])
         $scope.currentDate = new Date();
         $scope.isDisabled = false;
 
+        if ($state.params.success == 'False') {
+            $scope.newDeveloper = JSON.parse(localStorage.getItem('saved_profile_info'));
+            localStorage.removeItem('saved_profile_info');
+            $scope.newDeveloper.PhoneNumber = $scope.newDeveloper.PhoneNumber.slice(1);
+            $scope.currentStates.isRegisteredGithubAccount = true;
+            $scope.$apply();
+        };
+        if($state.params.success == 'True') {
+            $state.go('success');
+        };
+
         $scope.signUp = function () {
             $scope.changeDisable();
             $scope.newDeveloper.PhoneNumber = '7' + $scope.newDeveloper.PhoneNumber;
+
             $scope.loginType === 'github' ?
                 ApiService.signUpWithGithub($scope.newDeveloper).then(function () {
-                    if ($state.params.status == 'False') {
-                        // здесь сохраненный в кэш пользователь после редиректа присваивается текущему состоянию
-                        $scope.newDeveloper = localStorage.getItem('saved_profile_info');
-                        $scope.$apply();
-                    }
-                    else {
-                        $state.go('success');
-                    }
+                    localStorage.setItem('saved_profile_info', JSON.stringify($scope.newDeveloper));
                 }) :
                 ApiService.signUp($scope.newDeveloper).then(function (responseObject) {
                     $scope.currentStates = {};
@@ -2119,8 +2199,7 @@ angular.module('LodSite.controllers', [])
 
     .controller('GithubLoginCtrl', ['$scope', '$state', '$base64', 'ApiService', 'TokenService', 'WebSocketService',
         function ($scope, $state, $base64, ApiService, TokenService, WebSocketService) {
-            $scope.success = $state.params.success;
-            if ($scope.success == 'True') {
+            if ($state.params.success == 'True') {
                 $scope.isNoDeveloper = false;
                 $scope.decodedToken = $base64.decode($state.params.encoded_token);
                 var decodedToken = JSON.parse($scope.decodedToken);

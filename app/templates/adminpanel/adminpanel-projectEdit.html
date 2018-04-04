@@ -153,15 +153,27 @@
 
 
     <div class="adding-project__submit-wrapper">
-      <div ng-switch="currentState">
-        <p class="help-message-input" ng-switch-when="success">
-          Изменения успешно сохранены.
-        </p>
+        <div ng-switch="currentState">
+            <p class="help-message-input" ng-switch-when="success">
+                Изменения успешно сохранены.
+            </p>
 
-        <p class="help-message-input" ng-switch-when="failed">
-          Ошибка!
-        </p>
-      </div>
+            <p class="help-message-input" ng-switch-when="failed">
+                Произошла ошибка!
+            </p>
+
+            <p class="help-message-input" ng-switch-when="failed_to_add_collaborator">
+                Произошла ошибка! Не удалось добавить одного или нескольких разработчиков в коллабораторы.
+                Убедитесь, что все указанные разработчики выполнили привязку к GitHub.
+            </p>
+            <p class="help-message-input" ng-switch-when="failed_to_remove_collaborator">
+                Произошла ошибка! Не удалось удалить разработчика из коллабораторов одного или нескольких репозиториев.
+                Убедитесь, разработчик не указал другой GitHub профиль.
+            </p>
+            <p class="help-message-input" ng-switch-when="failed_to_create_repo">
+                Произошла ошибка! Не удалось создать репозиторий.
+            </p>
+        </div>
 
       <button class="profile-settings__submit adding-project__submit" ng-disabled="editProjectForm.$invalid || isDisabled"
               ng-click="editProject()">

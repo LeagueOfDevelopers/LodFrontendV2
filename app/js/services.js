@@ -294,10 +294,12 @@ angular.module('LodSite.services', [])
             };
 
             this.createGithubRepository = function (repoName) {
-                var url = '/github/repositories/' + repoName;
+                var baseUrl = '/github/repositories/' + repoName;
+                var frontendCallback = window.location.href + '?action=create_repository';
+                var url = defineCallback(baseUrl, frontendCallback);
 
                 return sendAuthorizationSaveRequest(GET, url).then(function (response) {
-                    window.open(response.data, "popup", "width=300,height=300,left=10,top=100");
+                    window.location.href = response.data;
                 });
             }
 
@@ -349,7 +351,7 @@ angular.module('LodSite.services', [])
 
             this.addCollaboratorToRepositories = function (projectId, developerId) {
                 var baseUrl = '/github/repositories/' + projectId + '/developer/' + developerId;
-                var frontendCallback = window.location.href;
+                var frontendCallback = window.location.href + '?action=add_collaborator';
                 var url = defineCallback(baseUrl, frontendCallback);
 
                 return sendAuthorizationSaveRequest(GET, url).then(function (response) {
@@ -359,7 +361,7 @@ angular.module('LodSite.services', [])
 
             this.removeCollaboratorFromRepositories = function (projectId, developerId) {
                 var baseUrl = '/github/repositories/' + projectId + '/developer/' + developerId + '/delete';
-                var frontendCallback = window.location.href;
+                var frontendCallback = window.location.href + '?action=remove_collaborator';
                 var url = defineCallback(baseUrl, frontendCallback);
 
                 return sendAuthorizationSaveRequest(GET, url).then(function (response) {

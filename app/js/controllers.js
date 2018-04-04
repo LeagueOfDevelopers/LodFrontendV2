@@ -174,8 +174,11 @@ angular.module('LodSite.controllers', [])
             var developerId = token.UserId;
 
             if ($state.params.status == 'False') {
-                $state.go('error');
+                $scope.currentState = 'failed';
+                $scope.$apply();
             }
+
+            $location.url($location.path());
             
             $scope.state = [];
             $scope.currentState = null;
@@ -1658,9 +1661,6 @@ angular.module('LodSite.controllers', [])
                             $scope.currentState = '';
                         }, 4000);
                     }
-                    else {
-                        $state.go('error');
-                    }
                     $scope.changeDisable();
                 });
             };
@@ -1687,6 +1687,8 @@ angular.module('LodSite.controllers', [])
             $scope.isMoreDevs = true;
             $scope.isOpen = false;
             var pageCounter = 0;
+
+            $scope.isFailed = false;
 
             $scope.resetPageCounter = function () {
                 pageCounter = 0;
@@ -1761,6 +1763,7 @@ angular.module('LodSite.controllers', [])
                 $scope.changeDisable();
                 switch ($scope.developerForConfirmation.eventType) {
                     case 0:
+                        $scope.isFailed = false;
                         ApiService.confirmDeveloper($scope.developerForConfirmation.id).then(function (isSuccess) {
                             if (isSuccess) {
                                 $scope.developers[$scope.developerForConfirmation.index].ConfirmationStatus = 2;
@@ -1770,12 +1773,13 @@ angular.module('LodSite.controllers', [])
                                 $scope.closeWindow();
                             }
                             else {
-                                $state.go('error');
+                                $scope.isFailed = true;
                             }
                             $scope.changeDisable();
                         });
                         break;
                     case 1:
+                        $scope.isFailed = false;
                         ApiService.changeAccountRole($scope.developerForConfirmation.id).then(function (isSuccess) {
                             if (isSuccess) {
                                 $scope.developers[$scope.developerForConfirmation.index].AccountRole = 1;
@@ -1785,12 +1789,13 @@ angular.module('LodSite.controllers', [])
                                 $scope.closeWindow();
                             }
                             else {
-                                $state.go('error');
+                                $scope.isFailed = true;
                             }
                             $scope.changeDisable();
                         });
                         break;
                     case 2:
+                        $scope.isFailed = false;
                         ApiService.changeHidingStatus($scope.developerForConfirmation.id, !$scope.developers[$scope.developerForConfirmation.index].IsHidden)
                             .then(function (isSuccess) {
                                 if (isSuccess) {
@@ -1801,12 +1806,13 @@ angular.module('LodSite.controllers', [])
                                     $scope.closeWindow();
                                 }
                                 else {
-                                    $state.go('error');
+                                    $scope.isFailed = true;
                                 }
                                 $scope.changeDisable();
                             });
                         break;
                     case 3:
+                        $scope.isFailed = false;
                         if ($scope.developerForConfirmation.registrationDate != $scope.developerForConfirmation.newRegistrationDate) {
                             var dateString = [$scope.developerForConfirmation.newRegistrationDate.slice(0, 2), '.',
                                 $scope.developerForConfirmation.newRegistrationDate.slice(2)].join('');
@@ -1823,7 +1829,7 @@ angular.module('LodSite.controllers', [])
                                         $scope.closeWindow();
                                     }
                                     else {
-                                        $state.go('error');
+                                        $scope.isFailed = true;
                                     }
                                     $scope.changeDisable();
                                 });
@@ -1835,6 +1841,7 @@ angular.module('LodSite.controllers', [])
                         }
                         break;
                 };
+                $scope.isFailed = false;
             };
 
 
@@ -1887,7 +1894,8 @@ angular.module('LodSite.controllers', [])
 
 
     //other
-    .controller('SignupCtrl', ['$scope', '$state', 'ApiService', '$timeout', function ($scope, $state, ApiService, $timeout) {
+    .controller('SignupCtrl', ['$scope', '$state', '$location', 'ApiService', '$timeout',
+        function ($scope, $state, $location, ApiService, $timeout) {
         $scope.currentStates = {};
         $scope.newDeveloper = {};
         $scope.repeatedPassword = undefined;
@@ -1900,8 +1908,9 @@ angular.module('LodSite.controllers', [])
             $scope.newDeveloper.PhoneNumber = $scope.newDeveloper.PhoneNumber.slice(1);
             $scope.currentStates.isRegisteredGithubAccount = true;
             $scope.$apply();
+            $location.url($location.path());
         };
-        if($state.params.success == 'True') {
+        if ($state.params.success == 'True') {
             $state.go('success');
         };
 
@@ -1918,13 +1927,12 @@ angular.module('LodSite.controllers', [])
 
                     if (responseObject) {
                         if (responseObject.status === 200) {
-                            $state.go('success');
+                            $scope.currentStates.isSuccess = true;
                         } else if (responseObject.status === 409) {
                             $scope.currentStates.isRegisteredEmail = true;
                         } else {
                             $scope.currentStates.isFailed = true;
                         }
-
                     } else {
                         $scope.currentStates.isFailed = true;
                     }
@@ -2243,6 +2251,7 @@ angular.module('LodSite.controllers', [])
             $scope.changeDisable = function () {
                 $scope.isDisabled = !$scope.isDisabled;
             }
+            $scope.currentState = null;
 
             var pageCounter = 0;
             $scope.notifications = {
@@ -2346,7 +2355,7 @@ angular.module('LodSite.controllers', [])
 
                 ApiService.readNotifications(notifIds).then(function (isSuccess) {
                     if (!isSuccess) {
-                        $state.go('error');
+                        $scope.currentState = 'failed';
                     }
                     else {
                         $scope.notifications.Unread.forEach(function (item) {
@@ -2422,15 +2431,6 @@ angular.module('LodSite.controllers', [])
 
     .controller('ErrorCtrl', ['$scope', '$state', function ($scope, $state) {
         $scope.errorMessage = 'выполнить действие';
-        if ($state.params.occuredOnActionType === 'login') {
-            $scope.errorMessage = 'войти';
-        };
-        if ($state.params.occuredOnActionType === 'registration') {
-            $scope.errorMessage = 'зарегистрироваться';
-        };
-        if ($state.params.occuredOnActionType === 'admin') {
-            $scope.errorMessage = 'выполнить действие. Убедитесь, что все указанные разработчики привязали GitHub аккаунт';
-        };
         $scope.closeDialog = function () {
             $state.transitionTo('index', {
                 location: true,
@@ -2442,13 +2442,7 @@ angular.module('LodSite.controllers', [])
     }])
 
     .controller('SuccessCtrl', ['$scope', '$state', function ($scope, $state) {
-        $scope.successMessage = 'Вы были зарегистрированы. На ваш E-mail отправлено сообщение с ссылкой для подтверждения';
-        if ($state.params.occuredOnActionType === 'github') {
-            $scope.successMessage = 'Вы были зарегистрированы. Ждите потверждения администратора';
-        };
-        if ($state.params.occuredOnActionType === 'admin') {
-            $scope.successMessage = 'Изменения успешно сохранены';
-        }
+        $scope.successMessage = 'Вы были зарегистрированы. Ждите потверждения администратора';
         $scope.closeDialog = function () {
             $state.transitionTo('index', {
                 location: true,

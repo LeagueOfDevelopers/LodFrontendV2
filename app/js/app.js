@@ -38,31 +38,32 @@ angular.module('LodSite', [
              .state('login-github', {
                url: '/login/github/:encoded_token?success',
                template: '<ui-view/>',
-               controller: 'GithubLoginCtrl'
+               controller: 'GithubLoginCtrl',
+               reloadOnSearch: false
              })
 
              .state('error', {
-               url: '/error/:occuredOnActionType',
+               url: '/error',
                templateUrl: templateUrl('index', 'index'), 
                controller: 'ErrorCtrl',
                onEnter: ['ngDialog', function (ngDialog) {
                    ngDialog.open({
                        template: 'errorTemplate',
                        showClose: true,
-                       closeByNavigation: false
+                       closeByNavigation: true
                    });
                }]
              })
 
              .state('success', {
-               url: '/success/:occuredOnActionType',
+               url: '/success',
                templateUrl: templateUrl('index', 'index'),
                controller: 'SuccessCtrl',
                onEnter: ['ngDialog', function (ngDialog) {
                    ngDialog.open({
                        template: 'successTemplate',
                        showClose: true,
-                       closeByNavigation: false
+                       closeByNavigation: true
                    });
                }]
              })
@@ -202,11 +203,14 @@ angular.module('LodSite', [
 ;
 
 var DOMAIN_NAME = 'lod-misis.ru';
-var DOMAIN_URL = 'https://'+ DOMAIN_NAME;
-var API_DOMAIN_URL = 'https://api.' + DOMAIN_NAME;
-var WEBSOCKET_CLIENT_URL = 'wss://api.' + DOMAIN_NAME + '/socket';
+//var DOMAIN_URL = 'https://'+ DOMAIN_NAME;
+//var API_DOMAIN_URL = 'https://api.' + DOMAIN_NAME;
+//var WEBSOCKET_CLIENT_URL = 'wss://api.' + DOMAIN_NAME + '/socket';
 var numberOfProjects = null;
 
+var DOMAIN_URL = 'http://localhost:58077'
+var API_DOMAIN_URL = 'http://localhost:50054';
+var WEBSOCKET_CLIENT_URL = 'ws://localhost:50054/socket';
 
 var CALLBACK_URL_QUERY_STRING_PARAMETER = 'frontend_callback';
 

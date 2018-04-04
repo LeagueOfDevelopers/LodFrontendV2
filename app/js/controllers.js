@@ -2329,6 +2329,65 @@ angular.module('LodSite.controllers', [])
                 return newNotifications;
             };
 
+            var supplementInfo = function (notifications) {
+                notifications = notifications.map(function (notification) {
+                    switch (notification.EventType) {
+                        case 'NewEmailConfirmedDeveloper':
+                            if (notification.EventInfo.FirstName == undefined || notification.EventInfo.LastName == undefined) {
+                                ApiService.getDeveloper(notification.EventInfo.UserId).then(function (data) {
+                                    notification.EventInfo.FirstName = data.data.FirstName;
+                                    notification.EventInfo.LastName = data.data.LastName;
+                                });
+                            }
+                            break;
+                        case 'NewFullConfirmedDeveloper':
+                            if (notification.EventInfo.FirstName == undefined || notification.EventInfo.LastName == undefined) {
+                                ApiService.getDeveloper(notification.EventInfo.NewDeveloperId).then(function (data) {
+                                    notification.EventInfo.FirstName = data.data.FirstName;
+                                    notification.EventInfo.LastName = data.data.LastName;
+                                });
+                            }
+                            break;
+                        case 'NewDeveloperOnProject':
+                            if (notification.EventInfo.FirstName == undefined || notification.EventInfo.LastName == undefined) {
+                                ApiService.getDeveloper(notification.EventInfo.UserId).then(function (data) {
+                                    notification.EventInfo.FirstName = data.data.FirstName;
+                                    notification.EventInfo.LastName = data.data.LastName;
+                                });
+                            }
+                            if (notification.EventInfo.ProjectName == undefined) {
+                                ApiService.getProject(notification.EventInfo.ProjectId).then(function (data) {
+                                    notification.EventInfo.ProjectName = data.data.Name;
+                                });
+                            }
+                            break;
+
+                        case 'NewProjectCreated':
+                            if (notification.EventInfo.ProjectName == undefined) {
+                                ApiService.getProject(notification.EventInfo.ProjectId).then(function (data) {
+                                    notification.EventInfo.ProjectName = data.data.Name;
+                                });
+                            }
+                            break;
+                        case 'DeveloperHasLeftProject':
+                            if (notification.EventInfo.FirstName == undefined || notification.EventInfo.LastName == undefined) {
+                                ApiService.getDeveloper(notification.EventInfo.UserId).then(function (data) {
+                                    notification.EventInfo.FirstName = data.data.FirstName;
+                                    notification.EventInfo.LastName = data.data.LastName;
+                                });
+                            }
+                            if (notification.EventInfo.ProjectName == undefined) {
+                                ApiService.getProject(notification.EventInfo.ProjectId).then(function (data) {
+                                    notification.EventInfo.ProjectName = data.data.Name;
+                                });
+                            }
+                            break;
+                    }
+                });
+
+                return notifications;
+            };
+
             $scope.addNotifications = function () {
                 $scope.changeDisable();
                 ApiService.getNotifications(pageCounter).then(function (data) {
@@ -2340,6 +2399,9 @@ angular.module('LodSite.controllers', [])
                     };
 
                     $scope.notifications = sortNotifications(notifications);
+
+                    supplementInfo($scope.notifications.Read);
+                    supplementInfo($scope.notifications.Unread);
 
                     $scope.isMoreNotif = ($scope.notifications.Unread.length + $scope.notifications.Read.length) < data.CountOfEntities;
 

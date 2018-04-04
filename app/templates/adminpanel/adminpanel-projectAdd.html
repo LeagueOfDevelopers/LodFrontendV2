@@ -161,7 +161,15 @@
                 </p>
 
                 <p class="help-message-input" ng-switch-when="failed">
-                    Ошибка!
+                    Произошла ошибка!
+                </p>
+
+                <p class="help-message-input" ng-switch-when="failed_to_add_collaborator">
+                    Произошла ошибка! Не удалось добавить одного или нескольких разработчиков в коллабораторы.
+                    Убедитесь, что все указанные разработчики выполнили привязку к GitHub.
+                </p>
+                <p class="help-message-input" ng-switch-when="failed_to_create_repo">
+                    Произошла ошибка! Не удалось создать репозиторий.
                 </p>
             </div>
 

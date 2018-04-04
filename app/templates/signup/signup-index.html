@@ -81,6 +81,10 @@
     <p class="help-message-input" ng-if="currentStates.isRegisteredEmail">
       Пользователь с таким e-mail уже зарегистрирован!
     </p>
+    <p class="help-message-input" ng-if="currentStates.isRegisteredGithubAccount">
+      Похоже, что пользователь с таким GitHub аккаунтом уже существует.
+      Попробуйте зарегистрироваться через E-mail и пароль.
+    </p>
     <p class="help-message-input" ng-if="currentStates.isFailed">
       Ошибка регистрации! Проверьте введенные данные.
     </p>

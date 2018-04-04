@@ -46,8 +46,7 @@
         <a class="information__link" ng-href="{{'/projects/' + notification.EventInfo.ProjectId}}">
           <span ng-bind="' ' + notification.EventInfo.ProjectName">
           </span>
-        </a>
-        .
+        </a>.
       </div>
 
       <div ng-switch-when="NewDeveloperOnProject">
@@ -205,7 +204,9 @@
     </div>
 
   </div>
-
+  <p class="help-message-input" ng-if="currentState == 'failed'">
+      Произошла ошибка!
+  </p>
   <button class="notifications__see-more-button button-style" ng-disabled="isDisabled" ng-if="isMoreNotif" ng-click="addNotifications()">Показать
                                                                                                            больше</button>
 </div>

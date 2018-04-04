@@ -36,13 +36,14 @@ angular.module('LodSite', [
              })
 
              .state('login-github', {
-               url: '/login/github/:encodedToken',
-               template: '<ui-view>',
-               controller: 'GithubLoginCtrl'
+               url: '/login/github/:encoded_token?success',
+               template: '<ui-view/>',
+               controller: 'GithubLoginCtrl',
+               reloadOnSearch: false
              })
 
              .state('error', {
-               url: '/error/:occuredOnActionType',
+               url: '/error',
                templateUrl: templateUrl('index', 'index'), 
                controller: 'ErrorCtrl',
                onEnter: ['ngDialog', function (ngDialog) {
@@ -55,7 +56,7 @@ angular.module('LodSite', [
              })
 
              .state('success', {
-               url: '/success/:occuredOnActionType',
+               url: '/success',
                templateUrl: templateUrl('index', 'index'),
                controller: 'SuccessCtrl',
                onEnter: ['ngDialog', function (ngDialog) {
@@ -113,9 +114,10 @@ angular.module('LodSite', [
              })
 
              .state('developers.edit', {
-               url: '/profile/:id',
+               url: '/profile/:id?success',
                templateUrl: templateUrl('developers', 'developers-edit'),
-               controller: 'DeveloperEditCtrl'
+               controller: 'DeveloperEditCtrl',
+               reloadOnSearch: false
              })
 
 
@@ -139,15 +141,17 @@ angular.module('LodSite', [
              })
 
              .state('adminpanel.projectAdd', {
-               url: '/projects/add',
+               url: '/projects/add?action&repository_link&success',
                templateUrl: templateUrl('adminpanel', 'adminpanel-projectAdd'),
-               controller: 'AddProjectCtrl'
+               controller: 'AddProjectCtrl',
+               reloadOnSearch: false
              })
 
              .state('adminpanel.projectEdit', {
-               url: '/projects/edit/:id',
+               url: '/projects/edit/:id?action&success&repository_link',
                templateUrl: templateUrl('adminpanel', 'adminpanel-projectEdit'),
-               controller: 'EditProjectCtrl'
+               controller: 'EditProjectCtrl',
+               reloadOnSearch: false
              })
 
              .state('adminpanel.notification', {
@@ -164,9 +168,10 @@ angular.module('LodSite', [
 
              //other
              .state('signup', {
-               url: '/signup',
+               url: '/signup?success',
                templateUrl: templateUrl('signup', 'signup-index'),
-               controller: 'SignupCtrl'
+               controller: 'SignupCtrl',
+               reloadOnSearch: false
              })
 
              .state('about', {
@@ -203,6 +208,8 @@ var API_DOMAIN_URL = 'https://api.' + DOMAIN_NAME;
 var WEBSOCKET_CLIENT_URL = 'wss://api.' + DOMAIN_NAME + '/socket';
 var numberOfProjects = null;
 
+
+var CALLBACK_URL_QUERY_STRING_PARAMETER = 'frontend_callback';
 
 // other functions
 function templateUrl(module, name) {

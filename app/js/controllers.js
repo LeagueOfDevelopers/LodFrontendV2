@@ -165,8 +165,8 @@ angular.module('LodSite.controllers', [])
         $scope.$emit('toggle_black', { isBlack: true });
     }])
 
-    .controller('DeveloperEditCtrl', ['$scope', '$state', '$timeout', 'ApiService', 'TokenService',
-        function ($scope, $state, $timeout, ApiService, TokenService) {
+    .controller('DeveloperEditCtrl', ['$scope', '$state', '$location', '$timeout', 'ApiService', 'TokenService',
+        function ($scope, $state, $location, $timeout, ApiService, TokenService) {
             var token = TokenService.getToken();
             if (!token) {
                 return $state.go('index');

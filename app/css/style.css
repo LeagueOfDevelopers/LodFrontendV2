@@ -174,14 +174,16 @@ input {
 }
 
 .random-wrapper {
+    padding-left: 1.5%;
+    padding-right: 1.5%;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
 }
 
 .content-wrapper {
-    width: 90vw;
-    margin: auto;
+    width: 98%;
+    margin: auto 1%;
 }
 
 .filling-empty-space-childs {
@@ -197,8 +199,9 @@ input {
     max-width: 30vw;
     min-width: 200px;
     min-height: 200px;
-    margin: 1vw;
+    margin: 1%;
     flex: 1 0 auto;
+    flex-basis: 22.25%;
 }
 
 
@@ -208,103 +211,76 @@ input {
     max-width: 30vw;
     min-width: 200px;
     min-height: 200px;
-    margin: 1vw;
+    margin: 1%;
+    flex: 1 0 auto;
+    flex-basis: 22.25%;
     margin-bottom: 100px;
 }
 
 /*PROJECTS-SECTION AND DEVELOPERS-SECTION GRID*/
 
-@media only screen and (min-width: 400px) and (max-width: 560px) {
-    .projects-section__link-to-project, .filling-empty-space-childs {
-        width: 22vw;
-        height: 22vw;
-        max-width: 22vw;
-    }
-
-    .developers-section__link-to-profile {
-        width: 22vw;
-        height: 22vw;
-        max-width: 22vw;
+@media only screen and (max-width: 450px) {
+    .projects-section__link-to-project, .filling-empty-space-childs, .developers-section__link-to-profile {
+        height: 80vw;
+        flex-basis: 80vw;
+        max-width: 80vw;
     }
 }
 
-@media only screen and (min-width: 700px) and (max-width: 800px) {
-    /*
-    .developers-section__link-to-profile {
-        width: 20vw;
-        height: 20vw;
-        max-width: 20vw;
-    }*/
+@media only screen and (min-width: 451px) and (max-width: 709px) {
+    .projects-section__link-to-project, .filling-empty-space-childs, .developers-section__link-to-profile {
+        height: 46vw;
+        flex-basis: 46%;
+        max-width: 46vw;
+    }
+}
+
+@media only screen and (min-width: 710px) and (max-width: 999px) {
+    .projects-section__link-to-project, .filling-empty-space-childs, .developers-section__link-to-profile {
+        height: 30vw;
+        flex-basis: 30%;
+        max-width: 30%;
+    }
 }
 
 @media only screen and (min-width: 1000px) and (max-width: 1500px) {
     .projects-section__link-to-project, .filling-empty-space-childs, .developers-section__link-to-profile {
-        width: 22vw;
         height: 22vw;
+        flex-basis: 22.25%;
         max-width: 22vw;
     }
-    /*
-    .developers-section__link-to-profile {
-        width: 17vw;
-        height: 17vw;
-        max-width: 17vw;
-    }*/
 }
 
 @media only screen and (min-width: 1500px) and (max-width: 2000px) {
     .projects-section__link-to-project, .filling-empty-space-childs, .developers-section__link-to-profile {
-        width: 17vw;
-        height: 17vw;
-        max-width: 17vw;
+        height: 17.4vw;
+        flex-basis: 17.4%;
+        max-width: 17.4vw;
     }
-    /*
-    .developers-section__link-to-profile {
-        width: 13vw;
-        height: 13vw;
-        max-width: 13vw;
-    }*/
 }
 
 @media only screen and (min-width: 2000px) and (max-width: 2500px) {
     .projects-section__link-to-project, .filling-empty-space-childs, .developers-section__link-to-profile {
-        width: 13vw;
-        height: 13vw;
-        max-width: 13vw;
+        height: 14vw;
+        flex-basis: 14.165%;
+        max-width: 14vw;
     }
-    /*
-    .developers-section__link-to-profile {
-        width: 11vw;
-        height: 11vw;
-        max-width: 11vw;
-    }*/
 }
 
 @media only screen and (min-width: 2500px) and (max-width: 3000px) {
     .projects-section__link-to-project, .filling-empty-space-childs, .developers-section__link-to-profile {
-        width: 11vw;
-        height: 11vw;
-        max-width: 11vw;
+        height: 11.6vw;
+        flex-basis: 11.857%;
+        max-width: 11.8vw;
     }
-    /*
-    .developers-section__link-to-profile {
-        width: 9vw;
-        height: 9vw;
-        max-width: 9vw;
-    }*/
 }
 
 @media only screen and (min-width: 3000px) {
     .projects-section__link-to-project, .filling-empty-space-childs, .developers-section__link-to-profile {
-        width: 9vw;
-        height: 9vw;
-        max-width: 9vw;
+        height: 10vw;
+        flex-basis: 10.125%;
+        max-width: 10vw;
     }
-    /*
-    .developers-section__link-to-profile {
-        width: 7vw;
-        height: 7vw;
-        max-width: 7vw;
-    }*/
 }
 
 ol, ul {
@@ -2293,7 +2269,7 @@ footer {
   vertical-align: middle;
   width: 100%;
   font-family: 'Cuprum', sans-serif;
-  font-size: 4vh;
+  font-size: 1.5em;
   border-bottom: 1px solid #202d3a;
   text-align: center;
   padding-bottom: 5px;
@@ -3158,11 +3134,11 @@ footer {
   *************************/
   .headline {
     text-align: left;
-    padding-left: 15px;
+    padding-left: 1%;
   }
 
     .developers-section__headline, .projects-section__headline {
-        padding-left: 2.5vw;
+        padding-left: 2.5%;
     }
     
     
@@ -4040,14 +4016,13 @@ footer {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: flex-start;
+        justify-content: space-between;
     }
 
     .projects__all-project, .developers__full-developer {
-        margin-left: 1vw;
-        margin-right: 1vw;
-        width: 43vw;
-        max-width: 43vw;
+        margin-left: 0;
+        margin-right: 0;
+        flex-basis: 49%;
         height: 20vw;
     }
 

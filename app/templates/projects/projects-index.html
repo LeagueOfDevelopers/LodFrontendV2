@@ -9,6 +9,7 @@
   </div>
   <div class="dividing-line"></div>
   <div class="projects-section-container">
+      <div class="random-wrapper">
       <a ng-repeat="fullProject in fullProjects" class="projects-section__link-to-project"
          ui-sref="projects.item({id: fullProject.ProjectId})">
           <div class="projects-section__project">
@@ -37,6 +38,7 @@
       <div class="filling-empty-space-childs"></div>
       <div class="filling-empty-space-childs"></div>
       <div class="filling-empty-space-childs"></div>
+      </div>
   </div>
   <button class="projects-section__see-more-button button-style" ng-disabled="isDisabled" ng-if="isMoreProjects" ng-click="addProjects()">Показать больше</button>
 </section>

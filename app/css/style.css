@@ -3816,7 +3816,6 @@ footer {
   *****************************/
   .profile-settings__help-message, .profile-settings__help-message__password {
     margin: -10px auto 10px;
-    white-space: nowrap;
   }
 
   .profile-settings__help-message__vk-uri {

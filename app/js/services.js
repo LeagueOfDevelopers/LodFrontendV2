@@ -191,24 +191,11 @@ angular.module('LodSite.services', [])
             };
 
             this.getRedirectionToAuthenticationGithubForm = function (id) {
-                var baseUrl = '/auth/github';
-                var frontendCallback = window.location.href;
+                var baseUrl = '/auth/github/' + id;
+                var frontendCallback = window.location.href + '?registration_type=lod';
                 var url = defineCallback(baseUrl, frontendCallback);
 
                 return sendAuthorizationSaveRequest(GET, url).then(function (response) {
-                    window.location.href = response.data; 
-                });
-            };
-
-            this.unlinkGithubProfile = function () {
-                var baseUrl = '/unlink/github';
-                var frontendCallback = window.location.href;
-                var url = defineCallback(baseUrl, frontendCallback);
-
-                return sendAuthorizationSaveRequest(GET, url).then(function (response) {
-                    if (response.status === 409) {
-                        return response.status === 409;
-                    }
                     window.location.href = response.data; 
                 });
             };

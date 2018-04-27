@@ -1914,27 +1914,34 @@ angular.module('LodSite.controllers', [])
             localStorage.removeItem('saved_profile_info');
             $scope.newDeveloper.PhoneNumber = $scope.newDeveloper.PhoneNumber.slice(1);
             $scope.currentStates.isRegisteredGithubAccount = true;
-            $scope.$apply();
             $location.url($location.path());
         };
         if ($state.params.success == 'True') {
-            $state.go('success');
+            if ($state.params.registration_type == 'lod') {
+                $scope.newDeveloper = JSON.parse(localStorage.getItem('saved_profile_info'));
+                localStorage.removeItem('saved_profile_info');
+                $scope.newDeveloper.PhoneNumber = $scope.newDeveloper.PhoneNumber.slice(1);
+                $location.url($location.path());
+                $scope.currentStates.isSuccess = true;
+            } else {
+                $state.go('success');
+            }
         };
 
         $scope.signUp = function () {
             $scope.changeDisable();
             $scope.newDeveloper.PhoneNumber = '7' + $scope.newDeveloper.PhoneNumber;
 
-            $scope.loginType === 'github' ?
+            !$scope.isPasswordRequired ?
                 ApiService.signUpWithGithub($scope.newDeveloper).then(function () {
                     localStorage.setItem('saved_profile_info', JSON.stringify($scope.newDeveloper));
                 }) :
                 ApiService.signUp($scope.newDeveloper).then(function (responseObject) {
                     $scope.currentStates = {};
-
+                    localStorage.setItem('saved_profile_info', JSON.stringify($scope.newDeveloper));
                     if (responseObject) {
                         if (responseObject.status === 200) {
-                            $scope.currentStates.isSuccess = true;
+                            ApiService.getRedirectionToAuthenticationGithubForm(responseObject.data);
                         } else if (responseObject.status === 409) {
                             $scope.currentStates.isRegisteredEmail = true;
                         } else {
@@ -2511,7 +2518,7 @@ angular.module('LodSite.controllers', [])
     }])
 
     .controller('SuccessCtrl', ['$scope', '$state', function ($scope, $state) {
-        $scope.successMessage = 'Вы были зарегистрированы. Ждите потверждения администратора';
+        $scope.successMessage = 'Вы были зарегистрированы. Ждите подтверждения администратора';
         $scope.closeDialog = function () {
             $state.transitionTo('index', {
                 location: true,

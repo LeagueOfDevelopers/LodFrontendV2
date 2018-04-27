@@ -168,7 +168,7 @@ angular.module('LodSite', [
 
              //other
              .state('signup', {
-               url: '/signup?success',
+               url: '/signup?registration_type&success',
                templateUrl: templateUrl('signup', 'signup-index'),
                controller: 'SignupCtrl',
                reloadOnSearch: false
@@ -207,7 +207,6 @@ var DOMAIN_URL = 'https://'+ DOMAIN_NAME;
 var API_DOMAIN_URL = 'https://api.' + DOMAIN_NAME;
 var WEBSOCKET_CLIENT_URL = 'wss://api.' + DOMAIN_NAME + '/socket';
 var numberOfProjects = null;
-
 
 var CALLBACK_URL_QUERY_STRING_PARAMETER = 'frontend_callback';
 

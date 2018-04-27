@@ -1514,6 +1514,10 @@ footer {
     height: 40px;
 }
 
+.sign-up-form__question {
+    font-size: 0.85em;
+}
+
 .sign-up-form__label span {
     display: -webkit-inline-box;
     height: 40px;
@@ -2616,6 +2620,18 @@ footer {
 .button__no:hover {
   border-color: #2980b9;
   color: #2980b9;
+}
+
+@media only screen and (max-width: 360px) {
+    .sign-up-form__question {
+        font-size: 0.62em;
+    }
+}
+
+@media only screen and (min-width: 360px) and (max-width: 400px) {
+    .sign-up-form__question {
+        font-size: 0.68em;
+    }
 }
 
 @media only screen and (min-width: 480px) {

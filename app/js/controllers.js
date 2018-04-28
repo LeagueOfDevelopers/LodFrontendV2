@@ -469,6 +469,15 @@ angular.module('LodSite.controllers', [])
                     controller: [
                         '$rootScope', '$scope', function ($rootScope, $scope) {
                             $scope.openedScreenshotUrl = $rootScope.openedScreenshot.BigPhotoUri;
+                            $scope.plusDivs = function (n) {
+                                if ($rootScope.imgIndex + 1 == $rootScope.screenshots.length && n == 1) {
+                                    $rootScope.imgIndex = -1;
+                                };
+                                if ($rootScope.imgIndex == 0 && n == -1) {
+                                    $rootScope.imgIndex = $rootScope.screenshots.length;
+                                };
+                                $scope.openedScreenshotUrl = $rootScope.screenshots[$rootScope.imgIndex += n].BigPhotoUri;
+                            };
                         }
                     ]
                 });
@@ -490,10 +499,11 @@ angular.module('LodSite.controllers', [])
                             $scope.replacementText = "В данный момент на проекте нет разработчиков.";
                         }
                         $scope.openViewerDialog = function (imgIndex) {
+                            $rootScope.imgIndex = imgIndex;
                             $rootScope.openedScreenshot = $scope.project.Screenshots[imgIndex];
+                            $rootScope.screenshots = $scope.project.Screenshots;
                             $scope.openViewer();
                         };
-
                         $scope.$emit('change_title', {
                             title: $scope.project.Name + ' - Лига Разработчиков НИТУ МИСиС'
                         });

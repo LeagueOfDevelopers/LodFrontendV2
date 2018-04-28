@@ -1115,6 +1115,7 @@ footer {
 
 .viewer__close-button {
   position: absolute;
+  z-index: 100;
   top: 10px;
   right: 10px;
   width: 40px;
@@ -1125,19 +1126,45 @@ footer {
   transition: all .2s ease-out;
 }
 
+.viewer__display-button {
+    height: 100vh;
+    text-align: center;
+    width: 50px;
+    cursor: pointer;
+    font-size: 100px;
+    line-height: 100vh;
+    position: absolute;
+    color: rgba(235, 235, 235, 0.3);
+    box-sizing: border-box;
+}
+
+.viewer__display-button:hover, .viewer__display-button:focus {
+    filter: blur(3px);
+    color: #f1f1f1;
+}
+
+.viewer__display-left-button {
+    left: 0;
+    margin-left: 6px;
+}
+
+.viewer__display-right-button {
+    right: 0;
+    margin-right: 14px;
+}
+
 /*************************
         ABOUT
 *************************/
 /*about*/
 -->
 /*heading*/
-
 .about-logo {
-  width: 100%;
-  height: 320px;
-  background: url("../imgs/logo-ver1-black.svg") no-repeat center;
-  background-size: contain;
-  margin-bottom: -45px;
+    width: 100%;
+    height: 320px;
+    background: url("../imgs/logo-ver1-black.svg") no-repeat center;
+    background-size: contain;
+    margin-bottom: -45px;
 }
 
 /*about*/

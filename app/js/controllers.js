@@ -470,6 +470,7 @@ angular.module('LodSite.controllers', [])
                         '$rootScope', '$scope', function ($rootScope, $scope) {
                             $scope.openedScreenshotUrl = $rootScope.openedScreenshot.BigPhotoUri;
                             $scope.plusDivs = function (n) {
+                                $scope.scaleSymbol = '+';
                                 if ($rootScope.imgIndex + 1 == $rootScope.screenshots.length && n == 1) {
                                     $rootScope.imgIndex = -1;
                                 };
@@ -477,6 +478,12 @@ angular.module('LodSite.controllers', [])
                                     $rootScope.imgIndex = $rootScope.screenshots.length;
                                 };
                                 $scope.openedScreenshotUrl = $rootScope.screenshots[$rootScope.imgIndex += n].BigPhotoUri;
+                            };
+                            $scope.scaleSymbol = '+';
+                            $scope.scale = function () {
+                                $scope.scaleSymbol == '+' ? document.getElementsByClassName("viewer__img")[0].style.backgroundSize = "cover" :
+                                    document.getElementsByClassName("viewer__img")[0].style.backgroundSize = "contain";
+                                $scope.scaleSymbol = $scope.scaleSymbol == '+' ? '−' : '+';
                             };
                         }
                     ]

@@ -1113,6 +1113,10 @@ footer {
   height: 100vh;
 }
 
+.viewer__img: {
+
+}
+
 .viewer__close-button {
   position: absolute;
   z-index: 100;
@@ -1136,11 +1140,13 @@ footer {
     position: absolute;
     color: rgba(235, 235, 235, 0.3);
     box-sizing: border-box;
+    transform: scale(1) !important;
 }
 
-.viewer__display-button:hover, .viewer__display-button:focus {
-    filter: blur(3px);
+.viewer__display-button:hover,
+.viewer__display-scale-button:hover {
     color: #f1f1f1;
+    border-color: #f1f1f1;
 }
 
 .viewer__display-left-button {
@@ -1151,6 +1157,22 @@ footer {
 .viewer__display-right-button {
     right: 0;
     margin-right: 14px;
+}
+
+.viewer__display-scale-button {
+    z-index: 50;
+    color: rgba(235, 235, 235, 0.3);
+    font-size: 60px;
+    margin: auto;
+    transform: translateY(47vh);
+    line-height: 33px;
+    text-align: center;
+    border: 2px solid rgba(235, 235, 235, 0.3);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: all .2s ease-out;
 }
 
 /*************************

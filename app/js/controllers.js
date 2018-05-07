@@ -1071,12 +1071,13 @@ angular.module('LodSite.controllers', [])
                 ApiService.addProject($scope.newProject).then(function (response) {
                     if (response.isSuccess) {
                         $scope.currentState = 'success';
-
+                        $scope.developerIds = [];
                         $scope.chosenDevelopers.forEach(function (developer) {
                             ApiService.joinToProject(response.projectId, developer.UserId, JSON.stringify(developer.Role));
-                            ApiService.addCollaboratorToRepositories(response.projectId, developer.UserId);
-                            localStorage.setItem('saved_project', $scope.newProject);
+                            $scope.developerIds.push(developer.UserId);
                         });
+
+                        ApiService.addCollaboratorToRepositories(response.projectId, $scope.developerIds);
 
                         localStorage.setItem('saved_project', JSON.stringify($scope.newProject));
                         localStorage.setItem('chosen_developers', JSON.stringify($scope.chosenDevelopers));
@@ -1624,10 +1625,11 @@ angular.module('LodSite.controllers', [])
                 ApiService.editProject(projectId, $scope.editedProject).then(function (isSuccess) {
                     if (isSuccess) {
                         $scope.currentState = 'success';
+                        $scope.developerIds = [];
                         $scope.projectMemberships.forEach(function (developer) {
-                            ApiService.addCollaboratorToRepositories(projectId, developer.UserId);
-                            localStorage.setItem('saved_project', $state.params.editedProject);
+                            $scope.developerIds.push(developer.UserId);
                         });
+                        ApiService.addCollaboratorToRepositories(projectId, $scope.developerIds);
                         localStorage.setItem('saved_project', JSON.stringify($scope.editedProject));
                         localStorage.setItem('chosen_developers', JSON.stringify($scope.projectMemberships));
                         localStorage.setItem('categories', JSON.stringify($scope.categories));

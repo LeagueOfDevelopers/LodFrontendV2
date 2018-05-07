@@ -336,12 +336,14 @@ angular.module('LodSite.services', [])
                 });
             };
 
-            this.addCollaboratorToRepositories = function (projectId, developerId) {
-                var baseUrl = '/github/repositories/' + projectId + '/developer/' + developerId;
+            this.addCollaboratorToRepositories = function (projectId, developerIds) {
+                var baseUrl = '/github/repositories/' + projectId;
+                var ids = JSON.stringify(developerIds);
                 var frontendCallback = window.location.href + '?action=add_collaborator';
                 var url = defineCallback(baseUrl, frontendCallback);
+                url = url + '&ids=' + ids;
 
-                return sendAuthorizationSaveRequest(GET, url).then(function (response) {
+                return sendAuthorizationSaveRequest(POST, url).then(function (response) {
                     window.location.href = response.data;
                 });
             }

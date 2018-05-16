@@ -4,9 +4,9 @@
   <form class="sign-up-form" name="signForm">
       <div class="sign-up-form__section">
           <div class="section__step-number">1</div>
-          <input type="text" class="validate-field" placeholder="Имя" pattern="[а-яА-ЯёЁ _\.]{1,30}$"
+          <input type="text" class="validate-field" placeholder="Имя" pattern="[а-яА-ЯёЁ- _\.]{1,30}$"
                  ng-model="newDeveloper.FirstName" ng-maxlength="50" required autofocus />
-          <input type="text" class="validate-field" placeholder="Фамилия" pattern="[а-яА-ЯёЁ _\.]{1,30}$"
+          <input type="text" class="validate-field" placeholder="Фамилия" pattern="[а-яА-ЯёЁ- _\.]{1,30}$"
                  ng-model="newDeveloper.LastName" ng-maxlength="50" required />
       </div>
       <div class="sign-up-form__section">
@@ -21,9 +21,9 @@
               <option value="ИБО" ng-selected="newDeveloper.InstituteName=='ИБО'">ИБО</option>
               <option value="Горный" ng-selected="newDeveloper.InstituteName=='Горный'">Горный</option>
           </select>
-          <input type="text" class="validate-field" placeholder="Кафедра" pattern="[а-яА-ЯёЁ _\.]{1,255}$"
+          <input type="text" class="validate-field" placeholder="Кафедра" pattern="[а-яА-ЯёЁ- _\.]{1,255}$"
                  ng-model="newDeveloper.Department" ng-maxlength="255" required />
-          <input type="text" class="validate-field" placeholder="Специальность" pattern="[а-яА-ЯёЁ _\.]{1,255}$"
+          <input type="text" class="validate-field" placeholder="Специальность" pattern="[а-яА-ЯёЁ- _\.]{1,255}$"
                  ng-model="newDeveloper.StudyingProfile" ng-maxlength="255" required />
           <input type="number" class="validate-field" placeholder="Год поступления" 
                  min="2000" max="{{currentDate | date:'yyyy'}}" ng-model="newDeveloper.AccessionYear"
@@ -35,7 +35,7 @@
       </div>
       <div class="sign-up-form__section">
           <div class="section__step-number">3</div>
-          <input type="url" name="vkUrl" class="validate-field" placeholder="Профиль Вконтакте" pattern="^(http|https)?://vk.com/[a-zA-Z0-9]+$"
+          <input type="url" name="vkUrl" class="validate-field" placeholder="Профиль Вконтакте" pattern="^(http|https)?://vk.com/.+$"
                  ng-model="newDeveloper.VkProfileUri" ng-maxlength="100" />
 
           <div class="help-message-input" ng-show="signForm.vkUrl.$error.pattern">

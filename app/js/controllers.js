@@ -306,15 +306,6 @@ angular.module('LodSite.controllers', [])
 
             /*POST - REQUESTS*/
 
-            $scope.unlinkGithubProfile = function () {
-                $scope.changeDisable();
-                ApiService.unlinkGithubProfile().then(function (isFailed) {
-                        $scope.state[0] = 'failed';
-                        changeCurrentState();
-                        $scope.changeDisable();
-                });
-            }
-
             $scope.changeProfileSettings = function () {
                 $scope.changeDisable();
                 $scope.profile.PhoneNumber = '7' + $scope.profile.PhoneNumber;
@@ -349,13 +340,12 @@ angular.module('LodSite.controllers', [])
                             $scope.state[2] = 'failed';
                         }
                         changeCurrentState();
-                        $scope.changeDisable();
                     });
                 } else {
                     $scope.state[2] = 'success';
-                    $scope.changeDisable();
                     changeCurrentState();
                 }
+                $scope.changeDisable();
             };
 
 
@@ -886,6 +876,7 @@ angular.module('LodSite.controllers', [])
                     $scope.getGithubRepositories();
                 } else {
                     $scope.resetRepositories();
+                    $scope.previousSearchString = '';
                 }
             };
 

@@ -1,5 +1,4 @@
 @import url(https://fonts.googleapis.com/css?family=Cuprum:400,700|PT+Sans:400,700|Noto+Serif:400,700&subset=latin,cyrillic) all;
-
 /* CSS RESET */
 /* html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a,
 abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike,
@@ -3248,7 +3247,7 @@ footer {
   *************************/
   header {
     height: 100px;
-    background-color: rgba(21, 21, 21, 0);
+    /* background-color: rgba(21, 21, 21, 0); */
   }
 
   .header--black header {
@@ -3290,7 +3289,7 @@ footer {
   }
 
   .log-in {
-    background: url("../../Front/src/assets/log-in-icon.png") no-repeat center;
+    background: url("../src/assets/log-in-icon.png") no-repeat center;
     background-size: contain;
   }
 

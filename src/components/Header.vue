@@ -1,7 +1,7 @@
 <template>
     <header>
       <router-link to="home" tag="div" class="header__site-logo"></router-link>
-      <span v-if="!userIsLoggedIn" class="header__additional-nav">
+      <span v-if="!userIsLoggedIn()" class="header__additional-nav">
         <router-link to="registration" tag="span" 
                   class="additional-nav__item">Стать разработчиком</router-link>
         <span>или</span>
@@ -15,7 +15,7 @@
         <router-link to="{ name: 'portfolio', params: {id: getUser.id }}" tag="span" 
                   class="additional-nav__item">Портфолио</router-link>
         <router-link to="profile" tag="span" class="additional-nav__item">Профиль</router-link>
-        <router-link to="adminpanel_main" v-if="userIsAdmin" tag="span" 
+        <router-link to="adminpanel_main" v-if="userIsAdmin()" tag="span" 
                   class="additional-nav__item">Администрирование</router-link>
         <span>|</span>
         <span @click="signOut" class="additional-nav__item">
@@ -37,24 +37,22 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   computed: {
-    getNotificationsAmount() {
-      return 1;
-    },
-    getUser() {
-      return { id: 1 };
-    }
+    ...mapGetters(["getNotificationsAmount", "getUserId"])
   },
   methods: {
     userIsLoggedIn() {
       return true;
     },
     userIsAdmin() {
-      return true;
+      return false;
     },
     signIn() {},
     signOut() {}
-  }
+  },
+  created() {}
 };
 </script>

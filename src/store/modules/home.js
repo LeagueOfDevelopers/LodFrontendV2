@@ -4,8 +4,8 @@ const state = {
 };
 
 const getters = {
-  getNotificationsAmount: state => state.notificationsAmount,
-  getUserId: state => state.user.id
+  notificationsAmount: state => state.notificationsAmount,
+  userId: state => state.user.id
 };
 
 const mutations = {};

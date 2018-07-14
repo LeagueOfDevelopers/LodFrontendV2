@@ -87,6 +87,7 @@ export const routes = [
   },
   {
     path: "/developers/profile/:id?success",
+    name: "profile",
     props: route => ({
       id: route.params.id,
       success: route.query.success

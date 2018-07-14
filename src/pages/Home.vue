@@ -1,13 +1,17 @@
 <template>
-  <div>
+  <section>
     <pp-welcome/>
-    <pp-projects-overview/>
+    <pp-projects-overview :projects="projects"/>
     <pp-dividing-line/>
-    <pp-developers-overview/>
-  </div>
+    <pp-developers-overview :developers="developers"/>
+  </section>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+import axios from 'axios'
+import store from '../store/index.js'
+
 import Welcome from "../components/home/Welcome.vue";
 import ProjectsOverview from "../components/home/ProjectsOverview.vue";
 import DevelopersOverview from "../components/home/DevelopersOverview.vue";
@@ -19,6 +23,16 @@ export default {
     ppProjectsOverview: ProjectsOverview,
     ppDividingLine: DividingLine,
     ppDevelopersOverview: DevelopersOverview
+  },
+  created() {
+    store.dispatch('LOAD_DEVELOPERS');
+    store.dispatch('LOAD_PROJECTS');
+  },
+  computed: {
+    ...mapGetters([
+      'projects',
+      'developers'
+    ])
   }
 };
 </script>

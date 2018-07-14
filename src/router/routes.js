@@ -1,4 +1,4 @@
-import Home from "../view_components/Home.vue";
+import Home from "../pages/Home.vue";
 
 export const routes = [
   {
@@ -98,6 +98,7 @@ export const routes = [
   },
   {
     path: "/projects/:id",
+    name: "project",
     props: true
   },
   {

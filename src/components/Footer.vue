@@ -5,9 +5,9 @@
         class="signature__link">Лигой Разработчиков</router-link>
     </span>
     <div class="footer__links">
-      <router-link to="http://vk.com/lodmisis" tag="span" class="links__vk">Мы Вконтакте</router-link>
+      <router-link to="http://vk.com/lodmisis" tag="span" class="links__vk clickable">Мы Вконтакте</router-link>
       <span>|</span>
-      <router-link to="contact" tag="span" class="links__contact-us">Связаться</router-link>
+      <router-link to="contact" tag="span" class="links__contact-us clickable">Связаться</router-link>
     </div>
     <span class="footer__copyright">© League of developers
       <span class="copyright__this-year">{{ currentDate }}</span>

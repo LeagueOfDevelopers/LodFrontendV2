@@ -1,17 +1,25 @@
 <template>
   <section class="projects-section">
-    
+    <project-small-cards-row :projects="projects"/>
+    <watch-all-button link-text="Смотреть все" redirect-to-route="projects" />
   </section>
 </template>
 
 <script>
-import ProjectSmallCard from "../reusable/cards/project/ProjectSmallCard.vue";
+import ProjectSmallCardsRow from "../reusable/cards/project/ProjectSmallCardsRow.vue";
 import WatchAllButton from "../reusable/buttons/WatchAllButton.vue";
 
 export default {
   components: {
-    ppProjectSmallCard: ProjectSmallCard,
-    ppWatchAllButton: WatchAllButton
+    ProjectSmallCardsRow,
+    WatchAllButton
+  },
+  props: {
+    projects: {
+      type: Array,
+      required: true,
+      default: () => []
+    }
   }
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
-    <header>
-      <router-link to="home" tag="div" class="header__site-logo"></router-link>
+    <header :class="{ 'header--transparent': $route.name === 'home' }">
+      <router-link to="/" tag="div" class="header__site-logo clickable"></router-link>
       <span v-if="!userIsLoggedIn()" class="header__additional-nav">
         <router-link to="registration" tag="span" 
                   class="additional-nav__item">Стать разработчиком</router-link>
@@ -25,13 +25,13 @@
 
       <nav class="header__nav-full">
         <router-link to="projects" tag="span" 
-                  class="nav-full__item">Проекты</router-link>
+                  class="nav-full__item clickable">Проекты</router-link>
         <router-link to="developers" tag="span" 
-                  class="nav-full__item">Разработчики</router-link>
+                  class="nav-full__item clickable">Разработчики</router-link>
         <router-link to="about" tag="span" 
-                  class="nav-full__item">О нас</router-link>
+                  class="nav-full__item clickable">О нас</router-link>
         <router-link to="contact" tag="span" 
-                  class="nav-full__item">Связаться</router-link>
+                  class="nav-full__item clickable">Связаться</router-link>
       </nav>
     </header>
 </template>

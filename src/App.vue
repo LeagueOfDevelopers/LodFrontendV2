@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="block-flex-column">
     <pp-header/>
     <router-view/>
     <pp-footer/>

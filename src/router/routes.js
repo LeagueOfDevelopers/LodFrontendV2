@@ -1,5 +1,6 @@
 import Home from "../pages/Home.vue";
 import NotFound from "../pages/NotFound.vue";
+import Projects from "../pages/Projects.vue";
 
 export const routes = [
   {
@@ -96,7 +97,8 @@ export const routes = [
   },
   {
     path: "/projects",
-    name: "projects"
+    name: "projects",
+    component: Projects
   },
   {
     path: "/projects/:id",

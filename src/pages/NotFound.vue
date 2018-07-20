@@ -1,17 +1,23 @@
 <template>
-  <div>
+  <section>
     <div class="error-page">
       <h1 class="headline error-page__heading">404 Not found</h1>
-      <div class="dividing-line"></div>
+      <dividing-line/>
       <div class="not-found-info">
         К сожалению, такой страницы не существует или у Вас нет прав для ее просмотра.
       </div>
-  </div>
-  </div>
+    </div>
+  </section>
 </template>
 
 <script>
-export default {};
+import DividingLine from "../components/reusable/DividingLine.vue";
+
+export default {
+  components: {
+    DividingLine
+  }
+};
 </script>
 
 <style scoped>

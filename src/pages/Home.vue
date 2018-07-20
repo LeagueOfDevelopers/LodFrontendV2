@@ -8,9 +8,8 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-import axios from 'axios'
-import store from '../store/index.js'
+import { mapGetters } from "vuex";
+import store from "../store/index.js";
 
 import Welcome from "../components/home/Welcome.vue";
 import ProjectsOverview from "../components/home/ProjectsOverview.vue";
@@ -25,14 +24,11 @@ export default {
     ppDevelopersOverview: DevelopersOverview
   },
   created() {
-    store.dispatch('LOAD_DEVELOPERS');
-    store.dispatch('LOAD_PROJECTS');
+    store.dispatch("LOAD_DEVELOPERS");
+    store.dispatch("LOAD_PROJECTS");
   },
   computed: {
-    ...mapGetters([
-      'projects',
-      'developers'
-    ])
+    ...mapGetters(["projects", "developers"])
   }
 };
 </script>

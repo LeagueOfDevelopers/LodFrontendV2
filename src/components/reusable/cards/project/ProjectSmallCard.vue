@@ -7,18 +7,15 @@
         <div class="project__name">
           {{project.Name}}
         </div>
+
+        <slot name="project-status"></slot>
+
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      /* defaultProjectLandscape: '~/src/assets/project-cap-image.png' */
-      // move check to store
-    };
-  },
   props: {
     project: {
       type: Object,

@@ -28,3 +28,17 @@ export const getComponentsInRowNumber = () => {
   }
   return componentsInRowNumber;
 };
+
+export const getGreeting = () => {
+  const hour = new Date().getHours();
+  switch (true) {
+    case hour < 6 || (hour <= 24 && hour > 22):
+      return "Доброй ночи";
+    case hour >= 6 && hour < 11:
+      return "Доброе утро";
+    case hour >= 11 && hour < 18:
+      return "Добрый день";
+    case hour >= 18:
+      return "Добрый вечер";
+  }
+};

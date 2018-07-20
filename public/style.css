@@ -1,5 +1,16 @@
 @import url(https://fonts.googleapis.com/css?family=Cuprum:400,700|PT+Sans:400,700|Noto+Serif:400,700&subset=latin,cyrillic) all;
 
+.message {
+  margin: 10px; 
+  color: #2980b9;
+}
+
+.message_translate-to-top {
+  transform: translateY(-10px);
+  color: #2980b9;
+  font-size: 0.88em;
+}
+
 .block-flex-column {
   display: flex;
   flex-direction: column;

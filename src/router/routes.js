@@ -8,7 +8,7 @@ export const routes = [
   },
   {
     path: "/signup",
-    name: "registration"
+    name: "signup"
   },
   {
     path: "/password/recovery/:token",

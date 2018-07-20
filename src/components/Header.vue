@@ -3,11 +3,13 @@
     <header :class="{ 'header--transparent': $route.name === 'home' }">
       <router-link :to="{ name: 'home' }" tag="div" class="header__site-logo clickable"></router-link>
       <span v-if="!userIsLoggedIn" class="header__additional-nav">
-        <router-link :to="{ name: 'registration' }" tag="span" 
+        <router-link :to="{ name: 'signup' }" tag="span" 
           class="additional-nav__item">Стать разработчиком</router-link>
         <span>или</span>
-        <span @click="signIn" class="additional-nav__item">
-          <span class="log-in"><!-- POPUP --></span>Войти
+        <span class="additional-nav__item"
+          @click="loginModalIsOpened = true">
+          <span class="log-in">
+          </span>Войти
         </span>
       </span>
       <span v-else class="header__additional-nav">
@@ -24,7 +26,7 @@
         </span>
       </span>
 
-      <div class="header__nav-toggle" @click="openNavMobile()" 
+      <div class="header__nav-toggle" @click="openNavMobile" 
         :class="{'header__nav-toggle--active': navMobileIsOpened}">
         <div class="nav-toggle__burger"></div>
       </div>
@@ -51,8 +53,8 @@
       <router-link :to="{ name: 'admin_main' }" tag="a" v-if="userIsAdmin" 
         class="nav-mobile__item">Администрирование</router-link>
       <a v-if="!userIsLoggedIn" 
-        @click="signIn" class="nav-mobile__item">Войти</a>
-      <router-link :to="{ name: 'registration' }" tag="a" v-if="!userIsLoggedIn" 
+        @click="loginModalIsOpened = true" class="nav-mobile__item">Войти</a>
+      <router-link :to="{ name: 'signup' }" tag="a" v-if="!userIsLoggedIn" 
         class="nav-mobile__item">Стать разработчиком</router-link>
       <router-link :to="{ name: 'projects' }" tag="a" 
         class="nav-mobile__item">Наши проекты</router-link>
@@ -63,28 +65,33 @@
       <router-link :to="{ name: 'contact' }" tag="a" 
         class="nav-mobile__item">Связаться</router-link>
       <a tag="a" v-if="userIsLoggedIn" 
-        @click="signOut()" class="nav-mobile__item">Выйти</a>
+        class="nav-mobile__item">Выйти</a>
     </nav>
+
+    <login v-if="loginModalIsOpened" v-on:close-modal="loginModalIsOpened = false"></login>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import Login from "./modals/Login.vue";
 
 export default {
   data() {
     return {
+      loginModalIsOpened: false,
       navMobileIsOpened: false,
       userIsLoggedIn: false,
       userIsAdmin: false
     };
   },
+  components: {
+    Login
+  },
   computed: {
     ...mapGetters(["notificationsAmount", "userId"])
   },
   methods: {
-    signIn() {},
-    signOut() {},
     openNavMobile() {
       this.navMobileIsOpened = !this.navMobileIsOpened;
     }

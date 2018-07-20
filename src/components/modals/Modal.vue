@@ -38,9 +38,6 @@ export default {};
   transition: opacity 0.3s ease;
 }
 
-.modal-wrapper {
-}
-
 .modal-container {
   width: 300px;
   margin: 0px auto;

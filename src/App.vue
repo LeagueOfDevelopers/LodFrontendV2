@@ -1,7 +1,7 @@
 <template>
-  <div id="app" class="block-flex-column">
+  <div id="app" class="block-flex-column full-height">
     <pp-header/>
-    <router-view/>
+    <router-view class="flex-grow-max"/>
     <pp-footer/>
   </div>
 </template>
@@ -19,4 +19,14 @@ export default {
 </script>
 
 <style src="../public/style.css">
+</style>
+
+<style scoped>
+.full-height {
+  min-height: 100vh;
+}
+
+.flex-grow-max {
+  flex-grow: 2;
+}
 </style>

@@ -1,4 +1,5 @@
 import Home from "../pages/Home.vue";
+import NotFound from "../pages/NotFound.vue";
 
 export const routes = [
   {
@@ -103,7 +104,12 @@ export const routes = [
     props: true
   },
   {
+    path: "/404",
+    name: "not_found",
+    component: NotFound
+  },
+  {
     path: "*",
-    component: Home
+    redirect: { name: "not_found" }
   }
 ];

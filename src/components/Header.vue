@@ -69,24 +69,34 @@
     </nav>
 
     <login v-if="loginModalIsOpened" v-on:close-modal="loginModalIsOpened = false"></login>
+    <success v-show="$route.params.status == 'success'" 
+      v-on:close-modal="successModalIsOpened = false"></success>
+    <error v-show="$route.params.status == 'error'" 
+      v-on:close-modal="errorModalIsOpened = false"></error>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import Login from "./modals/Login.vue";
+import Success from "./modals/Success.vue";
+import Error from "./modals/Error.vue";
 
 export default {
   data() {
     return {
       loginModalIsOpened: false,
+      successModalIsOpened: false,
+      errorModalIsOpened: false,
       navMobileIsOpened: false,
       userIsLoggedIn: false,
       userIsAdmin: false
     };
   },
   components: {
-    Login
+    Login,
+    Success,
+    Error
   },
   computed: {
     ...mapGetters(["notificationsAmount", "userId"])

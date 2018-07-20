@@ -103,12 +103,7 @@ export const routes = [
     props: true
   },
   {
-    path: "/success"
-  },
-  {
-    path: "/error"
-  },
-  {
-    path: "*"
+    path: "*",
+    component: Home
   }
 ];

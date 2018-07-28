@@ -4,8 +4,11 @@
     <dividing-line/>
     <category-list/>
     <dividing-line/>
-    <project-small-cards-row :projects="projects"/>
-    <show-more-button/>
+    <div>
+      <project-small-cards-row v-for="row in rowsNumber" :key="row" 
+        :projects="projects"/>
+    </div>
+    <show-more-button @click="loadMoreProjects"/>
   </section>
 </template>
 
@@ -19,6 +22,11 @@ import ProjectSmallCardsRow from "../components/reusable/cards/project/ProjectSm
 import ShowMoreButton from "../components/reusable/buttons/ShowMoreButton.vue";
 
 export default {
+  data() {
+    return {
+      items: 8
+    };
+  },
   components: {
     CategoryList,
     DividingLine,
@@ -29,7 +37,12 @@ export default {
     store.dispatch("LOAD_PROJECTS");
   },
   computed: {
-    ...mapGetters(["projects"])
+    ...mapGetters(["projects", "rowsNumber"])
+  },
+  methods: {
+    loadMoreProjects() {
+      store.dispatch("LOAD_PROJECTS");
+    }
   }
 };
 </script>

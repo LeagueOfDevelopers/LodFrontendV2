@@ -1,9 +1,9 @@
 <template>
   <section>
     <pp-welcome/>
-    <pp-projects-overview :projects="projects"/>
+    <pp-projects-overview :projects="randomProjects"/>
     <pp-dividing-line/>
-    <pp-developers-overview :developers="developers"/>
+    <pp-developers-overview :developers="randomDevelopers"/>
   </section>
 </template>
 
@@ -24,11 +24,11 @@ export default {
     ppDevelopersOverview: DevelopersOverview
   },
   created() {
-    store.dispatch("LOAD_DEVELOPERS");
-    store.dispatch("LOAD_PROJECTS");
+    store.dispatch("LOAD_RANDOM_DEVELOPERS");
+    store.dispatch("LOAD_RANDOM_PROJECTS");
   },
   computed: {
-    ...mapGetters(["projects", "developers"])
+    ...mapGetters(["randomProjects", "randomDevelopers"])
   }
 };
 </script>

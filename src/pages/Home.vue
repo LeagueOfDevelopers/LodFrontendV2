@@ -1,8 +1,10 @@
 <template>
   <section>
     <pp-welcome/>
+    <h1 class="projects-section__headline headline">Наши проекты</h1>
     <pp-projects-overview :projects="randomProjects"/>
     <pp-dividing-line/>
+    <h1 class="developers-section__headline headline">Наши разработчики</h1>
     <pp-developers-overview :developers="randomDevelopers"/>
   </section>
 </template>

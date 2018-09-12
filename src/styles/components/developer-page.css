@@ -1,0 +1,85 @@
+.developer-page {
+  box-sizing: border-box;
+  padding: 0 15px;
+}
+
+.developer-confirmation-status {
+  text-align: center;
+  margin-top: 15px;
+  color: rgba(32, 45, 58, .5);
+}
+
+.developer-photo {
+  width: 200px;
+  height: 200px;
+  margin: 15px auto;
+  border: 10px solid #ccc;
+  border-radius: 50%;
+}
+
+.developer-name, .developer-role {
+  text-align: center;
+}
+
+.developer-name {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.developer-role {
+  font-size: 1.2em;
+  margin: 5px 0 20px 0;
+}
+
+.developer-info {
+  margin: 25px auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.developer-info:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.developer-info__item {
+  box-sizing: border-box;
+  padding: 10px 0;
+  width: 100%;
+}
+
+.developer-info__item-name, .developer-info__item-text {
+  background: #fff;
+  font-size: 1em;
+  padding: 10px;
+}
+
+.developer-info__item-name {
+  border-radius: 5px 5px 0 0;
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+
+}
+
+.developer-info__item-text {
+  border-radius: 0 0 5px 5px;
+  box-sizing: border-box;
+  min-height: 70px;
+}
+
+.residence-time {
+  display: inline-block;
+  border: 1px solid #f1f1f1;
+  padding: 0 5px;
+  margin: 5px 0;
+}
+
+.project__developer-role, .project__developer-role-text {
+  color: #fff;
+}
+
+.developer-projects {
+  margin: 20px 0;
+}

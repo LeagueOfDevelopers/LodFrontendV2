@@ -1,0 +1,127 @@
+.contact-content {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.contact-heading {
+  display: block;
+  position: relative;
+  width: 225px;
+  top: 28px;
+  margin: 10px auto;
+  padding: 10px;
+  font-family: 'Noto Serif', serif;
+  font-size: 1.5em;
+  font-weight: 900;
+  border: 2px solid #202d3a;
+  background-color: #f1f1f1;
+}
+
+.contact-form {
+  border: 2px solid #202d3a;
+  padding-top: 45px;
+  max-width: 80%;
+}
+
+.contact-form {
+  min-width: 270px;
+  margin: 0 auto;
+}
+
+.contact-form input, .contact-form textarea {
+  display: inline-block;
+  resize: none;
+  margin: 7px auto;
+  padding: 0 15px;
+  width: 70%;
+  outline: none;
+  border: 0;
+  font-family: 'PT Sans', sans-serif;
+  font-size: 1em;
+}
+
+.contact-form:first-child {
+  margin-top: 30px;
+}
+
+.contact-form input {
+  min-height: 45px;
+}
+
+.contact-form input:required:valid, .contact-form textarea:valid {
+  border: 1px solid #4CAF50;
+}
+
+.isValid:invalid, .contact-form .isValid:invalid {
+  border: 1px solid #F44336;
+}
+
+.contact-form textarea {
+  padding-top: 10px;
+  margin-bottom: 20px;
+  height: 200px;
+}
+
+.contact-form .submit {
+  display: block;
+  position: relative;
+  margin: 0 auto -36px;
+  height: 70px;
+  width: 70px;
+  border: 2px solid #202d3a;
+  border-radius: 50%;
+  background-color: #f1f1f1;
+}
+
+.contact-form .submit--success {
+  background-color: #2fd08e;
+}
+
+.contact-form .success, .contact-form [type="submit"] {
+  display: inline-block;
+  position: relative;
+  height: 40px;
+  width: 40px;
+}
+
+.contact-form [type="submit"] {
+  top: 7px;
+}
+
+.contact-form .success {
+  top: 15px;
+}
+
+.contact-form [type="submit"] {
+  background: url("../src/assets/envelope.svg") no-repeat center;
+}
+
+.contact-form .success {
+  background: url("../src/assets/white_tick.svg") no-repeat center;
+  background-size: cover;
+}
+
+.upload-box-wrap {
+  display: block;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  -webkit-align-content: flex-start;
+  align-content: flex-start;
+}
+
+
+.upload-box {
+  position: relative;
+  width: 66px;
+  height: 66px;
+  margin-right: 10px;
+  border: 2px solid #0072bc;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

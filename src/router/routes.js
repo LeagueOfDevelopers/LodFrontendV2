@@ -6,11 +6,17 @@ export const routes = [
   {
     path: "/",
     name: "home",
-    component: Home
+    component: Home,
+    meta: {
+      title: "Лига Разработчиков НИТУ МИСиС"
+    }
   },
   {
     path: "/signup",
-    name: "signup"
+    name: "signup",
+    meta: {
+      title: "Лига Разработчиков НИТУ МИСиС - Стать разразработчиком"
+    }
   },
   {
     path: "/password/recovery/:token",
@@ -25,15 +31,24 @@ export const routes = [
   },
   {
     path: "/notifications",
-    name: "notifications"
+    name: "notifications",
+    meta: {
+      title: "Лига Разработчиков НИТУ МИСиС - Оповещения"
+    }
   },
   {
     path: "/contact",
-    name: "contact"
+    name: "contact",
+    meta: {
+      title: "Лига Разработчиков НИТУ МИСиС - Связаться"
+    }
   },
   {
     path: "/about",
-    name: "about"
+    name: "about",
+    meta: {
+      title: "Лига Разработчиков НИТУ МИСиС - О нас"
+    }
   },
   {
     path: "/signup?registration_type&success",
@@ -76,7 +91,10 @@ export const routes = [
   },
   {
     path: "/developers",
-    name: "developers"
+    name: "developers",
+    meta: {
+      title: "Лига Разработчиков НИТУ МИСиС - Разработчики"
+    }
   },
   {
     path: "/developers/:id",
@@ -98,7 +116,10 @@ export const routes = [
   {
     path: "/projects",
     name: "projects",
-    component: Projects
+    component: Projects,
+    meta: {
+      title: "Лига Разработчиков НИТУ МИСиС - Проекты"
+    }
   },
   {
     path: "/projects/:id",
@@ -108,7 +129,10 @@ export const routes = [
   {
     path: "/404",
     name: "not_found",
-    component: NotFound
+    component: NotFound,
+    meta: {
+      title: "404 - Страница не найдена"
+    }
   },
   {
     path: "*",

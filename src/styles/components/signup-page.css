@@ -1,0 +1,129 @@
+.sign-up-container {
+  box-sizing: border-box;
+  padding: 0 15px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.sign-up__headline {
+  text-align: center;
+}
+
+.sign-up-form {
+  display: block;
+  width: 100%;
+}
+
+.sign-up-form__section {
+  display: block;
+  position: relative;
+  box-sizing: border-box;
+  padding: 5px 20px;
+  border: 1px solid #202d3a;
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+.section__step-number {
+  display: none;
+}
+
+.sign-up-form input,
+select {
+  font-family: "PT Sans", sans-serif;
+  font-size: 1em;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  min-height: 40px;
+  padding: 0 15px;
+  margin: 15px 0;
+  border: 1px solid #f1f1f1;
+  outline: none;
+}
+
+.sign-up-form select {
+  background-color: #fff;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.sign-up-form__switcher {
+  background-color: white;
+  padding: 15px;
+  margin: 15px 0;
+}
+
+.sign-up-form__label {
+  display: block;
+  height: 40px;
+}
+
+.sign-up-form__question {
+  font-size: 0.85em;
+}
+
+.sign-up-form__label span {
+  display: -webkit-inline-box;
+  height: 40px;
+  min-width: 140px;
+  line-height: 40px;
+  margin: 0;
+  vertical-align: -webkit-baseline-middle;
+  vertical-align: -moz-middle-with-baseline;
+}
+
+.sign-up-form__label,
+.sign-up-form__switcher input,
+input.sign-up__checkbox {
+  cursor: pointer;
+}
+
+.sign-up-form__switcher input,
+input.sign-up__checkbox {
+  width: 22px;
+  margin: auto;
+  margin-right: 10px;
+  display: -webkit-inline-box;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  vertical-align: -webkit-baseline-middle;
+  vertical-align: -moz-middle-with-baseline;
+}
+
+.sign-up__button {
+  max-width: 200px;
+  margin: 0 auto 40px auto;
+  padding: 15px 10px;
+  font-family: "PT Sans", sans-serif;
+  font-size: 1em;
+  text-transform: uppercase;
+  background: #f1f1f1;
+  color: #202d3a;
+  border: 1px solid #202d3a;
+  -webkit-transition: all 0.15s ease-out;
+  -moz-transition: all 0.15s ease-out;
+  -o-transition: all 0.15s ease-out;
+  transition: all 0.15s ease-out;
+  outline: none;
+  cursor: pointer;
+}
+
+.sign-up__button:disabled {
+  cursor: default;
+  border: 1px solid #808080;
+  color: #808080;
+}
+
+/* login and signup form validation */
+.validate-field.ng-invalid.ng-dirty {
+  border: 1px solid #f44336;
+}
+
+.validate-field.ng-valid.ng-dirty {
+  border: 1px solid #4caf50;
+}

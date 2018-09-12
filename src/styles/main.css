@@ -1,0 +1,30 @@
+@import "./base";
+
+@import "./components/loader";
+@import "./components/header";
+@import "./components/footer";
+
+@import "./components/about-page";
+@import "./components/confirmation-page";
+@import "./components/contact-page";
+@import "./components/developer-page";
+@import "./components/developers-page";
+@import "./components/error-page";
+@import "./components/notifications-page";
+@import "./components/password-recovery-page";
+@import "./components/project-page";
+@import "./components/signup-page";
+@import "./components/profile-settings";
+@import "./components/login-popup";
+
+@import "./components/home-page/developers-section";
+@import "./components/home-page/projects-section";
+@import "./components/home-page/welcome-section";
+
+@import "./components/admin/adding-developer";
+@import "./components/admin/adding-project";
+@import "./components/admin/admin-developers-page";
+@import "./components/admin/admin-notification-page";
+@import "./components/admin/admin-projects-page";
+@import "./components/admin/admin-panel";
+@import "./components/admin/modal-window";

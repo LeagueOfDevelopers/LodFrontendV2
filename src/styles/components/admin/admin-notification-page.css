@@ -1,0 +1,20 @@
+.admin-notification__submit {
+  display: block;
+  margin: 20px auto;
+}
+
+.admin-notification__heading {
+  width: 90%;
+  max-width: 450px;
+  margin: 0 auto 10px;
+}
+
+.admin-notification__textarea {
+  height: 185px;
+  resize: none;
+}
+
+.admin-notification__message {
+  margin-top: 5px;
+  text-align: center;
+}

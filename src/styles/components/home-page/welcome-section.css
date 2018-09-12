@@ -1,0 +1,27 @@
+.welcome-section {
+  background: url('../src/assets/mobile-main-background.jpg') no-repeat center;
+  background-size: cover;
+  height: calc(100vh - 70px);
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.welcome-section-container {
+  padding: 20px 15px;
+  box-sizing: border-box;
+}
+
+.welcome-section__headline {
+  margin: 30px 0 10px 0;
+  color: #ffd200;
+  font-size: 1.8em;
+}
+
+.welcome-section__paragraph {
+  display: block;
+  font-size: 1.1em;
+  font-weight: 500;
+  color: #ffffff;
+}

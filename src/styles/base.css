@@ -1,0 +1,48 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+  font-size: 100%;
+  font-family: 'PT Sans', sans-serif;
+  background-color: #f1f1f1;
+  color: #202d3a;
+}
+
+body {
+  box-sizing: border-box;
+  font-size: inherit;
+  font-family: inherit;
+  user-select: none;
+  color: inherit;
+}
+
+a {
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+  color: #202d3a;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+  color: inherit;
+  background-color: inherit;
+  border: none;
+}
+
+button:focus {
+  outline: none;
+}
+
+input {
+  transition: all .5s ease-out;
+}

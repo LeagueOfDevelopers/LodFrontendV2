@@ -1,0 +1,38 @@
+.confirmation__success,
+.confirmation__error,
+.confirmation__loading {
+  text-align: center;
+  margin: 0 auto;
+  padding: 20px;
+  font-size: 1.4em;
+  font-weight: 600;
+  padding: 100px 0;
+}
+
+.confirmation__success {
+  color: white;
+  background-color: #2980b9;
+}
+
+.confirmation__error {
+  background-color: #f44336;
+}
+
+.confirmation__button {
+  text-align: center;
+  font-size: 0.8em;
+  white-space: nowrap;
+  width: auto;
+  display: inline-block;
+  color: #fff;
+  border-color: #ffffff;
+}
+
+.confirmation__button:after {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.confirmation__button-wrap {
+  padding: 50px 0 0;
+  text-align: center;
+}

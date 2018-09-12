@@ -1,0 +1,141 @@
+.adminpanel__developers {
+  margin-bottom: 30px;
+}
+
+.adminpanel__developers .table-mobile {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.adminpanel__developers .table {
+  display: none;
+}
+
+.adminpanel__developers .table__item {
+  background: white;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, .15);
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.adminpanel__developers .table__cell__heading {
+  display: inline-block;
+}
+
+.adminpanel__developers .table__cell {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.adminpanel__developers .table__cell__name {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  font-size: 1.1em;
+  border: none;
+}
+
+.adminpanel__developers .table__cell__name:hover {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.adminpanel__developers .table__cell__data {
+  display: inline-block;
+  border: 1px solid #2980b9;
+  background: #2980b9;
+  border-radius: 3px;
+  color: white;
+  width: 130px;
+  cursor: pointer;
+}
+
+.adminpanel__developers .table__toggle {
+  display: inline-block;
+  width: 120px;
+  border: 1px solid #2980b9;
+  padding: 0 5px;
+  background-color: #ffffff;
+  color: #2980b9;
+  cursor: pointer;
+}
+
+.adminpanel__developers .table__toggle--active {
+  background-color: #2980b9;
+  color: #ffffff;
+}
+
+.adminpanel__developers .table__cell__on {
+  margin-right: -5px;
+  border-radius: 2px 0 0 2px;
+}
+
+.adminpanel__developers .table__cell__off {
+  border-radius: 0 2px 2px 0;
+}
+
+.adminpanel__developers .modal-window__name {
+  display: inline;
+  color: #2980b9;
+}
+
+.adminpanel__developers .modal-window__name:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.modal-window__message {
+  display: inline;
+}
+
+.modal-window__message input {
+  width: 60%;
+  height: 24px;
+  padding: 6px;
+  margin-top: 15px;
+  align-self: center;
+  text-align: center;
+  align-self: -webkit-center;
+  text-align: -webkit-center;
+  text-align: -moz-center;
+}
+
+.modal-window__button {
+  display: inline-block;
+  width: 105px;
+  box-sizing: border-box;
+  margin-top: 15px;
+  border-radius: 5px;
+  border: 1px solid #202d3a;
+  padding: 5px 20px;
+  text-transform: uppercase;
+  font-family: 'Cuprum', sans-serif;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all .15s ease-out;
+  -moz-transition: all .15s ease-out;
+  -o-transition: all .15s ease-out;
+  transition: all .15s ease-out;
+}
+
+.modal-window__button:hover {
+  cursor: pointer;
+}
+
+.button__yes {
+  background-color: #202d3a;
+  color: #ffffff;
+  margin-right: 5%;
+}
+
+.button__yes:hover {
+  background-color: #2980b9;
+  border-color: #2980b9;
+}
+
+.button__no:hover {
+  border-color: #2980b9;
+  color: #2980b9;
+}

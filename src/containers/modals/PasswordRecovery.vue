@@ -3,8 +3,8 @@
     <input type="text" name="email" placeholder="E-mail"
       :v-model="email" data-vv-as="'E-mail'"
       v-validate="{ required: true, email: true, max: 30 }">
-    <p class="message_translate-to-top" v-show="errors.has('email')"> 
-      {{errors.first('email')}} 
+    <p class="message_translate-to-top" v-show="errors.has('email')">
+      {{errors.first('email')}}
     </p>
     <button type="submit">Отправить</button>
     <p v-show="requestIsSucceeded" class="message">

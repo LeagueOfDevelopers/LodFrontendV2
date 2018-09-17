@@ -1,9 +1,9 @@
 <template>
   <div>
     <header :class="{ 'header--transparent': $route.name === 'home' }">
-      <router-link :to="{ name: 'home' }" tag="div" class="header__site-logo clickable"></router-link>
+      <router-link :to="{ name: 'home' }" tag="div" class="header__site-logo"></router-link>
       <span v-if="!userIsLoggedIn" class="header__additional-nav">
-        <router-link :to="{ name: 'signup' }" tag="span" 
+        <router-link :to="{ name: 'signup' }" tag="a"
           class="additional-nav__item">Стать разработчиком</router-link>
         <span>или</span>
         <span class="additional-nav__item"
@@ -13,12 +13,12 @@
         </span>
       </span>
       <span v-else class="header__additional-nav">
-        <router-link to="notifications" tag="span" 
+        <router-link to="notifications" tag="a"
           class="additional-nav__item">Оповещений: {{notificationsAmount}}</router-link>
-        <router-link :to="{ name: 'portfolio', params: {id: userId }}" tag="span" 
+        <router-link :to="{ name: 'portfolio', params: {id: userId }}" tag="a"
           class="additional-nav__item">Портфолио</router-link>
-        <router-link to="profile" tag="span" class="additional-nav__item">Профиль</router-link>
-        <router-link :to="{ name: 'admin_main' }" v-if="userIsAdmin" tag="span" 
+        <router-link to="profile" tag="a" class="additional-nav__item">Профиль</router-link>
+        <router-link :to="{ name: 'admin_main' }" v-if="userIsAdmin" tag="a"
           class="additional-nav__item">Администрирование</router-link>
         <span>|</span>
         <span @click="signOut" class="additional-nav__item">
@@ -26,52 +26,52 @@
         </span>
       </span>
 
-      <div class="header__nav-toggle" @click="openNavMobile" 
+      <div class="header__nav-toggle" @click="openNavMobile"
         :class="{'header__nav-toggle--active': navMobileIsOpened}">
         <div class="nav-toggle__burger"></div>
       </div>
 
       <nav class="header__nav-full">
-        <router-link :to="{ name: 'projects' }" tag="span" 
-          class="nav-full__item clickable">Проекты</router-link>
-        <router-link :to="{ name: 'developers' }" tag="span" 
-          class="nav-full__item clickable">Разработчики</router-link>
-        <router-link :to="{ name: 'about' }" tag="span" 
-          class="nav-full__item clickable">О нас</router-link>
-        <router-link :to="{ name: 'contact' }" tag="span" 
-          class="nav-full__item clickable">Связаться</router-link>
+        <router-link :to="{ name: 'projects' }" tag="a"
+          class="nav-full__item">Проекты</router-link>
+        <router-link :to="{ name: 'developers' }" tag="a"
+          class="nav-full__item">Разработчики</router-link>
+        <router-link :to="{ name: 'about' }" tag="a"
+          class="nav-full__item">О нас</router-link>
+        <router-link :to="{ name: 'contact' }" tag="a"
+          class="nav-full__item">Связаться</router-link>
       </nav>
     </header>
 
     <nav class="nav-mobile" v-if="navMobileIsOpened">
-      <router-link :to="{ name: 'notifications' }" tag="a" v-if="userIsLoggedIn" 
+      <router-link :to="{ name: 'notifications' }" tag="a" v-if="userIsLoggedIn"
         class="nav-mobile__item">Оповещений: {{ notificationsAmount }}</router-link>
-      <router-link :to="{ name: 'portfolio' }" tag="a" v-if="userIsLoggedIn" 
+      <router-link :to="{ name: 'portfolio' }" tag="a" v-if="userIsLoggedIn"
         class="nav-mobile__item">Портфолио</router-link>
-      <router-link :to="{ name: 'profile' }" tag="a" v-if="userIsLoggedIn" 
+      <router-link :to="{ name: 'profile' }" tag="a" v-if="userIsLoggedIn"
         class="nav-mobile__item">Профиль</router-link>
-      <router-link :to="{ name: 'admin_main' }" tag="a" v-if="userIsAdmin" 
+      <router-link :to="{ name: 'admin_main' }" tag="a" v-if="userIsAdmin"
         class="nav-mobile__item">Администрирование</router-link>
-      <a v-if="!userIsLoggedIn" 
+      <a v-if="!userIsLoggedIn"
         @click="loginModalIsOpened = true" class="nav-mobile__item">Войти</a>
-      <router-link :to="{ name: 'signup' }" tag="a" v-if="!userIsLoggedIn" 
+      <router-link :to="{ name: 'signup' }" tag="a" v-if="!userIsLoggedIn"
         class="nav-mobile__item">Стать разработчиком</router-link>
-      <router-link :to="{ name: 'projects' }" tag="a" 
+      <router-link :to="{ name: 'projects' }" tag="a"
         class="nav-mobile__item">Наши проекты</router-link>
-      <router-link :to="{ name: 'developers' }" tag="a" 
+      <router-link :to="{ name: 'developers' }" tag="a"
         class="nav-mobile__item">Разработчики</router-link>
-      <router-link :to="{ name: 'about' }" tag="a" 
+      <router-link :to="{ name: 'about' }" tag="a"
         class="nav-mobile__item">О нас</router-link>
-      <router-link :to="{ name: 'contact' }" tag="a" 
+      <router-link :to="{ name: 'contact' }" tag="a"
         class="nav-mobile__item">Связаться</router-link>
-      <a tag="a" v-if="userIsLoggedIn" 
+      <a tag="a" v-if="userIsLoggedIn"
         class="nav-mobile__item">Выйти</a>
     </nav>
 
     <login v-if="loginModalIsOpened" v-on:close-modal="loginModalIsOpened = false"></login>
-    <success v-show="$route.params.status == 'success'" 
+    <success v-show="$route.params.status == 'success'"
       v-on:close-modal="successModalIsOpened = false"></success>
-    <error v-show="$route.params.status == 'error'" 
+    <error v-show="$route.params.status == 'error'"
       v-on:close-modal="errorModalIsOpened = false"></error>
   </div>
 </template>

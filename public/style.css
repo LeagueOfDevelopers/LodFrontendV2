@@ -16,10 +16,10 @@ button {
   color: inherit;
   background-color: inherit;
   border: none;
+}
 
-  &:focus {
-    outline: none;
-  }
+button:focus {
+  outline: none;
 }
 
 body {
@@ -442,6 +442,7 @@ header {
   height: 100%;
   background: url("../src/assets/logo-ver2.svg") no-repeat left;
   background-size: contain;
+  cursor: pointer;
 }
 
 .header__additional-nav {

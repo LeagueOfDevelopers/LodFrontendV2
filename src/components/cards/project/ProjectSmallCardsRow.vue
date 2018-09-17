@@ -51,8 +51,7 @@ export default {
   props: {
     projects: {
       type: Array,
-      required: true,
-      default: () => []
+      required: true
     }
   }
 };

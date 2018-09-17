@@ -1,25 +1,25 @@
 <template>
   <section class="projects-section">
     <h1 class="projects-section__headline headline">Проекты</h1>
-    <dividing-line/>
-    <category-list/>
-    <dividing-line/>
+    <div class="dividing-line"></div>
+    <category v-for="category in categories" :key="category.index"
+      :category="category" @click="selectCategory(category.index)">
+    </category>
+    <div class="dividing-line"></div>
     <div>
-      <project-small-cards-row v-for="row in rowsNumber" :key="row" 
-        :projects="projects"/>
+      <project-small-cards-row :projects="projects"/>
     </div>
-    <show-more-button @click="loadMoreProjects"/>
+    <button class="projects-section__see-more-button button-style"
+      @click="loadMoreProjects">
+      Показать больше
+    </button>
   </section>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import store from "../store/index.js";
-
-import CategoryList from "../components/reusable/categories/CategoryList.vue";
-import DividingLine from "../components/reusable/DividingLine.vue";
-import ProjectSmallCardsRow from "../components/reusable/cards/project/ProjectSmallCardsRow.vue";
-import ShowMoreButton from "../components/reusable/buttons/ShowMoreButton.vue";
+import Category from "../components/Category.vue";
+import ProjectSmallCardsRow from "../components/cards/project/ProjectSmallCardsRow.vue";
 
 export default {
   data() {
@@ -28,20 +28,21 @@ export default {
     };
   },
   components: {
-    CategoryList,
-    DividingLine,
-    ProjectSmallCardsRow,
-    ShowMoreButton
+    Category,
+    ProjectSmallCardsRow
   },
   created() {
-    store.dispatch("LOAD_PROJECTS");
+    this.$store.dispatch("LOAD_PROJECTS");
   },
   computed: {
-    ...mapGetters(["projects", "rowsNumber"])
+    ...mapGetters(["projects", "rowsNumber", "categories"])
   },
   methods: {
     loadMoreProjects() {
-      store.dispatch("LOAD_PROJECTS");
+      this.$store.dispatch("LOAD_PROJECTS");
+    },
+    selectCategory(index) {
+      this.$store.dispatch("SELECT_CATEGORY", index);
     }
   }
 };

@@ -3,7 +3,7 @@
     <h1 class="projects-section__headline headline">Проекты</h1>
     <div class="dividing-line"></div>
     <category v-for="category in categories" :key="category.index"
-      :category="category" @click="selectCategory(category.index)">
+      :category="category" @category-selected="selectCategory(category.index)">
     </category>
     <div class="dividing-line"></div>
     <div>
@@ -22,11 +22,6 @@ import Category from "../components/Category.vue";
 import ProjectSmallCardsRow from "../components/cards/project/ProjectSmallCardsRow.vue";
 
 export default {
-  data() {
-    return {
-      items: 8
-    };
-  },
   components: {
     Category,
     ProjectSmallCardsRow
@@ -35,7 +30,7 @@ export default {
     this.$store.dispatch("LOAD_PROJECTS");
   },
   computed: {
-    ...mapGetters(["projects", "rowsNumber", "categories"])
+    ...mapGetters(["projects", "categories"])
   },
   methods: {
     loadMoreProjects() {

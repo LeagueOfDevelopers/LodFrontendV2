@@ -1,16 +1,30 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import { home } from "./modules/home.js";
-import { developers } from "./modules/developers.js";
-import { projects } from "./modules/projects.js";
+// MODULES
+import developers from "./modules/developers";
+import projects from "./modules/projects";
+
+// STATIC
+import categories from "./static/categories";
+
+// PARAMETERS
+import currentUser from "./parameters/currentUser";
+import notifications from "./parameters/notifications";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    home,
+    // MODULES
     developers,
-    projects
+    projects,
+
+    // STATIC
+    currentUser,
+    notifications,
+
+    // PARAMETERS
+    categories
   }
 });

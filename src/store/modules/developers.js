@@ -27,11 +27,10 @@ const actions = {
       .then(response => {
         commit("UPDATE_RANDOM_DEVELOPERS", response.data);
       });
-    /* .catch(error => console.log(error)); */
   }
 };
 
-export const developers = {
+export default {
   state,
   getters,
   mutations,

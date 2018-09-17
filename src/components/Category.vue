@@ -1,5 +1,7 @@
 <template>
-  <button class="categories__item" :class="{'categories__item--activated': category.status}">
+  <button class="categories__item"
+    @click="$emit('category-selected')"
+    :class="{'categories__item--activated': category.status}">
     {{ category.name }}
   </button>
 </template>

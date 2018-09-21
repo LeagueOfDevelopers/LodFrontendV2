@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     loadMoreProjects() {
-      this.$store.dispatch("LOAD_PROJECTS");
+      this.$store.dispatch("LOAD_MORE_PROJECTS");
     },
     selectCategory(index) {
       this.$store.dispatch("SELECT_CATEGORY", index);
@@ -42,6 +42,3 @@ export default {
   }
 };
 </script>
-
-<style>
-</style>

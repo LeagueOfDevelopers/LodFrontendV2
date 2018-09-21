@@ -6,7 +6,8 @@
       <project-small-card :project="project">
         <div class="project__status" slot="project-status">
           Статус:
-          <span class="status__value" :style="{ background: getstatusColor(project.ProjectStatus) }">
+          <span class="status__value"
+            :style="{ background: getstatusColor(project.ProjectStatus) }">
             {{ getStatusDescription(project.ProjectStatus) }}
           </span>
         </div>

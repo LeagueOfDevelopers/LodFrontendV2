@@ -16,8 +16,11 @@ const mutations = {
   UPDATE_RANDOM_PROJECTS(state, randomProjects) {
     state.randomProjects = randomProjects;
   },
-  UPDATE_PROJECTS(state, projects) {
-    state.projects = projects;
+  ADD_PROJECTS(state, projects) {
+    state.projects = state.projects.concat(projects);
+  },
+  RESET_PROJECTS(state) {
+    state.projects = [];
   }
 };
 
@@ -30,8 +33,11 @@ const actions = {
       });
   },
   LOAD_PROJECTS({ commit, rootGetters }) {
-    const selectedCategories = rootGetters.selectedCategoryIndexes.join(",");
+    if (state.projects.length !== 0) {
+      commit("RESET_PROJECTS");
+    }
     const componentsInRowNumber = getComponentsInRowNumber();
+    const selectedCategories = rootGetters.selectedCategoryIndexes.join(",");
     API()
       .get(
         `/projects/${
@@ -39,7 +45,22 @@ const actions = {
         }/${componentsInRowNumber}?&categories=${selectedCategories}`
       )
       .then(response => {
-        commit("UPDATE_PROJECTS", response.data.Data);
+        commit("ADD_PROJECTS", response.data.Data);
+        // add check for available projects to load
+        // response.data.CountOfEntities === state.projects.length
+      });
+  },
+  LOAD_MORE_PROJECTS({ commit, rootGetters }) {
+    const componentsInRowNumber = getComponentsInRowNumber();
+    const selectedCategories = rootGetters.selectedCategoryIndexes.join(",");
+    API()
+      .get(
+        `/projects/${
+          state.projects.length
+        }/${componentsInRowNumber}?&categories=${selectedCategories}`
+      )
+      .then(response => {
+        commit("ADD_PROJECTS", response.data.Data);
       });
   }
 };

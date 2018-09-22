@@ -6,13 +6,13 @@ const state = {
   randomDevelopers: [],
   developers: [],
   developersNextPageNumber: 0,
-  developerStateStatus: statuses.available
+  developersStateStatus: statuses.available
 };
 
 const getters = {
   randomDevelopers: state => state.randomDevelopers,
   developers: state => state.developers,
-  developerStateStatus: state => state.developerStateStatus
+  developersStateStatus: state => state.developersStateStatus
 };
 
 const mutations = {
@@ -29,7 +29,7 @@ const mutations = {
     state.developersNextPageNumber = state.developersNextPageNumber + 1;
   },
   UPDATE_DEVELOPERS_STATE_STATUS(state, status) {
-    state.developerStateStatus = statuses[status];
+    state.developersStateStatus = statuses[status];
   }
 };
 
@@ -48,29 +48,35 @@ const actions = {
       .get(`/developers?page=${state.developersNextPageNumber}`)
       .then(response => {
         commit("ADD_DEVELOPERS", response.data.Data);
-        state.developers.length !== response.data.CountOfEntities
-          ? commit("UPDATE_DEVELOPERS_NEXT_PAGE_NUMBER")
-          : commit("UPDATE_DEVELOPERS_STATE_STATUS", "unavailable");
+        if (state.developers.length !== response.data.CountOfEntities) {
+          commit("UPDATE_DEVELOPERS_NEXT_PAGE_NUMBER");
+          commit("UPDATE_DEVELOPERS_STATE_STATUS", "available");
+        } else {
+          commit("UPDATE_DEVELOPERS_STATE_STATUS", "unavailable");
+        }
       })
       .catch(() => {
         commit("UPDATE_DEVELOPERS_STATE_STATUS", "failed");
       });
-    commit("UPDATE_DEVELOPERS_STATE_STATUS", "available");
   },
   LOAD_MORE_DEVELOPERS({ commit }) {
-    commit("UPDATE_DEVELOPERS_STATE_STATUS", "loading");
-    API()
-      .get(`/developers?page=${state.developersNextPageNumber}`)
-      .then(response => {
-        commit("ADD_DEVELOPERS", response.data.Data);
-        state.developers.length !== response.data.CountOfEntities
-          ? commit("UPDATE_DEVELOPERS_NEXT_PAGE_NUMBER")
-          : commit("UPDATE_DEVELOPERS_STATE_STATUS", "unavailable");
-      })
-      .catch(() => {
-        commit("UPDATE_DEVELOPERS_STATE_STATUS", "failed");
-      });
-    commit("UPDATE_DEVELOPERS_STATE_STATUS", "available");
+    if (state.developersStateStatus === "available") {
+      commit("UPDATE_DEVELOPERS_STATE_STATUS", "loading");
+      API()
+        .get(`/developers?page=${state.developersNextPageNumber}`)
+        .then(response => {
+          commit("ADD_DEVELOPERS", response.data.Data);
+          if (state.developers.length !== response.data.CountOfEntities) {
+            commit("UPDATE_DEVELOPERS_NEXT_PAGE_NUMBER");
+            commit("UPDATE_DEVELOPERS_STATE_STATUS", "available");
+          } else {
+            commit("UPDATE_DEVELOPERS_STATE_STATUS", "unavailable");
+          }
+        })
+        .catch(() => {
+          commit("UPDATE_DEVELOPERS_STATE_STATUS", "failed");
+        });
+    }
   }
 };
 

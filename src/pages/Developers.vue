@@ -14,7 +14,8 @@
         </div>
     </div>
     <button class="developers-section__see-more-button button-style"
-      @click="loadMoreDevelopers()">
+      @click="loadMoreDevelopers()"
+      v-if="developersStateStatus === 'available'">
         Показать больше
     </button>
   </section>
@@ -32,7 +33,7 @@ export default {
     this.$store.dispatch("LOAD_DEVELOPERS");
   },
   computed: {
-    ...mapGetters(["developers"])
+    ...mapGetters(["developers", "developersStateStatus"])
   },
   methods: {
     loadMoreDevelopers() {

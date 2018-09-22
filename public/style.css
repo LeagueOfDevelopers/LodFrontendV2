@@ -208,10 +208,8 @@ input {
 }
 
 .random-wrapper {
-  padding-left: 1.5%;
-  padding-right: 1.5%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
 }
 

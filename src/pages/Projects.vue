@@ -10,7 +10,8 @@
       <project-small-cards-row :projects="projects"/>
     </div>
     <button class="projects-section__see-more-button button-style"
-      @click="loadMoreProjects">
+      @click="loadMoreProjects"
+      v-if="projectsStateStatus === 'available'">
       Показать больше
     </button>
   </section>
@@ -30,7 +31,7 @@ export default {
     this.$store.dispatch("LOAD_PROJECTS");
   },
   computed: {
-    ...mapGetters(["projects", "categories"])
+    ...mapGetters(["projects", "categories", "projectsStateStatus"])
   },
   methods: {
     loadMoreProjects() {

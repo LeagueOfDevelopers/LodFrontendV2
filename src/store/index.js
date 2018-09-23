@@ -4,6 +4,7 @@ import Vuex from "vuex";
 // MODULES
 import developers from "./modules/developers";
 import projects from "./modules/projects";
+import newDeveloper from "./modules/newDeveloper";
 
 // STATIC
 import categories from "./static/categories";
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     // MODULES
     developers,
     projects,
+    newDeveloper,
 
     // STATIC
     currentUser,

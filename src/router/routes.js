@@ -2,6 +2,7 @@ import Home from "../pages/Home.vue";
 import NotFound from "../pages/NotFound.vue";
 import Projects from "../pages/Projects.vue";
 import Developers from "../pages/Developers.vue";
+import Signup from "../pages/Signup.vue";
 
 export const routes = [
   {
@@ -15,6 +16,7 @@ export const routes = [
   {
     path: "/signup",
     name: "signup",
+    component: Signup,
     meta: {
       title: "Лига Разработчиков НИТУ МИСиС - Стать разразработчиком"
     }

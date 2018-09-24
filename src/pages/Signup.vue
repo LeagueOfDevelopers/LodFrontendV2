@@ -1,7 +1,7 @@
 <template>
   <div class="sign-up-container">
     <h1 class="sign-up__headline headline">Стать разработчиком</h1>
-    <form @submit.prevent="validateBeforeSubmit" class="sign-up-form">
+    <form @submit.prevent="validateBeforeSubmit" name="signup" class="sign-up-form">
       <div class="sign-up-form__section">
           <div class="section__step-number">1</div>
           <input type="text" name="first-name" class="validate-field" placeholder="Имя"
@@ -114,10 +114,10 @@
           <div class="help-message-input" v-show="errors.has('password')">
               Пароль должен быть длинной не менее 8
               символов и содержать латинские буквы
+                 v-validate="{ required: true, min: 8, max: 50, regex: /^(?=^.{8,50}$)[a-zA-Z0-9]+$/ }"
               или цифры.
           </div>
           <input type="password" name="repeatedPassword" class="validate-field" placeholder="Повторите пароль"
-                 v-validate="{ required: true, min: 8, max: 50, regex: /^(?=^.{8,50}$)[a-zA-Z0-9]+$/ }"
                  v-model="repeatedPassword" />
 
           <div class="help-message-input"
@@ -125,11 +125,18 @@
             Пароли не совпадают.
           </div>
       </div>
+      <div style="margin: 0 auto 30px auto;" >
+        <p class="help-message-input" v-show="newDeveloperStateStatus === 'succeeded'">
+          Поздравляем! Ваша заявка принята, ожидайте e-mail сообщения о подтвреждении.
+        </p>
+        <p class="help-message-input" v-show="newDeveloperStateStatus === 'failed'">
+          Ошибка регистрации! Проверьте введенные данные.
+        </p>
+      </div>
+      <button class="sign-up__button" v-if="newDeveloperStateStatus !== 'loading'">
+        Отправить заявку
+      </button>
   </form>
-    <button class="sign-up__button" v-if="newDeveloperStateStatus === 'available'"
-      @click="signUp()">
-      Отправить заявку
-    </button>
   </div>
 </template>
 
@@ -150,12 +157,16 @@ export default {
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
-          return;
+          this.$store.dispatch("POST_NEW_DEVELOPER", this.newDeveloper);
         }
       });
     },
     signUp() {
-      this.$store.dispatch("POST_NEW_DEVELOPER", this.newDeveloper);
+      this.$store.dispatch(
+        "POST_NEW_DEVELOPER",
+        this.newDeveloper,
+        this.isPasswordRequired
+      );
     }
   }
 };

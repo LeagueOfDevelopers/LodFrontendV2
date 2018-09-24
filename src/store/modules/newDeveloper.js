@@ -21,17 +21,30 @@ const mutations = {
 };
 
 const actions = {
-  POST_NEW_DEVELOPER({ commit }, newDeveloper) {
+  POST_NEW_DEVELOPER({ commit }, newDeveloper, withCredentials) {
     commit("UPDATE_NEW_DEVELOPER_STATE_STATUS", "loading");
-    API()
-      .post(`developers`, newDeveloper)
-      .then(response => {
-        commit("UPDATE_NEW_DEVELOPER", response.data.Data);
-        commit("UPDATE_NEW_DEVELOPER_STATE_STATUS", "succeeded");
-      })
-      .catch(() => {
-        commit("UPDATE_NEW_DEVELOPER_STATE_STATUS", "failed");
-      });
+    if (withCredentials)
+      API()
+        .post(`developers`, newDeveloper)
+        .then(response => {
+          commit("UPDATE_NEW_DEVELOPER", response.data);
+          commit("UPDATE_NEW_DEVELOPER_STATE_STATUS", "succeeded");
+        })
+        .catch(() => {
+          commit("UPDATE_NEW_DEVELOPER_STATE_STATUS", "failed");
+        });
+    else
+      API()
+        .post(
+          `signup/github?frontend_callback=localhost:8080/signup`,
+          newDeveloper
+        )
+        .then(response => {
+          window.location.href = response.data;
+        })
+        .catch(() => {
+          commit("UPDATE_NEW_DEVELOPER_STATE_STATUS", "failed");
+        });
   }
 };
 

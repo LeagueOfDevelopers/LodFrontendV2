@@ -2,7 +2,7 @@
   <div>
     <header :class="{ 'header--transparent': $route.name === 'home' }">
       <router-link :to="{ name: 'home' }" tag="div" class="header__site-logo"></router-link>
-      <span v-if="!userIsLoggedIn" class="header__additional-nav">
+      <span v-if="!isAuthorized" class="header__additional-nav">
         <router-link :to="{ name: 'signup' }" tag="a"
           class="additional-nav__item">Стать разработчиком</router-link>
         <span>или</span>
@@ -44,17 +44,17 @@
     </header>
 
     <nav class="nav-mobile" v-if="navMobileIsOpened">
-      <router-link :to="{ name: 'notifications' }" tag="a" v-if="userIsLoggedIn"
+      <router-link :to="{ name: 'notifications' }" tag="a" v-if="isAuthorized"
         class="nav-mobile__item">Оповещений: {{ notificationsAmount }}</router-link>
-      <router-link :to="{ name: 'portfolio' }" tag="a" v-if="userIsLoggedIn"
+      <router-link :to="{ name: 'portfolio' }" tag="a" v-if="isAuthorized"
         class="nav-mobile__item">Портфолио</router-link>
-      <router-link :to="{ name: 'profile' }" tag="a" v-if="userIsLoggedIn"
+      <router-link :to="{ name: 'profile' }" tag="a" v-if="isAuthorized"
         class="nav-mobile__item">Профиль</router-link>
       <router-link :to="{ name: 'admin_main' }" tag="a" v-if="userIsAdmin"
         class="nav-mobile__item">Администрирование</router-link>
-      <a v-if="!userIsLoggedIn"
+      <a v-if="!isAuthorized"
         @click="loginModalIsOpened = true" class="nav-mobile__item">Войти</a>
-      <router-link :to="{ name: 'signup' }" tag="a" v-if="!userIsLoggedIn"
+      <router-link :to="{ name: 'signup' }" tag="a" v-if="!isAuthorized"
         class="nav-mobile__item">Стать разработчиком</router-link>
       <router-link :to="{ name: 'projects' }" tag="a"
         class="nav-mobile__item">Наши проекты</router-link>
@@ -64,7 +64,7 @@
         class="nav-mobile__item">О нас</router-link>
       <router-link :to="{ name: 'contact' }" tag="a"
         class="nav-mobile__item">Связаться</router-link>
-      <a tag="a" v-if="userIsLoggedIn"
+      <a tag="a" @click="signOut" v-if="isAuthorized"
         class="nav-mobile__item">Выйти</a>
     </nav>
 
@@ -88,9 +88,8 @@ export default {
       loginModalIsOpened: false,
       successModalIsOpened: false,
       errorModalIsOpened: false,
-      navMobileIsOpened: false,
-      userIsLoggedIn: false,
-      userIsAdmin: false
+      userIsAdmin: false,
+      navMobileIsOpened: false
     };
   },
   components: {
@@ -99,13 +98,18 @@ export default {
     Error
   },
   computed: {
-    ...mapGetters(["notificationsAmount", "userId"])
+    ...mapGetters(["notificationsAmount", "userId", "isAuthorized"])
   },
   methods: {
     openNavMobile() {
       this.navMobileIsOpened = !this.navMobileIsOpened;
+    },
+    signOut() {
+      this.$store.dispatch("UNAUTHORIZE_USER");
     }
   },
-  created() {}
+  created() {
+    this.$store.dispatch("CHECK_AUTHORIZATION");
+  }
 };
 </script>

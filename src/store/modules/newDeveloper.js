@@ -1,4 +1,4 @@
-import API from "../../api.js";
+import API from "../../api";
 import statuses from "../stateStatuses";
 
 const state = {
@@ -21,11 +21,11 @@ const mutations = {
 };
 
 const actions = {
-  POST_NEW_DEVELOPER({ commit }, newDeveloper, withCredentials) {
+  POST_NEW_DEVELOPER({ commit }, data) {
     commit("UPDATE_NEW_DEVELOPER_STATE_STATUS", "loading");
-    if (withCredentials)
+    if (data.withCredentials) {
       API()
-        .post(`developers`, newDeveloper)
+        .post(`developers`, data.newDeveloper)
         .then(response => {
           commit("UPDATE_NEW_DEVELOPER", response.data);
           commit("UPDATE_NEW_DEVELOPER_STATE_STATUS", "succeeded");
@@ -33,11 +33,11 @@ const actions = {
         .catch(() => {
           commit("UPDATE_NEW_DEVELOPER_STATE_STATUS", "failed");
         });
-    else
+    } else {
       API()
         .post(
           `signup/github?frontend_callback=localhost:8080/signup`,
-          newDeveloper
+          data.newDeveloper
         )
         .then(response => {
           window.location.href = response.data;
@@ -45,6 +45,7 @@ const actions = {
         .catch(() => {
           commit("UPDATE_NEW_DEVELOPER_STATE_STATUS", "failed");
         });
+    }
   }
 };
 

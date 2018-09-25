@@ -1,13 +1,23 @@
+import API from "../../api";
+import statuses from "../stateStatuses";
+
 const state = {
   currentUser: {
-    id: 1,
+    id: 0,
     isAuthorized: false
-  }
+  },
+  credentials: {
+    email: "",
+    password: ""
+  },
+  authorizeUserStateStatus: "available"
 };
 
 const getters = {
   userId: state => state.currentUser.id,
-  isAuthorized: state => state.currentUser.isAuthorized
+  isAuthorized: state => state.currentUser.isAuthorized,
+  credentials: state => state.credentials,
+  authorizeUserStateStatus: state => state.authorizeUserStateStatus
 };
 
 const mutations = {
@@ -16,12 +26,27 @@ const mutations = {
   },
   UPDATE_IS_USER_AUTHORIZED(state, isAuthorized) {
     state.currentUser.isAuthorized = isAuthorized;
+  },
+  UPDATE_IS_AUTHORIZE_USER_STATE_STATUS(state, status) {
+    state.authorizeUserStateStatus = statuses[status];
   }
 };
 
 const actions = {
   UPDATE_USER_ID({ commit }, userId) {
     commit("UPDATE_USER_ID", userId);
+  },
+  AUTHORIZE_USER_WITH_CREDENTIALS({ dispatch, commit }, credentials) {
+    commit("UPDATE_IS_AUTHORIZE_USER_STATE_STATUS", "loading");
+    API()
+      .post(`login`, credentials)
+      .then(response => {
+        dispatch("AUTHORIZE_USER", response.data.Token);
+        commit("UPDATE_IS_AUTHORIZE_USER_STATE_STATUS", "succeeded");
+      })
+      .catch(() => {
+        commit("UPDATE_IS_AUTHORIZE_USER_STATE_STATUS", "failed");
+      });
   },
   AUTHORIZE_USER({ commit }, token) {
     commit("UPDATE_IS_USER_AUTHORIZED", true);
@@ -31,8 +56,11 @@ const actions = {
     commit("UPDATE_IS_USER_AUTHORIZED", false);
     localStorage.removeItem("token");
   },
-  CHECK_TOKEN_VALIDITY() {
-    // HERE REQUEST TO CHECK IF TOKEN VALID AND REFRESH
+  CHECK_AUTHORIZATION({ dispatch }) {
+    if (!state.currentUser.isAuthorized) {
+      const token = localStorage.getItem("token");
+      if (token) dispatch("AUTHORIZE_USER", token);
+    }
   }
 };
 

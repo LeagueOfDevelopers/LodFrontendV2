@@ -1,25 +1,28 @@
 <template>
   <pp-modal>
-    <div slot="header"> 
+    <div slot="header">
       <div class="form__close-button" @click="$emit('close-modal')"></div>
-      <div class="form__greeting"> {{ getGreeting() }}! </div> 
+      <div class="form__greeting"> {{ getGreeting() }}! </div>
     </div>
     <form @submit.prevent="validateBeforeSubmit" slot="content"
       v-if="!isRecoverPasswordSelected">
       <input type="text" name="email" placeholder="E-mail"
-        :v-model="credentials.email" data-vv-as="'E-mail'"
+        v-model="credentials.email" data-vv-as="'E-mail'"
         v-validate="{ required: true, email: true, max: 30 }">
-      <p class="message_translate-to-top" v-show="errors.has('email')"> 
-        {{errors.first('email')}} 
+      <p class="message_translate-to-top" v-show="errors.has('email')">
+        {{errors.first('email')}}
       </p>
-      <input type="text" name="password" placeholder="Пароль"
-        :v-model="credentials.password" data-vv-as="'Пароль'"
+      <input type="password" name="password" placeholder="Пароль"
+        v-model="credentials.password" data-vv-as="'Пароль'"
         v-validate="{ required: true, min: 8, max: 50, regex: /^[a-zA-Z0-9]+$/ }">
-      <p class="message_translate-to-top" v-show="errors.has('password')"> 
-        {{errors.first('password')}} 
+      <p class="message_translate-to-top" v-show="errors.has('password')">
+        {{errors.first('password')}}
       </p>
       <button type="submit">Войти</button>
-      <p class="message" v-show="requestIsFailed">
+      <p class="message" v-show="authorizeUserStateStatus === 'succeeded'">
+        Вход в систему успешно выполнен.
+      </p>
+      <p class="message" v-show="authorizeUserStateStatus === 'failed'">
         Не удалось войти, проверьте введенные данные.
       </p>
       <div class="form__question">
@@ -43,7 +46,6 @@
     </form>
     <password-recovery v-if="isRecoverPasswordSelected" slot="content"
         @back-to-login-form="isRecoverPasswordSelected = false">
-
     </password-recovery>
   </pp-modal>
 </template>
@@ -51,18 +53,17 @@
 <script>
 import Modal from "./Modal.vue";
 import PasswordRecovery from "./PasswordRecovery.vue";
-import { getGreeting } from "../../helpers.js";
+import { getGreeting } from "../../helpers";
+import { mapGetters } from "vuex";
 
 export default {
   data() {
     return {
-      credentials: {
-        email: "",
-        password: ""
-      },
-      isRecoverPasswordSelected: false,
-      requestIsFailed: false
+      isRecoverPasswordSelected: false
     };
+  },
+  computed: {
+    ...mapGetters(["credentials", "authorizeUserStateStatus"])
   },
   methods: {
     getGreeting() {
@@ -71,7 +72,10 @@ export default {
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
-          return;
+          this.$store.dispatch(
+            "AUTHORIZE_USER_WITH_CREDENTIALS",
+            this.credentials
+          );
         }
       });
     },

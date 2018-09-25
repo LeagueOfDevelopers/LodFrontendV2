@@ -88,15 +88,15 @@
               <div class="dividing-line"></div>
               <p class="sign-up-form__question">Хотите иметь возможность входа на сайт не только через GitHub?</p>
               <label class="sign-up-form__label"
-                @click="isPasswordRequired = !isPasswordRequired">
+                @click="withCredentials = !withCredentials">
                   <input type="checkbox" class="sign-up__checkbox"
                          style="width: 18px; margin-right: 4px"
-                         v-model="isPasswordRequired" />
+                         v-model="withCredentials" />
                   <span class="sign-up-form__question">Указать другой E-mail и установить пароль.</span>
               </label>
           </div>
       </div>
-      <div class="sign-up-form__section" v-if="isPasswordRequired">
+      <div class="sign-up-form__section" v-if="withCredentials">
           <input type="email" name="email" class="validate-field" placeholder="E-mail"
                  v-validate="{ required: true }"
                  v-model="newDeveloper.Email" data-vv-as="'E-mail'"/>
@@ -146,7 +146,7 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      isPasswordRequired: false,
+      withCredentials: false,
       repeatedPassword: ""
     };
   },
@@ -157,16 +157,13 @@ export default {
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
-          this.$store.dispatch("POST_NEW_DEVELOPER", this.newDeveloper);
+          const data = {
+            newDeveloper: this.newDeveloper,
+            withCredentials: this.withCredentials
+          };
+          this.$store.dispatch("POST_NEW_DEVELOPER", data);
         }
       });
-    },
-    signUp() {
-      this.$store.dispatch(
-        "POST_NEW_DEVELOPER",
-        this.newDeveloper,
-        this.isPasswordRequired
-      );
     }
   }
 };

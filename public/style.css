@@ -208,7 +208,10 @@ input {
 }
 
 .random-wrapper {
+  padding-left: 1.5%;
+  padding-right: 1.5%;
   display: flex;
+  justify-content: center;
   justify-content: flex-start;
   flex-wrap: wrap;
 }
@@ -1230,9 +1233,7 @@ footer {
 /*************************
         ABOUT
 *************************/
-/*about*/
--->
-/*heading*/
+
 .about-logo {
   width: 100%;
   height: 320px;
@@ -1241,9 +1242,9 @@ footer {
   margin-bottom: -45px;
 }
 
-/*about*/
--->
-/*content*/
+.about-wrapper {
+  box-sizing: content-box;
+}
 
 .about-wrap-content {
   margin: 5% auto 100px;
@@ -1264,6 +1265,10 @@ footer {
   font-weight: 900;
   text-align: center;
   z-index: 1;
+  display: flex;
+  color: white;
+  justify-content: center;
+  align-items: center;
 }
 
 .left-number {
@@ -1272,11 +1277,6 @@ footer {
 
 .right-number {
   background-color: #2980b9;
-}
-
-.about-numbers span {
-  vertical-align: middle;
-  color: white;
 }
 
 .about-text {
@@ -2873,7 +2873,7 @@ input.sign-up__checkbox {
     width: 150px;
     height: 150px;
     border-width: 10px;
-    font-size: 93px;
+    font-size: 94px;
   }
 
   .about-text {
@@ -3681,9 +3681,6 @@ input.sign-up__checkbox {
    *************************/
   /*about*/
   /*heading*/
-  .about-wrapper {
-    width: 100%;
-  }
 
   .about-heading {
     padding: 0 30px;
@@ -3736,11 +3733,10 @@ input.sign-up__checkbox {
   }
 
   .about-numbers {
-    display: inline-block;
     margin: 0;
     width: 200px;
     height: 200px;
-    font-size: 127px;
+    font-size: 130px;
   }
 
   .about-text {

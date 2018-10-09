@@ -3,6 +3,7 @@ import NotFound from "../pages/NotFound.vue";
 import Projects from "../pages/Projects.vue";
 import Developers from "../pages/Developers.vue";
 import Signup from "../pages/Signup.vue";
+import About from "../pages/About.vue";
 
 export const routes = [
   {
@@ -49,6 +50,7 @@ export const routes = [
   {
     path: "/about",
     name: "about",
+    component: About,
     meta: {
       title: "Лига Разработчиков НИТУ МИСиС - О нас"
     }

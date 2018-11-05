@@ -5,6 +5,9 @@ import Developers from "../pages/Developers.vue";
 import Signup from "../pages/Signup.vue";
 import About from "../pages/About.vue";
 import Contact from "../pages/Contact.vue";
+import Profile from "../pages/Profile.vue";
+import EditProfile from "../pages/EditProfile.vue";
+import Notifications from "../pages/Notifications.vue";
 
 export const routes = [
   {
@@ -37,6 +40,7 @@ export const routes = [
   {
     path: "/notifications",
     name: "notifications",
+    component: Notifications,
     meta: {
       title: "Лига Разработчиков НИТУ МИСиС - Оповещения"
     }
@@ -107,7 +111,18 @@ export const routes = [
   {
     path: "/developers/:id",
     name: "portfolio",
-    props: true
+    component: Profile,
+    meta: {
+      title: "Лига Разработчиков НИТУ МИСиС - Портфолио"
+    }
+  },
+  {
+    path: "/developers/profile",
+    name: "editProfile",
+    component: EditProfile,
+    meta: {
+      title: "Лига Разработчиков НИТУ МИСиС - Редактирование профиля"
+    }
   },
   {
     path: "/developers/confirmation/:token",

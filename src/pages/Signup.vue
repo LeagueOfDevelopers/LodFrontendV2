@@ -162,6 +162,9 @@ export default {
             withCredentials: this.withCredentials
           };
           this.$store.dispatch("POST_NEW_DEVELOPER", data);
+          (this.withCredentials = false),
+            (this.repeatedPassword = ""),
+            (this.newDeveloper.InstituteName = undefined);
         }
       });
     }

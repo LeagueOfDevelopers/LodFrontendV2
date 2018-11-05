@@ -42,6 +42,7 @@ const actions = {
       .post(`login`, credentials)
       .then(response => {
         dispatch("AUTHORIZE_USER", response.data.Token);
+        commit("UPDATE_USER_ID", response.data.UserId);
         commit("UPDATE_IS_AUTHORIZE_USER_STATE_STATUS", "succeeded");
       })
       .catch(() => {

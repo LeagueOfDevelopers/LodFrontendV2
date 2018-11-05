@@ -26,12 +26,15 @@ const actions = {
     if (data.withCredentials) {
       API()
         .post(`developers`, data.newDeveloper)
-        .then(response => {
-          commit("UPDATE_NEW_DEVELOPER", response.data);
+        .then(() => {
           commit("UPDATE_NEW_DEVELOPER_STATE_STATUS", "succeeded");
         })
         .catch(() => {
           commit("UPDATE_NEW_DEVELOPER_STATE_STATUS", "failed");
+          setTimeout(
+            () => commit("UPDATE_NEW_DEVELOPER_STATE_STATUS", "available"),
+            5000
+          );
         });
     } else {
       API()

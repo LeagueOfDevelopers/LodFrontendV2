@@ -5,6 +5,7 @@ import Vuex from "vuex";
 import developers from "./modules/developers";
 import projects from "./modules/projects";
 import newDeveloper from "./modules/newDeveloper";
+import contactMessage from "./modules/contactMessage";
 
 // STATIC
 import categories from "./static/categories";
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     developers,
     projects,
     newDeveloper,
+    contactMessage,
 
     // STATIC
     currentUser,

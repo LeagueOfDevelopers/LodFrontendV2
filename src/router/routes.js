@@ -4,6 +4,7 @@ import Projects from "../pages/Projects.vue";
 import Developers from "../pages/Developers.vue";
 import Signup from "../pages/Signup.vue";
 import About from "../pages/About.vue";
+import Contact from "../pages/Contact.vue";
 
 export const routes = [
   {
@@ -43,6 +44,7 @@ export const routes = [
   {
     path: "/contact",
     name: "contact",
+    component: Contact,
     meta: {
       title: "Лига Разработчиков НИТУ МИСиС - Связаться"
     }

@@ -35,6 +35,7 @@ const mutations = {
 const actions = {
   UPDATE_USER_ID({ commit }, userId) {
     commit("UPDATE_USER_ID", userId);
+    localStorage.setItem("userId", userId);
   },
   AUTHORIZE_USER_WITH_CREDENTIALS({ dispatch, commit }, credentials) {
     commit("UPDATE_IS_AUTHORIZE_USER_STATE_STATUS", "loading");
@@ -42,7 +43,7 @@ const actions = {
       .post(`login`, credentials)
       .then(response => {
         dispatch("AUTHORIZE_USER", response.data.Token);
-        commit("UPDATE_USER_ID", response.data.UserId);
+        dispatch("UPDATE_USER_ID", response.data.UserId);
         commit("UPDATE_IS_AUTHORIZE_USER_STATE_STATUS", "succeeded");
       })
       .catch(() => {
@@ -56,11 +57,16 @@ const actions = {
   UNAUTHORIZE_USER({ commit }) {
     commit("UPDATE_IS_USER_AUTHORIZED", false);
     localStorage.removeItem("token");
+    localStorage.removeItem("userId");
   },
-  CHECK_AUTHORIZATION({ dispatch }) {
+  CHECK_AUTHORIZATION({ dispatch, commit }) {
     if (!state.currentUser.isAuthorized) {
       const token = localStorage.getItem("token");
-      if (token) dispatch("AUTHORIZE_USER", token);
+      if (token) {
+        dispatch("AUTHORIZE_USER", token);
+        const userId = localStorage.getItem("userId");
+        if (userId) commit("UPDATE_USER_ID", userId);
+      }
     }
   }
 };

@@ -1,12 +1,12 @@
 <template>
-  <section>
-    <welcome/>
-    <h1 class="projects-section__headline headline">Наши проекты</h1>
-    <projects-overview :projects="randomProjects"/>
-    <div class="dividing-line"></div>
-    <h1 class="developers-section__headline headline">Наши разработчики</h1>
-    <developers-overview :developers="randomDevelopers"/>
-  </section>
+	<section>
+		<welcome/>
+		<h1 class="projects-section__headline headline">Наши проекты</h1>
+		<projects-overview :projects="randomProjects"/>
+		<div class="dividing-line"></div>
+		<h1 class="developers-section__headline headline">Наши разработчики</h1>
+		<developers-overview :developers="randomDevelopers"/>
+	</section>
 </template>
 
 <script>

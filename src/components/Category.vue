@@ -1,9 +1,9 @@
 <template>
-  <button class="categories__item"
-    @click="$emit('category-selected')"
-    :class="{'categories__item--activated': category.status}">
-    {{ category.name }}
-  </button>
+	<button class="categories__item"
+	        @click="$emit('category-selected')"
+	        :class="{'categories__item--activated': category.status}">
+		{{ category.name }}
+	</button>
 </template>
 
 <script>
@@ -19,4 +19,7 @@ export default {
 </script>
 
 <style>
+.categories__item {
+  display: none;
+}
 </style>

@@ -1,0 +1,24 @@
+footer {
+  box-sizing: border-box;
+  padding: 15px;
+  background: #000;
+  text-align: center;
+}
+
+.footer__signature,
+.footer__links,
+.footer__copyright {
+  display: block;
+  margin: 20px 0;
+  color: rgba(255, 255, 255, .5);
+}
+
+.signature__link,
+.links__vk,
+.links__contact-us {
+  color: #fff;
+  -webkit-transition: all .2s;
+  -moz-transition: all .2s;
+  -o-transition: all .2s;
+  transition: all .2s;
+}

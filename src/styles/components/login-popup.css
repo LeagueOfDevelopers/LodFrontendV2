@@ -1,0 +1,102 @@
+.login-window {
+  max-width: 360px;
+  width: 100%;
+  padding: 8% 0 0;
+  margin: auto;
+}
+
+.login-window__form {
+  position: fixed;
+  z-index: 100;
+  background: #f1f1f1;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.form__close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 25px;
+  height: 25px;
+  background: url(../src/assets/close-button.svg) no-repeat center;
+  background-size: contain;
+  cursor: pointer;
+  transition: all .2s ease-out;
+}
+
+.form__container input, .password-recovery__container input {
+  font-family: 'PT Sans', sans-serif;
+  outline: 0;
+  background: #fff;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 1em;
+}
+
+.form__container button, .password-recovery__container button {
+  font-family: 'PT Sans', sans-serif;
+  text-transform: uppercase;
+  background: #f1f1f1;
+  width: 100%;
+  border: 1px solid #202d3a;
+  padding: 15px;
+  color: #202d3a;
+  outline: none;
+  font-size: 1em;
+  -webkit-transition: all .15s ease-out;
+  -moz-transition: all .15s ease-out;
+  -o-transition: all .15s ease-out;
+  transition: all .15s ease-out;
+  cursor: pointer;
+}
+
+.form__container button:disabled, .password-recovery__container button:disabled {
+  cursor: default;
+  border: 1px solid #808080;
+  color: #808080;
+}
+
+.form__container button:hover, .password-recovery__container button:hover {
+  background: #2980b9;
+  border: 1px solid #2980b9;
+  color: #fff;
+}
+
+.form__container button:disabled:hover, .password-recovery__container button:disabled:hover {
+  background: none;
+  border: 1px solid #808080;
+  color: #808080;
+}
+
+.form__question {
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 0.8em;
+}
+
+.ngdialog-content {
+  background: transparent !important;
+}
+
+.form__greeting {
+  font-family: 'Noto Serif', serif;
+  margin-bottom: 25px;
+}
+
+.form__become-dev {
+  text-decoration: underline;
+  color: #202d3a;
+  display: block;
+  font-size: 1.1em;
+}
+
+.form__link:hover {
+  cursor: pointer;
+}

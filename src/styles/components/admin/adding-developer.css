@@ -1,0 +1,9 @@
+.adding-developer__button-wrapper {
+  width: 90%;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.adding-developer__button {
+  margin: 0;
+}

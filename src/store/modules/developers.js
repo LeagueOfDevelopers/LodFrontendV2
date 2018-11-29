@@ -1,8 +1,6 @@
 import API from "../../api";
-import {getComponentsInRowNumber} from "../../helpers";
 import statuses from "../stateStatuses";
-
-import {fakeDevelopers} from "../../caps/caps";
+import {requestRandomDevelopers, requestDevelopers} from "../../requestApi";
 
 const state = {
   randomDevelopers: [],
@@ -37,25 +35,17 @@ const mutations = {
 
 const actions = {
   LOAD_RANDOM_DEVELOPERS({commit}) {
-    API()
-      .get(`/developers/random/${getComponentsInRowNumber()}`)
+    requestRandomDevelopers()
       .then(response => {
-        commit("UPDATE_RANDOM_DEVELOPERS", response.data);
-      })
-
-      // Fake data
-
-      .catch(() => {
-        commit("UPDATE_RANDOM_DEVELOPERS", fakeDevelopers)
+        commit("UPDATE_RANDOM_DEVELOPERS", response);
       })
   },
   LOAD_DEVELOPERS({commit}) {
     if (state.developers.length !== 0) commit("RESET_DEVELOPERS");
     commit("UPDATE_DEVELOPERS_STATE_STATUS", "loading");
-    API()
-      .get(`/developers?page=${state.developersNextPageNumber}`)
+    requestDevelopers(state.developersNextPageNumber)
       .then(response => {
-        commit("ADD_DEVELOPERS", response.data.Data);
+        commit("ADD_DEVELOPERS", response);
         if (state.developers.length !== response.data.CountOfEntities) {
           commit("UPDATE_DEVELOPERS_NEXT_PAGE_NUMBER");
           commit("UPDATE_DEVELOPERS_STATE_STATUS", "available");
@@ -65,10 +55,6 @@ const actions = {
       })
       .catch(() => {
         commit("UPDATE_DEVELOPERS_STATE_STATUS", "failed");
-
-        // Fake data
-
-        commit("ADD_DEVELOPERS", fakeDevelopers);
       });
   },
   LOAD_MORE_DEVELOPERS({commit}) {

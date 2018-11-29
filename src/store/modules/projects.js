@@ -1,8 +1,7 @@
 import API from "../../api.js";
-import { getComponentsInRowNumber } from "../../helpers.js";
 import statuses from "../stateStatuses";
-
-import {fakeProjects} from "../../caps/caps";
+import {requestRandomProjects, requestProjects} from "../../requestApi";
+import {getComponentsInRowNumber} from "../../helpers";
 
 const state = {
   randomProjects: [],
@@ -33,29 +32,21 @@ const mutations = {
 };
 
 const actions = {
-  LOAD_RANDOM_PROJECTS({ commit }) {
-    API()
-      .get(`/projects/random/${getComponentsInRowNumber()}`)
+  LOAD_RANDOM_PROJECTS({commit}) {
+    requestRandomProjects()
       .then(response => {
-        commit("UPDATE_RANDOM_PROJECTS", response.data);
+        commit("UPDATE_RANDOM_PROJECTS", response);
       })
-      .catch(() => {
-        commit("UPDATE_RANDOM_PROJECTS", fakeProjects);
-      });
   },
-  LOAD_PROJECTS({ commit, rootGetters }) {
+  LOAD_PROJECTS({commit, rootGetters}) {
     if (state.projects.length !== 0) commit("RESET_PROJECTS");
     commit("UPDATE_PROJECTS_STATE_STATUS", "loading");
-    const componentsInRowNumber = getComponentsInRowNumber();
+
     const selectedCategories = rootGetters.selectedCategoryIndexes.join(",");
-    API()
-      .get(
-        `/projects/${
-          state.projects.length
-        }/${componentsInRowNumber}?&categories=${selectedCategories}`
-      )
+
+    requestProjects(state.projects.length, selectedCategories)
       .then(response => {
-        commit("ADD_PROJECTS", response.data.Data);
+        commit("ADD_PROJECTS", response);
         if (state.projects.length !== response.data.CountOfEntities) {
           commit("UPDATE_PROJECTS_STATE_STATUS", "available");
         } else {
@@ -66,7 +57,7 @@ const actions = {
         commit("UPDATE_PROJECTS_STATE_STATUS", "failed");
       });
   },
-  LOAD_MORE_PROJECTS({ commit, rootGetters }) {
+  LOAD_MORE_PROJECTS({commit, rootGetters}) {
     if (state.projectsStateStatus === "available") {
       commit("UPDATE_PROJECTS_STATE_STATUS", "loading");
       const componentsInRowNumber = getComponentsInRowNumber();
@@ -75,7 +66,7 @@ const actions = {
         .get(
           `/projects/${
             state.projects.length
-          }/${componentsInRowNumber}?&categories=${selectedCategories}`
+            }/${componentsInRowNumber}?&categories=${selectedCategories}`
         )
         .then(response => {
           commit("ADD_PROJECTS", response.data.Data);

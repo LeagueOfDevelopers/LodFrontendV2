@@ -1,5 +1,5 @@
 .welcome-section {
-  background: url('../src/assets/mobile-main-background.jpg') no-repeat center;
+  background: url('../../../../src/assets/mobile-main-background.jpg') no-repeat center;
   background-size: cover;
   height: calc(100vh - 70px);
   font-size: 1em;

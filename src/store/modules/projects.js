@@ -2,6 +2,8 @@ import API from "../../api.js";
 import { getComponentsInRowNumber } from "../../helpers.js";
 import statuses from "../stateStatuses";
 
+import {fakeProjects} from "../../caps/caps";
+
 const state = {
   randomProjects: [],
   projects: [],
@@ -36,6 +38,9 @@ const actions = {
       .get(`/projects/random/${getComponentsInRowNumber()}`)
       .then(response => {
         commit("UPDATE_RANDOM_PROJECTS", response.data);
+      })
+      .catch(() => {
+        commit("UPDATE_RANDOM_PROJECTS", fakeProjects);
       });
   },
   LOAD_PROJECTS({ commit, rootGetters }) {

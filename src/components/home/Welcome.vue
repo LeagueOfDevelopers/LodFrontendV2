@@ -10,3 +10,11 @@
     </div>
   </section>
 </template>
+
+<style>
+  .welcome-section__headline {
+    letter-spacing: 1px;
+    font-family: "Noto Serif";
+
+  }
+</style>

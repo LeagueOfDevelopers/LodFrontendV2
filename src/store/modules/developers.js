@@ -1,6 +1,8 @@
 import API from "../../api";
-import { getComponentsInRowNumber } from "../../helpers";
+import {getComponentsInRowNumber} from "../../helpers";
 import statuses from "../stateStatuses";
+
+import {fakeDevelopers} from "../../caps/caps";
 
 const state = {
   randomDevelopers: [],
@@ -34,14 +36,20 @@ const mutations = {
 };
 
 const actions = {
-  LOAD_RANDOM_DEVELOPERS({ commit }) {
+  LOAD_RANDOM_DEVELOPERS({commit}) {
     API()
       .get(`/developers/random/${getComponentsInRowNumber()}`)
       .then(response => {
         commit("UPDATE_RANDOM_DEVELOPERS", response.data);
-      });
+      })
+
+      // Fake data
+
+      .catch(() => {
+        commit("UPDATE_RANDOM_DEVELOPERS", fakeDevelopers)
+      })
   },
-  LOAD_DEVELOPERS({ commit }) {
+  LOAD_DEVELOPERS({commit}) {
     if (state.developers.length !== 0) commit("RESET_DEVELOPERS");
     commit("UPDATE_DEVELOPERS_STATE_STATUS", "loading");
     API()
@@ -57,9 +65,13 @@ const actions = {
       })
       .catch(() => {
         commit("UPDATE_DEVELOPERS_STATE_STATUS", "failed");
+
+        // Fake data
+
+        commit("ADD_DEVELOPERS", fakeDevelopers);
       });
   },
-  LOAD_MORE_DEVELOPERS({ commit }) {
+  LOAD_MORE_DEVELOPERS({commit}) {
     if (state.developersStateStatus === "available") {
       commit("UPDATE_DEVELOPERS_STATE_STATUS", "loading");
       API()

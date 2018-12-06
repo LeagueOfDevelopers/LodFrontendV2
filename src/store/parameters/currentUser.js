@@ -1,4 +1,4 @@
-import API from "../../api";
+import API from "../../config";
 import statuses from "../stateStatuses";
 
 const state = {

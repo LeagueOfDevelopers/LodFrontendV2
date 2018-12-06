@@ -23,8 +23,7 @@ const mutations = {
 const actions = {
   sendContactMessage({ commit }) {
     commit("UPDATE_CONTACT_MESSAGE_STATE_STATUS", statuses.loading);
-    API()
-      .post(`/contact`, state.contactMessage)
+    API().sendContactMessage(state.contactMessage)
       .then(() => {
         commit("UPDATE_CONTACT_MESSAGE_STATE_STATUS", statuses.succeeded);
       })

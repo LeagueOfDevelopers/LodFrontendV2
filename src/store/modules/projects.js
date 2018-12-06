@@ -1,6 +1,5 @@
-import API from "../../api.js";
+import API from "../../api";
 import statuses from "../stateStatuses";
-import {requestRandomProjects, requestProjects} from "../../requestApi";
 import {getComponentsInRowNumber} from "../../helpers";
 
 const state = {
@@ -33,7 +32,7 @@ const mutations = {
 
 const actions = {
   LOAD_RANDOM_PROJECTS({commit}) {
-    requestRandomProjects()
+    API.requestRandomProjects()
       .then(response => {
         commit("UPDATE_RANDOM_PROJECTS", response);
       })
@@ -44,7 +43,7 @@ const actions = {
 
     const selectedCategories = rootGetters.selectedCategoryIndexes.join(",");
 
-    requestProjects(state.projects.length, selectedCategories)
+    API.requestProjects(state.projects.length, selectedCategories)
       .then(response => {
         commit("ADD_PROJECTS", response);
         if (state.projects.length !== response.data.CountOfEntities) {
@@ -60,14 +59,11 @@ const actions = {
   LOAD_MORE_PROJECTS({commit, rootGetters}) {
     if (state.projectsStateStatus === "available") {
       commit("UPDATE_PROJECTS_STATE_STATUS", "loading");
+
       const componentsInRowNumber = getComponentsInRowNumber();
       const selectedCategories = rootGetters.selectedCategoryIndexes.join(",");
-      API()
-        .get(
-          `/projects/${
-            state.projects.length
-            }/${componentsInRowNumber}?&categories=${selectedCategories}`
-        )
+
+      API().requestProjects(state.projects.length, selectedCategories)
         .then(response => {
           commit("ADD_PROJECTS", response.data.Data);
           if (state.projects.length !== response.data.CountOfEntities) {

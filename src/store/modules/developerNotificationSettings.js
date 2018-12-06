@@ -24,8 +24,7 @@ const mutations = {
 const actions = {
   loadNotificatonSettings({ commit, getters }) {
     commit("UPDATE_DEVELOPER_NOTIFICATION_SETTINGS_STATE_STATUS", "loading");
-    API()
-      .get(`developers/notificationsettings/${getters.userId}`)
+    API().requestNotificationSettings(getters.userId)
       .then(response => {
         commit("UPDATE_NOTIFICATION_SETTINGS", response.data);
         commit(
@@ -39,11 +38,7 @@ const actions = {
   },
   changeNotificatonSettings({ commit, getters }) {
     commit("UPDATE_DEVELOPER_NOTIFICATION_SETTINGS_STATE_STATUS", "loading");
-    API()
-      .put(
-        `developers/notificationsettings/${getters.userId}`,
-        this.developerNotificationSettings
-      )
+    API().putNotificationSettings(getters.userId, this.developerNotificationSettings)
       .then(() => {
         commit("UPDATE_NOTIFICATION_SETTINGS_STATE_STATUS", "succeeded");
       })

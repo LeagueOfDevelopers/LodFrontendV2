@@ -1,6 +1,8 @@
 import axios from "axios";
 
-export default () => {
+// Api config
+
+export const api = () => {
   return axios.create({
     baseURL: "./",
     withCredentials: false,

@@ -1,5 +1,6 @@
 import API from "../../api";
 import statuses from "../stateStatuses";
+import {use} from "vee-validate/dist/vee-validate.minimal.esm";
 
 const state = {
   portfolio: {},
@@ -23,8 +24,7 @@ const mutations = {
 const actions = {
   loadPortfolio({ commit }, userId) {
     commit("UPDATE_PORTFOLIO_STATE_STATUS", "loading");
-    API()
-      .get(`developers/${userId}`)
+    API().requestDeveloperPortfolio(userId)
       .then(response => {
         const portfolioData = {
           Image: response.data.Image,

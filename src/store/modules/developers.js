@@ -1,6 +1,6 @@
 import API from "../../api";
+
 import statuses from "../stateStatuses";
-import {requestRandomDevelopers, requestDevelopers} from "../../requestApi";
 
 const state = {
   randomDevelopers: [],
@@ -35,7 +35,7 @@ const mutations = {
 
 const actions = {
   LOAD_RANDOM_DEVELOPERS({commit}) {
-    requestRandomDevelopers()
+    API.requestRandomDevelopers()
       .then(response => {
         commit("UPDATE_RANDOM_DEVELOPERS", response);
       })
@@ -43,7 +43,7 @@ const actions = {
   LOAD_DEVELOPERS({commit}) {
     if (state.developers.length !== 0) commit("RESET_DEVELOPERS");
     commit("UPDATE_DEVELOPERS_STATE_STATUS", "loading");
-    requestDevelopers(state.developersNextPageNumber)
+    API.requestDevelopers(state.developersNextPageNumber)
       .then(response => {
         commit("ADD_DEVELOPERS", response);
         if (state.developers.length !== response.data.CountOfEntities) {
@@ -60,8 +60,7 @@ const actions = {
   LOAD_MORE_DEVELOPERS({commit}) {
     if (state.developersStateStatus === "available") {
       commit("UPDATE_DEVELOPERS_STATE_STATUS", "loading");
-      API()
-        .get(`/developers?page=${state.developersNextPageNumber}`)
+      API().requestDevelopers(state.developersNextPageNumber)
         .then(response => {
           commit("ADD_DEVELOPERS", response.data.Data);
           if (state.developers.length !== response.data.CountOfEntities) {

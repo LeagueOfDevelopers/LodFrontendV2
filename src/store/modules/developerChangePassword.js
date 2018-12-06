@@ -24,8 +24,7 @@ const actions = {
       NewPassword: this.changePassword,
       Token: localStorage.getItem("token")
     };
-    API()
-      .put(`password`, request)
+    API().putNewPassword(request)
       .then(() => {
         commit("UPDATE_CHANGE_PASSWORD_STATE_STATUS", "succeeded");
       })

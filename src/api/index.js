@@ -1,5 +1,5 @@
 import api from "./requests";
-import fakeApi from "../stumps/requests";
+import fakeApi from "../stubs/requests";
 
 const fakeData = true;
 

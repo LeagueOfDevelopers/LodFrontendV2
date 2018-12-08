@@ -4,7 +4,7 @@ import axios from "axios";
 
 export const api = () => {
   return axios.create({
-    baseURL: "./",
+    baseURL: "https://test.api.lod-misis.ru",
     withCredentials: false,
     headers: {
       Accept: "application/json",

@@ -2,7 +2,8 @@
 	<section class="projects-section">
 		<project-small-cards-row :projects="projects"/>
 		<router-link :to="{ name: 'projects' }" tag="a"
-		             class="projects-section__see-all-button button-style">
+		             class="projects-section__see-all-button button-style"
+    >
 			Смотреть всех
 		</router-link>
 	</section>

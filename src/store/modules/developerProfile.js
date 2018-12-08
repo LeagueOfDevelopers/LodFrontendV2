@@ -23,8 +23,7 @@ const mutations = {
 const actions = {
   loadProfileData({ commit, getters }) {
     commit("UPDATE_DEVELOPER_PROFILE_STATE_STATUS", "loading");
-    API()
-      .get(`developers/${getters.userId}`)
+    API().requestDeveloperProfile(getters.userId)
       .then(response => {
         const profileData = {
           Image: response.data.Image,
@@ -46,7 +45,7 @@ const actions = {
   },
   changeProfileData({ commit, getters }) {
     commit("UPDATE_DEVELOPER_PROFILE_STATE_STATUS", "loading");
-    API()
+    API().putDeveloperProfile()
       .put(`developers/${getters.userId}`)
       .then(() => {
         commit("UPDATE_DEVELOPER_PROFILE_STATE_STATUS", "succeeded");

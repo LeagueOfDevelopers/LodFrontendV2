@@ -1,5 +1,5 @@
 import API from "../../api";
-import { getComponentsInRowNumber } from "../../helpers";
+
 import statuses from "../stateStatuses";
 
 const state = {
@@ -34,20 +34,18 @@ const mutations = {
 };
 
 const actions = {
-  LOAD_RANDOM_DEVELOPERS({ commit }) {
-    API()
-      .get(`/developers/random/${getComponentsInRowNumber()}`)
+  LOAD_RANDOM_DEVELOPERS({commit}) {
+    API.requestRandomDevelopers()
       .then(response => {
-        commit("UPDATE_RANDOM_DEVELOPERS", response.data);
-      });
+        commit("UPDATE_RANDOM_DEVELOPERS", response);
+      })
   },
-  LOAD_DEVELOPERS({ commit }) {
+  LOAD_DEVELOPERS({commit}) {
     if (state.developers.length !== 0) commit("RESET_DEVELOPERS");
     commit("UPDATE_DEVELOPERS_STATE_STATUS", "loading");
-    API()
-      .get(`/developers?page=${state.developersNextPageNumber}`)
+    API.requestDevelopers(state.developersNextPageNumber)
       .then(response => {
-        commit("ADD_DEVELOPERS", response.data.Data);
+        commit("ADD_DEVELOPERS", response);
         if (state.developers.length !== response.data.CountOfEntities) {
           commit("UPDATE_DEVELOPERS_NEXT_PAGE_NUMBER");
           commit("UPDATE_DEVELOPERS_STATE_STATUS", "available");
@@ -59,11 +57,10 @@ const actions = {
         commit("UPDATE_DEVELOPERS_STATE_STATUS", "failed");
       });
   },
-  LOAD_MORE_DEVELOPERS({ commit }) {
+  LOAD_MORE_DEVELOPERS({commit}) {
     if (state.developersStateStatus === "available") {
       commit("UPDATE_DEVELOPERS_STATE_STATUS", "loading");
-      API()
-        .get(`/developers?page=${state.developersNextPageNumber}`)
+      API().requestDevelopers(state.developersNextPageNumber)
         .then(response => {
           commit("ADD_DEVELOPERS", response.data.Data);
           if (state.developers.length !== response.data.CountOfEntities) {

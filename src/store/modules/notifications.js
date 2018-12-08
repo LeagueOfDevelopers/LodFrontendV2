@@ -42,8 +42,8 @@ const mutations = {
 const actions = {
   loadNotifications({ commit }) {
     commit("UPDATE_NOTIFICATIONS_STATE_STATUS", "loading");
-    API()
-      .get(`event/${this.notificationsCurrentPage + 1}`)
+
+    API().requestNotifications(this.notificationsCurrentPage)
       .then(response => {
         commit("ADD_NOTIFICATIONS", response.data.Data);
         commit(
@@ -61,11 +61,9 @@ const actions = {
   },
   readNotifications({ commit }) {
     commit("UPDATE_READ_NOTIFICATIONS_STATE_STATUS", "loading");
-    API()
-      .put(
-        `event/read`,
-        this.notifications.filter(notification => !notification.WasRead)
-      )
+    API().putReadNotifications(
+      this.notifications.filter(notification => !notification.WasRead)
+    )
       .then(() => commit("UPDATE_READ_NOTIFICATIONS_STATE_STATUS", "available"))
       .catch(() => {
         commit("UPDATE_READ_NOTIFICATIONS_STATE_STATUS", "failed");

@@ -24,8 +24,7 @@ const actions = {
   POST_NEW_DEVELOPER({ commit }, data) {
     commit("UPDATE_NEW_DEVELOPER_STATE_STATUS", "loading");
     if (data.withCredentials) {
-      API()
-        .post(`developers`, data.newDeveloper)
+      API().sendNewDeveloperWithCredentials(data.newDeveloper)
         .then(() => {
           commit("UPDATE_NEW_DEVELOPER_STATE_STATUS", "succeeded");
         })
@@ -37,11 +36,7 @@ const actions = {
           );
         });
     } else {
-      API()
-        .post(
-          `signup/github?frontend_callback=localhost:8080/signup`,
-          data.newDeveloper
-        )
+      API().sendNewDeveloperWithoutCredentials(data.newDeveloper)
         .then(response => {
           window.location.href = response.data;
         })

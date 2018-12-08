@@ -1,30 +1,30 @@
-@import "./base";
+@import "./base.css";
 
-@import "./components/loader";
-@import "./components/header";
-@import "./components/footer";
+@import "./components/loader.css";
+@import "./components/header.css";
+@import "./components/footer.css";
 
-@import "./components/about-page";
-@import "./components/confirmation-page";
-@import "./components/contact-page";
-@import "./components/developer-page";
-@import "./components/developers-page";
-@import "./components/error-page";
-@import "./components/notifications-page";
-@import "./components/password-recovery-page";
-@import "./components/project-page";
-@import "./components/signup-page";
-@import "./components/profile-settings";
-@import "./components/login-popup";
+@import "./components/about-page.css";
+@import "./components/confirmation-page.css";
+@import "./components/contact-page.css";
+@import "./components/developer-page.css";
+@import "./components/developers-page.css";
+@import "./components/error-page.css";
+@import "./components/notifications-page.css";
+@import "./components/password-recovery-page.css";
+@import "./components/project-page.css";
+@import "./components/signup-page.css";
+@import "./components/profile-settings.css";
+@import "./components/login-popup.css";
 
-@import "./components/home-page/developers-section";
-@import "./components/home-page/projects-section";
-@import "./components/home-page/welcome-section";
+@import "./components/home-page/developers-section.css";
+@import "./components/home-page/projects-section.css";
+@import "./components/home-page/welcome-section.css";
 
-@import "./components/admin/adding-developer";
-@import "./components/admin/adding-project";
-@import "./components/admin/admin-developers-page";
-@import "./components/admin/admin-notification-page";
-@import "./components/admin/admin-projects-page";
-@import "./components/admin/admin-panel";
-@import "./components/admin/modal-window";
+@import "./components/admin/adding-developer.css";
+@import "./components/admin/adding-project.css";
+@import "./components/admin/admin-developers-page.css";
+@import "./components/admin/admin-notification-page.css";
+@import "./components/admin/admin-projects-page.css";
+@import "./components/admin/admin-panel.css";
+@import "./components/admin/modal-window.css";

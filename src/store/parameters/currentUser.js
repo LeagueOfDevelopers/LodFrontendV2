@@ -39,8 +39,8 @@ const actions = {
   },
   AUTHORIZE_USER_WITH_CREDENTIALS({ dispatch, commit }, credentials) {
     commit("UPDATE_IS_AUTHORIZE_USER_STATE_STATUS", "loading");
-    API()
-      .post(`login`, credentials)
+
+    API().authorizeUser(credentials)
       .then(response => {
         dispatch("AUTHORIZE_USER", response.data.Token);
         dispatch("UPDATE_USER_ID", response.data.UserId);

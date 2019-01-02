@@ -108,72 +108,84 @@ export const projects = [
     ProjectId: 1,
     ProjectStatus: 1,
     PhotoUri: "",
-    Name: "Hello world"
+    Name: "Hello world",
+    Category: 1
   },
   {
     ProjectId: 2,
     ProjectStatus: 1,
     PhotoUri: "",
-    Name: "Todo list"
+    Name: "Todo list",
+    Category: 2
   },
   {
     ProjectId: 3,
     ProjectStatus: 1,
     PhotoUri: "",
-    Name: "Foo Bar"
+    Name: "Foo Bar",
+    Category: 3
   },
   {
     ProjectId: 4,
     ProjectStatus: 1,
     PhotoUri: "",
-    Name: "Half-life 3"
+    Name: "Half-life 3",
+    Category: 4
   },
   {
     ProjectId: 5,
     ProjectStatus: 1,
     PhotoUri: "",
-    Name: "Microsoft"
+    Name: "Microsoft",
+    Category: 0
   },
   {
     ProjectId: 6,
     ProjectStatus: 1,
     PhotoUri: "",
-    Name: "Super Project"
+    Name: "Super Project",
+    Category: 1
   },
   {
     ProjectId: 7,
     ProjectStatus: 1,
     PhotoUri: "",
-    Name: "Site"
+    Name: "Site",
+    Category: 2
   },
   {
     ProjectId: 8,
     ProjectStatus: 1,
     PhotoUri: "",
-    Name: "Application"
+    Name: "Application",
+    Category: 3
   },
   {
     ProjectId: 9,
     ProjectStatus: 1,
     PhotoUri: "",
-    Name: "Project 1"
+    Name: "Project 1",
+    Category: 4
   },
   {
     ProjectId: 10,
     ProjectStatus: 1,
     PhotoUri: "",
-    Name: "Project 2"
+    Name: "Project 2",
+    Category: 0
   },
   {
     ProjectId: 11,
     ProjectStatus: 1,
     PhotoUri: "",
-    Name: "Foo Bar 1"
+    Name: "Foo Bar 1",
+    Category: 1
   },
   {
     ProjectId: 12,
     ProjectStatus: 1,
     PhotoUri: "",
-    Name: "Half-life 4"
+    Name: "Half-life 4",
+    Category: 2
   }
 ];

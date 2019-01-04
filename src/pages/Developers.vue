@@ -38,7 +38,8 @@ export default {
   methods: {
     loadMoreDevelopers() {
       this.$store.dispatch("LOAD_MORE_DEVELOPERS");
-    }
+    },
+
   }
 };
 </script>

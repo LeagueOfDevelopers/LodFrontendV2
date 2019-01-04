@@ -28,7 +28,7 @@ export const developers = [
   },
   {
     UserId: 4,
-    PhotoUri: "http://www.joystickcloud.com/wp-content/uploads/2016/06/Gabe-Newell.jpg",
+    PhotoUri: "https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fi.ytimg.com%2Fvi%2FW1lDwVEkbNc%2Fmaxresdefault.jpg&f=1",
     FirstName: "Gaben",
     LastName: "Newell",
     Role: "Half-life developer",

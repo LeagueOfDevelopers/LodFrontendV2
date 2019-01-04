@@ -17,7 +17,7 @@
 
   export default {
     name: "project-filter",
-    mounted() {
+    created() {
       if (this.currentCategory !== -1)
          this.categories[this.currentCategory].selected = true;
     },

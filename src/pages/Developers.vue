@@ -4,7 +4,7 @@
 
     <div class="dividing-line"></div>
     <div class="developers-page__search">
-      <input placeholder="Поиск"/>
+      <input placeholder="Поиск" v-model="searchValue" @keyup="filterDevelopers()"/>
       <div class="search__icon"></div>
     </div>
     <div class="content-wrapper">
@@ -32,6 +32,11 @@ export default {
   created() {
     this.$store.dispatch("LOAD_DEVELOPERS");
   },
+  data() {
+    return {
+      searchValue: ""
+    }
+  },
   computed: {
     ...mapGetters(["developers", "developersStateStatus"])
   },
@@ -39,7 +44,9 @@ export default {
     loadMoreDevelopers() {
       this.$store.dispatch("LOAD_MORE_DEVELOPERS");
     },
-
+    filterDevelopers() {
+      this.$store.dispatch("FILTER_DEVELOPERS", this.searchValue.toLocaleLowerCase());
+    }
   }
 };
 </script>

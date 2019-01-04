@@ -45,7 +45,7 @@ export default {
       this.$store.dispatch("LOAD_MORE_DEVELOPERS");
     },
     filterDevelopers() {
-      this.$store.dispatch("FILTER_DEVELOPERS", this.searchValue.toLocaleLowerCase());
+      this.$store.dispatch("FILTER_DEVELOPERS", this.searchValue.toLowerCase());
     }
   }
 };

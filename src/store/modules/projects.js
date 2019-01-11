@@ -5,12 +5,18 @@ import {getComponentsInRowNumber} from "../../helpers";
 const state = {
   randomProjects: [],
   projects: [],
+  currentCategory: -1,
   projectsStateStatus: statuses.available
 };
 
 const getters = {
   randomProjects: state => state.randomProjects,
-  projects: state => state.projects,
+  projects: state => {
+    return state.currentCategory === -1 ?
+      state.projects :
+      state.projects.filter(project => project.Category === state.currentCategory);
+  },
+  currentCategory: state => state.currentCategory,
   projectsNumber: state => state.projects.length,
   projectsStateStatus: state => state.projectsStateStatus
 };
@@ -27,6 +33,9 @@ const mutations = {
   },
   UPDATE_PROJECTS_STATE_STATUS(state, status) {
     state.projectsStateStatus = statuses[status];
+  },
+  UPDATE_PROJECTS_CATEGORY(state, category) {
+    state.currentCategory = category;
   }
 };
 
@@ -76,6 +85,9 @@ const actions = {
           commit("UPDATE_PROJECTS_STATE_STATUS", "failed");
         });
     }
+  },
+  FILTER_PROJECTS({commit}, category) {
+    commit("UPDATE_PROJECTS_CATEGORY", category);
   }
 };
 

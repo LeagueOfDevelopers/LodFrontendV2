@@ -1,8 +1,11 @@
 <template>
   <section class="random-wrapper">
-    <router-link v-for="project in projects" :key="project.ProjectId"
-                 :to="{name: 'project', params: {id: project.ProjectId}}" tag="div"
-                 class="projects-section__link-to-project">
+    <router-link v-for="project in projects"
+                 :key="project.ProjectId"
+                 :to="{name: 'project', params: {id: project.ProjectId}}"
+                 tag="div"
+                 class="projects-section__link-to-project"
+    >
       <project-small-card :project="project">
         <div class="project__status" slot="project-status">
           Статус:

@@ -81,7 +81,8 @@ export default {
       .post(`/contact`, contactMessage);
   },
 
-  authorizeUser() {
-
+  authorizeUser(credentials) {
+    return api()
+      .post('login', credentials);
   }
 }

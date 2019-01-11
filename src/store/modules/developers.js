@@ -3,6 +3,7 @@ import API from "../../api";
 import statuses from "../stateStatuses";
 
 const state = {
+  searchValue: "",
   randomDevelopers: [],
   developers: [],
   developersNextPageNumber: 0,
@@ -11,7 +12,11 @@ const state = {
 
 const getters = {
   randomDevelopers: state => state.randomDevelopers,
-  developers: state => state.developers,
+  developers: state => state.searchValue.length ?
+    state.developers.filter(developer =>
+      (developer.FirstName + " " + developer.LastName).toLowerCase().indexOf(state.searchValue) !== -1
+    )
+    : state.developers,
   developersStateStatus: state => state.developersStateStatus
 };
 
@@ -30,6 +35,9 @@ const mutations = {
   },
   UPDATE_DEVELOPERS_STATE_STATUS(state, status) {
     state.developersStateStatus = statuses[status];
+  },
+  UPDATE_SEARCH_VALUE(state, newValue) {
+    state.searchValue = newValue;
   }
 };
 
@@ -74,6 +82,9 @@ const actions = {
           commit("UPDATE_DEVELOPERS_STATE_STATUS", "failed");
         });
     }
+  },
+  FILTER_DEVELOPERS({commit}, searchValue) {
+    commit("UPDATE_SEARCH_VALUE", searchValue);
   }
 };
 

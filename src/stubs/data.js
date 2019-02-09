@@ -113,14 +113,14 @@ export const projects = [
   },
   {
     ProjectId: 2,
-    ProjectStatus: 1,
+    ProjectStatus: 2,
     PhotoUri: "",
     Name: "Todo list",
     Category: 2
   },
   {
     ProjectId: 3,
-    ProjectStatus: 1,
+    ProjectStatus: 3,
     PhotoUri: "",
     Name: "Foo Bar",
     Category: 3
@@ -134,14 +134,14 @@ export const projects = [
   },
   {
     ProjectId: 5,
-    ProjectStatus: 1,
+    ProjectStatus: 2,
     PhotoUri: "",
     Name: "Microsoft",
     Category: 0
   },
   {
     ProjectId: 6,
-    ProjectStatus: 1,
+    ProjectStatus: 3,
     PhotoUri: "",
     Name: "Super Project",
     Category: 1
@@ -155,14 +155,14 @@ export const projects = [
   },
   {
     ProjectId: 8,
-    ProjectStatus: 1,
+    ProjectStatus: 2,
     PhotoUri: "",
     Name: "Application",
     Category: 3
   },
   {
     ProjectId: 9,
-    ProjectStatus: 1,
+    ProjectStatus: 3,
     PhotoUri: "",
     Name: "Project 1",
     Category: 4
@@ -176,7 +176,7 @@ export const projects = [
   },
   {
     ProjectId: 11,
-    ProjectStatus: 1,
+    ProjectStatus: 2,
     PhotoUri: "",
     Name: "Foo Bar 1",
     Category: 1

@@ -9,6 +9,7 @@ module.exports = {
           to: "./"
         }
       ])
-    ]
+    ],
+    devtool: "inline-source-map"
   }
 };

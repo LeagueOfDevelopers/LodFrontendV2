@@ -1,24 +1,37 @@
 <template>
   <div class="developers-section__developer">
-    <img class="developer__photo"
-         :src="developer.PhotoUri || require('../../../../assets/developer-default-photo.png')">
-    <span class="developer__full-name">{{ developer.FirstName + ' ' + developer.LastName }}</span>
-    <span class="developer__specialization"> {{developer.Role}} </span>
+    <div
+      class="developer__photo"
+      :style="{
+        backgroundImage: `url(${photo})`,
+        backgroundPosition: 'center center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover'
+      }"
+    ></div>
+    <span class="developer__full-name">{{ developer.firstname + ' ' + developer.lastname }}</span>
+    <span class="developer__specialization"> {{developer.specialization}} </span>
   </div>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {};
-    },
-    props: {
-      developer: {
-        type: Object,
-        required: true,
-        default: () => {
-        }
-      }
+import defaultPhoto from "../../../../assets/developer-default-photo.png";
+
+export default {
+  data() {
+    return {};
+  },
+  props: {
+    developer: {
+      type: Object,
+      required: true,
+      default: () => {}
     }
-  };
+  },
+  computed: {
+    photo() {
+      return this.developer.avatar.smallPhotoUri || defaultPhoto;
+    }
+  }
+};
 </script>

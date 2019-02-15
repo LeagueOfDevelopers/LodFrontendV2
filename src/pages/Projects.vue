@@ -20,7 +20,7 @@
 <script>
 import { mapGetters } from "vuex";
 import Category from "../components/Category.vue";
-import ProjectSmallCardsRow from "../components/cards/project/ProjectSmallCardsRow.vue";
+import ProjectSmallCardsRow from "../components/reusable/cards/project/ProjectSmallCardsRow.vue";
 import ProjectFilter from "../components/projects/ProjectFilter.vue";
 
 export default {

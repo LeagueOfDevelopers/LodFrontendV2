@@ -1,5 +1,5 @@
-import { developers, projects } from "./data";
-import {getRandomDevelopers, getRandomProjects} from "./helpers";
+import { allDevelopers, developers, projects } from "./data";
+import { getRandomDevelopers, getRandomProjects} from "./helpers";
 import {getComponentsInRowNumber} from "../helpers";
 import {api} from "../config";
 
@@ -9,7 +9,7 @@ export default {
   },
 
   async requestDevelopers() {
-    return developers;
+    return allDevelopers;
   },
 
   async requestRandomProjects() {

@@ -43,7 +43,7 @@ const mutations = {
 
 const actions = {
   LOAD_RANDOM_DEVELOPERS({commit}) {
-    API.requestRandomDevelopers()
+    API.getRandomDevelopers()
       .then(response => {
         commit("UPDATE_RANDOM_DEVELOPERS", response);
       })

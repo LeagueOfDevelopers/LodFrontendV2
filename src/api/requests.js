@@ -1,28 +1,37 @@
-import {api} from "./config";
-import {getComponentsInRowNumber} from "../helpers";
+import { api } from "./config";
+import { getComponentsInRowNumber } from "../helpers";
 
 export default {
-  requestRandomDevelopers() {
-    return api()
-      .get(`/developers/random/${getComponentsInRowNumber()}`)
-      .then(res => res.data);
+  async getRandomProjects() {
+    try {
+      const res = await api().get(`/projects/random/${getComponentsInRowNumber()}`);
+      return res.data.projects;
+    }
+    catch (err) {
+      console.log(err);
+    }
   },
 
-  requestDevelopers(page) {
-    return api()
-      .get(`/developers?page=${page}`)
-      .then(res => res.data.Data);
-  },
-
-  requestRandomProjects() {
-    return api()
-      .get(`/projects/random/${getComponentsInRowNumber()}`)
-      .then(res => res.data);
+  async getRandomDevelopers() {
+    try {
+      const res = await api().get(`/developers/random/${getComponentsInRowNumber()}`);
+      return res.data.developers;
+    }
+    catch (err) {
+      console.log(err);
+    }
   },
 
   requestProjects(amount, categories) {
     return api()
       .get(`/projects/${amount}/${getComponentsInRowNumber()}?&categories=${categories}`)
+      .then(res => res.data.Data);
+  },
+
+
+  requestDevelopers(page) {
+    return api()
+      .get(`/developers?page=${page}`)
       .then(res => res.data.Data);
   },
 
@@ -41,7 +50,7 @@ export default {
       .get(`developers/${id}`);
   },
 
-  requestNotifications (currentPage) {
+  requestNotifications(currentPage) {
     return api()
       .get(`event/${currentPage + 1}`);
   },

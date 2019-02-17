@@ -23,8 +23,8 @@ export default {
     DevelopersOverview
   },
   created() {
-    this.$store.dispatch("LOAD_RANDOM_DEVELOPERS");
     this.$store.dispatch("LOAD_RANDOM_PROJECTS");
+    this.$store.dispatch("LOAD_RANDOM_DEVELOPERS");
   },
   computed: {
     ...mapGetters(["randomProjects", "randomDevelopers"])

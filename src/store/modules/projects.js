@@ -41,7 +41,7 @@ const mutations = {
 
 const actions = {
   LOAD_RANDOM_PROJECTS({commit}) {
-    API.requestRandomProjects()
+    API.getRandomProjects()
       .then(response => {
         commit("UPDATE_RANDOM_PROJECTS", response);
       })

@@ -6,18 +6,13 @@ const state = {
   searchValue: "",
   randomDevelopers: [],
   developers: [],
-  developersNextPageNumber: 0,
-  developersStateStatus: statuses.available
+  developersStateStatus: statuses.available,
+  developersOnPageCount: 20,
+  allDevelopersCount: 0
 };
 
 const getters = {
-  randomDevelopers: state => state.randomDevelopers,
-  developers: state => state.searchValue.length ?
-    state.developers.filter(developer =>
-      (developer.FirstName + " " + developer.LastName).toLowerCase().indexOf(state.searchValue) !== -1
-    )
-    : state.developers,
-  developersStateStatus: state => state.developersStateStatus
+
 };
 
 const mutations = {
@@ -30,11 +25,14 @@ const mutations = {
   RESET_DEVELOPERS(state) {
     state.developers = [];
   },
-  UPDATE_DEVELOPERS_NEXT_PAGE_NUMBER(state) {
-    state.developersNextPageNumber = state.developersNextPageNumber + 1;
+  UPDATE_DEVELOPERS_CURRENT_PAGE(state) {
+    state.developersCurrentPage = ++state.developersCurrentPage;
   },
   UPDATE_DEVELOPERS_STATE_STATUS(state, status) {
     state.developersStateStatus = statuses[status];
+  },
+  UPDATE_ALL_DEVELOPERS_COUNT(state, count) {
+    state.allDevelopersCount = count;
   },
   UPDATE_SEARCH_VALUE(state, newValue) {
     state.searchValue = newValue;
@@ -42,53 +40,61 @@ const mutations = {
 };
 
 const actions = {
-  LOAD_RANDOM_DEVELOPERS({commit}) {
+  LOAD_RANDOM_DEVELOPERS({ commit }) {
     API.getRandomDevelopers()
       .then(response => {
         commit("UPDATE_RANDOM_DEVELOPERS", response);
       })
   },
-  LOAD_DEVELOPERS({commit}) {
-    if (state.developers.length !== 0) commit("RESET_DEVELOPERS");
-    commit("UPDATE_DEVELOPERS_STATE_STATUS", "loading");
-    API.requestDevelopers(state.developersNextPageNumber)
-      .then(response => {
-        commit("ADD_DEVELOPERS", response);
-        if (state.developers.length !== response.data.CountOfEntities) {
-          commit("UPDATE_DEVELOPERS_NEXT_PAGE_NUMBER");
-          commit("UPDATE_DEVELOPERS_STATE_STATUS", "available");
-        } else {
-          commit("UPDATE_DEVELOPERS_STATE_STATUS", "unavailable");
-        }
-      })
-      .catch(() => {
-        commit("UPDATE_DEVELOPERS_STATE_STATUS", "failed");
-      });
+
+  RESET_DEVELOPERS({ commit }) {
+    commit("RESET_DEVELOPERS");
   },
-  LOAD_MORE_DEVELOPERS({commit}) {
-    if (state.developersStateStatus === "available") {
-      commit("UPDATE_DEVELOPERS_STATE_STATUS", "loading");
-      API().requestDevelopers(state.developersNextPageNumber)
-        .then(response => {
-          commit("ADD_DEVELOPERS", response.data.Data);
-          if (state.developers.length !== response.data.CountOfEntities) {
-            commit("UPDATE_DEVELOPERS_NEXT_PAGE_NUMBER");
-            commit("UPDATE_DEVELOPERS_STATE_STATUS", "available");
-          } else {
-            commit("UPDATE_DEVELOPERS_STATE_STATUS", "unavailable");
-          }
-        })
-        .catch(() => {
-          commit("UPDATE_DEVELOPERS_STATE_STATUS", "failed");
-        });
+
+  async LOAD_DEVELOPERS({ commit }, count = state.developersOnPageCount) {
+    commit("UPDATE_DEVELOPERS_STATE_STATUS", "loading");
+
+    try {
+      const res = await API.getDevelopers(count, state.developers.length);
+
+      commit("ADD_DEVELOPERS", res.developers);
+      commit("UPDATE_ALL_DEVELOPERS_COUNT", res.allDevelopersCount);
+
+      const developerStateStatus = state.developers.length < state.allDevelopersCount ?
+        "available" : "unavailable";
+
+      commit("UPDATE_DEVELOPERS_STATE_STATUS", developerStateStatus);
+    }
+    catch {
+      commit("UPDATE_DEVELOPERS_STATE_STATUS", "failed");
     }
   },
-  FILTER_DEVELOPERS({commit}, searchValue) {
+
+  async LOAD_MORE_DEVELOPERS({ dispatch }) {
+    const {
+      developers,
+      allDevelopersCount,
+      developersOnPageCount,
+      developersStateStatus
+    } = state;
+
+    if (developersStateStatus === "unavailable") return;
+
+    const developersLeft = allDevelopersCount - developers.length;
+
+    if (developersLeft > developersOnPageCount)
+      dispatch("LOAD_DEVELOPERS");
+    else
+      dispatch("LOAD_DEVELOPERS", developersLeft);
+  },
+
+  FILTER_DEVELOPERS({ commit }, searchValue) {
     commit("UPDATE_SEARCH_VALUE", searchValue);
   }
 };
 
 export default {
+  namespaced: true,
   state,
   getters,
   mutations,

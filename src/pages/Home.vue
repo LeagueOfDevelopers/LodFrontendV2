@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions, mapState } from "vuex";
 
 import Welcome from "../components/home/Welcome.vue";
 import ProjectsOverview from "../components/home/ProjectsOverview.vue";
@@ -24,10 +24,18 @@ export default {
   },
   created() {
     this.$store.dispatch("LOAD_RANDOM_PROJECTS");
-    this.$store.dispatch("LOAD_RANDOM_DEVELOPERS");
+    this.loadRandomDevelopers();
   },
   computed: {
-    ...mapGetters(["randomProjects", "randomDevelopers"])
+    ...mapGetters(["randomProjects"]),
+    ...mapState("developers", [
+      "randomDevelopers"
+    ])
+  },
+  methods: {
+    ...mapActions("developers", {
+      loadRandomDevelopers: "LOAD_RANDOM_DEVELOPERS"
+    })
   }
 };
 </script>

@@ -8,7 +8,7 @@ export default {
       return res.data.projects;
     }
     catch (err) {
-      return false;
+      return new Array();
     }
   },
 
@@ -18,7 +18,7 @@ export default {
       return res.data.developers;
     }
     catch (err) {
-      return false;
+      return new Array();
     }
   },
 

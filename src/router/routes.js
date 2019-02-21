@@ -1,6 +1,7 @@
 import Home from "../pages/Home.vue";
 import NotFound from "../pages/NotFound.vue";
 import Projects from "../pages/Projects.vue";
+import Project from "../pages/Project";
 import Developers from "../pages/Developers.vue";
 import Signup from "../pages/Signup.vue";
 import About from "../pages/About.vue";
@@ -147,6 +148,7 @@ export const routes = [
   {
     path: "/projects/:id",
     name: "project",
+    component: Project,
     props: true
   },
   {

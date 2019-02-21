@@ -1,14 +1,14 @@
 <template>
   <section class="random-wrapper">
-    <router-link v-for="project in projects" :key="project.ProjectId"
-                 :to="{name: 'project', params: {id: project.ProjectId}}"
+    <router-link v-for="project in projects" :key="project.id"
+                 :to="{name: 'project', params: {id: project.id}}"
                  tag="div"
                  class="projects-section__link-to-project">
       <project-small-card :project="project">
         <div class="project__status" slot="project-status">
           Статус:
-          <span class="status__value" :style="{ background: getstatusColor(project.ProjectStatus) }">
-            {{ getStatusDescription(project.ProjectStatus) }}
+          <span class="status__value" :style="{ background: getstatusColor(project.projectStatus) }">
+            {{ getStatusDescription(project.projectStatus) }}
           </span>
         </div>
       </project-small-card>

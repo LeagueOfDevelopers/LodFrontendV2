@@ -23,7 +23,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import DeveloperBigCard from "../components/cards/developer/DeveloperBigCard.vue";
+import DeveloperBigCard from "../components/reusable/cards/developer/DeveloperBigCard.vue";
 
 export default {
   components: {

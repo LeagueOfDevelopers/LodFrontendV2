@@ -1,23 +1,23 @@
-import { developers, projects } from "./data";
-import {getRandomDevelopers, getRandomProjects} from "./helpers";
+import { allDevelopers, developers, projects } from "./data";
+import { getRandomDevelopers, getRandomProjects} from "./helpers";
 import {getComponentsInRowNumber} from "../helpers";
 import {api} from "../config";
 
 export default {
-  async requestRandomDevelopers() {
-    return getRandomDevelopers(getComponentsInRowNumber());
-  },
-
-  async requestDevelopers() {
-    return developers;
-  },
-
-  async requestRandomProjects() {
+  async getRandomProjects() {
     return getRandomProjects(getComponentsInRowNumber());
+  },
+
+  async getRandomDevelopers() {
+    return getRandomDevelopers(getComponentsInRowNumber());
   },
 
   async requestProjects() {
     return projects;
+  },
+
+  async requestDevelopers() {
+    return allDevelopers;
   },
 
   async sendNewDeveloperWithCredentials(newDeveloper) {

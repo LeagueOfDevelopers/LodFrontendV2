@@ -1,11 +1,15 @@
 <template>
   <div class="projects-section__project">
-    <div :class="{ 'default-project-img': !project.PhotoUri, 'project-img': project.PhotoUri }"
-         :style="[ project.PhotoUri ?  {backgroundImage: `url(${project.PhotoUri})`} : {}]"
-         class="project__background"></div>
+    <div
+      :style="{
+        backgroundColor: '#000000',
+        backgroundImage: `url(${image})`
+      }"
+      class="project__background"
+    ></div>
     <div class="project__info-container">
       <div class="project__name">
-        {{project.Name}}
+        {{project.name}}
       </div>
 
       <slot name="project-status"></slot>
@@ -15,26 +19,24 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      project: {
-        type: Object,
-        required: true,
-        default: () => {
-        }
-      }
+import defaultImage from "../../../../assets/project-cap-image.png";
+
+export default {
+  props: {
+    project: {
+      type: Object,
+      required: true,
+      default: () => {}
     }
-  };
+  },
+  computed: {
+    image() {
+      return this.project.landingImage.smallPhotoUri || defaultImage;
+    }
+  }
+};
 </script>
 
 <style scoped>
-  .default-project-img {
-    background: #000 url("../../../../assets/project-cap-image.png") no-repeat center;
-    background-size: cover;
-  }
 
-  .project-img {
-    background: #000 no-repeat center;
-    background-size: cover;
-  }
 </style>

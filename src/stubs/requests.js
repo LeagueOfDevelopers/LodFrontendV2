@@ -15,14 +15,28 @@ export default {
   async getFilteredDevelopers(count, offset, searchValue) {
     const matchedDevelopers = allDevelopers.filter(developer => {
       const { firstname, lastname } = developer;
-      return !!~`${firstname} ${lastname}`.toLowerCase().indexOf(searchValue);
+      return !!~`${firstname} ${lastname}`.toLowerCase().indexOf(searchValue.toLowerCase());
     });
 
     return this.getDevelopers(count, offset, matchedDevelopers);
   },
 
-  async requestProjects() {
-    return projects;
+  async getProjects(count, offset, category) {
+    const matchedProjects = category ?
+      projects.filter(project => project.category === category) :
+      projects;
+
+    const allProjectsCount = matchedProjects.length;
+
+    if (offset > matchedProjects.length)
+      return { projects: [], allProjectsCount };
+
+    const projectsAvaialable = matchedProjects.slice(offset, allProjectsCount);
+
+    if (count > projectsAvaialable)
+      return { projects: projectsAvaialable, allProjectsCount };
+
+    return { projects: projectsAvaialable.slice(0, count), allProjectsCount };
   },
 
   async getDevelopers(count, offset, developers = allDevelopers) {

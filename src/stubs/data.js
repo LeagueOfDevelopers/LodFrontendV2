@@ -361,6 +361,7 @@ export const projects = [
     "id": 6,
     "name": "Форум эндаумент-фондов",
     "projectStatus": 3,
+    "category": 1,
     "landingImage": {
       "bigPhotoUri": projectPhoto,
       "smallPhotoUri": projectPhoto,
@@ -370,6 +371,7 @@ export const projects = [
     "id": 2,
     "name": "Полный курс",
     "projectStatus": 3,
+    "category": 1,
     "landingImage": {
       "bigPhotoUri": null,
       "smallPhotoUri": null
@@ -379,6 +381,7 @@ export const projects = [
     "id": 8,
     "name": "Эндаумент МФТИ",
     "projectStatus": 3,
+    "category": 1,
     "landingImage": {
       "bigPhotoUri": projectPhoto,
       "smallPhotoUri": projectPhoto,
@@ -388,6 +391,7 @@ export const projects = [
     "id": 3,
     "name": "ItHappened",
     "projectStatus": 3,
+    "category": 1,
     "landingImage": {
       "bigPhotoUri": projectPhoto,
       "smallPhotoUri": projectPhoto,
@@ -397,6 +401,7 @@ export const projects = [
     "id": 15,
     "name": "Консенсус",
     "projectStatus": 1,
+    "category": 1,
     "landingImage": {
       "bigPhotoUri": projectPhoto,
       "smallPhotoUri": projectPhoto,
@@ -406,6 +411,7 @@ export const projects = [
     "id": 11,
     "name": "Solys",
     "projectStatus": 3,
+    "category": 1,
     "landingImage": {
       "bigPhotoUri": projectPhoto,
       "smallPhotoUri": projectPhoto,
@@ -415,6 +421,7 @@ export const projects = [
     "id": 5,
     "name": "События Эндаумент МИСИС",
     "projectStatus": 3,
+    "category": 2,
     "landingImage": {
       "bigPhotoUri": projectPhoto,
       "smallPhotoUri": projectPhoto,
@@ -424,6 +431,7 @@ export const projects = [
     "id": 4,
     "name": "Сайт Эндаумент МИСИС",
     "projectStatus": 3,
+    "category": 3,
     "landingImage": {
       "bigPhotoUri": projectPhoto,
       "smallPhotoUri": projectPhoto,
@@ -433,6 +441,7 @@ export const projects = [
     "id": 7,
     "name": "Сайт Эндаумент-фонда МГСУ",
     "projectStatus": 3,
+    "category": 4,
     "landingImage": {
       "bigPhotoUri": projectPhoto,
       "smallPhotoUri": projectPhoto,
@@ -442,6 +451,7 @@ export const projects = [
     "id": 1,
     "name": "Сайт Лиги Разработчиков",
     "projectStatus": 1,
+    "category": 5,
     "landingImage": {
       "bigPhotoUri": projectPhoto,
       "smallPhotoUri": projectPhoto,
@@ -451,9 +461,10 @@ export const projects = [
     "id": 14,
     "name": "Shynee",
     "projectStatus": 1,
+    "category": 6,
     "landingImage": {
       "bigPhotoUri": projectPhoto,
       "smallPhotoUri": projectPhoto,
     }
-  }
+  },
 ];

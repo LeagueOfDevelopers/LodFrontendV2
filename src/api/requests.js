@@ -22,7 +22,7 @@ export default {
     }
   },
 
-  requestProjects(amount, categories) {
+  getProjects(amount, categories) {
     return api()
       .get(`/projects/${amount}/${getComponentsInRowNumber()}?&categories=${categories}`)
       .then(res => res.data.Data);

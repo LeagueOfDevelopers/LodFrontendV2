@@ -1,7 +1,7 @@
 <template>
   <div class="developers__full-developer">
     <div class="project-card">
-      <img class="full-developer__photo" :src="avatar.smallPhotoUri || DEFAULT_DEVELOPER_PHOTO">
+      <img class="full-developer__photo" :src="photo">
       <div class="full-developer__info">
         <div class="full-developer__name"> {{ firstname + ' ' + lastname }}</div>
         <div class="full-developer__role"> {{ specialization }}</div>
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+  import defaultPhoto from "../../../../assets/developer-default-photo.png";
   import {getOffsetDate} from "../../../../helpers";
 
   export default {
@@ -30,13 +31,17 @@
     },
     data() {
       return {
-        DEFAULT_DEVELOPER_PHOTO: require("../../../../assets/developer-default-photo.png"),
         // Optional
         PhotoUri: "",
         VkPageUri: "",
         // Developer info
         ...this.developer
       };
+    },
+    computed: {
+      photo() {
+        return defaultPhoto;
+      }
     },
     methods: {
       normalizeDate(date) {

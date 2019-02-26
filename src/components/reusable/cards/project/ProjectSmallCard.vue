@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     image() {
-      return this.project.landingImage.smallPhotoUri || defaultImage;
+      return defaultImage;
     }
   }
 };

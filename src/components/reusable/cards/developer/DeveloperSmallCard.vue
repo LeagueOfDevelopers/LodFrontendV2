@@ -21,16 +21,15 @@ export default {
   data() {
     return {};
   },
+  computed: {
+    photo() {
+      return defaultPhoto
+    }
+  },
   props: {
     developer: {
       type: Object,
-      required: true,
-      default: () => {}
-    }
-  },
-  computed: {
-    photo() {
-      return this.developer.avatar.smallPhotoUri || defaultPhoto;
+      required: true
     }
   }
 };

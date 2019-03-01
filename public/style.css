@@ -3397,7 +3397,7 @@ input.sign-up__checkbox {
   }
 
   .header__nav-full {
-    display: inline-block;
+    display: block;
     position: relative;
     right: 5px;
     font-size: 1.3em;
@@ -4195,7 +4195,6 @@ input.sign-up__checkbox {
     margin-left: 0;
     margin-right: 0;
     flex-basis: 49%;
-    height: 20vw;
   }
 
   .projects__all-project {

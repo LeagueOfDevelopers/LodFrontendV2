@@ -8,7 +8,7 @@ export default {
       return res.data.projects;
     }
     catch (err) {
-      console.log(err);
+      return new Array();
     }
   },
 
@@ -18,7 +18,7 @@ export default {
       return res.data.developers;
     }
     catch (err) {
-      console.log(err);
+      return new Array();
     }
   },
 
@@ -29,10 +29,14 @@ export default {
   },
 
 
-  requestDevelopers(page) {
-    return api()
-      .get(`/developers?page=${page}`)
-      .then(res => res.data.Data);
+  async getDevelopers(count, offset) {
+    try {
+      const res = await api().get(`/developers?count=${count}&offset=${offset}`);
+      return res.data;
+    }
+    catch (err) {
+      return false;
+    }
   },
 
   sendNewDeveloperWithCredentials(newDeveloper) {

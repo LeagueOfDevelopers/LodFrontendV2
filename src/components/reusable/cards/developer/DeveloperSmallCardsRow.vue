@@ -1,7 +1,7 @@
 <template>
   <section class="random-wrapper">
     <router-link v-for="developer in developers" :key="developer.id"
-      :to="{name: 'portfolio', params: {id: developer.id}}" tag="div"
+      :to="{name: 'developers'}" tag="div"
       class="developers-section__link-to-profile">
       <developer-small-card :developer="developer" />  
     </router-link>

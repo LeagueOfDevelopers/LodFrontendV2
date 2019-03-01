@@ -49,7 +49,7 @@ const actions = {
   },
 
   RESET_DEVELOPERS({ commit }) {
-    const {developers, allDevelopersCount} = state;
+    const { developers, allDevelopersCount } = state;
     if (developers.length || allDevelopersCount)
       commit("RESET_DEVELOPERS");
   },

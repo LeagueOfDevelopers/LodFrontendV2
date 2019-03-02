@@ -52,9 +52,7 @@ const actions = {
     commit("UPDATE_PROJECTS_STATE_STATUS", "loading");
 
     try {
-      const res = state.currentCategory ?
-        await API.getProjects(count, state.projects.length, state.currentCategory) :
-        await API.getProjects(count, state.projects.length);
+      const res = await API.getProjects(count, state.projects.length, state.currentCategory);
 
       commit("ADD_PROJECTS", res.projects);
       commit("UPDATE_ALL_PROJECTS_COUNT", res.allProjectsCount);

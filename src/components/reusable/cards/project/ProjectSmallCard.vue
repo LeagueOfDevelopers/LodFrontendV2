@@ -3,7 +3,8 @@
     <div
       :style="{
         backgroundColor: '#000000',
-        backgroundImage: `url(${image})`
+        backgroundImage: 
+        `url(${image})`
       }"
       class="project__background"
     ></div>
@@ -31,12 +32,15 @@ export default {
   },
   computed: {
     image() {
-      return defaultImage;
+      return this.project.landingImage.smallPhotoUri ? 
+      this.project.landingImage.smallPhotoUri
+        .replace(/api/, "test.api")
+        .replace(/image/, "images") :
+      defaultImage;
     }
   }
 };
 </script>
 
 <style scoped>
-
 </style>

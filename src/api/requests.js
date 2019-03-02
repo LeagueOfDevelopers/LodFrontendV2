@@ -24,7 +24,7 @@ export default {
 
   getProjects(count, offset, category) {
     return api()
-      .get(`/projects?count=${count}&offset=${offset}&category=${category || 0}`)
+      .get(`/projects?count=${count}&offset=${offset}&category=${category}`)
       .then(res => res.data);
   },
 
@@ -32,6 +32,16 @@ export default {
   async getDevelopers(count, offset) {
     try {
       const res = await api().get(`/developers?count=${count}&offset=${offset}`);
+      return res.data;
+    }
+    catch (err) {
+      return false;
+    }
+  },
+
+  async getFilteredDevelopers(count, offset, searchString) {
+    try {
+      const res = await api().get(`/developers/${searchString}?count=${count}&offset=${offset}`);
       return res.data;
     }
     catch (err) {

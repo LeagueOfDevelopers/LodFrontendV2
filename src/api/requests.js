@@ -22,10 +22,10 @@ export default {
     }
   },
 
-  getProjects(amount, categories) {
+  getProjects(count, offset, category) {
     return api()
-      .get(`/projects/${amount}/${getComponentsInRowNumber()}?&categories=${categories}`)
-      .then(res => res.data.Data);
+      .get(`/projects?count=${count}&offset=${offset}&category=${category || 0}`)
+      .then(res => res.data);
   },
 
 

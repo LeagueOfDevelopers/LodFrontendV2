@@ -18,13 +18,13 @@ export default {
   &-header {
     font-size: 2em;
     font-family: "Noto Serif", serif;
-    padding-left: 10px;
+    padding-left: 1%;
     margin-bottom: 15px;
   }
   &-projects {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 -5px;
+    margin: 0 -1%;
     margin-bottom: 20px;
   }
 }

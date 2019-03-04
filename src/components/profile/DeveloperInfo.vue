@@ -1,12 +1,38 @@
 <template>
   <div class="developer-info">
-    <div
-      class="developer-info__item"
-      v-for="(value, property) in placeholders"
-      :key="property"
-    >
-      <div class="developer-info__item-name">{{value}}</div>
-      <div class="developer-info__item-text">{{propsArr[property]}}</div>
+    <div class="developer-info__item">
+      <div class="developer-info__item-name">Институт</div>
+      <div class="developer-info__item-text">{{ institute }}</div>
+    </div>
+    <div class="developer-info__item">
+      <div class="developer-info__item-name">Кафедра</div>
+      <div class="developer-info__item-text">{{ faculty }}</div>
+    </div>
+    <div class="developer-info__item">
+      <div class="developer-info__item-name">Специальность</div>
+      <div class="developer-info__item-text">{{ specialization }}</div>
+    </div>
+    <div class="developer-info__item">
+      <div class="developer-info__item-name">Курс</div>
+      <div class="developer-info__item-text">{{ course }}</div>
+    </div>
+    <div class="developer-info__item">
+      <div class="developer-info__item-name">В Лиге Разработчиков</div>
+      <div class="developer-info__item-text">{{ date }}</div>
+    </div>
+    <div class="developer-info__item">
+      <div class="developer-info__item-name">Профиль Вконтакте</div>
+      <div class="developer-info__item-text">
+        <a class="link" :href="profileVk">{{ profileVk }}</a>
+      </div>
+    </div>
+    <div class="developer-info__item">
+      <div class="developer-info__item-name">E-mail</div>
+      <div class="developer-info__item-text">{{ email }}</div>
+    </div>
+    <div class="developer-info__item">
+      <div class="developer-info__item-name">Номер телефона</div>
+      <div class="developer-info__item-text">{{ phoneNumber }}</div>
     </div>
   </div>
 </template>
@@ -47,34 +73,17 @@ export default {
       type: String,
       required: true
     }
-  },
-  data() {
-    return {
-      placeholders: {
-        institute: "Институт",
-        faculty: "Кафедра",
-        specialization: "Специальность",
-        course: "Курс",
-        date: "В Лиге Разработчиков",
-        profileVk: "Профиль Вконтакте",
-        email: "E-mail",
-        phoneNumber: "Номер телефона"
-      }
-    };
-  },
-  computed: {
-    propsArr() {
-      return {
-        institute: this.institute,
-        faculty: this.faculty,
-        specialization: this.specialization,
-        course: this.course,
-        date: this.date,
-        profileVk: this.profileVk,
-        email: this.email,
-        phoneNumber: this.phoneNumber
-      };
-    }
   }
 };
 </script>
+
+<style lang="less" scoped>
+.link {
+  color: #3498db;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+</style>
+

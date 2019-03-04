@@ -1,14 +1,13 @@
 <template>
-  <div
-    class="project-wrapper"
-    :style="{ width: width }"
-  >
+  <div class="project-wrapper">
     <div
       class="developerProject"
-      :style="{ backgroundImage: `url(${imgUrl})` }"
+      :style="{ 
+        backgroundImage: `url(${image})`
+      }"
     >
       <div class="developerProject-description">
-        <h1 class="developerProject-description__name">Project name</h1>
+        <h1 class="developerProject-description__name">{{name}}</h1>
         <p class="developerProject-description__status">
           <span>Статус:</span>
           <span
@@ -52,25 +51,33 @@ export default {
     }
   },
   computed: {
-    width() {
-      return `${100 / getComponentsInRowNumber()}%`;
+    image() {
+      return this.imgUrl
+        ? this.imgUrl.replace(/api/, "test.api").replace(/image/, "images")
+        : defaultBackground;
     },
     statusState() {
       switch (this.status) {
-        case 1:
+        case 0: {
           return {
-            color: "#009688",
-            text: "Завершён"
+            color: "#795548",
+            text: "Запланирован"
           };
-        case 2:
+        }
+        case 1:
           return {
             color: "#1E88E5",
             text: "В процессе"
           };
-        case 3:
+        case 2:
           return {
             color: "#607D8B",
             text: "Заморожен"
+          };
+        default:
+          return {
+            color: "#009688",
+            text: "Завершён"
           };
       }
     }
@@ -81,8 +88,29 @@ export default {
 <style lang="less" scoped>
 .project-wrapper {
   position: relative;
-  padding: 5px;
+  padding: 1%;
   box-sizing: border-box;
+  flex-basis: calc(100% / 5);
+
+  @media (max-width: 1499px) {
+    flex-basis: calc(100% / 4);
+  }
+
+  @media (max-width: 1199px) {
+    flex-basis: calc(100% / 3);
+  }
+
+  @media (max-width: 991px) {
+    flex-basis: calc(100% / 3);
+  }
+
+  @media (max-width: 767px) {
+    flex-basis: calc(100% / 2);
+  }
+
+  @media (max-width: 575px) {
+    flex-basis: calc(100% / 1);
+  }
 }
 
 .developerProject {

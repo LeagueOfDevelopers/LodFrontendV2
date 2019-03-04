@@ -1,38 +1,53 @@
 <template>
-  <div class="developer-page">
-    <ProfileHeader 
-      name="Ricardo Milos"
-      role="Frontend developer"
-      photoUrl="https://i.ytimg.com/vi/aVeCYjAiQHo/maxresdefault.jpg"
-      :confirmationStatus="2"
-    />
-
-    <div class="dividing-line"></div>
-
-    <DeveloperInfo
-      institute="string"
-      faculty="faculty"
-      specialization="specialization"
-      :course="1"
-      :date="new Date(1394523456661) | normalizeDate"
-      profileVk="profileVk"
-      email="email"
-      phoneNumber="phoneNumber"
-    />
-
-    <div class="dividing-line"></div>
-
-    <DeveloperPortfolio>
-      <DeveloperProject
-        v-for="i in 7"
-        :key="i"
-        name="name"
-        :status="2"
-        role="backend"
-        imgUrl="https://s3-us-west-2.amazonaws.com/m.cdpn.io/default-project-screenshot-large.png"
+  <transition
+    v-if="failedStatus"
+    name="fade"
+  >
+    <NotFound />
+  </transition>
+  <transition
+    v-else-if="availableStatus"
+    name="fade"
+  >
+    <div class="developer-page">
+      <ProfileHeader
+        :name="info.firstname + ' ' + info.lastname"
+        role="Frontend developer"
+        :photoUrl="photo"
+        :confirmationStatus="info.confirmationStatus"
       />
-    </DeveloperPortfolio>
-  </div>
+
+      <div class="dividing-line"></div>
+
+      <DeveloperInfo
+        :institute="info.instituteName"
+        :faculty="info.studyingDirection"
+        :specialization="info.specialization"
+        :course="1"
+        :date="new Date(info.registrationTime) | normalizeDate"
+        :profileVk="info.vkProfileUri || 'Не указан'"
+        :email="info.email || 'Не указан'"
+        :phoneNumber="info.phoneNumber || 'Не указан'"
+      />
+
+      <div class="dividing-line"></div>
+
+      <DeveloperPortfolio>
+        <p
+          class="no-projects"
+          v-if="!info.projects.length"
+        >Здесь пока ничего нет</p>
+        <DeveloperProject
+          v-for="(project, index) in info.projects"
+          :key="index"
+          :name="project.projectName"
+          :status="project.projectStatus"
+          :role="project.developerRole"
+          :imgUrl="project.landingImage.smallPhotoUri"
+        />
+      </DeveloperPortfolio>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -40,8 +55,12 @@ import ProfileHeader from "../components/profile/ProfileHeader";
 import DeveloperInfo from "../components/profile/DeveloperInfo";
 import DeveloperPortfolio from "../components/profile/DeveloperPortfolio";
 import DeveloperProject from "../components/profile/DeveloperProject";
+import NotFound from "../pages/NotFound";
+import defaultPhoto from "../assets/developer-default-photo.png";
 
 import { getOffsetDate } from "../helpers";
+import { mapActions, mapState } from "vuex";
+import statuses from "../store/stateStatuses.js";
 
 export default {
   name: "Profile",
@@ -49,7 +68,36 @@ export default {
     ProfileHeader,
     DeveloperInfo,
     DeveloperPortfolio,
-    DeveloperProject
+    DeveloperProject,
+    NotFound
+  },
+  computed: {
+    ...mapState("developerProfile", {
+      info: state => state.developerInfo,
+      profileStateStatus: state => state.developerProfileStateStatus
+    }),
+
+    availableStatus() {
+      return this.profileStateStatus === statuses.available;
+    },
+    failedStatus() {
+      return this.profileStateStatus === statuses.failed;
+    },
+    photo() {
+      return this.info.avatar.smallPhotoUri
+        ? this.info.avatar.smallPhotoUri
+            .replace(/api/, "test.api")
+            .replace(/image/, "images")
+        : defaultPhoto;
+    }
+  },
+  created() {
+    this.loadProfileData(this.$route.params.id);
+  },
+  methods: {
+    ...mapActions("developerProfile", {
+      loadProfileData: "loadProfileData"
+    })
   },
   filters: {
     normalizeDate(date) {
@@ -58,4 +106,11 @@ export default {
   }
 };
 </script>
+
+<style lang="less" scoped>
+.no-projects {
+  margin-left: 2%;
+}
+</style>
+
 

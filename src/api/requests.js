@@ -49,6 +49,11 @@ export default {
     }
   },
 
+  async getDeveloperProfile(id) {
+    const res = await api().get(`developers/${id}`);
+    return res.data;
+  },
+
   sendNewDeveloperWithCredentials(newDeveloper) {
     return api()
       .post(`developers`, newDeveloper);
@@ -57,11 +62,6 @@ export default {
   sendNewDeveloperWithoutCredentials(newDeveloper) {
     return api()
       .post(`signup/github?frontend_callback=localhost:8080/signup`, newDeveloper);
-  },
-
-  requestDeveloperPortfolio(id) {
-    return api()
-      .get(`developers/${id}`);
   },
 
   requestNotifications(currentPage) {

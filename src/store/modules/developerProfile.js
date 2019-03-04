@@ -2,8 +2,8 @@ import API from "../../api";
 import statuses from "../stateStatuses";
 
 const state = {
-  developerProfile: {},
-  developerProfileStateStatus: statuses.available
+  developerInfo: {},
+  developerProfileStateStatus: statuses.unavailable
 };
 
 const getters = {
@@ -12,8 +12,11 @@ const getters = {
 };
 
 const mutations = {
-  UPDATE_DEVELOPER_PROFILE(state, profile) {
-    state.developerProfile = profile;
+  SET_DEVELOPER_INFO(state, data) {
+    state.developerInfo = data;
+  },
+  RESET_DEVELOPER_INFO(state) {
+    state.developerInfo = {};
   },
   UPDATE_DEVELOPER_PROFILE_STATE_STATUS(state, status) {
     state.developerProfileStateStatus = status;
@@ -21,42 +24,24 @@ const mutations = {
 };
 
 const actions = {
-  loadProfileData({ commit, getters }) {
-    commit("UPDATE_DEVELOPER_PROFILE_STATE_STATUS", "loading");
-    API().requestDeveloperProfile(getters.userId)
-      .then(response => {
-        const profileData = {
-          Image: response.data.Image,
-          VkProfileUri: response.data.VkProfileUri,
-          LinkToGithubProfile: response.data.LinkToGithubProfile,
-          PhoneNumber: response.data.PhoneNumber,
-          StudentAccessionYear: response.data.StudentAccessionYear,
-          IsGraduated: response.data.IsGraduated,
-          StudyingDirection: response.data.StudyingDirection,
-          InstituteName: response.data.InstituteName,
-          Specialization: response.data.Specialization
-        };
-        commit("UPDATE_DEVELOPER_PROFILE", profileData);
-        commit("UPDATE_DEVELOPER_PROFILE_STATE_STATUS", "succeeded");
-      })
-      .catch(() => {
-        commit("UPDATE_DEVELOPER_PROFILE_STATE_STATUS", "failed");
-      });
-  },
-  changeProfileData({ commit, getters }) {
-    commit("UPDATE_DEVELOPER_PROFILE_STATE_STATUS", "loading");
-    API().putDeveloperProfile()
-      .put(`developers/${getters.userId}`)
-      .then(() => {
-        commit("UPDATE_DEVELOPER_PROFILE_STATE_STATUS", "succeeded");
-      })
-      .catch(() => {
-        commit("UPDATE_DEVELOPER_PROFILE_STATE_STATUS", "failed");
-      });
+  async loadProfileData({ commit }, id) {
+    try {
+      commit("RESET_DEVELOPER_INFO");
+      commit("UPDATE_DEVELOPER_PROFILE_STATE_STATUS", statuses.loading);
+
+      const data = await API.getDeveloperProfile(id);
+
+      commit("SET_DEVELOPER_INFO", data);
+      commit("UPDATE_DEVELOPER_PROFILE_STATE_STATUS", statuses.available);
+    }
+    catch (err) {
+      commit("UPDATE_DEVELOPER_PROFILE_STATE_STATUS", statuses.failed);
+    }
   }
 };
 
 export default {
+  namespaced: true,
   state,
   getters,
   mutations,

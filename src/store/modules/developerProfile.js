@@ -7,8 +7,8 @@ const state = {
 };
 
 const getters = {
-  profile: state => state.developerProfile,
-  profileStateStatus: state => state.developerProfileStateStatus
+  availableStatus: state => state.developerProfileStateStatus === statuses.available,
+  failedStatus: state => state.developerProfileStateStatus === statuses.failed
 };
 
 const mutations = {

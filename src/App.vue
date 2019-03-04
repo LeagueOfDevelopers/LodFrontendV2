@@ -1,10 +1,13 @@
 <template>
-  <div id="app" class="block-flex-column full-height">
-    <pp-header/>
+  <div
+    id="app"
+    class="block-flex-column full-height"
+  >
+    <pp-header />
     <pp-content>
-      <router-view class="flex-grow-max"/>
+      <router-view />
     </pp-content>
-    <pp-footer/>
+    <pp-footer />
   </div>
 </template>
 
@@ -37,12 +40,5 @@ export default {
 
 .flex-grow-max {
   flex-grow: 2;
-}
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .3s;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
 }
 </style>

@@ -1,53 +1,46 @@
 <template>
-  <transition
-    v-if="failedStatus"
-    name="fade"
-  >
-    <NotFound />
-  </transition>
-  <transition
+  <NotFound v-if="failedStatus" />
+  <div
     v-else-if="availableStatus"
-    name="fade"
+    class="developer-page"
   >
-    <div class="developer-page">
-      <ProfileHeader
-        :name="info.firstname + ' ' + info.lastname"
-        role="Frontend developer"
-        :photoUrl="photo"
-        :confirmationStatus="info.confirmationStatus"
+    <ProfileHeader
+      :name="info.firstname + ' ' + info.lastname"
+      role="Frontend developer"
+      :photoUrl="photo"
+      :confirmationStatus="info.confirmationStatus"
+    />
+
+    <div class="dividing-line"></div>
+
+    <DeveloperInfo
+      :institute="info.instituteName"
+      :faculty="info.studyingDirection"
+      :specialization="info.specialization"
+      :course="1"
+      :date="new Date(info.registrationTime) | normalizeDate"
+      :profileVk="info.vkProfileUri || 'Не указан'"
+      :email="info.email || 'Не указан'"
+      :phoneNumber="info.phoneNumber || 'Не указан'"
+    />
+
+    <div class="dividing-line"></div>
+
+    <DeveloperPortfolio>
+      <p
+        class="no-projects"
+        v-if="!info.projects.length"
+      >Здесь пока ничего нет</p>
+      <DeveloperProject
+        v-for="(project, index) in info.projects"
+        :key="index"
+        :name="project.projectName"
+        :status="project.projectStatus"
+        :role="project.developerRole"
+        :imgUrl="project.landingImage.smallPhotoUri"
       />
-
-      <div class="dividing-line"></div>
-
-      <DeveloperInfo
-        :institute="info.instituteName"
-        :faculty="info.studyingDirection"
-        :specialization="info.specialization"
-        :course="1"
-        :date="new Date(info.registrationTime) | normalizeDate"
-        :profileVk="info.vkProfileUri || 'Не указан'"
-        :email="info.email || 'Не указан'"
-        :phoneNumber="info.phoneNumber || 'Не указан'"
-      />
-
-      <div class="dividing-line"></div>
-
-      <DeveloperPortfolio>
-        <p
-          class="no-projects"
-          v-if="!info.projects.length"
-        >Здесь пока ничего нет</p>
-        <DeveloperProject
-          v-for="(project, index) in info.projects"
-          :key="index"
-          :name="project.projectName"
-          :status="project.projectStatus"
-          :role="project.developerRole"
-          :imgUrl="project.landingImage.smallPhotoUri"
-        />
-      </DeveloperPortfolio>
-    </div>
-  </transition>
+    </DeveloperPortfolio>
+  </div>
 </template>
 
 <script>
@@ -59,8 +52,7 @@ import NotFound from "../pages/NotFound";
 import defaultPhoto from "../assets/developer-default-photo.png";
 
 import { getOffsetDate } from "../helpers";
-import { mapActions, mapState } from "vuex";
-import statuses from "../store/stateStatuses.js";
+import { mapActions, mapState, mapGetters } from "vuex";
 
 export default {
   name: "Profile",
@@ -77,12 +69,8 @@ export default {
       profileStateStatus: state => state.developerProfileStateStatus
     }),
 
-    availableStatus() {
-      return this.profileStateStatus === statuses.available;
-    },
-    failedStatus() {
-      return this.profileStateStatus === statuses.failed;
-    },
+    ...mapGetters("developerProfile", ["availableStatus", "failedStatus"]),
+
     photo() {
       return this.info.avatar.smallPhotoUri
         ? this.info.avatar.smallPhotoUri

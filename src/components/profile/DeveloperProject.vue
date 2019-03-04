@@ -13,9 +13,9 @@
           <span
             class="statusLabel"
             :style="{
-            backgroundColor: statusState.color
-          }"
-          >{{ statusState.text }}</span>
+              backgroundColor: stateStatus.color
+            }"
+          >{{ stateStatus.text }}</span>
         </p>
         <p class="developerProject-description__role">
           <span>Роль разработчика: </span>
@@ -56,7 +56,7 @@ export default {
         ? this.imgUrl.replace(/api/, "test.api").replace(/image/, "images")
         : defaultBackground;
     },
-    statusState() {
+    stateStatus() {
       switch (this.status) {
         case 0: {
           return {

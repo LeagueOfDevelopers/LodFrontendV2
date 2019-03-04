@@ -1,7 +1,6 @@
 <template>
   <div
     id="app"
-    class="block-flex-column full-height"
   >
     <pp-header />
     <pp-content>
@@ -31,14 +30,8 @@ export default {
 <style scoped>
 #app {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-}
-
-.full-height {
-  min-height: 100vh;
-}
-
-.flex-grow-max {
-  flex-grow: 2;
+  min-height: ;
 }
 </style>

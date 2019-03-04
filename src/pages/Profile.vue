@@ -17,7 +17,7 @@
       :institute="info.instituteName"
       :faculty="info.studyingDirection"
       :specialization="info.specialization"
-      :course="1"
+      :course="course"
       :date="new Date(info.registrationTime) | normalizeDate"
       :profileVk="info.vkProfileUri || 'Не указан'"
       :email="info.email || 'Не указан'"
@@ -54,6 +54,8 @@ import defaultPhoto from "../assets/developer-default-photo.png";
 import { getOffsetDate } from "../helpers";
 import { mapActions, mapState, mapGetters } from "vuex";
 
+import moment from "moment";
+
 export default {
   name: "Profile",
   components: {
@@ -77,6 +79,12 @@ export default {
             .replace(/api/, "test.api")
             .replace(/image/, "images")
         : defaultPhoto;
+    },
+
+    course() {
+      const accessionYear = moment([this.info.studentAccessionYear, 9, 1]);
+
+      return moment().diff(accessionYear, "years") + 1;
     }
   },
   created() {

@@ -32,6 +32,6 @@ export default {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  min-height: ;
+  min-height: 100vh;
 }
 </style>

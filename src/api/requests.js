@@ -22,16 +22,26 @@ export default {
     }
   },
 
-  requestProjects(amount, categories) {
+  getProjects(count, offset, category) {
     return api()
-      .get(`/projects/${amount}/${getComponentsInRowNumber()}?&categories=${categories}`)
-      .then(res => res.data.Data);
+      .get(`/projects?count=${count}&offset=${offset}&category=${category}`)
+      .then(res => res.data);
   },
 
 
   async getDevelopers(count, offset) {
     try {
       const res = await api().get(`/developers?count=${count}&offset=${offset}`);
+      return res.data;
+    }
+    catch (err) {
+      return false;
+    }
+  },
+
+  async getFilteredDevelopers(count, offset, searchString) {
+    try {
+      const res = await api().get(`/developers/${searchString}?count=${count}&offset=${offset}`);
       return res.data;
     }
     catch (err) {

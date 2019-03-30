@@ -3,22 +3,24 @@
     <h1 class="projects-section__headline headline">Проекты</h1>
     <div class="dividing-line"></div>
 
-    <project-filter></project-filter>
+    <project-filter />
 
     <div class="dividing-line"></div>
     <div>
-      <project-small-cards-row :projects="projects"/>
+      <project-small-cards-row :projects="projects" />
     </div>
-    <button class="projects-section__see-more-button button-style"
+    <button
+      class="projects-section__see-more-button button-style"
       @click="loadMoreProjects"
-      v-if="projectsStateStatus === 'available'">
+      v-if="projectsStateStatus === 'available'"
+    >
       Показать больше
     </button>
   </section>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState, mapActions } from "vuex";
 import Category from "../components/Category.vue";
 import ProjectSmallCardsRow from "../components/reusable/cards/project/ProjectSmallCardsRow.vue";
 import ProjectFilter from "../components/projects/ProjectFilter.vue";
@@ -30,15 +32,19 @@ export default {
     ProjectFilter
   },
   created() {
-    this.$store.dispatch("LOAD_PROJECTS");
+    this.loadProjects();
   },
   computed: {
-    ...mapGetters(["projects", "categories", "projectsStateStatus"])
+    ...mapState("projects", [
+      "projects",
+      "projectsStateStatus"
+    ])
   },
   methods: {
-    loadMoreProjects() {
-      this.$store.dispatch("LOAD_MORE_PROJECTS");
-    }
+    ...mapActions("projects", {
+      loadProjects: "LOAD_PROJECTS",
+      loadMoreProjects: "LOAD_MORE_PROJECTS"
+    })
   }
 };
 </script>

@@ -23,7 +23,11 @@ export default {
   },
   computed: {
     photo() {
-      return defaultPhoto
+      return this.developer.avatar.smallPhotoUri
+        ? this.developer.avatar.smallPhotoUri
+            .replace(/api/, "test.api")
+            .replace(/image/, "images")
+        : defaultPhoto;
     }
   },
   props: {

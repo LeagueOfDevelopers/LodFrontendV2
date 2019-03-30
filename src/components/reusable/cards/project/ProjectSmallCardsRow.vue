@@ -32,7 +32,7 @@ export default {
 .random-wrapper {
   display: flex;
   flex-wrap: wrap;
-  margin: 0 -1%;
+  margin: 0;
 }
 </style>
 

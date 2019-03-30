@@ -24,7 +24,7 @@ export default {
   &-projects {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 -1%;
+    margin: 0;
     margin-bottom: 20px;
   }
 }

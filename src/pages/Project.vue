@@ -1,20 +1,31 @@
 <template>
-  <div class="project">
+  <not-found v-if="failedStatus"></not-found>
+  <div
+    class="project"
+    v-else-if="availableStatus"
+  >
     <div class="container">
       <project-info
-        name="project name"
-        :types="[1, 3]"
-        :description="description"
-        :developers="developers"
+        :name="info.name"
+        :types="info.projectTypes"
+        :description="info.info"
+        :developers="info.projectMemberships"
         :accessLevel="1"
-        :status="1"
+        :status="info.projectStatus"
+        :image="info.landingImage ? info.landingImage.bigPhotoUri : ''"
       />
 
-      <project-tasks :tasks="tasks">
+      <project-tasks
+        v-if="info.tasks && info.tasks.length"
+        :tasks="info.tasks"
+      >
         <section-header text="Задачи на проекте" />
       </project-tasks>
 
-      <project-screenshots :screenshots="screenshots">
+      <project-screenshots
+        v-if="info.screenshots && info.screenshots.length"
+        :screenshots="info.screenshots"
+      >
         <section-header text="Скриншоты" />
       </project-screenshots>
     </div>
@@ -26,6 +37,9 @@ import ProjectInfo from "../components/project/ProjectInfo";
 import ProjectTasks from "../components/project/ProjectTasks";
 import ProjectScreenshots from "../components/project/ProjectScreenshots";
 import SectionHeader from "../components/project/SectionHeader";
+import NotFound from "../pages/NotFound";
+
+import { mapActions, mapState, mapGetters } from "vuex";
 
 export default {
   name: "Project",
@@ -33,29 +47,23 @@ export default {
     "project-info": ProjectInfo,
     "project-tasks": ProjectTasks,
     "section-header": SectionHeader,
-    "project-screenshots": ProjectScreenshots
+    "project-screenshots": ProjectScreenshots,
+    "not-found": NotFound
   },
-  data() {
-    return {
-      description:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat consequuntur harum repellat alias eligendi molestias assumenda corporis minima. Voluptatem, optio!",
-      developers: [
-        {
-          name: "Иван Иванов",
-          role: "Backend",
-          id: 5
-        }
-      ],
-      img: undefined,
-      tasks: ["first", "second", "third", "fourth", "fifth", "sixth", "seventh"],
-      screenshots: [
-        "https://pay.google.com/about/static/images/social/knowledge_graph_logo.png",
-        "https://pay.google.com/about/static/images/social/knowledge_graph_logo.png",
-        "https://pay.google.com/about/static/images/social/knowledge_graph_logo.png",
-        "https://pay.google.com/about/static/images/social/knowledge_graph_logo.png",
-        "https://pay.google.com/about/static/images/social/knowledge_graph_logo.png"
-      ]
-    };
+  created() {
+    this.loadProjectInfo(this.$route.params.id);
+  },
+  computed: {
+    ...mapState("project", {
+      info: state => state.info
+    }),
+
+    ...mapGetters("project", ["availableStatus", "failedStatus"])
+  },
+  methods: {
+    ...mapActions("project", {
+      loadProjectInfo: "LOAD_PROJECT_INFO"
+    })
   }
 };
 </script>

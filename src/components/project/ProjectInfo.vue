@@ -36,7 +36,10 @@
             </div>
           </div>
 
-          <div class="main-info__developers text-info">
+          <div
+            v-if="developers.length"
+            class="main-info__developers text-info"
+          >
             <h3 class="text-info__headline">Разработчики:</h3>
             <div class="text-info__value">
               <p
@@ -46,9 +49,9 @@
               >
                 <router-link
                   tag="a"
-                  :to="`/developers/${developer.id}`"
+                  :to="`/developers/${developer.developerId}`"
                   class="text-link"
-                >{{ developer.name }} </router-link>
+                >Имя Разработчика </router-link>
                 <span>({{ developer.role }})</span>
               </p>
             </div>
@@ -105,7 +108,9 @@ export default {
   },
   computed: {
     projectImage() {
-      return this.image || defaultImage;
+      return this.image
+        ? this.image.replace(/api/, "test.api").replace(/image/, "images")
+        : defaultImage;
     },
     statusText() {
       switch (this.status) {

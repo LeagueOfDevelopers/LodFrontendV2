@@ -11,6 +11,7 @@ import developerProfile from "./modules/developerProfile";
 import developerChangePassword from "./modules/developerChangePassword";
 import developerNotificationSettings from "./modules/developerNotificationSettings";
 import portfolio from "./modules/portfolio";
+import project from "./modules/project";
 
 // STATIC
 import categories from "./static/categories";
@@ -32,6 +33,7 @@ export default new Vuex.Store({
     developerChangePassword,
     developerNotificationSettings,
     portfolio,
+    project,
 
     // STATIC
     currentUser,

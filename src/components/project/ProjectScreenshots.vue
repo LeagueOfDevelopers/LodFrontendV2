@@ -4,10 +4,10 @@
     <ul class="project-screenshots__list">
       <li
         class="project-screenshots__item"
-        v-for="(url, index) in screenshots"
+        v-for="(screenshot, index) in screenshots"
         :key="index"
         :style="{
-          backgroundImage: `url(${url})`
+          backgroundImage: `url(${ normalizeUrl(screenshot.smallPhotoUri) })`
         }"
       >
       </li>
@@ -20,6 +20,11 @@ export default {
   name: "ProjectScreenshots",
   props: {
     screenshots: Array
+  },
+  methods: {
+    normalizeUrl(url) {
+      return url.replace(/api/, "test.api").replace(/image/, "images");
+    }
   }
 };
 </script>

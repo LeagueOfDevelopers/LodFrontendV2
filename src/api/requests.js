@@ -54,6 +54,11 @@ export default {
     return res.data;
   },
 
+  async getProjectInfo(id) {
+    const res = await api().get(`projects/${id}`);
+    return res.data;
+  },
+
   sendNewDeveloperWithCredentials(newDeveloper) {
     return api()
       .post(`developers`, newDeveloper);

@@ -1,6 +1,6 @@
 <template>
   <router-link
-    :to="{path: `projects`, params: id}"
+    :to="{path: `projects/${id}`, params: id}"
     class="project-wrapper"
   >
     <div

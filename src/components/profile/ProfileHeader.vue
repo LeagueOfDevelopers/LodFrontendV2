@@ -4,14 +4,16 @@
       <span>{{ confirmationStatusText }}</span>
     </p>
     <div class="profileHeader-photo">
-      <figure 
-        :style="{
+      <figure :style="{
           backgroundImage: `url(${photoUrl})`
         }"></figure>
     </div>
     <p class="profileHeader-info">
       <span class="profileHeader-info__name">{{name}}</span>
-      <span class="profileHeader-info__role">{{role}}</span>
+      <span
+        v-show="false"
+        class="profileHeader-info__role"
+      >{{role}}</span>
     </p>
   </div>
 </template>
@@ -70,6 +72,7 @@ export default {
       width: 250px;
       height: 250px;
       margin: 0 auto;
+      margin-bottom: 10px;
       background-size: cover;
       background-position: center center;
       box-sizing: border-box;

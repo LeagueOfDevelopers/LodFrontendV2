@@ -1,34 +1,22 @@
 import moment from "moment";
 
 export const getComponentsInRowNumber = () => {
-  let componentsInRowNumber = 4;
+  let componentsInRowNumber = 5;
   switch (true) {
-    case window.matchMedia("(max-width: 400px)").matches:
+    case window.matchMedia("(max-width: 575px)").matches:
       componentsInRowNumber = 1;
       break;
-    case window.matchMedia("(max-width: 580px)").matches:
+    case window.matchMedia("(max-width: 767px)").matches:
       componentsInRowNumber = 2;
       break;
-    case window.matchMedia("(max-width: 709px)").matches:
+    case window.matchMedia("(max-width: 991px)").matches:
       componentsInRowNumber = 3;
       break;
-    case window.matchMedia("(max-width: 999px)").matches:
-      componentsInRowNumber = 3;
-      break;
-    case window.matchMedia("(max-width: 1500px)").matches:
+    case window.matchMedia("(max-width: 1199px)").matches:
       componentsInRowNumber = 4;
       break;
-    case window.matchMedia("(max-width: 2000px)").matches:
-      componentsInRowNumber = 5;
-      break;
-    case window.matchMedia("(max-width: 2500px)").matches:
-      componentsInRowNumber = 6;
-      break;
-    case window.matchMedia("(max-width: 3000px)").matches:
-      componentsInRowNumber = 7;
-      break;
-    case window.matchMedia("(min-width: 3000px)").matches:
-      componentsInRowNumber = 8;
+    case window.matchMedia("(max-width: 1499px)").matches:
+      componentsInRowNumber = 4;
       break;
   }
   return componentsInRowNumber;

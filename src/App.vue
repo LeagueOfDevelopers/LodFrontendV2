@@ -1,19 +1,25 @@
 <template>
-  <div id="app" class="block-flex-column full-height">
-    <pp-header/>
-    <router-view class="flex-grow-max"/>
-    <pp-footer/>
+  <div
+    id="app"
+  >
+    <pp-header />
+    <pp-content>
+      <router-view />
+    </pp-content>
+    <pp-footer />
   </div>
 </template>
 
 <script>
 import Header from "./containers/Header.vue";
 import Footer from "./containers/Footer.vue";
+import Content from "./containers/Content";
 
 export default {
   components: {
     ppHeader: Header,
-    ppFooter: Footer
+    ppFooter: Footer,
+    ppContent: Content
   }
 };
 </script>
@@ -22,11 +28,10 @@ export default {
 </style>
 
 <style scoped>
-.full-height {
-  min-height: 100vh;
-}
-
-.flex-grow-max {
-  flex-grow: 2;
+#app {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  min-height: ;
 }
 </style>

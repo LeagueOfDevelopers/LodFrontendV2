@@ -1,12 +1,19 @@
 <template>
   <div class="developers__full-developer">
     <div class="project-card">
-      <img
+      <router-link
+        tag="img"
+        :to="`developers/${id}`"
         class="full-developer__photo"
         :src="photo"
-      >
+      ></router-link>
       <div class="full-developer__info">
-        <div class="full-developer__name"> {{ firstname + ' ' + lastname }}</div>
+        <router-link
+          tag="div"
+          :to="`developers/${id}`"
+          class="full-developer__name"
+          :src="photo"
+        >{{ firstname + ' ' + lastname }}</router-link>
         <div class="full-developer__role"> {{ specialization }}</div>
         <div class="full-developer__experience">
           В Лиге Разработчиков: <span class="residence-time"> {{ normalizeDate(registrationTime) }}</span>
@@ -61,3 +68,17 @@ export default {
   }
 };
 </script>
+
+<style lang="less" scoped>
+.full-developer {
+  &__photo,
+  &__name {
+    cursor: pointer;
+  }
+
+  &__name:hover {
+    text-decoration: underline;
+  }
+}
+</style>
+
